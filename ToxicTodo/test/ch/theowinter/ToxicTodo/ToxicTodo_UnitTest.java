@@ -15,35 +15,30 @@ public class ToxicTodo_UnitTest {
 	 */
 	public MainToxicTodo createTestEnviornment(){
 		MainToxicTodo main = new MainToxicTodo();
-		main.addCategory("School work");
-		main.addCategory("Programming stuff");
-		main.addCategory("To buy");
+		main.addCategory("School work", "school");
+		main.addCategory("Programming stuff", "programming");
+		main.addCategory("To buy", "buy");
 		return main;
-	}
-	
-	@Test
-	public void startAPP(){
-		
 	}
 
 	@Test
 	public void testCreateTodoCategoryClass(){
 		String categoryName = "Test Category";
-		TodoCategory test = new TodoCategory(categoryName);
+		TodoCategory test = new TodoCategory(categoryName, "test");
 		test.add("blub");
 		test.add("blab");
 		test.add("blob");
 		
 		//Asserts
 		assertEquals(categoryName, test.getName());
-		assertEquals(3, test.getTodolist().size());
+		assertEquals(3, test.getElementsInCategory().size());
 	}
 	
 	@Test
 	public void testAddTodoCategory(){
 		MainToxicTodo main = createTestEnviornment();
-		main.addCategory("forth cat");
-		main.addCategory("fifth cat");
+		main.addCategory("forth cat", "forth");
+		main.addCategory("fifth cat", "fith");
 		
 		assertEquals(5, main.categorySize());
 	}
@@ -52,6 +47,12 @@ public class ToxicTodo_UnitTest {
 	public void testRemoveTodoCategory(){
 		MainToxicTodo main = createTestEnviornment();
 		main.removeCategory("Programming stuff");
-		main.listCategories();
+	}
+	
+	@Test
+	public void testListCommand(){
+		MainToxicTodo main = createTestEnviornment();
+		String[] args = {"list","test"};
+		main.main(args);
 	}
 }
