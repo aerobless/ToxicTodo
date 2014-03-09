@@ -22,11 +22,11 @@ public class ToxicTodo_UnitTest {
 		main.addCategory("To buy", "buy");
 		
 		//Add todos to categories
-		main.addElementToCategory("school", "Complete exercise 1 for vssprog");
-		main.addElementToCategory("school", "Complete exercise 1 for parprog");
-		main.addElementToCategory("programming", "Build better todolist");
-		main.addElementToCategory("programming", "fix all the bugs");
-		main.addElementToCategory("buy", "new pens");
+		main.addTaskToCategory("school", "Complete exercise 1 for vssprog");
+		main.addTaskToCategory("school", "Complete exercise 1 for parprog");
+		main.addTaskToCategory("programming", "Build better todolist");
+		main.addTaskToCategory("programming", "fix all the bugs");
+		main.addTaskToCategory("buy", "new pens");
 		return main;
 	}
 	
@@ -68,7 +68,7 @@ public class ToxicTodo_UnitTest {
 	@Test
 	public void testAddElementToCategory(){
 		MainToxicTodo main = createTestEnviornment();
-		main.addElementToCategory("school", "Complete exercise 1 for vssprog");
+		main.addTaskToCategory("school", "Complete exercise 1 for vssprog");
 		assertEquals(6, main.todoSize());
 	}
 	
@@ -78,6 +78,8 @@ public class ToxicTodo_UnitTest {
 		String[] args = {"add","school", "InfSi1:", "Watch", "security","videos","on","YouTube"};
 		main.main(args);
 		assertEquals(6, main.todoSize());
-		printListFromMain(main);
+		while(true){
+			printListFromMain(main);
+		}
 	}
 }

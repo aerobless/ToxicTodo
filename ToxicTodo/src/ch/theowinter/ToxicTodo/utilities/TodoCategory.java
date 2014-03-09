@@ -32,4 +32,8 @@ public class TodoCategory {
 	public int size(){
 		return todoTasks.size();
 	}
+	
+	public String remove(int i){
+		return todoTasks.remove(i);
+	}
 }
