@@ -15,9 +15,18 @@ public class ToxicTodo_UnitTest {
 	 */
 	public MainToxicTodo createTestEnviornment(){
 		MainToxicTodo main = new MainToxicTodo();
+		
+		//Create categories
 		main.addCategory("School work", "school");
 		main.addCategory("Programming stuff", "programming");
 		main.addCategory("To buy", "buy");
+		
+		//Add todos to categories
+		main.addElementToCategory("school", "Complete exercise 1 for vssprog");
+		main.addElementToCategory("school", "Complete exercise 1 for parprog");
+		main.addElementToCategory("programming", "Build better todolist");
+		main.addElementToCategory("programming", "fix all the bugs");
+		main.addElementToCategory("buy", "new pens");
 		return main;
 	}
 
@@ -54,5 +63,11 @@ public class ToxicTodo_UnitTest {
 		MainToxicTodo main = createTestEnviornment();
 		String[] args = {"list","test"};
 		main.main(args);
+	}
+	
+	@Test
+	public void testAddElementToCategory(){
+		MainToxicTodo main = createTestEnviornment();
+		main.addElementToCategory("school", "Complete exercise 1 for vssprog");
 	}
 }

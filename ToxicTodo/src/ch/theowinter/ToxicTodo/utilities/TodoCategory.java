@@ -24,4 +24,8 @@ public class TodoCategory {
 	public ArrayList<String> getElementsInCategory(){
 		return todoElements;
 	}
+	
+	public String getKeyword(){
+		return keyword;
+	}
 }

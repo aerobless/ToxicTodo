@@ -34,6 +34,14 @@ public class MainToxicTodo {
 		}
 	}
 	
+	public void addElementToCategory(String keyword, String text){
+		for(TodoCategory todoCategory : totalTodoList){
+			if(todoCategory.getKeyword().equals(keyword)){
+				todoCategory.add(text);
+			}
+		}
+	}
+	
 	public int categorySize(){
 		return totalTodoList.size();
 	}
@@ -46,7 +54,7 @@ public class MainToxicTodo {
 	
 	public void listTodo(){
 		for(TodoCategory todoCategory : totalTodoList){
-			print("###"+todoCategory.getName().toUpperCase()+"###");
+			print("###-"+todoCategory.getName().toUpperCase()+"-###");
 			ArrayList<String> todoElements = todoCategory.getElementsInCategory();
 			for(String todoElement : todoElements){
 				print("    + "+todoElement);
