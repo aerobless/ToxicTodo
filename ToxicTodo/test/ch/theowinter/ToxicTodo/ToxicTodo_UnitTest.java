@@ -29,6 +29,11 @@ public class ToxicTodo_UnitTest {
 		main.addElementToCategory("buy", "new pens");
 		return main;
 	}
+	
+	public void printListFromMain(MainToxicTodo main){
+		String[] args = {"list"};
+		main.main(args);
+	}
 
 	@Test
 	public void testCreateTodoCategoryClass(){
@@ -56,18 +61,23 @@ public class ToxicTodo_UnitTest {
 	public void testRemoveTodoCategory(){
 		MainToxicTodo main = createTestEnviornment();
 		main.removeCategory("Programming stuff");
-	}
-	
-	@Test
-	public void testListCommand(){
-		MainToxicTodo main = createTestEnviornment();
-		String[] args = {"list","test"};
-		main.main(args);
+		
+		assertEquals(2, main.categorySize());
 	}
 	
 	@Test
 	public void testAddElementToCategory(){
 		MainToxicTodo main = createTestEnviornment();
 		main.addElementToCategory("school", "Complete exercise 1 for vssprog");
+		assertEquals(6, main.todoSize());
+	}
+	
+	@Test
+	public void testAddElementViaMain(){
+		MainToxicTodo main = createTestEnviornment();
+		String[] args = {"add","school", "InfSi1:", "Watch", "security","videos","on","YouTube"};
+		main.main(args);
+		assertEquals(6, main.todoSize());
+		printListFromMain(main);
 	}
 }

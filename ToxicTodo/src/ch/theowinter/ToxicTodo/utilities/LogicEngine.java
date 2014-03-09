@@ -4,7 +4,7 @@ public class LogicEngine {
 
     /**
      * Concatenates an array from startPosition to the end of the array.
-     * Originally built for my minecraft plugin "BloodAST"
+     * Originally built for my minecraft plugin "BloodAST - Advanced Server Tools"
      * @param args
      * @param arrayLength
      * @return concatenatedArray

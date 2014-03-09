@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class TodoCategory {
 	String categoryName;
 	String keyword;
-	ArrayList<String> todoElements = new ArrayList<String>();
+	ArrayList<String> todoTasks = new ArrayList<String>();
 	
 	public TodoCategory(String categoryName, String keyword) {
 		super();
@@ -14,7 +14,7 @@ public class TodoCategory {
 	}
 	
 	public void add(String todo){
-		todoElements.add(todo);
+		todoTasks.add(todo);
 	}
 	
 	public String getName(){
@@ -22,10 +22,14 @@ public class TodoCategory {
 	}
 	
 	public ArrayList<String> getElementsInCategory(){
-		return todoElements;
+		return todoTasks;
 	}
 	
 	public String getKeyword(){
 		return keyword;
+	}
+	
+	public int size(){
+		return todoTasks.size();
 	}
 }
