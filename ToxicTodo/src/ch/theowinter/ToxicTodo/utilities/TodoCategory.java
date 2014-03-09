@@ -18,4 +18,8 @@ public class TodoCategory {
 	public String getName(){
 		return categoryName;
 	}
+	
+	public ArrayList<String> getTodolist(){
+		return todoElements;
+	}
 }
