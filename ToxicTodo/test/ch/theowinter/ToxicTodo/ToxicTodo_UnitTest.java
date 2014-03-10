@@ -1,10 +1,11 @@
 package ch.theowinter.ToxicTodo;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
 import ch.theowinter.ToxicTodo.utilities.TodoCategory;
+import ch.theowinter.ToxicTodo.utilities.TodoList;
 
 public class ToxicTodo_UnitTest {
 	
@@ -13,8 +14,8 @@ public class ToxicTodo_UnitTest {
 	 * 
 	 * @return MainToxicTodo
 	 */
-	public MainToxicTodo createTestEnviornment(){
-		MainToxicTodo main = new MainToxicTodo();
+	public TodoList createTestEnviornment(){
+		TodoList main = new TodoList();
 		
 		//Create categories
 		main.addCategory("School work", "school");
@@ -30,7 +31,7 @@ public class ToxicTodo_UnitTest {
 		return main;
 	}
 	
-	public void printListFromMain(MainToxicTodo main){
+	public void printListFromMain(TodoList main){
 		String[] args = {"list"};
 		main.main(args);
 	}
@@ -50,7 +51,7 @@ public class ToxicTodo_UnitTest {
 	
 	@Test
 	public void testAddTodoCategory(){
-		MainToxicTodo main = createTestEnviornment();
+		TodoList main = createTestEnviornment();
 		main.addCategory("forth cat", "forth");
 		main.addCategory("fifth cat", "fith");
 		
@@ -59,7 +60,7 @@ public class ToxicTodo_UnitTest {
 	
 	@Test
 	public void testRemoveTodoCategory(){
-		MainToxicTodo main = createTestEnviornment();
+		TodoList main = createTestEnviornment();
 		main.removeCategory("Programming stuff");
 		
 		assertEquals(2, main.categorySize());
@@ -67,19 +68,17 @@ public class ToxicTodo_UnitTest {
 	
 	@Test
 	public void testAddElementToCategory(){
-		MainToxicTodo main = createTestEnviornment();
+		TodoList main = createTestEnviornment();
 		main.addTaskToCategory("school", "Complete exercise 1 for vssprog");
 		assertEquals(6, main.todoSize());
 	}
 	
 	@Test
 	public void testAddElementViaMain(){
-		MainToxicTodo main = createTestEnviornment();
+		TodoList main = createTestEnviornment();
 		String[] args = {"add","school", "InfSi1:", "Watch", "security","videos","on","YouTube"};
 		main.main(args);
 		assertEquals(6, main.todoSize());
-		while(true){
 			printListFromMain(main);
-		}
 	}
 }
