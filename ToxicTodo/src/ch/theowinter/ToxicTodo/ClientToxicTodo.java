@@ -8,11 +8,15 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import ch.theowinter.ToxicTodo.utilities.TodoCategory;
-import ch.theowinter.ToxicTodo.utilities.TodoList;
-import ch.theowinter.ToxicTodo.utilities.ToxicDatagram;
+import ch.theowinter.ToxicTodo.utilities.TodoManager;
+import ch.theowinter.ToxicTodo.utilities.primitives.TodoCategory;
+import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
 
 public class ClientToxicTodo {
+	//Local storage
+	//TodoList 
+	
+	//Settings
 	private final static String HOST = "localhost";
 	private final static int PORT = 5222;
 	public static boolean debug = true;
@@ -21,6 +25,7 @@ public class ClientToxicTodo {
 		
 		//GET todo-LIST from server
 		ArrayList<TodoCategory> todoList = pollServerForTodoList();
+		
 		
 		//Run manipulations (add/remove/etc.)
 		//todo.run(args);

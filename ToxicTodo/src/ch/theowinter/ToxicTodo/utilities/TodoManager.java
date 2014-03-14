@@ -3,7 +3,9 @@ package ch.theowinter.ToxicTodo.utilities;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class TodoList implements Serializable{
+import ch.theowinter.ToxicTodo.utilities.primitives.TodoCategory;
+
+public class TodoManager implements Serializable{
 	private static final long serialVersionUID = -6873793820120779717L;
 	//Storage
 	ArrayList<TodoCategory> totalTodoList = new ArrayList<TodoCategory>();

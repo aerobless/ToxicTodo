@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import ch.theowinter.ToxicTodo.utilities.TodoCategory;
-import ch.theowinter.ToxicTodo.utilities.TodoList;
+import ch.theowinter.ToxicTodo.utilities.TodoManager;
+import ch.theowinter.ToxicTodo.utilities.primitives.TodoCategory;
 
 public class ToxicTodo_UnitTest {
 	
@@ -14,8 +14,8 @@ public class ToxicTodo_UnitTest {
 	 * 
 	 * @return MainToxicTodo
 	 */
-	public TodoList createTestEnviornment(){
-		TodoList main = new TodoList();
+	public TodoManager createTestEnviornment(){
+		TodoManager main = new TodoManager();
 		
 		//Create categories
 		main.addCategory("School work", "school");
@@ -31,7 +31,7 @@ public class ToxicTodo_UnitTest {
 		return main;
 	}
 	
-	public void printListFromMain(TodoList main){
+	public void printListFromMain(TodoManager main){
 		String[] args = {"list"};
 		main.run(args);
 	}
@@ -51,7 +51,7 @@ public class ToxicTodo_UnitTest {
 	
 	@Test
 	public void testAddTodoCategory(){
-		TodoList main = createTestEnviornment();
+		TodoManager main = createTestEnviornment();
 		main.addCategory("forth cat", "forth");
 		main.addCategory("fifth cat", "fith");
 		
@@ -60,7 +60,7 @@ public class ToxicTodo_UnitTest {
 	
 	@Test
 	public void testRemoveTodoCategory(){
-		TodoList main = createTestEnviornment();
+		TodoManager main = createTestEnviornment();
 		main.removeCategory("Programming stuff");
 		
 		assertEquals(2, main.categorySize());
@@ -68,14 +68,14 @@ public class ToxicTodo_UnitTest {
 	
 	@Test
 	public void testAddElementToCategory(){
-		TodoList main = createTestEnviornment();
+		TodoManager main = createTestEnviornment();
 		main.addTaskToCategory("school", "Complete exercise 1 for vssprog");
 		assertEquals(6, main.todoSize());
 	}
 	
 	@Test
 	public void testAddElementViaMain(){
-		TodoList main = createTestEnviornment();
+		TodoManager main = createTestEnviornment();
 		String[] args = {"add","school", "InfSi1:", "Watch", "security","videos","on","YouTube"};
 		main.run(args);
 		assertEquals(6, main.todoSize());

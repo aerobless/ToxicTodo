@@ -1,4 +1,4 @@
-package ch.theowinter.ToxicTodo.utilities;
+package ch.theowinter.ToxicTodo.utilities.primitives;
 
 import java.io.Serializable;
 import java.util.ArrayList;

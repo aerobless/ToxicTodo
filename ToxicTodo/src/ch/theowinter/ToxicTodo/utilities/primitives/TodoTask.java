@@ -1,4 +1,4 @@
-package ch.theowinter.ToxicTodo.utilities;
+package ch.theowinter.ToxicTodo.utilities.primitives;
 
 import java.util.Date;
 
