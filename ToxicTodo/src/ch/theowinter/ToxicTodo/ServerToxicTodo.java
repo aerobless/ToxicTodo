@@ -8,8 +8,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import ch.theowinter.ToxicTodo.utilities.TodoList;
+import ch.theowinter.ToxicTodo.utilities.ToxicDatagram;
 
 public class ServerToxicTodo {
+	//Server data:
+	private static TodoList serverTodo = new TodoList();
+	
+	//Connection info:
 	public static final int PORT = 5222;
 
 	//fix throws exception to correctly handled try-catches
@@ -21,18 +26,23 @@ public class ServerToxicTodo {
 	        	Socket s = ss.accept();  
 	        	InputStream is = s.getInputStream();  
 	        	ObjectInputStream ois = new ObjectInputStream(is);
-	        	TodoList todoList = (TodoList)ois.readObject();
-	        	/*
-	        	Ex02_5_FraktalHelper fractalHelp = (Ex02_5_FraktalHelper)ois.readObject();
 	        	
-	        	Ex02_5_FraktalGenerator generator = new Ex02_5_FraktalGenerator();
-	        	 */
-	        	System.out.println("Sending response");
+	        	serverPrint("got a message from a client");
+	        	ToxicDatagram dataFromClient = (ToxicDatagram)ois.readObject();  	
+	        	ToxicDatagram dataToClient ;
+	        	//temporary handling code
+	        	if(dataFromClient.getServerControlMessage().equals("getList")){
+	        		dataToClient = new ToxicDatagram(serverTodo, "success", "");
+	        	}
+	        	else{
+	        		dataToClient = new ToxicDatagram(null, "failure - bad request", "");	
+	        		serverPrint("bad request by client");
+	        	}
 	        	
 		    	OutputStream os = s.getOutputStream();  
 		    	ObjectOutputStream oos = new ObjectOutputStream(os);  
 		    	
-		    	oos.writeObject("ddd");
+		    	oos.writeObject(dataToClient);
 		    	oos.close();  
 		    	os.close();  
 	
