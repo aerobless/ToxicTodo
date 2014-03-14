@@ -19,6 +19,20 @@ public class ServerToxicTodo {
 
 	//fix throws exception to correctly handled try-catches
 	public static void main(String[] args) throws Exception {
+		
+		//SAMPLE DATA:
+		TodoList sampleData = new TodoList();
+		sampleData.addCategory("School work", "school");
+		sampleData.addCategory("Programming stuff", "programming");
+		sampleData.addCategory("To buy", "buy");
+		sampleData.addTaskToCategory("school", "Complete exercise 1 for vssprog");
+		sampleData.addTaskToCategory("school", "Complete exercise 1 for parprog");
+		sampleData.addTaskToCategory("programming", "Build better todolist");
+		sampleData.addTaskToCategory("programming", "fix all the bugs");
+		sampleData.addTaskToCategory("buy", "new pens");	
+		serverTodo = sampleData;
+		
+		
 		//TODO: add contion instead of true
 		while(true){
 	        try (ServerSocket ss = new ServerSocket(PORT)) {

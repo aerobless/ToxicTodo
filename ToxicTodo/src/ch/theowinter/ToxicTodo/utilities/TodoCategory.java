@@ -1,8 +1,10 @@
 package ch.theowinter.ToxicTodo.utilities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class TodoCategory {
+public class TodoCategory implements Serializable {
+	private static final long serialVersionUID = 2851662981886514578L;
 	String categoryName;
 	String keyword;
 	ArrayList<String> todoTasks = new ArrayList<String>();

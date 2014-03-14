@@ -1,9 +1,10 @@
 package ch.theowinter.ToxicTodo.utilities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class TodoList{
-	
+public class TodoList implements Serializable{
+	private static final long serialVersionUID = -6873793820120779717L;
 	//Storage
 	ArrayList<TodoCategory> totalTodoList = new ArrayList<TodoCategory>();
 	LogicEngine logic = new LogicEngine();
