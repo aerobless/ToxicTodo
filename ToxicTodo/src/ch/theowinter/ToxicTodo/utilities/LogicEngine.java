@@ -33,5 +33,4 @@ public class LogicEngine {
     	}
 		return concatenatedArray;
     }
-	
 }

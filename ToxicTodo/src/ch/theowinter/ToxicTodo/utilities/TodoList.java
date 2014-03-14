@@ -2,7 +2,8 @@ package ch.theowinter.ToxicTodo.utilities;
 
 import java.util.ArrayList;
 
-public class TodoList {
+public class TodoList{
+	
 	//Storage
 	ArrayList<TodoCategory> totalTodoList = new ArrayList<TodoCategory>();
 	LogicEngine logic = new LogicEngine();

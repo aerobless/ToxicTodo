@@ -7,6 +7,8 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import ch.theowinter.ToxicTodo.utilities.TodoList;
+
 public class ServerToxicTodo {
 	public static final int PORT = 5222;
 
@@ -15,10 +17,11 @@ public class ServerToxicTodo {
 		//TODO: add contion instead of true
 		while(true){
 	        try (ServerSocket ss = new ServerSocket(PORT)) {
-	        	System.out.println("waiting on client...");
+	        	serverPrint("Toxic Todo Server - Ready for clients to connect.");
 	        	Socket s = ss.accept();  
 	        	InputStream is = s.getInputStream();  
 	        	ObjectInputStream ois = new ObjectInputStream(is);
+	        	TodoList todoList = (TodoList)ois.readObject();
 	        	/*
 	        	Ex02_5_FraktalHelper fractalHelp = (Ex02_5_FraktalHelper)ois.readObject();
 	        	
@@ -40,5 +43,9 @@ public class ServerToxicTodo {
         }
 
 	}
-
+	
+	public static void serverPrint(String input){
+		//TODO: add better logging and logging to file
+		System.out.println(input);
+	}
 }
