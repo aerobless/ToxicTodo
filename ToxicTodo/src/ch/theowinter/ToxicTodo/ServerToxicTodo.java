@@ -23,14 +23,17 @@ import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
 public class ServerToxicTodo {
 	//Server data:
 	private static ArrayList<TodoCategory> serverTodo = new ArrayList<TodoCategory>();
-	private static Semaphore serverRunning = new Semaphore(1);
 	private static final String todoData = "ToxicTodo.xml";
+	
+	//Locks
+	private static Semaphore serverRunning = new Semaphore(1);
+	private static Semaphore writeLock = new Semaphore(1);
 	
 	//Connection info:
 	public static final int PORT = 5222;
 
 	@SuppressWarnings("unchecked") //It's fine to suppress that warning because we can't possibly know what's in the file we're loading.
-	public static void main(String[] args) { //TODO: fix throws exception to correctly handled try-catches	
+	public static void main(String[] args) { 
 		
 		serverTodo = (ArrayList<TodoCategory>)loadXMLFile(todoData);
 		
@@ -95,7 +98,7 @@ public class ServerToxicTodo {
 		File xmlFile = new File(filename);
 		XStream loadXStream = new XStream(new StaxDriver());
 		loadXStream.alias("category", TodoCategory.class);
-		Object loadedObject = (Object)loadXStream.fromXML(xmlFile);
+		Object loadedObject = loadXStream.fromXML(xmlFile);
 		return loadedObject;
 	}
 	
@@ -151,17 +154,14 @@ public class ServerToxicTodo {
 			        	
 			        	serverPrint("got a message from a client");
 			        	ToxicDatagram dataFromClient = (ToxicDatagram)ois.readObject();  	
-			        	ToxicDatagram dataToClient;
+			        	ToxicDatagram dataToClient = new ToxicDatagram(null, "Server Error 400", "");
 			        	
-			        	//temporary handling code
-			        	if(dataFromClient.getServerControlMessage().equals("getList")){
-			        		dataToClient = new ToxicDatagram(serverTodo, "success", "");
-			        	}
-			        	else{
-			        		dataToClient = new ToxicDatagram(null, "failure - bad request", "");	
-			        		serverPrint("bad request by client");
-			        	}
-			        	
+			        	try {
+							dataToClient = runServerAction(dataFromClient.getServerControlMessage(), dataFromClient.getTodoList());
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 				    	OutputStream os = inputSocket.getOutputStream();  
 				    	ObjectOutputStream oos = new ObjectOutputStream(os);  
 				    	
@@ -180,6 +180,25 @@ public class ServerToxicTodo {
 		        	//Always save possible changes
 		        	saveToXMLFile(serverTodo, todoData);
 				}
+		
+		public synchronized ToxicDatagram runServerAction(String serverMessage, ArrayList<TodoCategory> todoList) throws InterruptedException{
+			ToxicDatagram dataToClient = new ToxicDatagram(null, "Bad request 500", "");
+			if(serverMessage.equals("read")){
+				//We wait until noone's writing anymore 
+				while(writeLock.availablePermits()==0){
+					wait();
+				}
+				dataToClient = new ToxicDatagram(serverTodo, "successfulREAD", "");
 			}
+			else if(serverMessage.equals("write")){
+				writeLock.acquire();
+				serverTodo = todoList;
+				writeLock.release();
+				dataToClient = new ToxicDatagram(null, "successfulWRITE", "");
+				notifyAll();
+			}
+			return dataToClient;
+		}
 	}
+}
 

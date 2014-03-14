@@ -40,7 +40,7 @@ public class ClientToxicTodo {
 	    	OutputStream os = s.getOutputStream();  
 	    	ObjectOutputStream oos = new ObjectOutputStream(os);  
 	    	
-	    	ToxicDatagram dataToServer = new ToxicDatagram(null, "getList", "not implemented yet - insecure");   	
+	    	ToxicDatagram dataToServer = new ToxicDatagram(null, "read", "not implemented yet - insecure");   	
 			oos.writeObject(dataToServer);
 			
 			print("Request sent - awaiting server response", debug);
@@ -72,7 +72,7 @@ public class ClientToxicTodo {
 	    	OutputStream os = s.getOutputStream();  
 	    	ObjectOutputStream oos = new ObjectOutputStream(os);  
 	    	
-	    	ToxicDatagram dataToServer = new ToxicDatagram(todoList, "sendList", "not implemented yet - insecure");   	
+	    	ToxicDatagram dataToServer = new ToxicDatagram(todoList, "write", "not implemented yet - insecure");   	
 			oos.writeObject(dataToServer);
 			
 			print("Request sent - awaiting server response", debug);
