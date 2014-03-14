@@ -1,6 +1,7 @@
 package ch.theowinter.ToxicTodo;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,18 +29,11 @@ public class ServerToxicTodo {
 	//Connection info:
 	public static final int PORT = 5222;
 
+	@SuppressWarnings("unchecked") //It's fine to suppress that warning because we can't possibly know what's in the file we're loading.
 	public static void main(String[] args) { //TODO: fix throws exception to correctly handled try-catches	
-		//SAMPLE DATA:
-		serverTodo.add(new TodoCategory("School work", "school"));
-		serverTodo.add(new TodoCategory("Programming stuff", "programming"));
-		serverTodo.add(new TodoCategory("To buy", "buy"));		
-		serverTodo.get(0).add("Complete exercise 1 for vssprog");
-		serverTodo.get(0).add("Complete exercise 1 for parprog");
-		serverTodo.get(1).add("Build better todolist");
-		serverTodo.get(1).add("fix all the bugs");
-		serverTodo.get(2).add("new pens");
 		
-    	saveToXMLFile(serverTodo, todoData);
+		serverTodo = (ArrayList<TodoCategory>)loadXMLFile(todoData);
+    	//saveToXMLFile(serverTodo, todoData);
 		
 		//Open up a connection:
 		Thread serverConnection = new Thread(new ServerConnection());
@@ -76,7 +70,6 @@ public class ServerToxicTodo {
 		FileOutputStream fos = null;
 		try {
 		    fos = new FileOutputStream(filename);
-		    fos.write("<?xml version=\"1.0\"?>".getBytes("UTF-8"));
 		    byte[] bytes = serializeToXML(inputObject).getBytes("UTF-8");
 		    fos.write(bytes);
 
@@ -97,6 +90,14 @@ public class ServerToxicTodo {
 		XStream saveXStream = new XStream(new StaxDriver());
 		saveXStream.alias("category", TodoCategory.class);
 		return saveXStream.toXML(input);
+	}
+	
+	private static Object loadXMLFile(String filename){
+		File xmlFile = new File(filename);
+		XStream loadXStream = new XStream(new StaxDriver());
+		loadXStream.alias("category", TodoCategory.class);
+		Object loadedObject = (Object)loadXStream.fromXML(xmlFile);
+		return loadedObject;
 	}
 	
 	public static void serverPrint(String input){
