@@ -107,37 +107,37 @@ public class ServerToxicTodo {
 	static class ConnectionBuilderThread implements Runnable{
 		@Override
 		public void run() {
+			try {
 			while(serverRunning.availablePermits()>0){
+				@SuppressWarnings("resource") //socket gets closed in the OpenConnectionThread
+				Socket client = new Socket();
+				client.setSoTimeout(100);
 				ServerSocket server;
-				try {
-					server = new ServerSocket(PORT);
-					serverPrint("server> Waiting for client...");
-
-					Socket client = new Socket(); //TODO: maybe finde a way to close it
-					client.setSoTimeout(100);
-					client = server.accept();
-	
-					//Open up a connection:
-					Thread serverConnection = new Thread(new ServerConnection(client));
-					serverConnection.setDaemon(true);
-					serverConnection.start();
+				server = new ServerSocket(PORT);
+				serverPrint("server> Waiting for client...");
 				
+				client = server.accept();
+				
+				//Open up a connection:
+				Thread serverConnection = new Thread(new OpenConnectionThread(client));
+				serverConnection.setDaemon(true);
+				serverConnection.start();
 
-					//Report active Threads
-					serverPrint("Active Threads: "+Thread.activeCount());
+				//Report active Threads
+				serverPrint("Active Threads: "+Thread.activeCount());
 
-					server.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				server.close();
 				}
+				} catch (IOException e) {
+					e.printStackTrace();
+			}
 		}
 	}
 	
-	static class ServerConnection implements Runnable {
+	static class OpenConnectionThread implements Runnable {
 			Socket inputSocket;
 		
-		public ServerConnection(Socket client) {
+		public OpenConnectionThread(Socket client) {
 			super();
 			inputSocket = client;
 		}
@@ -151,7 +151,8 @@ public class ServerToxicTodo {
 			        	
 			        	serverPrint("got a message from a client");
 			        	ToxicDatagram dataFromClient = (ToxicDatagram)ois.readObject();  	
-			        	ToxicDatagram dataToClient ;
+			        	ToxicDatagram dataToClient;
+			        	
 			        	//temporary handling code
 			        	if(dataFromClient.getServerControlMessage().equals("getList")){
 			        		dataToClient = new ToxicDatagram(serverTodo, "success", "");
@@ -172,10 +173,8 @@ public class ServerToxicTodo {
 			        	
 			        	inputSocket.close();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}  
 		        	//Always save possible changes
@@ -183,4 +182,4 @@ public class ServerToxicTodo {
 				}
 			}
 	}
-}
+
