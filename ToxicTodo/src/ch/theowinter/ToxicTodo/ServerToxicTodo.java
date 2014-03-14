@@ -1,6 +1,7 @@
 package ch.theowinter.ToxicTodo;
 
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -12,6 +13,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.StaxDriver;
+
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoCategory;
 import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
 
@@ -19,11 +23,12 @@ public class ServerToxicTodo {
 	//Server data:
 	private static ArrayList<TodoCategory> serverTodo = new ArrayList<TodoCategory>();
 	private static Semaphore serverRunning = new Semaphore(1);
+	private static final String todoData = "ToxicTodo.xml";
 	
 	//Connection info:
 	public static final int PORT = 5222;
 
-	public static void main(String[] args) {		//TODO: fix throws exception to correctly handled try-catches	
+	public static void main(String[] args) { //TODO: fix throws exception to correctly handled try-catches	
 		//SAMPLE DATA:
 		serverTodo.add(new TodoCategory("School work", "school"));
 		serverTodo.add(new TodoCategory("Programming stuff", "programming"));
@@ -33,6 +38,8 @@ public class ServerToxicTodo {
 		serverTodo.get(1).add("Build better todolist");
 		serverTodo.get(1).add("fix all the bugs");
 		serverTodo.get(2).add("new pens");
+		
+    	saveToXMLFile(serverTodo, todoData);
 		
 		//Open up a connection:
 		Thread serverConnection = new Thread(new ServerConnection());
@@ -50,6 +57,11 @@ public class ServerToxicTodo {
 			try {
 				String input = buffer.readLine();
 				if(input.equals("stop") || input.equals("exit") || input.equals("q")){
+					
+					//Save before shutting the server down
+		        	saveToXMLFile(serverTodo, todoData);
+		        	
+		        	//After this the main method is finished and the daemon threads get killed
 					serverRunning.acquire();
 				}
 			} catch (IOException e) {
@@ -58,6 +70,33 @@ public class ServerToxicTodo {
 				System.err.println("InterruptedException");
 			}
 		}
+	}
+	
+	private static void saveToXMLFile(Object inputObject, String filename){
+		FileOutputStream fos = null;
+		try {
+		    fos = new FileOutputStream(filename);
+		    fos.write("<?xml version=\"1.0\"?>".getBytes("UTF-8"));
+		    byte[] bytes = serializeToXML(inputObject).getBytes("UTF-8");
+		    fos.write(bytes);
+
+		} catch(Exception e) {
+			System.err.println("Error: Can't save the file.");
+		} finally {
+		    if(fos!=null) {
+		        try{ 
+		            fos.close();
+		        } catch (IOException e) {
+		        	System.err.println("Error: Can't close File Output Stream");
+		        }
+		    }
+		}
+	}
+	
+	private static String serializeToXML(Object input){
+		XStream saveXStream = new XStream(new StaxDriver());
+		saveXStream.alias("category", TodoCategory.class);
+		return saveXStream.toXML(input);
 	}
 	
 	public static void serverPrint(String input){
@@ -97,6 +136,10 @@ public class ServerToxicTodo {
 		        	is.close();  
 		        	s.close();  
 		        	ss.close();
+		        	
+		        	//Always save possible changes
+		        	saveToXMLFile(serverTodo, todoData);
+		        	
 		        } catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
