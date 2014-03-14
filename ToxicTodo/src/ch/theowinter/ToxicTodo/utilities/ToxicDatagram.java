@@ -15,4 +15,19 @@ public class ToxicDatagram implements Serializable{
 		serverControlMessage = aServerControlMessage;
 		cypher = aCypher;
 	}
+
+	/**
+	 * @return the todoList
+	 */
+	public TodoList getTodoList() {
+		return todoList;
+	}
+
+	/**
+	 * @return the serverControlMessage
+	 */
+	public String getServerControlMessage() {
+		return serverControlMessage;
+	}
+	
 }
