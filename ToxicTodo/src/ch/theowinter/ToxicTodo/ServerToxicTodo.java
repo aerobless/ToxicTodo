@@ -8,7 +8,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import ch.theowinter.ToxicTodo.utilities.TodoManager;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoCategory;
 import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
 
@@ -64,7 +63,6 @@ public class ServerToxicTodo {
 	        	ss.close();
 	        }
         }
-
 	}
 	
 	public static void serverPrint(String input){

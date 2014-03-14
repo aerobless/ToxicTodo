@@ -14,7 +14,7 @@ import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
 
 public class ClientToxicTodo {
 	//Local storage
-	//TodoList 
+	private static TodoManager todoManger;
 	
 	//Settings
 	private final static String HOST = "localhost";
@@ -24,18 +24,17 @@ public class ClientToxicTodo {
 	public static void main(String[] args) {
 		
 		//GET todo-LIST from server
-		ArrayList<TodoCategory> todoList = pollServerForTodoList();
-		
+		todoManger = new TodoManager(pullTodoListFromServer(), debug);
 		
 		//Run manipulations (add/remove/etc.)
-		//todo.run(args);
+		todoManger.run(new String[]{"list"}); //TODO: fix, normally "args", overwritten for testings
 		
 		//return new todo-LIST to server
-		updateServerTodoList(todoList);
+		pushTodoListToServer(todoManger.getTotalTodoList());
 		print("all done");
 	}
 	
-	private static ArrayList<TodoCategory> pollServerForTodoList(){
+	private static ArrayList<TodoCategory> pullTodoListFromServer(){
 		ArrayList<TodoCategory> todo = null;
 		try {
 	    	Socket s = new Socket(HOST, PORT);  
@@ -66,7 +65,7 @@ public class ClientToxicTodo {
 		return todo;
 	}
 	
-	private static boolean updateServerTodoList(ArrayList<TodoCategory> todoList){
+	private static boolean pushTodoListToServer(ArrayList<TodoCategory> todoList){
 		boolean success = false;
 		
 		try {
@@ -96,9 +95,7 @@ public class ClientToxicTodo {
 			anEx.printStackTrace();
 		} catch (ClassNotFoundException anEx) {
 			anEx.printStackTrace();
-		} 
-		
-		
+		} 	
 		return success;	
 	}
 	

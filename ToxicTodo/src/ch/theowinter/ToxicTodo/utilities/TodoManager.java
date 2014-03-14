@@ -1,18 +1,42 @@
 package ch.theowinter.ToxicTodo.utilities;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoCategory;
 
-public class TodoManager implements Serializable{
-	private static final long serialVersionUID = -6873793820120779717L;
+public class TodoManager{
 	//Storage
 	ArrayList<TodoCategory> totalTodoList = new ArrayList<TodoCategory>();
 	LogicEngine logic = new LogicEngine();
 	
 	//Switches
 	boolean debug = true;
+
+	/**
+	 * Empty constructor
+	 */
+	public TodoManager() {
+	}
+	
+	/**
+	 * Full constructor
+	 * 
+	 * @param totalTodoList
+	 * @param debug
+	 */
+	public TodoManager(ArrayList<TodoCategory> totalTodoList, boolean debug) {
+		super();
+		this.totalTodoList = totalTodoList;
+		this.debug = debug;
+	}
+
+	public ArrayList<TodoCategory> getTotalTodoList() {
+		return totalTodoList;
+	}
+
+	public void setTotalTodoList(ArrayList<TodoCategory> totalTodoList) {
+		this.totalTodoList = totalTodoList;
+	}
 
 	public void run(String[] args) {
 		print("app started", debug);
