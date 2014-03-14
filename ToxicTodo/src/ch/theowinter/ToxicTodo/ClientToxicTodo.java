@@ -22,7 +22,6 @@ public class ClientToxicTodo {
 	public static boolean debug = true;
 
 	public static void main(String[] args) {
-		
 		//GET todo-LIST from server
 		todoManger = new TodoManager(pullTodoListFromServer(), debug);
 		

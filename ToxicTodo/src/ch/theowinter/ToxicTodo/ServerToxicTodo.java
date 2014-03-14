@@ -23,7 +23,6 @@ public class ServerToxicTodo {
 	//Connection info:
 	public static final int PORT = 5222;
 
-
 	public static void main(String[] args) {		//TODO: fix throws exception to correctly handled try-catches	
 		//SAMPLE DATA:
 		serverTodo.add(new TodoCategory("School work", "school"));
