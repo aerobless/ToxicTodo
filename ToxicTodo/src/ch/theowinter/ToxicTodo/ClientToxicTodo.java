@@ -6,7 +6,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
+import ch.theowinter.ToxicTodo.utilities.TodoCategory;
 import ch.theowinter.ToxicTodo.utilities.TodoList;
 import ch.theowinter.ToxicTodo.utilities.ToxicDatagram;
 
@@ -18,18 +20,18 @@ public class ClientToxicTodo {
 	public static void main(String[] args) {
 		
 		//GET todo-LIST from server
-		TodoList todo = pollServerForTodoList();
+		ArrayList<TodoCategory> todoList = pollServerForTodoList();
 		
 		//Run manipulations (add/remove/etc.)
-		todo.run(args);
+		//todo.run(args);
 		
 		//return new todo-LIST to server
-		updateServerTodoList(todo);
+		updateServerTodoList(todoList);
 		print("all done");
 	}
 	
-	private static TodoList pollServerForTodoList(){
-		TodoList todo = new TodoList();
+	private static ArrayList<TodoCategory> pollServerForTodoList(){
+		ArrayList<TodoCategory> todo = null;
 		try {
 	    	Socket s = new Socket(HOST, PORT);  
 	    	OutputStream os = s.getOutputStream();  
@@ -59,7 +61,7 @@ public class ClientToxicTodo {
 		return todo;
 	}
 	
-	private static boolean updateServerTodoList(TodoList todo){
+	private static boolean updateServerTodoList(ArrayList<TodoCategory> todoList){
 		boolean success = false;
 		
 		try {
@@ -67,7 +69,7 @@ public class ClientToxicTodo {
 	    	OutputStream os = s.getOutputStream();  
 	    	ObjectOutputStream oos = new ObjectOutputStream(os);  
 	    	
-	    	ToxicDatagram dataToServer = new ToxicDatagram(todo, "sendList", "not implemented yet - insecure");   	
+	    	ToxicDatagram dataToServer = new ToxicDatagram(todoList, "sendList", "not implemented yet - insecure");   	
 			oos.writeObject(dataToServer);
 			
 			print("Request sent - awaiting server response", debug);

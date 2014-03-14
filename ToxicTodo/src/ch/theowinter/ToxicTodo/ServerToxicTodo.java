@@ -6,13 +6,15 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
+import ch.theowinter.ToxicTodo.utilities.TodoCategory;
 import ch.theowinter.ToxicTodo.utilities.TodoList;
 import ch.theowinter.ToxicTodo.utilities.ToxicDatagram;
 
 public class ServerToxicTodo {
 	//Server data:
-	private static TodoList serverTodo = new TodoList();
+	private static ArrayList<TodoCategory> serverTodo = new ArrayList<TodoCategory>();
 	
 	//Connection info:
 	public static final int PORT = 5222;
@@ -21,17 +23,14 @@ public class ServerToxicTodo {
 	public static void main(String[] args) throws Exception {
 		
 		//SAMPLE DATA:
-		TodoList sampleData = new TodoList();
-		sampleData.addCategory("School work", "school");
-		sampleData.addCategory("Programming stuff", "programming");
-		sampleData.addCategory("To buy", "buy");
-		sampleData.addTaskToCategory("school", "Complete exercise 1 for vssprog");
-		sampleData.addTaskToCategory("school", "Complete exercise 1 for parprog");
-		sampleData.addTaskToCategory("programming", "Build better todolist");
-		sampleData.addTaskToCategory("programming", "fix all the bugs");
-		sampleData.addTaskToCategory("buy", "new pens");	
-		serverTodo = sampleData;
-		
+		serverTodo.add(new TodoCategory("School work", "school"));
+		serverTodo.add(new TodoCategory("Programming stuff", "programming"));
+		serverTodo.add(new TodoCategory("To buy", "buy"));		
+		serverTodo.get(0).add("Complete exercise 1 for vssprog");
+		serverTodo.get(0).add("Complete exercise 1 for parprog");
+		serverTodo.get(1).add("Build better todolist");
+		serverTodo.get(1).add("fix all the bugs");
+		serverTodo.get(2).add("new pens");
 		
 		//TODO: add contion instead of true
 		while(true){

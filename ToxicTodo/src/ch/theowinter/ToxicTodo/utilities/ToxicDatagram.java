@@ -1,17 +1,18 @@
 package ch.theowinter.ToxicTodo.utilities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class ToxicDatagram implements Serializable{
 	private static final long serialVersionUID = -373861488847346784L;
-	TodoList todoList;
+	ArrayList<TodoCategory> todoList;
 	String serverControlMessage;
 	String cypher;
 	
-	public ToxicDatagram(TodoList aTodoList, String aServerControlMessage,
+	public ToxicDatagram(ArrayList<TodoCategory> serverTodo, String aServerControlMessage,
 			String aCypher) {
 		super();
-		todoList = aTodoList;
+		todoList = serverTodo;
 		serverControlMessage = aServerControlMessage;
 		cypher = aCypher;
 	}
@@ -19,7 +20,7 @@ public class ToxicDatagram implements Serializable{
 	/**
 	 * @return the todoList
 	 */
-	public TodoList getTodoList() {
+	public ArrayList<TodoCategory> getTodoList() {
 		return todoList;
 	}
 
