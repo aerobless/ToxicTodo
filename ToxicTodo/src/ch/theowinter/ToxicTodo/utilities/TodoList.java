@@ -1,8 +1,5 @@
 package ch.theowinter.ToxicTodo.utilities;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class TodoList {
@@ -75,35 +72,18 @@ public class TodoList {
 	
 	public void listTodo(){
 		int taskID= 0;
-		ArrayList<String[]> mapTasks = new ArrayList<String[]>();
-		mapTasks.add(new String[]{"first one is empty","because we start at 1"});
 		for(TodoCategory todoCategory : totalTodoList){
 			print("###-"+todoCategory.getName().toUpperCase()+"-###");
 			ArrayList<String> todoElements = todoCategory.getElementsInCategory();
 			for(String todoElement : todoElements){
 				++taskID;
-				mapTasks.add(new String[] {todoElement, todoCategory.getKeyword()});
 				print("    ["+taskID+"] "+todoElement);
 			}
 		}
-		//DELETE PART
-		System.out.println("wanna delete test?");
-		BufferedReader buffer=new BufferedReader(new InputStreamReader(System.in));
-		String line;
-		try {
-			line = buffer.readLine();
-			int n = Integer.parseInt(line);
-			for(TodoCategory todoCategory : totalTodoList){
-				if(todoCategory.getKeyword().equals(mapTasks.get(n)[1])){
-					int insideIndex = todoCategory.getElementsInCategory().indexOf(mapTasks.get(n)[0]);
-					todoCategory.remove(insideIndex);
-					
-				}
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	}
+	
+	public void completeTask(){
+
 	}
 	
 	public int todoSize(){

@@ -81,4 +81,9 @@ public class ToxicTodo_UnitTest {
 		assertEquals(6, main.todoSize());
 			printListFromMain(main);
 	}
+	
+	@Test
+	public void completeTask(){
+		//completeTask();
+	}
 }
