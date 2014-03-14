@@ -13,9 +13,12 @@ public class TodoList {
 	//Switches
 	boolean debug = true;
 
-	public void main(String[] args) {
+	public void run(String[] args) {
 		print("app started", debug);
-		if(args[0].equals("list")){
+		if(args.length == 0){
+			print("Toxic Todo Version 0.1 - Please specify some arguments first.");
+		}
+		else if(args[0].equals("list")){
 			//List all categories and the tasks inside
 			//TODO: perhaps only list categories that have tasks
 			listTodo();

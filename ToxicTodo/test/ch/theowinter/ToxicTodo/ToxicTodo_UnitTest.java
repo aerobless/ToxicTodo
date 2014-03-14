@@ -33,7 +33,7 @@ public class ToxicTodo_UnitTest {
 	
 	public void printListFromMain(TodoList main){
 		String[] args = {"list"};
-		main.main(args);
+		main.run(args);
 	}
 
 	@Test
@@ -77,7 +77,7 @@ public class ToxicTodo_UnitTest {
 	public void testAddElementViaMain(){
 		TodoList main = createTestEnviornment();
 		String[] args = {"add","school", "InfSi1:", "Watch", "security","videos","on","YouTube"};
-		main.main(args);
+		main.run(args);
 		assertEquals(6, main.todoSize());
 			printListFromMain(main);
 	}

@@ -1,10 +1,11 @@
 package ch.theowinter.ToxicTodo;
 
+import ch.theowinter.ToxicTodo.utilities.TodoList;
+
 public class MainToxicTodo {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		TodoList todo = new TodoList();
+		todo.run(args);
 	}
-
 }
