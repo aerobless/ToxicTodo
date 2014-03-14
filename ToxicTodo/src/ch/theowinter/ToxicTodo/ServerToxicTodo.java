@@ -33,12 +33,11 @@ public class ServerToxicTodo {
 	public static void main(String[] args) { //TODO: fix throws exception to correctly handled try-catches	
 		
 		serverTodo = (ArrayList<TodoCategory>)loadXMLFile(todoData);
-    	//saveToXMLFile(serverTodo, todoData);
 		
 		//Open up a connection:
-		Thread serverConnection = new Thread(new ServerConnection());
-		serverConnection.setDaemon(true);
-		serverConnection.start();
+		Thread connectionBuilder = new Thread(new ConnectionBuilderThread());
+		connectionBuilder.setDaemon(true);
+		connectionBuilder.start();
 		
 		//Handle shutdown command and possibly more in the future..
 		serverController();
@@ -105,50 +104,83 @@ public class ServerToxicTodo {
 		System.out.println(input);
 	}
 	
-	static class ServerConnection implements Runnable {
+	static class ConnectionBuilderThread implements Runnable{
 		@Override
 		public void run() {
 			while(serverRunning.availablePermits()>0){
-		        try (ServerSocket ss = new ServerSocket(PORT)) {
-		        	serverPrint("Toxic Todo Server - Ready for clients to connect.");
-		        	Socket s = ss.accept();  
-		        	InputStream is = s.getInputStream();  
-		        	ObjectInputStream ois = new ObjectInputStream(is);
-		        	
-		        	serverPrint("got a message from a client");
-		        	ToxicDatagram dataFromClient = (ToxicDatagram)ois.readObject();  	
-		        	ToxicDatagram dataToClient ;
-		        	//temporary handling code
-		        	if(dataFromClient.getServerControlMessage().equals("getList")){
-		        		dataToClient = new ToxicDatagram(serverTodo, "success", "");
-		        	}
-		        	else{
-		        		dataToClient = new ToxicDatagram(null, "failure - bad request", "");	
-		        		serverPrint("bad request by client");
-		        	}
-		        	
-			    	OutputStream os = s.getOutputStream();  
-			    	ObjectOutputStream oos = new ObjectOutputStream(os);  
-			    	
-			    	oos.writeObject(dataToClient);
-			    	oos.close();  
-			    	os.close();  
-		
-		        	is.close();  
-		        	s.close();  
-		        	ss.close();
-		        	
-		        	//Always save possible changes
-		        	saveToXMLFile(serverTodo, todoData);
-		        	
-		        } catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ClassNotFoundException e) {
+				ServerSocket server;
+				try {
+					server = new ServerSocket(PORT);
+					serverPrint("server> Waiting for client...");
+
+					Socket client = new Socket(); //TODO: maybe finde a way to close it
+					client.setSoTimeout(100);
+					client = server.accept();
+	
+					//Open up a connection:
+					Thread serverConnection = new Thread(new ServerConnection(client));
+					serverConnection.setDaemon(true);
+					serverConnection.start();
+				
+
+					//Report active Threads
+					serverPrint("Active Threads: "+Thread.activeCount());
+
+					server.close();
+				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-	        }
 		}
+	}
+	
+	static class ServerConnection implements Runnable {
+			Socket inputSocket;
+		
+		public ServerConnection(Socket client) {
+			super();
+			inputSocket = client;
+		}
+
+		@Override
+		public void run() {
+		        	InputStream is;
+					try {
+						is = inputSocket.getInputStream();
+						ObjectInputStream ois = new ObjectInputStream(is);
+			        	
+			        	serverPrint("got a message from a client");
+			        	ToxicDatagram dataFromClient = (ToxicDatagram)ois.readObject();  	
+			        	ToxicDatagram dataToClient ;
+			        	//temporary handling code
+			        	if(dataFromClient.getServerControlMessage().equals("getList")){
+			        		dataToClient = new ToxicDatagram(serverTodo, "success", "");
+			        	}
+			        	else{
+			        		dataToClient = new ToxicDatagram(null, "failure - bad request", "");	
+			        		serverPrint("bad request by client");
+			        	}
+			        	
+				    	OutputStream os = inputSocket.getOutputStream();  
+				    	ObjectOutputStream oos = new ObjectOutputStream(os);  
+				    	
+				    	oos.writeObject(dataToClient);
+				    	oos.close();  
+				    	os.close();  
+			
+			        	is.close();  
+			        	
+			        	inputSocket.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}  
+		        	//Always save possible changes
+		        	saveToXMLFile(serverTodo, todoData);
+				}
+			}
 	}
 }
