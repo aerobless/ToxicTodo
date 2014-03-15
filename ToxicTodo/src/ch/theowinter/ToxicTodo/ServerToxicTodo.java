@@ -34,8 +34,11 @@ public class ServerToxicTodo {
 
 	@SuppressWarnings("unchecked") //It's fine to suppress that warning because we can't possibly know what's in the file we're loading.
 	public static void main(String[] args) { 
-		
-		serverTodo = (ArrayList<TodoCategory>)loadXMLFile(todoData);
+
+		//Load sample data or stored data
+		if(!firstTimeRun()){
+			serverTodo = (ArrayList<TodoCategory>)loadXMLFile(todoData);	
+		}
 		
 		//Open up a connection:
 		Thread connectionBuilder = new Thread(new ConnectionBuilderThread());
@@ -99,6 +102,26 @@ public class ServerToxicTodo {
 		loadXStream.alias("category", TodoCategory.class);
 		Object loadedObject = loadXStream.fromXML(xmlFile);
 		return loadedObject;
+	}
+	
+	/**
+	 * Load some sample data, when the server is started for the first time.
+	 */
+	private static boolean firstTimeRun(){
+		boolean firstTime = false;
+		File f = new File(todoData);
+		if(!f.exists()){
+			serverTodo.add(new TodoCategory("School work", "school"));
+			serverTodo.add(new TodoCategory("Programming stuff", "programming"));
+			serverTodo.add(new TodoCategory("To buy", "buy"));		
+			serverTodo.get(0).add("Complete exercise 1 for vssprog");
+			serverTodo.get(0).add("Complete exercise 1 for parprog");
+			serverTodo.get(1).add("Build better todolist");
+			serverTodo.get(1).add("fix all the bugs");
+			serverTodo.get(2).add("new pens");
+			firstTime = true;
+		}
+		return firstTime;
 	}
 	
 	public static void serverPrint(String input){
