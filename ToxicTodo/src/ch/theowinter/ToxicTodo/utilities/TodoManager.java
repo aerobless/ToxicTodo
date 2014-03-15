@@ -1,8 +1,12 @@
 package ch.theowinter.ToxicTodo.utilities;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoCategory;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoTask;
@@ -115,9 +119,23 @@ public class TodoManager{
 		return throwAwayIndex;
 	}
 	
-	public void completeTask(int i){
-		HashMap<Integer, TodoTask> throwAwayIndex = listTodo();
-		TodoTask completeTask = throwAwayIndex.get(i);
+	/**
+	 * Select a task that should marked as completed on the server.
+	 * @return TodoTask or null (when entering bad number or IOException)
+	 */
+	public TodoTask completeTask(){
+		print("Enter the number of the task you want to delete:");
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		TodoTask completeTask = null;
+		try {
+			HashMap<Integer, TodoTask> throwAwayIndex = listTodo();
+			completeTask = throwAwayIndex.get(Integer.parseInt(br.readLine()));
+		} catch (IOException e) {
+			print("IOException");
+		} catch (NumberFormatException e){
+			print("That's not a valid number..");
+		}
+		return completeTask;
 	}
 	
 	public int todoSize(){
