@@ -1,13 +1,13 @@
 package ch.theowinter.ToxicTodo.utilities.primitives;
 
+import java.io.Serializable;
 import java.util.Date;
 
 
-public class TodoTask {
-	
-	//Basic info:
-	double taskID;
+public class TodoTask implements Serializable{
+	private static final long serialVersionUID = 8551171003242753417L;
 
+	//Basic info:
 	String taskText;
 	
 	//Optional data:
@@ -19,9 +19,8 @@ public class TodoTask {
 	//TODO: add possibility for "daily quest" e.g. repeatable task
 	
 
-	public TodoTask(double aTaskID, String aTaskText) {
+	public TodoTask(String aTaskText) {
 		super();
-		taskID = aTaskID;
 		taskText = aTaskText;
 	}
 }

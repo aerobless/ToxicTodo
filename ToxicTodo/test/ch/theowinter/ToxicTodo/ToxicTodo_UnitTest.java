@@ -84,6 +84,8 @@ public class ToxicTodo_UnitTest {
 	
 	@Test
 	public void completeTask(){
+		TodoManager main = createTestEnviornment();
+		
 		//completeTask();
 	}
 }

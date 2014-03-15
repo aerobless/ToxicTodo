@@ -26,7 +26,7 @@ public class ClientToxicTodo {
 		todoManger = new TodoManager(pullTodoListFromServer(), debug);
 		
 		//Run manipulations (add/remove/etc.)
-		todoManger.run(args); //TODO: fix, normally "args", overwritten for testings
+		todoManger.run(new String[]{"list"}); //TODO: fix, normally "args", overwritten for testings
 		
 		//return new todo-LIST to server
 		pushTodoListToServer(todoManger.getTotalTodoList());

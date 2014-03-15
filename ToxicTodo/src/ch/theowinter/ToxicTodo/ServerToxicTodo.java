@@ -185,14 +185,11 @@ public class ServerToxicTodo {
 							e.printStackTrace();
 						}
 				    	OutputStream os = inputSocket.getOutputStream();  
-				    	ObjectOutputStream oos = new ObjectOutputStream(os);  
-				    	
+				    	ObjectOutputStream oos = new ObjectOutputStream(os);     	
 				    	oos.writeObject(dataToClient);
 				    	oos.close();  
-				    	os.close();  
-			
+				    	os.close();  	
 			        	is.close();  
-			        	
 			        	inputSocket.close();
 					} catch (IOException e) {
 						e.printStackTrace();

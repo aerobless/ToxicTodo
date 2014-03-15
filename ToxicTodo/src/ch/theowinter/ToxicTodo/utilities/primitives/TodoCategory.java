@@ -7,7 +7,7 @@ public class TodoCategory implements Serializable {
 	private static final long serialVersionUID = 2851662981886514578L;
 	String categoryName;
 	String keyword;
-	ArrayList<String> todoTasks = new ArrayList<String>();
+	ArrayList<TodoTask> todoTaskList = new ArrayList<TodoTask>();
 	
 	public TodoCategory(String categoryName, String keyword) {
 		super();
@@ -16,15 +16,15 @@ public class TodoCategory implements Serializable {
 	}
 	
 	public void add(String todo){
-		todoTasks.add(todo);
+		todoTaskList.add(new TodoTask(todo));
 	}
 	
 	public String getName(){
 		return categoryName;
 	}
 	
-	public ArrayList<String> getElementsInCategory(){
-		return todoTasks;
+	public ArrayList<TodoTask> getElementsInCategory(){
+		return todoTaskList;
 	}
 	
 	public String getKeyword(){
@@ -32,10 +32,10 @@ public class TodoCategory implements Serializable {
 	}
 	
 	public int size(){
-		return todoTasks.size();
+		return todoTaskList.size();
 	}
 	
-	public String remove(int i){
-		return todoTasks.remove(i);
+	public TodoTask remove(int i){
+		return todoTaskList.remove(i);
 	}
 }

@@ -1,8 +1,10 @@
 package ch.theowinter.ToxicTodo.utilities;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoCategory;
+import ch.theowinter.ToxicTodo.utilities.primitives.TodoTask;
 
 public class TodoManager{
 	//Storage
@@ -100,14 +102,16 @@ public class TodoManager{
 	
 	public void listTodo(){
 		int taskID= 0;
+		//Map<int, double> 
 		for(TodoCategory todoCategory : totalTodoList){
 			print("###-"+todoCategory.getName().toUpperCase()+"-###");
-			ArrayList<String> todoElements = todoCategory.getElementsInCategory();
-			for(String todoElement : todoElements){
+			ArrayList<TodoTask> todoElements = todoCategory.getElementsInCategory();
+			for(TodoTask todoElement : todoElements){
 				++taskID;
 				print("    ["+taskID+"] "+todoElement);
 			}
 		}
+		//return 
 	}
 	
 	public void completeTask(){
@@ -133,6 +137,4 @@ public class TodoManager{
 			System.out.println("DEBUG INFO:"+input);
 		}
 	}
-	
-	
 }
