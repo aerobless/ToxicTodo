@@ -18,6 +18,7 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoCategory;
+import ch.theowinter.ToxicTodo.utilities.primitives.TodoTask;
 import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
 
 public class ServerToxicTodo {
@@ -37,7 +38,7 @@ public class ServerToxicTodo {
 
 		//Load sample data or stored data
 		if(!firstTimeRun()){
-			serverTodo = (ArrayList<TodoCategory>)loadXMLFile(todoData);	
+			serverTodo = (ArrayList<TodoCategory>)loadXMLFile(todoData);
 		}
 		
 		//Open up a connection:
@@ -93,6 +94,7 @@ public class ServerToxicTodo {
 	private static String serializeToXML(Object input){
 		XStream saveXStream = new XStream(new StaxDriver());
 		saveXStream.alias("category", TodoCategory.class);
+		saveXStream.alias("task", TodoTask.class);		
 		return saveXStream.toXML(input);
 	}
 	
@@ -100,6 +102,7 @@ public class ServerToxicTodo {
 		File xmlFile = new File(filename);
 		XStream loadXStream = new XStream(new StaxDriver());
 		loadXStream.alias("category", TodoCategory.class);
+		loadXStream.alias("task", TodoTask.class);	
 		Object loadedObject = loadXStream.fromXML(xmlFile);
 		return loadedObject;
 	}

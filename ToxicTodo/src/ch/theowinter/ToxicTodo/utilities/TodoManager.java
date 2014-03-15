@@ -1,6 +1,7 @@
 package ch.theowinter.ToxicTodo.utilities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoCategory;
@@ -100,22 +101,23 @@ public class TodoManager{
 		}
 	}
 	
-	public void listTodo(){
+	public HashMap<Integer, TodoTask> listTodo(){
 		int taskID= 0;
-		//Map<int, double> 
+		HashMap<Integer, TodoTask> throwAwayIndex = new HashMap<Integer, TodoTask>();
 		for(TodoCategory todoCategory : totalTodoList){
 			print("###-"+todoCategory.getName().toUpperCase()+"-###");
 			ArrayList<TodoTask> todoElements = todoCategory.getElementsInCategory();
 			for(TodoTask todoElement : todoElements){
 				++taskID;
-				print("    ["+taskID+"] "+todoElement);
+				print("    ["+taskID+"] "+todoElement.getTaskText());
 			}
 		}
-		//return 
+		return throwAwayIndex;
 	}
 	
-	public void completeTask(){
-		
+	public void completeTask(int i){
+		HashMap<Integer, TodoTask> throwAwayIndex = listTodo();
+		TodoTask completeTask = throwAwayIndex.get(i);
 	}
 	
 	public int todoSize(){
