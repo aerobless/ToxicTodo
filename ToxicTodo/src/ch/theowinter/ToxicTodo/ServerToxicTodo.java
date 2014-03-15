@@ -53,7 +53,6 @@ public class ServerToxicTodo {
 			try {
 				String input = buffer.readLine();
 				if(input.equals("stop") || input.equals("exit") || input.equals("q")){
-					
 					//Save before shutting the server down
 		        	saveToXMLFile(serverTodo, todoData);
 		        	

@@ -38,6 +38,7 @@
 			<compilerarg value="-Xbootclasspath/p:${toString:classpath}" />
 		</javac>
 		<copy file="licence.txt" tofile="build/licence.txt" />
+		<copy file="lib/xstream-1.4.7.jar" tofile="xstream-1.4.7.jar"/>
 	</target>	
 
 	<!-- jar-client -->
@@ -59,7 +60,7 @@
 		<jar jarfile="dist/ToxicTodoServer.jar" basedir="build">
 			<manifest>
 			    <attribute name="Main-Class" value="${main-class-server}"/>
-				<attribute name="Residence" value="Dev: ${Author}" />
+				<attribute name="ToxicTodo" value="Dev: ${Author}" />
 				<attribute name="Version" value="${Ver}" />
 				<attribute name="Built-By" value="${user.name}" />
 			</manifest>
