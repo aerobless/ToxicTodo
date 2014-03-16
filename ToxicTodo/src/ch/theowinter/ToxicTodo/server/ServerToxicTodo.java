@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
 import com.thoughtworks.xstream.XStream;
@@ -19,7 +18,6 @@ import ch.theowinter.ToxicTodo.utilities.primitives.TodoTask;
 
 public class ServerToxicTodo {
 	//Server data:
-	//public static ArrayList<TodoCategory> serverTodo = new ArrayList<TodoCategory>();
 	static TodoList serverTodoList = new TodoList();
 	public static final String todoData = "ToxicTodo.xml";
 	
@@ -29,7 +27,6 @@ public class ServerToxicTodo {
 	//Connection info:
 	public static final int PORT = 5222;
 
-	@SuppressWarnings("unchecked") //It's fine to suppress that warning because we can't possibly know what's in the file we're loading.
 	public static void main(String[] args) { 
 
 		//Load sample data or stored data
@@ -122,7 +119,6 @@ public class ServerToxicTodo {
 				serverTodoList.addTask("programming", "fix all the bugs");
 				serverTodoList.addTask("buy", "new pens");
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			firstTime = true;

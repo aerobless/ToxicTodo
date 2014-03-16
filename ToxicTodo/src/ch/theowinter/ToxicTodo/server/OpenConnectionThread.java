@@ -33,7 +33,7 @@ public void run() {
 	        	ToxicDatagram dataToClient = new ToxicDatagram(null, "Server Error 400", "");
 	        	
 	        	try {
-					dataToClient = runServerAction(dataFromClient.getServerControlMessage(), dataFromClient.getTodoList());
+					dataToClient = runServerAction(dataFromClient.getServerControlMessage(), dataFromClient.getOldTodoList());
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

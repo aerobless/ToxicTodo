@@ -49,7 +49,7 @@ public class ClientToxicTodo {
         	ObjectInputStream ois = new ObjectInputStream(is);
         	
         	ToxicDatagram dataFromServer = (ToxicDatagram)ois.readObject();
-        	todo = dataFromServer.getTodoList();
+        	todo = dataFromServer.getOldTodoList();
         	
         	print("Received response from server", debug);
 			
