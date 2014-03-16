@@ -46,7 +46,7 @@ public class TodoList {
 		if(categoryMap.get(keyword)!=null){
 			if(categoryMap.get(keyword).containsTasks()){
 				//Exporting orphaned tasks to orphan category before deleting old category.
-				ArrayList<TodoTask> orphanTasks = categoryMap.get(keyword).getElementsInCategory();
+				ArrayList<TodoTask> orphanTasks = categoryMap.get(keyword).getTaskInCategoryAsArrayList();
 				for(TodoTask orphan : orphanTasks){
 					categoryMap.get("orphan").add(orphan);
 				}
@@ -58,8 +58,38 @@ public class TodoList {
 		}
 	}
 	
-	//categories first
-	public void addTask(String taskText){
-		
+	/**
+	 * Add a new task to the category.
+	 * 
+	 * @param categoryKeyword
+	 * @param taskText
+	 * @throws Exception
+	 */
+	public void addTask(String categoryKeyword, String taskText) throws Exception{
+		addTask(categoryKeyword, new TodoTask(taskText));
+	}
+	
+	public void addTask(String categoryKeyword, TodoTask todoTask) throws Exception{
+		if(categoryMap.get(categoryKeyword)!=null){
+			categoryMap.get(categoryKeyword).add(todoTask);
+		}
+		else{
+			throw new Exception("Category doesn't exist.");
+		}
+	}
+	
+	/**
+	 * Remove a task from the category. Throws an error if the task doesn't exist.
+	 * @param todoTask
+	 * @param category
+	 * @throws Exception
+	 */
+	public void removeTask(TodoTask todoTask, String category) throws Exception{
+		if(categoryMap.get(category).get(todoTask.getTaskText())!=null){
+			categoryMap.get(category).removeTask(todoTask.getTaskText());	
+		}
+		else{
+			throw new Exception("Task doesn't exist.");
+		}
 	}
 }

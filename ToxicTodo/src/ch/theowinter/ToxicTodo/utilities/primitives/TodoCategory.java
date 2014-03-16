@@ -2,12 +2,13 @@ package ch.theowinter.ToxicTodo.utilities.primitives;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class TodoCategory implements Serializable {
 	private static final long serialVersionUID = 2851662981886514578L;
 	private String categoryName;
 	private String keyword;
-	private ArrayList<TodoTask> todoTaskList = new ArrayList<TodoTask>();
+	private HashMap<String, TodoTask> todoTaskList = new HashMap<String, TodoTask>();
 	
 	public TodoCategory(String categoryName, String keyword) {
 		super();
@@ -17,20 +18,24 @@ public class TodoCategory implements Serializable {
 	
 	
 	public void add(TodoTask todo){
-		todoTaskList.add(todo);
+		todoTaskList.put(todo.getTaskText(), todo);
 	}
 	
 	@Deprecated
 	public void add(String todo){
-		todoTaskList.add(new TodoTask(todo));
+		todoTaskList.put(todo, new TodoTask(todo));
 	}
 	
 	public String getName(){
 		return categoryName;
 	}
 	
-	public ArrayList<TodoTask> getElementsInCategory(){
+	public HashMap<String, TodoTask> getTasksHashMap(){
 		return todoTaskList;
+	}
+	
+	public ArrayList<TodoTask> getTaskInCategoryAsArrayList(){
+		return new ArrayList<TodoTask>(todoTaskList.values());
 	}
 	
 	public String getKeyword(){
@@ -41,8 +46,12 @@ public class TodoCategory implements Serializable {
 		return todoTaskList.size();
 	}
 	
-	public TodoTask remove(int i){
-		return todoTaskList.remove(i);
+	public TodoTask removeTask(String key){
+		return todoTaskList.remove(key);
+	}
+	
+	public TodoTask get(String key){
+		return todoTaskList.get(key);
 	}
 	
 	/**

@@ -110,7 +110,7 @@ public class TodoManager{
 		HashMap<Integer, TodoTask> throwAwayIndex = new HashMap<Integer, TodoTask>();
 		for(TodoCategory todoCategory : totalTodoList){
 			print("###-"+todoCategory.getName().toUpperCase()+"-###");
-			ArrayList<TodoTask> todoElements = todoCategory.getElementsInCategory();
+			ArrayList<TodoTask> todoElements = todoCategory.getTaskInCategoryAsArrayList();
 			for(TodoTask todoElement : todoElements){
 				++taskID;
 				print("    ["+taskID+"] "+todoElement.getTaskText());

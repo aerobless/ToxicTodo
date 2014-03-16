@@ -7,6 +7,7 @@ import org.junit.Test;
 import ch.theowinter.ToxicTodo.utilities.TodoManager;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoCategory;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
+import ch.theowinter.ToxicTodo.utilities.primitives.TodoTask;
 
 public class ToxicTodo_UnitTest {
 	
@@ -47,7 +48,7 @@ public class ToxicTodo_UnitTest {
 		
 		//Asserts
 		assertEquals(categoryName, test.getName());
-		assertEquals(3, test.getElementsInCategory().size());
+		assertEquals(3, test.getTaskInCategoryAsArrayList().size());
 	}
 	
 	@Test
@@ -66,14 +67,14 @@ public class ToxicTodo_UnitTest {
 		
 		assertEquals(2, main.categorySize());
 	}
-	
+	/*
 	@Test
 	public void testAddElementToCategory(){
 		TodoManager main = createTestEnviornment();
 		main.addTaskToCategory("school", "Complete exercise 1 for vssprog");
 		assertEquals(6, main.todoSize());
 	}
-	
+	*/
 	@Test
 	public void testAddElementViaMain(){
 		TodoManager main = createTestEnviornment();
@@ -122,14 +123,14 @@ public class ToxicTodo_UnitTest {
 		boolean throwsCorrectException = false;
 		TodoList todoList = new TodoList();
 		try {
-			todoList.addCategory("test-category for lulz", "testcat_keyword");
-			todoList.addCategory("test-category for lulz2", "testcat_keyword2");
+			todoList.addCategory("school work", "school");
+			todoList.addCategory("home work", "home");
 		} catch (Exception e) {
 			creationFailure = true;
 		}
 		//Removing category that does exist
 		try {
-			todoList.removeCategory("testcat_keyword");
+			todoList.removeCategory("home");
 		} catch (Exception e) {
 			creationFailure = true;
 		}
@@ -146,7 +147,77 @@ public class ToxicTodo_UnitTest {
 		//Check for success
 		assertFalse(creationFailure);
 		assertTrue(throwsCorrectException);
+
 	}
 	
+	@Test
+	public void addTask(){
+		boolean successfulTest = true;
+		boolean expectedFailure = false;
+
+		//SETUP
+		TodoList todoList = new TodoList();
+		try {
+			todoList.addCategory("school work", "school");
+			todoList.addCategory("home work", "home");
+		} catch (Exception e) {
+			successfulTest = false;
+		}
+		
+		try {
+			todoList.addTask("school", "Do VSS exercises");
+		} catch (Exception e) {
+			successfulTest = false;
+		}
+		
+		try {
+			todoList.addTask("iDontExist", "Clean car");
+		} catch (Exception e) {
+			expectedFailure = true;
+		}
+		assertTrue(expectedFailure);
+		assertTrue(successfulTest);
+	}
 	
+	@Test
+	public void removeTask(){
+		boolean successfulTest = true;
+		boolean expectedFailure = false;
+		boolean expectedFailure2 = false;
+
+		//SETUP
+		TodoList todoList = new TodoList();
+		TodoTask testedTask = new TodoTask("Do homework");
+		try {
+			todoList.addCategory("school work", "school");
+			todoList.addCategory("home work", "home");
+			todoList.addTask("school", "Do VSS exercises");
+			todoList.addTask("school", testedTask);
+		} catch (Exception e) {
+			successfulTest=false;
+		}
+		
+		//Tests
+		try {
+			todoList.removeTask(testedTask, "school");
+		} catch (Exception e) {
+			successfulTest=false;
+		}
+		
+		try {
+			todoList.removeTask(new TodoTask("I don't exist"), "school");
+		} catch (Exception e) {
+			expectedFailure=true;
+		}
+		
+		try {
+			todoList.removeTask(new TodoTask("I don't exist"), "school");
+		} catch (Exception e) {
+			expectedFailure2=true;
+		}
+		
+		assertTrue(successfulTest);
+		assertTrue(expectedFailure);
+		assertTrue(expectedFailure2);
+	}
 }
