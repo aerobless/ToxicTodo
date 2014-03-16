@@ -1,5 +1,6 @@
 package ch.theowinter.ToxicTodo.utilities.primitives;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -7,7 +8,8 @@ import java.util.HashMap;
  * Provides high-level access to todoTasks and todoCategories
  * @author theowinter
  */
-public class TodoList {
+public class TodoList implements Serializable {
+	private static final long serialVersionUID = -5867425003353980895L;
 	HashMap<String, TodoCategory> categoryMap = new HashMap<String, TodoCategory>();
 	
 
@@ -92,4 +94,9 @@ public class TodoList {
 			throw new Exception("Task doesn't exist.");
 		}
 	}
+
+	public HashMap<String, TodoCategory> getCategoryMap() {
+		return categoryMap;
+	}
+	
 }

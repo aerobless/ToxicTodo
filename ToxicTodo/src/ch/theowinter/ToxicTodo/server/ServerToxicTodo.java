@@ -154,7 +154,7 @@ public class ServerToxicTodo {
 				client = server.accept();
 				
 				//Open up a connection:
-				Thread serverConnection = new Thread(new OpenConnectionThread(client));
+				Thread serverConnection = new Thread(new ServerOpenConnectionThread(client));
 				serverConnection.setDaemon(true);
 				serverConnection.start();
 

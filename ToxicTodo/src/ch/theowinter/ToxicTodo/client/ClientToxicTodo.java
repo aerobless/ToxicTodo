@@ -6,16 +6,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
 
-import ch.theowinter.ToxicTodo.utilities.TodoManager;
-import ch.theowinter.ToxicTodo.utilities.primitives.TodoCategory;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
 import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
 
 public class ClientToxicTodo {
 	//Local storage
-	private static TodoManager todoManger;
+	private static ClientTodoManager todoManager;
 	
 	//Settings
 	private final static String HOST = "localhost";
@@ -24,10 +21,10 @@ public class ClientToxicTodo {
 
 	public static void main(String[] args) {
 		//GET todo-LIST from server
-		//todoManger = new TodoManager(pullTodoListFromServer(), debug);
+		todoManager = new ClientTodoManager(pullTodoListFromServer());
 		
 		//Run manipulations (add/remove/etc.)
-		//todoManger.run(new String[]{"list"}); //TODO: fix, normally "args", overwritten for testings
+		todoManager.run(new String[]{"list"});
 		
 		//return new todo-LIST to server
 		print("all done");

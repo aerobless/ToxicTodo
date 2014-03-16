@@ -10,11 +10,11 @@ import java.util.concurrent.Semaphore;
 
 import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
 
-class OpenConnectionThread implements Runnable {
+class ServerOpenConnectionThread implements Runnable {
 	private static Semaphore writeLock = new Semaphore(1);
 	Socket inputSocket;
 
-	public OpenConnectionThread(Socket client) {
+	public ServerOpenConnectionThread(Socket client) {
 		super();
 		inputSocket = client;
 	}
