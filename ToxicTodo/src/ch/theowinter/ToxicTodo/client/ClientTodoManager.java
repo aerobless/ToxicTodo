@@ -30,6 +30,9 @@ public class ClientTodoManager {
 		else if(args[0].equals("add")){
 			datagram = addTask(args);
 		}
+		else{
+			ClientToxicTodo.print("This command: "+args[0]+" does not exist.");
+		}
 		return datagram;
 	}
 	

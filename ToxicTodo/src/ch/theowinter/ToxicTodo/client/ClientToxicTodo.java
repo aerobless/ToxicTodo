@@ -24,12 +24,14 @@ public class ClientToxicTodo {
 		todoManager = new ClientTodoManager(sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "")));
 		
 		//2. Run manipulations (add/remove/etc.)
-		ToxicDatagram datagramForServer = todoManager.run(new String[]{"add school this actually works. nice :)"});
+		ToxicDatagram datagramForServer = todoManager.run(new String[]{"list"});//{"add", "school", "this", "actually", "works.", "nice", ":)"});
 		
 		//3. Return answer to the server unless we're finished
 		if(datagramForServer != null){
 			sendToServer(datagramForServer);	
 		}
+		
+		
 		print("all done");
 	}
 	
@@ -50,7 +52,7 @@ public class ClientToxicTodo {
         	ToxicDatagram dataFromServer = (ToxicDatagram)ois.readObject();
         	todoList = dataFromServer.getTodoList();
         	
-        	print("Received response from server", debug);
+        	print("Received response from server: "+dataFromServer.getServerControlMessage(), debug);
 			
 	    	oos.close();  
 	    	os.close();  
