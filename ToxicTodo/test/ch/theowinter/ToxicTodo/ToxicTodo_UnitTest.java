@@ -116,4 +116,37 @@ public class ToxicTodo_UnitTest {
 		assertTrue(success);
 	}
 	
+	@Test
+	public void removeCategory(){
+		boolean creationFailure = false;
+		boolean throwsCorrectException = false;
+		TodoList todoList = new TodoList();
+		try {
+			todoList.addCategory("test-category for lulz", "testcat_keyword");
+			todoList.addCategory("test-category for lulz2", "testcat_keyword2");
+		} catch (Exception e) {
+			creationFailure = true;
+		}
+		//Removing category that does exist
+		try {
+			todoList.removeCategory("testcat_keyword");
+		} catch (Exception e) {
+			creationFailure = true;
+		}
+		
+		//Removing category that does NOT exist
+		try {
+			todoList.removeCategory("iDontExist");
+		} catch (Exception e) {
+			throwsCorrectException = true;
+		}
+		
+		//TODO: add check for orphans
+		
+		//Check for success
+		assertFalse(creationFailure);
+		assertTrue(throwsCorrectException);
+	}
+	
+	
 }
