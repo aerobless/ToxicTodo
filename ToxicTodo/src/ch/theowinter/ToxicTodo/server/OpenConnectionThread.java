@@ -51,7 +51,7 @@ public void run() {
 				e.printStackTrace();
 			}  
         	//Always save possible changes
-        	ServerToxicTodo.saveToXMLFile(ServerToxicTodo.serverTodo, ServerToxicTodo.todoData);
+        	ServerToxicTodo.saveToXMLFile(ServerToxicTodo.serverTodoList, ServerToxicTodo.todoData);
 		}
 
 public synchronized ToxicDatagram runServerAction(String serverMessage, ArrayList<TodoCategory> todoList) throws InterruptedException{
@@ -61,11 +61,11 @@ public synchronized ToxicDatagram runServerAction(String serverMessage, ArrayLis
 		while(writeLock.availablePermits()==0){
 			wait();
 		}
-		dataToClient = new ToxicDatagram(ServerToxicTodo.serverTodo, "successfulREAD", "");
+		//dataToClient = new ToxicDatagram(ServerToxicTodo.serverTodo, "successfulREAD", "");
 	}
 	else if(serverMessage.equals("write")){
 		writeLock.acquire();
-		ServerToxicTodo.serverTodo = todoList;
+		//ServerToxicTodo.serverTodo = todoList;
 		writeLock.release();
 		dataToClient = new ToxicDatagram(null, "successfulWRITE", "");
 		notifyAll();

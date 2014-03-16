@@ -14,11 +14,13 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoCategory;
+import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoTask;
 
 public class ServerToxicTodo {
 	//Server data:
-	public static ArrayList<TodoCategory> serverTodo = new ArrayList<TodoCategory>();
+	//public static ArrayList<TodoCategory> serverTodo = new ArrayList<TodoCategory>();
+	static TodoList serverTodoList = new TodoList();
 	public static final String todoData = "ToxicTodo.xml";
 	
 	//Locks
@@ -32,7 +34,7 @@ public class ServerToxicTodo {
 
 		//Load sample data or stored data
 		if(!firstTimeRun()){
-			serverTodo = (ArrayList<TodoCategory>)loadXMLFile(todoData);
+			serverTodoList = (TodoList)loadXMLFile(todoData);
 		}
 		
 		//Open up a connection:
@@ -52,7 +54,7 @@ public class ServerToxicTodo {
 				String input = buffer.readLine();
 				if(input.equals("stop") || input.equals("exit") || input.equals("q")){
 					//Save before shutting the server down
-		        	saveToXMLFile(serverTodo, todoData);
+		        	saveToXMLFile(serverTodoList, todoData);
 		        	
 		        	//After this the main method is finished and the daemon threads get killed
 					serverRunning.acquire();
@@ -87,6 +89,7 @@ public class ServerToxicTodo {
 	
 	private static String serializeToXML(Object input){
 		XStream saveXStream = new XStream(new StaxDriver());
+		saveXStream.alias("list", TodoList.class);
 		saveXStream.alias("category", TodoCategory.class);
 		saveXStream.alias("task", TodoTask.class);		
 		return saveXStream.toXML(input);
@@ -95,6 +98,7 @@ public class ServerToxicTodo {
 	private static Object loadXMLFile(String filename){
 		File xmlFile = new File(filename);
 		XStream loadXStream = new XStream(new StaxDriver());
+		loadXStream.alias("list", TodoList.class);
 		loadXStream.alias("category", TodoCategory.class);
 		loadXStream.alias("task", TodoTask.class);	
 		Object loadedObject = loadXStream.fromXML(xmlFile);
@@ -108,14 +112,19 @@ public class ServerToxicTodo {
 		boolean firstTime = false;
 		File f = new File(todoData);
 		if(!f.exists()){
-			serverTodo.add(new TodoCategory("School work", "school"));
-			serverTodo.add(new TodoCategory("Programming stuff", "programming"));
-			serverTodo.add(new TodoCategory("To buy", "buy"));		
-			serverTodo.get(0).add("Complete exercise 1 for vssprog");
-			serverTodo.get(0).add("Complete exercise 1 for parprog");
-			serverTodo.get(1).add("Build better todolist");
-			serverTodo.get(1).add("fix all the bugs");
-			serverTodo.get(2).add("new pens");
+			try {
+				serverTodoList.addCategory("School work", "school");
+				serverTodoList.addCategory("Programming stuff", "programming");
+				serverTodoList.addCategory("To buy", "buy");
+				serverTodoList.addTask("school", "Complete exercise 1 for vssprog");
+				serverTodoList.addTask("school", "Complete exercise 1 for parprog");
+				serverTodoList.addTask("programming", "Build better todolist");
+				serverTodoList.addTask("programming", "fix all the bugs");
+				serverTodoList.addTask("buy", "new pens");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			firstTime = true;
 		}
 		return firstTime;
