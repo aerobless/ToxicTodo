@@ -58,7 +58,7 @@ public class ClientTodoManager {
 		//Adding it locally just to check before sending it off to the server
 		try {
 			todoList.addTask(goodArgs[1], task);
-			datagram = new ToxicDatagram("ADD_TASK_TO_LIST_ON_SERVER", "", task);
+			datagram = new ToxicDatagram("ADD_TASK_TO_LIST_ON_SERVER", "", task, goodArgs[1]);
 		} catch (Exception e) {
 			ClientToxicTodo.print("Local-Error: Category doesn't exist");
 		}

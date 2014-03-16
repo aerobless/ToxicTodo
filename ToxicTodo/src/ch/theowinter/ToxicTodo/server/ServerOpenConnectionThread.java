@@ -35,7 +35,7 @@ class ServerOpenConnectionThread implements Runnable {
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					}
+				}
 		        	
 			OutputStream os = inputSocket.getOutputStream();  
 			ObjectOutputStream oos = new ObjectOutputStream(os);     	
@@ -60,7 +60,17 @@ class ServerOpenConnectionThread implements Runnable {
 			while(writeLock.availablePermits()==0){
 				wait();
 			}
-			dataToClient = new ToxicDatagram("successfulREAD", "", ServerToxicTodo.getServerTodoList());
+			dataToClient = new ToxicDatagram("Answering successful request for TodoList", "", ServerToxicTodo.getServerTodoList());
+		}
+		else if(serverMessage.equals("ADD_TASK_TO_LIST_ON_SERVER")){
+			writeLock.acquire();
+			try {
+				ServerToxicTodo.serverTodoList.addTask(dataFromClient.getAdditionalMessage(), dataFromClient.getTodoTask());
+				dataToClient = new ToxicDatagram("Answering successful request to add new Task", "");
+			} catch (Exception e) {
+				ServerToxicTodo.serverPrint("Failed to add new task.");
+				dataToClient = new ToxicDatagram("Adding a new task failed. Maybe it already exists?", "");
+			}
 		}
 		return dataToClient;
 	}

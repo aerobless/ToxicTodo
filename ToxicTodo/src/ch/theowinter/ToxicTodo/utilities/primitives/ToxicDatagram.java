@@ -13,6 +13,7 @@ public class ToxicDatagram implements Serializable{
 	//Optional
 	private ArrayList<TodoCategory> oldTodoList; //deprecated
 	private TodoList todoList;
+	private String additionalMessage;
 	private TodoTask todoTask;
 	private TodoCategory todoCategory;
 	
@@ -36,11 +37,12 @@ public class ToxicDatagram implements Serializable{
 
 	//constructor for sending a task
 	public ToxicDatagram(String serverControlMessage, String cypher,
-			TodoTask todoTask) {
+			TodoTask todoTask, String additionalMessage) {
 		super();
 		this.controlMessage = serverControlMessage;
 		this.cypher = cypher;
 		this.todoTask = todoTask;
+		this.additionalMessage = additionalMessage;
 	}
 	
 	//constructor for sending a category
@@ -95,4 +97,14 @@ public class ToxicDatagram implements Serializable{
 	public TodoList getTodoList() {
 		return todoList;
 	}
+
+	public String getAdditionalMessage() {
+		return additionalMessage;
+	}
+
+	public void setAdditionalMessage(String additionalMessage) {
+		this.additionalMessage = additionalMessage;
+	}
+	
+	
 }

@@ -18,7 +18,7 @@ import ch.theowinter.ToxicTodo.utilities.primitives.TodoTask;
 
 public class ServerToxicTodo {
 	//Server data:
-	private static TodoList serverTodoList = new TodoList();
+	static TodoList serverTodoList = new TodoList();
 	public static final String todoData = "ToxicTodo.xml";
 	
 	//Locks
