@@ -7,7 +7,7 @@ public class ToxicDatagram implements Serializable{
 	private static final long serialVersionUID = -373861488847346784L;
 	
 	//Must have:
-	private String serverControlMessage;
+	private String controlMessage;
 	private String cypher;
 	
 	//Optional
@@ -21,7 +21,7 @@ public class ToxicDatagram implements Serializable{
 			String aCypher) {
 		super();
 		oldTodoList = serverTodo;
-		serverControlMessage = aServerControlMessage;
+		controlMessage = aServerControlMessage;
 		cypher = aCypher;
 	}
 	
@@ -29,7 +29,7 @@ public class ToxicDatagram implements Serializable{
 	public ToxicDatagram(String serverControlMessage, String cypher,
 			TodoList todoList) {
 		super();
-		this.serverControlMessage = serverControlMessage;
+		this.controlMessage = serverControlMessage;
 		this.cypher = cypher;
 		this.todoList = todoList;
 	}
@@ -38,7 +38,7 @@ public class ToxicDatagram implements Serializable{
 	public ToxicDatagram(String serverControlMessage, String cypher,
 			TodoTask todoTask) {
 		super();
-		this.serverControlMessage = serverControlMessage;
+		this.controlMessage = serverControlMessage;
 		this.cypher = cypher;
 		this.todoTask = todoTask;
 	}
@@ -47,9 +47,16 @@ public class ToxicDatagram implements Serializable{
 	public ToxicDatagram(String serverControlMessage, String cypher,
 			TodoCategory todoCategory) {
 		super();
-		this.serverControlMessage = serverControlMessage;
+		this.controlMessage = serverControlMessage;
 		this.cypher = cypher;
 		this.todoCategory = todoCategory;
+	}
+	
+	//constructor for only sending a control-message
+	public ToxicDatagram(String serverControlMessage, String cypher) {
+		super();
+		this.controlMessage = serverControlMessage;
+		this.cypher = cypher;
 	}
 
 	@Deprecated
@@ -58,7 +65,7 @@ public class ToxicDatagram implements Serializable{
 	}
 
 	public String getServerControlMessage() {
-		return serverControlMessage;
+		return controlMessage;
 	}
 
 	public TodoTask getTodoTask() {

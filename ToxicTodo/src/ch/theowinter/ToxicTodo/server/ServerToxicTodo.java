@@ -18,7 +18,7 @@ import ch.theowinter.ToxicTodo.utilities.primitives.TodoTask;
 
 public class ServerToxicTodo {
 	//Server data:
-	static TodoList serverTodoList = new TodoList();
+	private static TodoList serverTodoList = new TodoList();
 	public static final String todoData = "ToxicTodo.xml";
 	
 	//Locks
@@ -128,9 +128,17 @@ public class ServerToxicTodo {
 	
 	public static void serverPrint(String input){
 		//TODO: add better logging and logging to file
-		System.out.println(input);
+		System.out.println("Server: "+input);
 	}
 	
+	public static TodoList getServerTodoList() {
+		return serverTodoList;
+	}
+
+	public static void setServerTodoList(TodoList serverTodoList) {
+		ServerToxicTodo.serverTodoList = serverTodoList;
+	}
+
 	static class ConnectionBuilderThread implements Runnable{
 		@Override
 		public void run() {
