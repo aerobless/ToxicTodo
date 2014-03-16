@@ -1,11 +1,12 @@
 package ch.theowinter.ToxicTodo;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 import ch.theowinter.ToxicTodo.utilities.TodoManager;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoCategory;
+import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
 
 public class ToxicTodo_UnitTest {
 	
@@ -88,4 +89,31 @@ public class ToxicTodo_UnitTest {
 		
 		//completeTask();
 	}
+	
+	//------------------------------------------------------------------------------------------------------------------------------------
+	
+	@Test
+	public void createNewTodoList(){
+		TodoList todoList = new TodoList();
+	}
+	
+	@Test
+	public void addCategoryToTodoList(){
+		boolean success = false;
+		TodoList todoList = new TodoList();
+		try {
+			todoList.addCategory("test-category for lulz", "testcat_keyword");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//Check that we can't have two categories with the same keyword
+		try {
+			todoList.addCategory("test-category with same keyword", "testcat_keyword");
+		} catch (Exception e) {
+			success = true;
+		}
+		assertTrue(success);
+	}
+	
 }
