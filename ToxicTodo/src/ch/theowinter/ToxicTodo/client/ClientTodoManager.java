@@ -62,7 +62,6 @@ public class ClientTodoManager {
 		} catch (Exception e) {
 			ClientToxicTodo.print("Local-Error: Category doesn't exist");
 		}
-		
 		return datagram;
 	}
 }

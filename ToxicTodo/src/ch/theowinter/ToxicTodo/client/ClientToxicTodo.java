@@ -20,25 +20,27 @@ public class ClientToxicTodo {
 	public static boolean debug = true;
 
 	public static void main(String[] args) {
-		//GET todo-LIST from server
-		todoManager = new ClientTodoManager(pullTodoListFromServer());
+		//1. GET todo-LIST from server
+		todoManager = new ClientTodoManager(sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "")));
 		
-		//Run manipulations (add/remove/etc.)
-		todoManager.run(new String[]{"list"});
+		//2. Run manipulations (add/remove/etc.)
+		ToxicDatagram datagramForServer = todoManager.run(new String[]{"list"});
 		
-		//return new todo-LIST to server
+		//3. Return answer to the server unless we're finished
+		if(datagramForServer != null){
+			sendToServer(datagramForServer);	
+		}
 		print("all done");
 	}
 	
-	private static TodoList pullTodoListFromServer(){
+	private static TodoList sendToServer(ToxicDatagram datagram){
 		TodoList todoList = null;
 		try {
 	    	Socket s = new Socket(HOST, PORT);  
 	    	OutputStream os = s.getOutputStream();  
 	    	ObjectOutputStream oos = new ObjectOutputStream(os);  
-	    	
-	    	ToxicDatagram dataToServer = new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "");   	
-			oos.writeObject(dataToServer);
+	
+			oos.writeObject(datagram);
 			
 			print("Request sent - awaiting server response", debug);
 			
@@ -73,5 +75,4 @@ public class ClientToxicTodo {
 			System.out.println("DEBUG INFO:"+input);
 		}
 	}
-	
 }
