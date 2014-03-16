@@ -1,14 +1,10 @@
-package ch.theowinter.ToxicTodo;
+package ch.theowinter.ToxicTodo.server;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -19,16 +15,14 @@ import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoCategory;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoTask;
-import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
 
 public class ServerToxicTodo {
 	//Server data:
-	private static ArrayList<TodoCategory> serverTodo = new ArrayList<TodoCategory>();
-	private static final String todoData = "ToxicTodo.xml";
+	public static ArrayList<TodoCategory> serverTodo = new ArrayList<TodoCategory>();
+	public static final String todoData = "ToxicTodo.xml";
 	
 	//Locks
 	private static Semaphore serverRunning = new Semaphore(1);
-	private static Semaphore writeLock = new Semaphore(1);
 	
 	//Connection info:
 	public static final int PORT = 5222;
@@ -71,7 +65,7 @@ public class ServerToxicTodo {
 		}
 	}
 	
-	private static void saveToXMLFile(Object inputObject, String filename){
+	static void saveToXMLFile(Object inputObject, String filename){
 		FileOutputStream fos = null;
 		try {
 		    fos = new FileOutputStream(filename);
@@ -159,67 +153,6 @@ public class ServerToxicTodo {
 				} catch (IOException e) {
 					e.printStackTrace();
 			}
-		}
-	}
-	
-	static class OpenConnectionThread implements Runnable {
-			Socket inputSocket;
-		
-		public OpenConnectionThread(Socket client) {
-			super();
-			inputSocket = client;
-		}
-
-		@Override
-		public void run() {
-		        	InputStream is;
-					try {
-						is = inputSocket.getInputStream();
-						ObjectInputStream ois = new ObjectInputStream(is);
-			        	
-			        	serverPrint("got a message from a client");
-			        	ToxicDatagram dataFromClient = (ToxicDatagram)ois.readObject();  	
-			        	ToxicDatagram dataToClient = new ToxicDatagram(null, "Server Error 400", "");
-			        	
-			        	try {
-							dataToClient = runServerAction(dataFromClient.getServerControlMessage(), dataFromClient.getTodoList());
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-				    	OutputStream os = inputSocket.getOutputStream();  
-				    	ObjectOutputStream oos = new ObjectOutputStream(os);     	
-				    	oos.writeObject(dataToClient);
-				    	oos.close();  
-				    	os.close();  	
-			        	is.close();  
-			        	inputSocket.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					} catch (ClassNotFoundException e) {
-						e.printStackTrace();
-					}  
-		        	//Always save possible changes
-		        	saveToXMLFile(serverTodo, todoData);
-				}
-		
-		public synchronized ToxicDatagram runServerAction(String serverMessage, ArrayList<TodoCategory> todoList) throws InterruptedException{
-			ToxicDatagram dataToClient = new ToxicDatagram(null, "Bad request 500", "");
-			if(serverMessage.equals("read")){
-				//We wait until noone's writing anymore 
-				while(writeLock.availablePermits()==0){
-					wait();
-				}
-				dataToClient = new ToxicDatagram(serverTodo, "successfulREAD", "");
-			}
-			else if(serverMessage.equals("write")){
-				writeLock.acquire();
-				serverTodo = todoList;
-				writeLock.release();
-				dataToClient = new ToxicDatagram(null, "successfulWRITE", "");
-				notifyAll();
-			}
-			return dataToClient;
 		}
 	}
 }
