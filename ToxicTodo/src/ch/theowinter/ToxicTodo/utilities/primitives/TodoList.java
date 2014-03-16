@@ -61,7 +61,7 @@ public class TodoList implements Serializable {
 	}
 	
 	/**
-	 * Add a new task to the category.
+	 * Add a new task to the category. Throws error when category doesn't exist.
 	 * 
 	 * @param categoryKeyword
 	 * @param taskText
