@@ -52,6 +52,9 @@ public class ClientTodoManager {
 		ArrayList<String> localCategoryBinding = new ArrayList<String>();
 		ArrayList<TodoTask> localTaskBinding = new ArrayList<TodoTask>();
 		
+		//Clear ANSI console
+		ClientToxicTodo.print(jansi.ANSI_CLS);
+		
 		int taskID = 0;
 		for(String categoryKey : todoList.getCategoryMap().keySet()){
 			//Only list category if it contains tasks or we want to display empty categories too.
