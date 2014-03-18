@@ -54,6 +54,7 @@ class ServerOpenConnectionThread implements Runnable {
 		}
 	
 	public synchronized ToxicDatagram runServerAction(String serverMessage, ToxicDatagram dataFromClient) throws InterruptedException{
+		ServerToxicTodo.serverPrint("Trying to handle: "+serverMessage);
 		ToxicDatagram dataToClient = new ToxicDatagram("ERROR - 500 - Bad Request to server action handler.", "");
 		if(serverMessage.equals("SEND_TODOLIST_TO_CLIENT")){
 			//We wait until noone's writing anymore 
@@ -71,6 +72,7 @@ class ServerOpenConnectionThread implements Runnable {
 				ServerToxicTodo.serverPrint("Failed to add new task.");
 				dataToClient = new ToxicDatagram("Adding a new task failed. Maybe it already exists?", "");
 			}
+			writeLock.release();
 		}
 		return dataToClient;
 	}
