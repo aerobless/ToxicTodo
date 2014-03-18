@@ -28,11 +28,20 @@ public class ClientToxicTodo {
 		
 		//3. Return answer to the server unless we're finished
 		if(datagramForServer != null){
-			sendToServer(datagramForServer);	
+			sendToServer(datagramForServer);
+			voidDrawList();
 		}
 		
-		
-		print("all done");
+		print("all done -->");
+	}
+	
+	private static void voidDrawList(){
+		todoManager = new ClientTodoManager(sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "")));
+		ToxicDatagram datagramForServer = todoManager.run(new String[]{"list"});
+		if(datagramForServer != null){
+			sendToServer(datagramForServer);
+			voidDrawList();
+		}
 	}
 	
 	private static TodoList sendToServer(ToxicDatagram datagram){
