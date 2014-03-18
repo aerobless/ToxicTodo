@@ -32,7 +32,7 @@ public class ClientToxicTodo {
 			voidDrawList();
 		}
 		
-		print("all done -->");
+		print("all done>");
 	}
 	
 	private static void voidDrawList(){

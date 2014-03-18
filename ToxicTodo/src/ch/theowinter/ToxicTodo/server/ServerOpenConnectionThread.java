@@ -67,13 +67,41 @@ class ServerOpenConnectionThread implements Runnable {
 			writeLock.acquire();
 			try {
 				ServerToxicTodo.serverTodoList.addTask(dataFromClient.getAdditionalMessage(), dataFromClient.getTodoTask());
-				dataToClient = new ToxicDatagram("Answering successful request to add new Task", "");
+				dataToClient = new ToxicDatagram("Answering successful request to add new task", "");
 			} catch (Exception e) {
 				ServerToxicTodo.serverPrint("Failed to add new task.");
 				dataToClient = new ToxicDatagram("Adding a new task failed. Maybe it already exists?", "");
 			}
 			writeLock.release();
 		}
+		else if(serverMessage.equals("REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER")){
+			writeLock.acquire();
+			try {
+				ServerToxicTodo.serverTodoList.removeTask(dataFromClient.getTodoTask(), dataFromClient.getAdditionalMessage());
+				dataToClient = new ToxicDatagram("Answering successful request to remove & log task", "");
+			} catch (Exception e) {
+				ServerToxicTodo.serverPrint("Failed to remove & log task.");
+				dataToClient = new ToxicDatagram("Completing a task failed.", "");
+			}
+			writeLock.release();
+		}
+		
+		else if(serverMessage.equals("REMOVE_TASK_ON_SERVER")){
+			writeLock.acquire();
+			try {
+				ServerToxicTodo.serverTodoList.removeTask(dataFromClient.getTodoTask(), dataFromClient.getAdditionalMessage());
+				dataToClient = new ToxicDatagram("Answering successful request to remove task", "");
+			} catch (Exception e) {
+				ServerToxicTodo.serverPrint("Failed to remove task.");
+				dataToClient = new ToxicDatagram("Removing a task failed.", "");
+			}
+			writeLock.release();
+		}
+		
+		else{
+			ServerToxicTodo.serverPrint("Command from Client not recognized..");
+		}
+		
 		return dataToClient;
 	}
 	

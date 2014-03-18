@@ -50,8 +50,8 @@ public class ClientTodoManager {
 		ArrayList<String> localCategoryBinding = new ArrayList<String>();
 		ArrayList<TodoTask> localTaskBinding = new ArrayList<TodoTask>();
 		
+		int taskID = 0;
 		for(String categoryKey : todoList.getCategoryMap().keySet()){
-			int taskID = 1;
 			//Only list category if it contains tasks or we want to display empty categories too.
 			if(todoList.getCategoryMap().get(categoryKey).containsTasks() || displayEmptyCategories==true){
 				ClientToxicTodo.print("###-"+todoList.getCategoryMap().get(categoryKey).getName().toUpperCase()+"-###");
@@ -68,6 +68,7 @@ public class ClientTodoManager {
 		//Use removeTask to check if user wants to remove or complete as task, if empty enter --> the program exits
 		return removeTask(localCategoryBinding, localTaskBinding);
 	}
+	
 	//removeTask belongs to drawTodoList
 	private ToxicDatagram removeTask(ArrayList<String> localCategoryBinding, ArrayList<TodoTask> localTaskBinding){
 		ToxicDatagram datagram = null;
@@ -76,10 +77,10 @@ public class ClientTodoManager {
 			try{
 				int userChoice = Integer.parseInt(userInputArray[1]); //catch
 				if(userInputArray[0].equals("complete")){
-					datagram = new ToxicDatagram("REMOVE_AND_LOG_AS_COMPLETED_ON_SERVER", "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1)); //minus 1 because we draw numbers from 1 upwords and array starts at 0
+					datagram = new ToxicDatagram("REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER", "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1)); //minus 1 because we draw numbers from 1 upwords and array starts at 0
 				}
 				else if(userInputArray[0].equals("remove")){
-					datagram = new ToxicDatagram("REMOVE_ON_SERVER", "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1));
+					datagram = new ToxicDatagram("REMOVE_TASK_ON_SERVER", "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1));
 				}
 			} catch(NumberFormatException e){
 				ClientToxicTodo.print("Please enter a valid number.");
