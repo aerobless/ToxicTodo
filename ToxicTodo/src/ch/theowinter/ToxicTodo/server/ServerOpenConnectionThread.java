@@ -104,6 +104,19 @@ class ServerOpenConnectionThread implements Runnable {
 			writeLock.release();
 		}
 		
+		else if(serverMessage.equals("ADD_CATEGORY_TO_LIST_ON_SERVER")){
+			writeLock.acquire();
+			try {
+				ServerToxicTodo.serverTodoList.addCategory(dataFromClient.getTodoCategory().getName(), dataFromClient.getTodoCategory().getKeyword());
+				dataToClient = new ToxicDatagram("Answering successful request to add category", "");
+				ServerToxicTodo.writeChangesToDisk();
+			} catch (Exception e) {
+				ServerToxicTodo.serverPrint("Failed to add new category.");
+				dataToClient = new ToxicDatagram("Adding a category failed.", "");
+			}
+			writeLock.release();
+		}
+		
 		else{
 			ServerToxicTodo.serverPrint("Command from Client not recognized..");
 		}
