@@ -3,8 +3,8 @@
 	<property name="target" location="target/" />
 	<property name="Ver" value="1.0" />
 	<property name="Author" value="Theo Winter (aerobless)" />
-	<property name="main-class-server"  value="ch.theowinter.ToxicTodo.ServerToxicTodo"/>
-	<property name="main-class-client"  value="ch.theowinter.ToxicTodo.ClientToxicTodo"/>
+	<property name="main-class-server"  value="ch.theowinter.ToxicTodo.server.ServerToxicTodo"/>
+	<property name="main-class-client"  value="ch.theowinter.ToxicTodo.client.ClientToxicTodo"/>
     <path id="classpath">
         <fileset dir="lib" includes="**/*.jar"/>
         <fileset dir="lib" />
