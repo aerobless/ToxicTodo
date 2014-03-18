@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import ch.theowinter.ToxicTodo.utilities.JansiFormats;
 import ch.theowinter.ToxicTodo.utilities.LogicEngine;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoTask;
@@ -12,7 +13,8 @@ import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
 
 public class ClientTodoManager {
 	TodoList todoList;
-	LogicEngine logic = new LogicEngine();
+	private LogicEngine logic = new LogicEngine();
+	private JansiFormats jansi = new JansiFormats();
 
 	public ClientTodoManager(TodoList todoList) {
 		super();
@@ -54,11 +56,11 @@ public class ClientTodoManager {
 		for(String categoryKey : todoList.getCategoryMap().keySet()){
 			//Only list category if it contains tasks or we want to display empty categories too.
 			if(todoList.getCategoryMap().get(categoryKey).containsTasks() || displayEmptyCategories==true){
-				ClientToxicTodo.print("###-"+todoList.getCategoryMap().get(categoryKey).getName().toUpperCase()+"-###");
+				ClientToxicTodo.print(jansi.ANSI_BOLD+jansi.CYAN+"###-"+todoList.getCategoryMap().get(categoryKey).getName().toUpperCase()+"-###"+jansi.ANSI_NORMAL);
 				todoList.getCategoryMap().get(categoryKey).getTasksHashMap();
 				for(String taskKey : todoList.getCategoryMap().get(categoryKey).getTasksHashMap().keySet()){
 					++taskID;
-					ClientToxicTodo.print("    ["+taskID+"] "+todoList.getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey).getTaskText());
+					ClientToxicTodo.print(jansi.GREEN+"    ["+taskID+"] "+todoList.getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey).getTaskText()+jansi.ANSI_NORMAL);
 					//adding task to local bindings map
 					localCategoryBinding.add(categoryKey);
 					localTaskBinding.add(todoList.getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey));

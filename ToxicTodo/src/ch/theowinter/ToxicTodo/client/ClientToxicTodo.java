@@ -76,11 +76,8 @@ public class ClientToxicTodo {
 		return todoList;
 	}
 	
-	//TODO: remove from TodoList - duplicate code
 	public static void print(String input){
-		//TODO: add support for colours and stuff
-		AnsiConsole.out.println(jansi.GREEN+input);
-		//System.out.println(input);
+		AnsiConsole.out.println(input);
 	}
 	
 	public static void print(String input, boolean debug){
