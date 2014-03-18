@@ -42,10 +42,10 @@ public class ClientTodoManager {
 	private void drawTodoList(boolean displayEmptyCategories){
 		for(String categoryKey : todoList.getCategoryMap().keySet()){
 			int taskID = 1;
-			ClientToxicTodo.print("###-"+todoList.getCategoryMap().get(categoryKey).getName().toUpperCase()+"-###");
-			todoList.getCategoryMap().get(categoryKey).getTasksHashMap();
 			//Only list category if it contains tasks or we want to display empty categories too.
 			if(todoList.getCategoryMap().get(categoryKey).containsTasks() || displayEmptyCategories==true){
+				ClientToxicTodo.print("###-"+todoList.getCategoryMap().get(categoryKey).getName().toUpperCase()+"-###");
+				todoList.getCategoryMap().get(categoryKey).getTasksHashMap();
 				for(String taskKey : todoList.getCategoryMap().get(categoryKey).getTasksHashMap().keySet()){
 					++taskID;
 					ClientToxicTodo.print("    ["+taskID+"] "+todoList.getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey).getTaskText());
@@ -57,14 +57,7 @@ public class ClientTodoManager {
 	private ToxicDatagram addTask(String[] args){
 		String[] goodArgs = logic.concatenateArgs(args, 3);
 		TodoTask task = new TodoTask(goodArgs[2]);
-		ToxicDatagram datagram = null;
-		//Adding it locally just to check before sending it off to the server
-		try {
-			todoList.addTask(goodArgs[1], task);
-			datagram = new ToxicDatagram("ADD_TASK_TO_LIST_ON_SERVER", "", task, goodArgs[1]);
-		} catch (Exception e) {
-			ClientToxicTodo.print("Local-Error: Category doesn't exist");
-		}
+		ToxicDatagram datagram = new ToxicDatagram("ADD_TASK_TO_LIST_ON_SERVER", "", task, goodArgs[1]);
 		return datagram;
 	}
 }
