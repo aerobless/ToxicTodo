@@ -65,30 +65,36 @@ public class ClientTodoManager {
 				}
 			}
 		}
-		//Use removeTask to check if user wants to remove or complete as task, if empty enter --> the program exits
-		return removeTask(localCategoryBinding, localTaskBinding);
+		//Use inListActionHandler to check if user wants to remove or complete as task, if empty enter --> the program exits
+		return inListActionHandler(localCategoryBinding, localTaskBinding);
 	}
 	
-	//removeTask belongs to drawTodoList
-	private ToxicDatagram removeTask(ArrayList<String> localCategoryBinding, ArrayList<TodoTask> localTaskBinding){
+	//inListActionHandler belongs to drawTodoList
+	private ToxicDatagram inListActionHandler(ArrayList<String> localCategoryBinding, ArrayList<TodoTask> localTaskBinding){
 		ToxicDatagram datagram = null;
 		String[] userInputArray  = readInput().split(" ");
 		if(userInputArray.length>=2){
-			try{
-				int userChoice = Integer.parseInt(userInputArray[1]);
-				if(userChoice<=localCategoryBinding.size()){
-					if(userInputArray[0].equals("complete")){
-						datagram = new ToxicDatagram("REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER", "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1)); //minus 1 because we draw numbers from 1 upwords and array starts at 0
-					}
-					else if(userInputArray[0].equals("remove")){
-						datagram = new ToxicDatagram("REMOVE_TASK_ON_SERVER", "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1));
-					}
+				if(userInputArray[0].equals("add")){
+					datagram = addTask(userInputArray);
 				}
+				//Removing & Completing
 				else{
-					ClientToxicTodo.print("There's no task with that ID.");
+					try{
+						int userChoice = Integer.parseInt(userInputArray[1]);
+						if(userChoice<=localCategoryBinding.size()){
+							if(userInputArray[0].equals("complete")){
+								datagram = new ToxicDatagram("REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER", "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1)); //minus 1 because we draw numbers from 1 upwords and array starts at 0
+							}
+							else if(userInputArray[0].equals("remove")){
+								datagram = new ToxicDatagram("REMOVE_TASK_ON_SERVER", "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1));
+							}
+						}
+						else{
+							ClientToxicTodo.print("There's no task with that ID.");
+						}
+					} catch(NumberFormatException e){
+						ClientToxicTodo.print("Please enter a valid number.");
 				}
-			} catch(NumberFormatException e){
-				ClientToxicTodo.print("Please enter a valid number.");
 			}
 		}
 		return datagram;
