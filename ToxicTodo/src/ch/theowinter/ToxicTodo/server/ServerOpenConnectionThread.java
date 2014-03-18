@@ -6,6 +6,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.sql.Timestamp;
 import java.util.concurrent.Semaphore;
 
 import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
@@ -78,6 +79,8 @@ class ServerOpenConnectionThread implements Runnable {
 			writeLock.acquire();
 			try {
 				ServerToxicTodo.serverTodoList.removeTask(dataFromClient.getTodoTask(), dataFromClient.getAdditionalMessage());
+				java.util.Date date= new java.util.Date();
+				ServerToxicTodo.writeLogToFile("CompletedTasks.txt", new Timestamp(date.getTime())+" : COMPLETED : "+dataFromClient.getTodoTask().getTaskText());
 				dataToClient = new ToxicDatagram("Answering successful request to remove & log task", "");
 			} catch (Exception e) {
 				ServerToxicTodo.serverPrint("Failed to remove & log task.");

@@ -1,20 +1,23 @@
 package ch.theowinter.ToxicTodo.server;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.Semaphore;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.StaxDriver;
-
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoCategory;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoTask;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 public class ServerToxicTodo {
 	//Server data:
@@ -137,6 +140,14 @@ public class ServerToxicTodo {
 
 	public static void setServerTodoList(TodoList serverTodoList) {
 		ServerToxicTodo.serverTodoList = serverTodoList;
+	}
+	
+	public static void writeLogToFile(String logFilename, String logMessage){
+		try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(logFilename, true)))) {
+		    out.println(logMessage);
+		}catch (IOException e) {
+			serverPrint("ERROR: IO-Exception when trying to write log to file. ID: 777");
+		}
 	}
 
 	static class ConnectionBuilderThread implements Runnable{
