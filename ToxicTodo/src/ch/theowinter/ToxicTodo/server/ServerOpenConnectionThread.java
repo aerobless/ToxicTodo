@@ -69,6 +69,7 @@ class ServerOpenConnectionThread implements Runnable {
 			try {
 				ServerToxicTodo.serverTodoList.addTask(dataFromClient.getAdditionalMessage(), dataFromClient.getTodoTask());
 				dataToClient = new ToxicDatagram("Answering successful request to add new task", "");
+				ServerToxicTodo.writeChangesToDisk();
 			} catch (Exception e) {
 				ServerToxicTodo.serverPrint("Failed to add new task.");
 				dataToClient = new ToxicDatagram("Adding a new task failed. Maybe it already exists?", "");
@@ -82,6 +83,7 @@ class ServerOpenConnectionThread implements Runnable {
 				java.util.Date date= new java.util.Date();
 				ServerToxicTodo.writeLogToFile("CompletedTasks.txt", new Timestamp(date.getTime())+" : COMPLETED : "+dataFromClient.getTodoTask().getTaskText());
 				dataToClient = new ToxicDatagram("Answering successful request to remove & log task", "");
+				ServerToxicTodo.writeChangesToDisk();
 			} catch (Exception e) {
 				ServerToxicTodo.serverPrint("Failed to remove & log task.");
 				dataToClient = new ToxicDatagram("Completing a task failed.", "");
@@ -94,6 +96,7 @@ class ServerOpenConnectionThread implements Runnable {
 			try {
 				ServerToxicTodo.serverTodoList.removeTask(dataFromClient.getTodoTask(), dataFromClient.getAdditionalMessage());
 				dataToClient = new ToxicDatagram("Answering successful request to remove task", "");
+				ServerToxicTodo.writeChangesToDisk();
 			} catch (Exception e) {
 				ServerToxicTodo.serverPrint("Failed to remove task.");
 				dataToClient = new ToxicDatagram("Removing a task failed.", "");
@@ -104,7 +107,6 @@ class ServerOpenConnectionThread implements Runnable {
 		else{
 			ServerToxicTodo.serverPrint("Command from Client not recognized..");
 		}
-		
 		return dataToClient;
 	}
 	

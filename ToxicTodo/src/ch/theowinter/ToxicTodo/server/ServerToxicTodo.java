@@ -22,7 +22,7 @@ import com.thoughtworks.xstream.io.xml.StaxDriver;
 public class ServerToxicTodo {
 	//Server data:
 	static TodoList serverTodoList = new TodoList();
-	public static final String todoData = "ToxicTodo.xml";
+	public static final String localTodoDataStorage = "ToxicTodo.xml";
 	
 	//Locks
 	private static Semaphore serverRunning = new Semaphore(1);
@@ -34,7 +34,7 @@ public class ServerToxicTodo {
 
 		//Load sample data or stored data
 		if(!firstTimeRun()){
-			serverTodoList = (TodoList)loadXMLFile(todoData);
+			serverTodoList = (TodoList)loadXMLFile(localTodoDataStorage);
 		}
 		
 		//Open up a connection:
@@ -54,7 +54,7 @@ public class ServerToxicTodo {
 				String input = buffer.readLine();
 				if(input.equals("stop") || input.equals("exit") || input.equals("q")){
 					//Save before shutting the server down
-		        	saveToXMLFile(serverTodoList, todoData);
+		        	saveToXMLFile(serverTodoList, localTodoDataStorage);
 		        	
 		        	//After this the main method is finished and the daemon threads get killed
 					serverRunning.acquire();
@@ -110,7 +110,7 @@ public class ServerToxicTodo {
 	 */
 	private static boolean firstTimeRun(){
 		boolean firstTime = false;
-		File f = new File(todoData);
+		File f = new File(localTodoDataStorage);
 		if(!f.exists()){
 			try {
 				serverTodoList.addCategory("School work", "school");
@@ -148,6 +148,10 @@ public class ServerToxicTodo {
 		}catch (IOException e) {
 			serverPrint("ERROR: IO-Exception when trying to write log to file. ID: 777");
 		}
+	}
+	
+	public static void writeChangesToDisk(){
+		saveToXMLFile(serverTodoList, localTodoDataStorage);
 	}
 
 	static class ConnectionBuilderThread implements Runnable{
