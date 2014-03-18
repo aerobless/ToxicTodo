@@ -7,12 +7,16 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
+import org.fusesource.jansi.AnsiConsole;
+
+import ch.theowinter.ToxicTodo.utilities.JansiFormats;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
 import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
 
 public class ClientToxicTodo {
 	//Local storage
 	private static ClientTodoManager todoManager;
+	private static JansiFormats jansi = new JansiFormats();
 	
 	//Settings
 	private final static String HOST = "localhost";
@@ -31,8 +35,6 @@ public class ClientToxicTodo {
 			sendToServer(datagramForServer);
 			voidDrawList();
 		}
-		
-		print("all done>");
 	}
 	
 	private static void voidDrawList(){
@@ -77,7 +79,8 @@ public class ClientToxicTodo {
 	//TODO: remove from TodoList - duplicate code
 	public static void print(String input){
 		//TODO: add support for colours and stuff
-		System.out.println(input);
+		AnsiConsole.out.println(jansi.GREEN+input);
+		//System.out.println(input);
 	}
 	
 	public static void print(String input, boolean debug){

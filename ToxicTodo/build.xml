@@ -30,6 +30,7 @@
 	<!-- Download and unzip libraries -->
 	<target name="class" description="Install third-party support libraries and plugins">
 		<get src="https://nexus.codehaus.org/content/repositories/releases/com/thoughtworks/xstream/xstream/1.4.7/xstream-1.4.7.jar" dest="lib/xstream-1.4.7.jar" />
+		<get src="http://repo.fusesource.com/nexus/content/groups/public/org/fusesource/jansi/jansi/1.11/jansi-1.11.jar" dest="lib/jansi-1.11.jar" />
 	</target>	
   
 	<!-- compile -->
@@ -48,7 +49,7 @@
 		    <zipgroupfileset includes="*.jar" dir="lib"/>
 			<manifest>
 			    <attribute name="Main-Class" value="${main-class-client}"/>
-				<attribute name="Residence" value="Dev: ${Author}" />
+				<attribute name="ToxicTodo" value="Dev: ${Author}" />
 				<attribute name="Version" value="${Ver}" />
 				<attribute name="Built-By" value="${user.name}" />
 			</manifest>
