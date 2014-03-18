@@ -9,14 +9,12 @@ import java.net.Socket;
 
 import org.fusesource.jansi.AnsiConsole;
 
-import ch.theowinter.ToxicTodo.utilities.JansiFormats;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
 import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
 
 public class ClientToxicTodo {
 	//Local storage
 	private static ClientTodoManager todoManager;
-	private static JansiFormats jansi = new JansiFormats();
 	
 	//Settings
 	private final static String HOST = "localhost";

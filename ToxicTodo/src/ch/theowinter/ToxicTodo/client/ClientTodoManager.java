@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import ch.theowinter.ToxicTodo.utilities.JansiFormats;
 import ch.theowinter.ToxicTodo.utilities.LogicEngine;
+import ch.theowinter.ToxicTodo.utilities.primitives.TodoCategory;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoTask;
 import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
@@ -35,7 +36,12 @@ public class ClientTodoManager {
 			datagram = drawTodoList(true);
 		}
 		else if(args[0].equals("add")){
-			datagram = addTask(args);
+			if(args.length>=2 && args[1].equals("category")){
+				datagram = addCategory(args);
+			}
+			else{
+				datagram = addTask(args);
+			}
 		}
 		else{
 			ClientToxicTodo.print("This command: "+args[0]+" does not exist.");
@@ -80,7 +86,12 @@ public class ClientTodoManager {
 		String[] userInputArray  = readInput().split(" ");
 		if(userInputArray.length>=2){
 				if(userInputArray[0].equals("add")){
-					datagram = addTask(userInputArray);
+					if(userInputArray[1].equals("category")){
+						datagram = addCategory(userInputArray);
+					}
+					else{
+						datagram = addTask(userInputArray);
+					}
 				}
 				//Removing & Completing
 				else{
@@ -109,6 +120,20 @@ public class ClientTodoManager {
 		String[] goodArgs = logic.concatenateArgs(args, 3);
 		TodoTask task = new TodoTask(goodArgs[2]);
 		ToxicDatagram datagram = new ToxicDatagram("ADD_TASK_TO_LIST_ON_SERVER", "", task, goodArgs[1]);
+		return datagram;
+	}
+	
+	private ToxicDatagram addCategory(String[] args){
+		ToxicDatagram datagram = null;
+		if(args.length>=4){
+			String[] goodArgs = logic.concatenateArgs(args, 4);
+			TodoCategory category = new TodoCategory(goodArgs[2], goodArgs[3]);
+			datagram = new ToxicDatagram("ADD_CATEGORY_TO_LIST_ON_SERVER", "",category);
+		}
+		else{
+			ClientToxicTodo.print("You can add a category like this:");
+			ClientToxicTodo.print("add category keyword long category name");
+		}
 		return datagram;
 	}
 	
