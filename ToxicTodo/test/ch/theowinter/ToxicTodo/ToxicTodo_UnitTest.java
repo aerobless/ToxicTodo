@@ -137,4 +137,26 @@ public class ToxicTodo_UnitTest {
 		assertTrue(expectedFailure);
 		assertTrue(expectedFailure2);
 	}
+	
+	@Test
+	public void addCategoryAndTasks(){
+		boolean successfulTest = true;
+
+		//SETUP
+		TodoList todoList = new TodoList();
+		TodoTask testedTask = new TodoTask("Do homework");
+		try {
+			todoList.addCategory("school work", "school");
+			todoList.addCategory("home work", "home");
+			todoList.addTask("school", "Do VSS exercises");
+			todoList.addTask("school", testedTask);
+			todoList.addCategory("todo TEST", "todo");
+			todoList.addTask("todo", "Do VSS exercises");
+		} catch (Exception e) {
+			successfulTest=false;
+		}
+		
+
+		assertTrue(successfulTest);		
+	}
 }

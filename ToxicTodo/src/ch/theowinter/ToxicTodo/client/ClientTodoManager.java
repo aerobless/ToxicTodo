@@ -127,7 +127,7 @@ public class ClientTodoManager {
 		ToxicDatagram datagram = null;
 		if(args.length>=4){
 			String[] goodArgs = logic.concatenateArgs(args, 4);
-			TodoCategory category = new TodoCategory(goodArgs[2], goodArgs[3]);
+			TodoCategory category = new TodoCategory(goodArgs[3], goodArgs[2]);
 			datagram = new ToxicDatagram("ADD_CATEGORY_TO_LIST_ON_SERVER", "",category);
 		}
 		else{
