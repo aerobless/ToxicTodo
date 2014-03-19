@@ -7,21 +7,33 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
+import javax.crypto.SealedObject;
+
 import org.fusesource.jansi.AnsiConsole;
 
+import ch.theowinter.ToxicTodo.utilities.EncryptionEngine;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
 import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
 
 public class ClientToxicTodo {
 	//Local storage
 	private static ClientTodoManager todoManager;
+	private static EncryptionEngine crypto;
 	
 	//Settings
 	private final static String HOST = "localhost";
 	private final static int PORT = 5222;
+	private final static String password = "thisShouldBeSavedInAConfig";
 	public static boolean debug = false;
 
 	public static void main(String[] args) {
+		//0. Load config & init stuff
+		try {
+			crypto = new EncryptionEngine(password);
+		} catch (Exception anEx) {
+			System.err.println("Crypto Error - Unable to load the Encryption Engine");
+		}
+		
 		//1. GET todo-LIST from server
 		todoManager = new ClientTodoManager(sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "")));
 		
@@ -45,33 +57,52 @@ public class ClientToxicTodo {
 	}
 	
 	private static TodoList sendToServer(ToxicDatagram datagram){
-		
-		TodoList todoList = null;
+		//Encrypt before sending off
+		Object encryptedData = null;
 		try {
-	    	Socket s = new Socket(HOST, PORT);  
-	    	OutputStream os = s.getOutputStream();  
-	    	ObjectOutputStream oos = new ObjectOutputStream(os);  
-	
-			oos.writeObject(datagram);
-			
-			print("Request sent - awaiting server response", debug);
-			
-			InputStream is = s.getInputStream();  
-        	ObjectInputStream ois = new ObjectInputStream(is);
-        	
-        	ToxicDatagram dataFromServer = (ToxicDatagram)ois.readObject();
-        	todoList = dataFromServer.getTodoList();
-        	
-        	print("Received response from server: "+dataFromServer.getServerControlMessage(), debug);
-			
-	    	oos.close();  
-	    	os.close();  
-	    	s.close();
-		} catch (IOException anEx) {
-			anEx.printStackTrace();
-		} catch (ClassNotFoundException anEx) {
-			anEx.printStackTrace();
-		} 
+			encryptedData = crypto.enc(datagram);
+		} catch (Exception anEx1) {
+			System.err.println("Encryption ERROR - Unable to encrypt & send data!");
+			anEx1.printStackTrace();
+		}
+		TodoList todoList = null;
+		if(encryptedData!=null){
+			try {
+		    	Socket s = new Socket(HOST, PORT);  
+		    	OutputStream os = s.getOutputStream();  
+		    	ObjectOutputStream oos = new ObjectOutputStream(os);  
+		
+				oos.writeObject(encryptedData);
+				
+				print("Request sent - awaiting server response", debug);
+				
+				InputStream is = s.getInputStream();  
+	        	ObjectInputStream ois = new ObjectInputStream(is);
+	        	
+	        	SealedObject encryptedDataFromServer = (SealedObject)ois.readObject();
+	        	
+	        	//Decrypt data from server
+	        	ToxicDatagram dataFromServer = null;
+	    		try {
+	    			dataFromServer = (ToxicDatagram) crypto.dec(encryptedDataFromServer);
+	    		} catch (Exception anEx1) {
+	    			System.err.println("Encryption ERROR - Unable to encrypt & send data!");
+	    			anEx1.printStackTrace();
+	    		}
+	        	
+	        	todoList = dataFromServer.getTodoList();
+	        	
+	        	print("Received response from server: "+dataFromServer.getServerControlMessage(), debug);
+				
+		    	oos.close();  
+		    	os.close();  
+		    	s.close();
+			} catch (IOException anEx) {
+				anEx.printStackTrace();
+			} catch (ClassNotFoundException anEx) {
+				anEx.printStackTrace();
+			} 
+		}
 		return todoList;
 	}
 	

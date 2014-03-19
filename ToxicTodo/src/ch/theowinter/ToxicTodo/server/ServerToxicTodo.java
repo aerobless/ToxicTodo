@@ -23,6 +23,7 @@ public class ServerToxicTodo {
 	//Server data:
 	static TodoList serverTodoList = new TodoList();
 	public static final String localTodoDataStorage = "ToxicTodo.xml";
+	public final static String password = "thisShouldBeSavedInAConfig";
 	
 	//Locks
 	private static Semaphore serverRunning = new Semaphore(1);

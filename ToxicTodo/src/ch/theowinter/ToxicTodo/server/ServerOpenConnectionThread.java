@@ -9,15 +9,24 @@ import java.net.Socket;
 import java.sql.Timestamp;
 import java.util.concurrent.Semaphore;
 
+import javax.crypto.SealedObject;
+
+import ch.theowinter.ToxicTodo.utilities.EncryptionEngine;
 import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
 
 class ServerOpenConnectionThread implements Runnable {
 	private static Semaphore writeLock = new Semaphore(1);
+	private static EncryptionEngine crypto;
 	Socket inputSocket;
 
 	public ServerOpenConnectionThread(Socket client) {
 		super();
 		inputSocket = client;
+		try {
+			crypto = new EncryptionEngine(ServerToxicTodo.password);
+		} catch (Exception anEx) {
+			System.err.println("Crypto Error - Unable to load the Encryption Engine");
+		}
 	}
 	
 	@Override
@@ -28,7 +37,16 @@ class ServerOpenConnectionThread implements Runnable {
 			ObjectInputStream ois = new ObjectInputStream(is);
 		        	
 			ServerToxicTodo.serverPrint("got a message from a client");
-			ToxicDatagram dataFromClient = (ToxicDatagram)ois.readObject();  	
+			SealedObject encryptedDataFromClient = (SealedObject)ois.readObject(); 
+			//Decrypt data from client
+        	ToxicDatagram dataFromClient = null;
+    		try {
+    			dataFromClient = (ToxicDatagram) crypto.dec(encryptedDataFromClient);
+    		} catch (Exception anEx1) {
+    			System.err.println("Encryption ERROR - Unable to encrypt & send data!");
+    			anEx1.printStackTrace();
+    		}
+			
 			ToxicDatagram dataToClient = new ToxicDatagram("ERROR - 400 - The server has no response for you.", "");
 		        	
 			try {
@@ -39,8 +57,19 @@ class ServerOpenConnectionThread implements Runnable {
 				}
 		        	
 			OutputStream os = inputSocket.getOutputStream();  
-			ObjectOutputStream oos = new ObjectOutputStream(os);     	
-			oos.writeObject(dataToClient);
+			ObjectOutputStream oos = new ObjectOutputStream(os); 
+			
+			//Encrypt before sending off
+			Object encryptedData = null;
+			try {
+				encryptedData = crypto.enc(dataToClient);
+			} catch (Exception anEx1) {
+				System.err.println("Encryption ERROR - Unable to encrypt & send data!");
+				anEx1.printStackTrace();
+			}
+			if(encryptedData!=null){
+			oos.writeObject(encryptedData);
+			}
 			oos.close();  
 			os.close();  	
 			is.close();  
