@@ -1,10 +1,14 @@
 package ch.theowinter.ToxicTodo;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import javax.crypto.SealedObject;
+
 import org.junit.Test;
 
+import ch.theowinter.ToxicTodo.utilities.EncryptionEngine;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoTask;
 
@@ -155,8 +159,43 @@ public class ToxicTodo_UnitTest {
 		} catch (Exception e) {
 			successfulTest=false;
 		}
-		
-
 		assertTrue(successfulTest);		
+	}
+	
+	@Test
+	public void encryptionTests() throws Exception{
+		EncryptionEngine crypto = new EncryptionEngine("testPassword1234");
+		String topSecretData = "This message is secret";
+		Object encryptedData = crypto.enc(topSecretData);
+
+		String decryptedData = (String)crypto.dec((SealedObject)encryptedData);
+		assertEquals(topSecretData, decryptedData);
+	}
+	
+	@Test
+	public void encryptionTestsWithTwoDifferentEngines() throws Exception{
+		EncryptionEngine crypto1 = new EncryptionEngine("testPassword1234");
+		EncryptionEngine crypto2 = new EncryptionEngine("testPassword1234");
+		String topSecretData = "This message is secret";
+		Object encryptedData = crypto1.enc(topSecretData);
+		
+		String decryptedData = (String)crypto2.dec((SealedObject)encryptedData);
+		assertEquals(topSecretData, decryptedData);
+	}
+
+	@Test
+	public void encryptionTestWithBadPassword(){
+		boolean testFailedCorrectly = false;
+		try {
+			EncryptionEngine crypto = new EncryptionEngine("testPassword1234");
+			EncryptionEngine enemyCrypto = new EncryptionEngine("IdontHaveThePassword");
+			String topSecretData = "This message is secret";
+			Object encryptedData = crypto.enc(topSecretData);
+			String decryptedData = (String)enemyCrypto.dec((SealedObject)encryptedData);
+			System.out.println("ddd"+decryptedData);
+		} catch (Exception anEx) {
+			testFailedCorrectly = true;
+		}
+		assertTrue(testFailedCorrectly);
 	}
 }

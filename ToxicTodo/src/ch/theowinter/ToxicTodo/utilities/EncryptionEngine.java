@@ -1,18 +1,9 @@
 package ch.theowinter.ToxicTodo.utilities;
 
-import java.io.IOException;
 import java.io.Serializable;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
-import java.util.Random;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SealedObject;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -20,92 +11,39 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class EncryptionEngine {
-	private final Cipher ecipher;
-	private final Cipher dcipher;
+	private Cipher cipher;
+	private Cipher dcipher;	
 
 	/**
 	 * Creates a new instance of this class.
+	 * @throws Exception 
 	 *
 	 */
-	public EncryptionEngine(String password) {
+	public EncryptionEngine(String password) throws Exception {
 		super();
-		Cipher[] generatedCiphers = generateCipher(password);
-		ecipher = generatedCiphers[0];
-		dcipher = generatedCiphers[1];
+         char[] password1 = password.toCharArray();
+         byte[] salt = "ds8f982fn29w".getBytes(); 
+
+        // Create key
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        KeySpec spec = new PBEKeySpec(password1, salt, 1024, 128);
+        SecretKey tmp = factory.generateSecret(spec);
+        SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
+
+        // Init ciphers
+        cipher = Cipher.getInstance("AES");
+        dcipher = Cipher.getInstance("AES");
+        cipher.init(Cipher.ENCRYPT_MODE, secret);
+        dcipher.init(Cipher.DECRYPT_MODE, secret);
 	}
 	
-	public Cipher[] generateCipher(String password){
-		SecretKeyFactory factory;
-		Cipher eCipher = null;
-		Cipher dCipher = null;
-		try {
-			//Format password:
-		    char[] passPherase = password.toCharArray();
-			
-			//Make salt:
-			final Random r = new SecureRandom();
-			byte[] salt = new byte[32];
-			r.nextBytes(salt);
-			
-			//Generate cipher:
-			factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-			KeySpec spec = new PBEKeySpec(passPherase, salt, 65536, 256);
-			SecretKey tmp = factory.generateSecret(spec);
-			SecretKey secret = new SecretKeySpec(tmp.getEncoded(), "AES");
-
-			eCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-			eCipher.init(Cipher.ENCRYPT_MODE, secret);
-			
-			dCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-			dCipher.init(Cipher.DECRYPT_MODE, secret);
-			
-		} catch (NoSuchAlgorithmException anEx) {
-			// TODO Auto-generated catch block
-			anEx.printStackTrace();
-		} catch (InvalidKeySpecException anEx) {
-			// TODO Auto-generated catch block
-			anEx.printStackTrace();
-		} catch (NoSuchPaddingException anEx) {
-			// TODO Auto-generated catch block
-			anEx.printStackTrace();
-		} catch (InvalidKeyException anEx) {
-			// TODO Auto-generated catch block
-			anEx.printStackTrace();
-		}
-		return new Cipher[]{eCipher, dCipher};
-	}
-
-	public SealedObject encrypt(Serializable input){
-		SealedObject sealedObject  = null;
-		try {
-			sealedObject = new SealedObject(input, ecipher);
-		} catch (IllegalBlockSizeException anEx) {
-			// TODO Auto-generated catch block
-			anEx.printStackTrace();
-		} catch (IOException anEx) {
-			// TODO Auto-generated catch block
-			anEx.printStackTrace();
-		}
-		return sealedObject;
-	}
+	public SealedObject enc(Serializable input) throws Exception{
+        SealedObject so = new SealedObject(input, cipher);
+      return so;
+    }
 	
-	public Object decrypt(SealedObject input){
-		Object output = null;
-		try {
-			output = input.getObject(dcipher);
-		} catch (ClassNotFoundException anEx) {
-			// TODO Auto-generated catch block
-			anEx.printStackTrace();
-		} catch (IllegalBlockSizeException anEx) {
-			// TODO Auto-generated catch block
-			anEx.printStackTrace();
-		} catch (BadPaddingException anEx) {
-			// TODO Auto-generated catch block
-			anEx.printStackTrace();
-		} catch (IOException anEx) {
-			// TODO Auto-generated catch block
-			anEx.printStackTrace();
-		}
-		return output;
-	}
+	public Object dec(SealedObject input) throws Exception{
+       Object decryptedPacket = (Object) input.getObject(dcipher);
+      return decryptedPacket;
+    }
 }
