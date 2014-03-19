@@ -19,7 +19,7 @@ public class ClientToxicTodo {
 	//Settings
 	private final static String HOST = "localhost";
 	private final static int PORT = 5222;
-	public static boolean debug = true;
+	public static boolean debug = false;
 
 	public static void main(String[] args) {
 		//1. GET todo-LIST from server
@@ -45,6 +45,7 @@ public class ClientToxicTodo {
 	}
 	
 	private static TodoList sendToServer(ToxicDatagram datagram){
+		
 		TodoList todoList = null;
 		try {
 	    	Socket s = new Socket(HOST, PORT);  
