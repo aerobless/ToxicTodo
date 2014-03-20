@@ -80,6 +80,8 @@ public class ClientTodoManager {
 		return inListActionHandler(localCategoryBinding, localTaskBinding);
 	}
 	
+	
+	
 	//inListActionHandler belongs to drawTodoList
 	private ToxicDatagram inListActionHandler(ArrayList<String> localCategoryBinding, ArrayList<TodoTask> localTaskBinding){
 		ToxicDatagram datagram = null;
@@ -135,6 +137,19 @@ public class ClientTodoManager {
 			ClientToxicTodo.print("add category keyword long category name");
 		}
 		return datagram;
+	}
+	
+	private ToxicDatagram removeCategory(String[] args){
+		ToxicDatagram datagram = null;
+		if(args.length==3){
+			TodoCategory category = new TodoCategory(args[2], args[2]);
+			datagram = new ToxicDatagram("REMOVE_CATEGORY_ON_SERVER", "",category);
+		}
+		else{
+			ClientToxicTodo.print("You can remove a category like this:");
+			ClientToxicTodo.print("remove category keyword");
+		}
+		return datagram;	
 	}
 	
 	private String readInput(){

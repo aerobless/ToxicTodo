@@ -17,15 +17,6 @@ public class ToxicDatagram implements Serializable{
 	private TodoTask todoTask;
 	private TodoCategory todoCategory;
 	
-	@Deprecated
-	public ToxicDatagram(ArrayList<TodoCategory> serverTodo, String aServerControlMessage,
-			String aCypher) {
-		super();
-		oldTodoList = serverTodo;
-		controlMessage = aServerControlMessage;
-		cypher = aCypher;
-	}
-	
 	//new constructor for sending the entire list
 	public ToxicDatagram(String serverControlMessage, String cypher,
 			TodoList todoList) {
