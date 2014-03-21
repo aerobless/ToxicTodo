@@ -35,6 +35,9 @@ public class ClientTodoManager {
 			//Display complete list
 			datagram = drawTodoList(true);
 		}
+		else if(args[0].equals("remove")){
+			datagram = removeCategory(args);
+		}
 		else if(args[0].equals("add")){
 			if(args.length>=2 && args[1].equals("category")){
 				datagram = addCategory(args);
@@ -86,32 +89,43 @@ public class ClientTodoManager {
 	private ToxicDatagram inListActionHandler(ArrayList<String> localCategoryBinding, ArrayList<TodoTask> localTaskBinding){
 		ToxicDatagram datagram = null;
 		String[] userInputArray  = readInput().split(" ");
-		if(userInputArray.length>=2){
-				if(userInputArray[0].equals("add")){
-					if(userInputArray[1].equals("category")){
-						datagram = addCategory(userInputArray);
+		// adding task -  "add school xy" = 3args
+		if(userInputArray.length>=3){
+			if(userInputArray[0].equals("add") && userInputArray[1].equals("category")){
+				datagram = addCategory(userInputArray);
+				}
+			else if(userInputArray[0].equals("add")){
+				datagram = addTask(userInputArray);
+				}
+			else if (userInputArray[0].equals("remove") && userInputArray[1].equals("category")){
+					datagram = removeCategory(userInputArray);	
+					
+				}
+			else if (userInputArray[0].equals("complete")){
+				try{
+					int userChoice = Integer.parseInt(userInputArray[1]);
+					if(userChoice<=localCategoryBinding.size()){
+						datagram = new ToxicDatagram("REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER", "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1)); 
 					}
 					else{
-						datagram = addTask(userInputArray);
+						ClientToxicTodo.print("There's no task with that ID.");
 					}
+				} catch(NumberFormatException e){
+					ClientToxicTodo.print("Please enter a valid number.");
 				}
-				//Removing & Completing
-				else{
-					try{
-						int userChoice = Integer.parseInt(userInputArray[1]);
-						if(userChoice<=localCategoryBinding.size()){
-							if(userInputArray[0].equals("complete")){
-								datagram = new ToxicDatagram("REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER", "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1)); //minus 1 because we draw numbers from 1 upwords and array starts at 0
-							}
-							else if(userInputArray[0].equals("remove")){
-								datagram = new ToxicDatagram("REMOVE_TASK_ON_SERVER", "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1));
-							}
-						}
-						else{
-							ClientToxicTodo.print("There's no task with that ID.");
-						}
-					} catch(NumberFormatException e){
-						ClientToxicTodo.print("Please enter a valid number.");
+			}
+			
+			else if (userInputArray[0].equals("remove")){
+				try{
+					int userChoice = Integer.parseInt(userInputArray[1]);
+					if(userChoice<=localCategoryBinding.size()){
+						datagram = new ToxicDatagram("REMOVE_TASK_ON_SERVER", "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1));	
+					}
+					else{
+						ClientToxicTodo.print("There's no task with that ID.");
+					}
+				} catch(NumberFormatException e){
+					ClientToxicTodo.print("Please enter a valid number.");
 				}
 			}
 		}
@@ -150,8 +164,7 @@ public class ClientTodoManager {
 			ClientToxicTodo.print("remove category keyword");
 		}
 		return datagram;	
-	}
-	
+	}	
 	private String readInput(){
 		String input = null;
 		BufferedReader buffer=new BufferedReader(new InputStreamReader(System.in));
