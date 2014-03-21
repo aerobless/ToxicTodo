@@ -146,6 +146,19 @@ class ServerOpenConnectionThread implements Runnable {
 			writeLock.release();
 		}
 		
+		else if(serverMessage.equals("REMOVE_CATEGORY_ON_SERVER")){
+			writeLock.acquire();
+			try {
+				ServerToxicTodo.serverTodoList.removeCategory(dataFromClient.getTodoCategory().getKeyword());
+				dataToClient = new ToxicDatagram("Answering successful request to remove category", "");
+				ServerToxicTodo.writeChangesToDisk();
+			} catch (Exception e) {
+				ServerToxicTodo.serverPrint("Failed to remove category.");
+				dataToClient = new ToxicDatagram("Removing a category failed.", "");
+			}
+			writeLock.release();
+		}
+		
 		else{
 			ServerToxicTodo.serverPrint("Command from Client not recognized..");
 		}

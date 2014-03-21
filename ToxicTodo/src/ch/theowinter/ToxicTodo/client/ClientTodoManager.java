@@ -98,8 +98,7 @@ public class ClientTodoManager {
 				datagram = addTask(userInputArray);
 				}
 			else if (userInputArray[0].equals("remove") && userInputArray[1].equals("category")){
-					datagram = removeCategory(userInputArray);	
-					
+					datagram = removeCategory(userInputArray);		
 				}
 			else if (userInputArray[0].equals("complete")){
 				try{

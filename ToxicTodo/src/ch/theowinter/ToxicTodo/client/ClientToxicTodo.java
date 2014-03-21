@@ -91,7 +91,6 @@ public class ClientToxicTodo {
 	    		}
 	        	
 	        	todoList = dataFromServer.getTodoList();
-	        	
 	        	print("Received response from server: "+dataFromServer.getServerControlMessage(), debug);
 				
 		    	oos.close();  
