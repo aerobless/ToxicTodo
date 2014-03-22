@@ -15,15 +15,17 @@ import ch.theowinter.ToxicTodo.utilities.EncryptionEngine;
 import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
 
 class ServerOpenConnectionThread implements Runnable {
-	private static Semaphore writeLock = new Semaphore(1);
-	private static EncryptionEngine crypto;
-	Socket inputSocket;
+	private Semaphore writeLock = new Semaphore(1);
+	private EncryptionEngine crypto;
+	private String password;
+	private Socket inputSocket;
 
-	public ServerOpenConnectionThread(Socket client) {
+	public ServerOpenConnectionThread(Socket client, String password) {
 		super();
 		inputSocket = client;
+		this.password = password;
 		try {
-			crypto = new EncryptionEngine(ServerToxicTodo.password);
+			crypto = new EncryptionEngine(this.password);
 		} catch (Exception anEx) {
 			System.err.println("Crypto Error - Unable to load the Encryption Engine");
 		}

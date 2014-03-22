@@ -1,7 +1,6 @@
-package ch.theowinter.ToxicTodo.client;
+package ch.theowinter.ToxicTodo.server;
 
-public class ClientSettings {
-	private final String HOST = "localhost";
+public class ServerSettings {
 	private final int PORT = 5222;
 	private final String password = "secretPassword";
 	private final boolean debug = false;
@@ -10,14 +9,10 @@ public class ClientSettings {
 	 * Empty constructor because we will always load settings directly from the xml file.
 	 * Changing the config during runtime is not supported.
 	 */
-	public ClientSettings() {
+	public ServerSettings() {
 		super();
 	}
-	
-	public String getHOST() {
-		return HOST;
-	}
-	public int getPORT() {
+	public int getPort() {
 		return PORT;
 	}
 	public String getPassword() {
@@ -26,4 +21,5 @@ public class ClientSettings {
 	public boolean isDebug() {
 		return debug;
 	}
+
 }

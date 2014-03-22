@@ -18,21 +18,17 @@ public class ServerToxicTodo {
 	//Server data:
 	static TodoList serverTodoList = new TodoList();
 	static LogicEngine logic = new LogicEngine();
-	public static final String localTodoDataStorage = "ToxicTodo.xml";
-	public final static String password = "secretPassword";
+	static String settingsFile = "server_settings.xml";
+	private static final String todoDataFile = "ToxicTodo.xml";
+	static ServerSettings settings;
 	
 	//Locks
 	private static Semaphore serverRunning = new Semaphore(1);
-	
-	//Connection info:
-	public static final int PORT = 5222;
 
 	public static void main(String[] args) { 
 
 		//Load sample data or stored data
-		if(!firstTimeRun()){
-			serverTodoList = (TodoList)logic.loadXMLFile(localTodoDataStorage);
-		}
+		loadSettings();
 		
 		//Open up a connection:
 		Thread connectionBuilder = new Thread(new ConnectionBuilderThread());
@@ -51,7 +47,7 @@ public class ServerToxicTodo {
 				String input = buffer.readLine();
 				if(input.equals("stop") || input.equals("exit") || input.equals("q")){
 					//Save before shutting the server down
-					logic.saveToXMLFile(serverTodoList, localTodoDataStorage);
+					logic.saveToXMLFile(serverTodoList, todoDataFile);
 		        	
 		        	//After this the main method is finished and the daemon threads get killed
 					serverRunning.acquire();
@@ -62,30 +58,6 @@ public class ServerToxicTodo {
 				System.err.println("InterruptedException");
 			}
 		}
-	}
-	
-	/**
-	 * Load some sample data, when the server is started for the first time.
-	 */
-	private static boolean firstTimeRun(){
-		boolean firstTime = false;
-		File f = new File(localTodoDataStorage);
-		if(!f.exists()){
-			try {
-				serverTodoList.addCategory("School work", "school");
-				serverTodoList.addCategory("Programming stuff", "programming");
-				serverTodoList.addCategory("To buy", "buy");
-				serverTodoList.addTask("school", "Complete exercise 1 for vssprog");
-				serverTodoList.addTask("school", "Complete exercise 1 for parprog");
-				serverTodoList.addTask("programming", "Build better todolist");
-				serverTodoList.addTask("programming", "fix all the bugs");
-				serverTodoList.addTask("buy", "new pens");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			firstTime = true;
-		}
-		return firstTime;
 	}
 	
 	public static void serverPrint(String input){
@@ -110,7 +82,48 @@ public class ServerToxicTodo {
 	}
 	
 	public static void writeChangesToDisk(){
-		logic.saveToXMLFile(serverTodoList, localTodoDataStorage);
+		logic.saveToXMLFile(serverTodoList, todoDataFile);
+	}
+	
+	public static void loadSettings(){
+		if(!firstTimeRun()){
+			settings = (ServerSettings) logic.loadXMLFile(settingsFile);
+		}
+		serverTodoList = (TodoList)logic.loadXMLFile(todoDataFile);
+	}
+
+	/**
+	 * Load some sample data, when the server is started for the first time and
+	 * create a new settings file.
+	 */
+	private static boolean firstTimeRun(){
+		boolean firstTime = false;
+		File settingsOnDisk = new File(settingsFile);
+		if(!settingsOnDisk.exists()){
+			serverPrint("INFORMATION:");
+			serverPrint("server_settings.xml has been created because you run ToxicTodo for the first time.");
+			serverPrint("You can edit the settings to chose your prefered port and encryption password.");
+			firstTime = true;
+			settings = new ServerSettings();
+			logic.saveToXMLFile(settings, settingsFile);
+		}
+		File todoDataOnDisk = new File(todoDataFile);
+		if(!todoDataOnDisk.exists()){
+			try {
+				serverTodoList.addCategory("School work", "school");
+				serverTodoList.addCategory("Programming stuff", "programming");
+				serverTodoList.addCategory("To buy", "buy");
+				serverTodoList.addTask("school", "Complete exercise 1 for vssprog");
+				serverTodoList.addTask("school", "Complete exercise 1 for parprog");
+				serverTodoList.addTask("programming", "Build better todolist");
+				serverTodoList.addTask("programming", "fix all the bugs");
+				serverTodoList.addTask("buy", "new pens");
+				writeChangesToDisk();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return firstTime;
 	}
 
 	static class ConnectionBuilderThread implements Runnable{
@@ -122,13 +135,13 @@ public class ServerToxicTodo {
 				Socket client = new Socket();
 				client.setSoTimeout(100);
 				ServerSocket server;
-				server = new ServerSocket(PORT);
+				server = new ServerSocket(settings.getPort());
 				serverPrint("server> Waiting for client...");
 				
 				client = server.accept();
 				
 				//Open up a connection:
-				Thread serverConnection = new Thread(new ServerOpenConnectionThread(client));
+				Thread serverConnection = new Thread(new ServerOpenConnectionThread(client, settings.getPassword()));
 				serverConnection.setDaemon(true);
 				serverConnection.start();
 
