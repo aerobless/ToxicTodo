@@ -82,9 +82,7 @@ public class ClientTodoManager {
 		//Use inListActionHandler to check if user wants to remove or complete as task, if empty enter --> the program exits
 		return inListActionHandler(localCategoryBinding, localTaskBinding);
 	}
-	
-	
-	
+
 	//inListActionHandler belongs to drawTodoList
 	private ToxicDatagram inListActionHandler(ArrayList<String> localCategoryBinding, ArrayList<TodoTask> localTaskBinding){
 		ToxicDatagram datagram = null;

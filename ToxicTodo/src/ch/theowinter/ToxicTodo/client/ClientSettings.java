@@ -1,10 +1,10 @@
 package ch.theowinter.ToxicTodo.client;
 
 public class ClientSettings {
-	private final String HOST = "localhost";
-	private final int PORT = 5222;
-	private final String password = "secretPassword";
-	private final boolean debug = false;
+	private String HOST = "localhost";
+	private int PORT = 5222;
+	private String password = "secretPassword";
+	private boolean debug = false;
 	
 	/** 
 	 * Empty constructor because we will always load settings directly from the xml file.

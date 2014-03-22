@@ -1,9 +1,9 @@
 package ch.theowinter.ToxicTodo.server;
 
 public class ServerSettings {
-	private final int PORT = 5222;
-	private final String password = "secretPassword";
-	private final boolean debug = false;
+	private int PORT = 5222;
+	private String password = "secretPassword";
+	private boolean debug = false;
 	
 	/** 
 	 * Empty constructor because we will always load settings directly from the xml file.
