@@ -18,7 +18,7 @@ public class ServerToxicTodo {
 	//Server data:
 	static TodoList serverTodoList = new TodoList();
 	static LogicEngine logic = new LogicEngine();
-	static String settingsFile = "server_settings.xml";
+	static String settingsFile = "server_config.xml";
 	private static final String todoDataFile = "ToxicTodo.xml";
 	static ServerSettings settings;
 	
