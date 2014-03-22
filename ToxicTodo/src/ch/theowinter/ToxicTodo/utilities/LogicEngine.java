@@ -3,6 +3,8 @@ package ch.theowinter.ToxicTodo.utilities;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import ch.theowinter.ToxicTodo.client.ClientSettings;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoCategory;
@@ -97,8 +99,16 @@ public class LogicEngine {
 		return loadedObject;
 	}
 	
-	public String getJarDirectory(){
-		return LogicEngine.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString();
+	public String getJarDirectory(String filename){
+		URL jarLocation = LogicEngine.class.getProtectionDomain().getCodeSource().getLocation();
+		URL dataXML = null;
+		try {
+			dataXML = new URL(jarLocation, filename);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dataXML.getPath();
 	}
 	
 }

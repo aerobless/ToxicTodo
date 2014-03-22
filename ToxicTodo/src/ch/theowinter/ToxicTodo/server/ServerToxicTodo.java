@@ -18,8 +18,8 @@ public class ServerToxicTodo {
 	//Server data:
 	static TodoList serverTodoList = new TodoList();
 	static LogicEngine logic = new LogicEngine();
-	static String settingsFile = logic.getJarDirectory()+"/"+"server_config.xml";
-	private static final String todoDataFile = logic.getJarDirectory()+"/"+"ToxicTodo.xml";
+	static String settingsFile = logic.getJarDirectory("server_config.xml");
+	private static final String todoDataFile = logic.getJarDirectory("ToxicTodo.xml");
 	static ServerSettings settings;
 	
 	//Locks
@@ -101,7 +101,7 @@ public class ServerToxicTodo {
 		File settingsOnDisk = new File(settingsFile);
 		if(!settingsOnDisk.exists()){
 			serverPrint("INFORMATION:");
-			serverPrint("server_settings.xml has been created because you run ToxicTodo for the first time.");
+			serverPrint("server_config.xml has been created because you run ToxicTodo for the first time.");
 			serverPrint("You can edit the settings to chose your prefered port and encryption password.");
 			firstTime = true;
 			settings = new ServerSettings();
