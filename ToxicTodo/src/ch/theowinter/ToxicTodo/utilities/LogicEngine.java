@@ -97,4 +97,8 @@ public class LogicEngine {
 		return loadedObject;
 	}
 	
+	public String getJarDirectory(){
+		return LogicEngine.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString();
+	}
+	
 }

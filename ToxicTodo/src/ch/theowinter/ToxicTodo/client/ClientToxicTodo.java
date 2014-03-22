@@ -24,7 +24,7 @@ public class ClientToxicTodo {
 	private static EncryptionEngine crypto;
 	
 	//Settings
-	private final static String settingsFile = "client_config.xml";
+	private final static String settingsFile = logic.getJarDirectory()+"/"+"client_config.xml";
 	private static ClientSettings settings;
 
 	public static void main(String[] args) {
