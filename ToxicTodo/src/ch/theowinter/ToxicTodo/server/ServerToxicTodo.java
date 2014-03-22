@@ -19,7 +19,7 @@ public class ServerToxicTodo {
 	static TodoList serverTodoList = new TodoList();
 	static LogicEngine logic = new LogicEngine();
 	public static final String localTodoDataStorage = "ToxicTodo.xml";
-	public final static String password = "thisShouldBeSavedInAConfig";
+	public final static String password = "secretPassword";
 	
 	//Locks
 	private static Semaphore serverRunning = new Semaphore(1);
