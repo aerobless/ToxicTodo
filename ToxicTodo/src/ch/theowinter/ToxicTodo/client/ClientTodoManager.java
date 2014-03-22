@@ -27,6 +27,7 @@ public class ClientTodoManager {
 		ClientToxicTodo.print("app started", false);
 		if(args.length == 0){
 			ClientToxicTodo.print("Toxic Todo Version 0.2 - Please specify some arguments first.");
+			datagram = drawTodoList(false);			
 		}
 		else if(args[0].equals("list")){
 			datagram = drawTodoList(false);

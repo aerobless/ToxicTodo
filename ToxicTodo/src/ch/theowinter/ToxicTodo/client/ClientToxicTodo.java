@@ -40,7 +40,7 @@ public class ClientToxicTodo {
 		todoManager = new ClientTodoManager(sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "")));
 		
 		//2. Run manipulations (add/remove/etc.)
-		ToxicDatagram datagramForServer = todoManager.run(new String[]{"list"});
+		ToxicDatagram datagramForServer = todoManager.run(args);
 		
 		//3. Return answer to the server unless we're finished
 		if(datagramForServer != null){
