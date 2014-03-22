@@ -1,5 +1,17 @@
 package ch.theowinter.ToxicTodo.utilities;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import ch.theowinter.ToxicTodo.client.ClientSettings;
+import ch.theowinter.ToxicTodo.utilities.primitives.TodoCategory;
+import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
+import ch.theowinter.ToxicTodo.utilities.primitives.TodoTask;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.StaxDriver;
+
 public class LogicEngine {
 
     /**
@@ -33,4 +45,56 @@ public class LogicEngine {
     	}
 		return concatenatedArray;
     }
+    
+    
+    /**
+     * Save something as xml file.
+     * @param inputObject
+     * @param filename
+     */
+    public void saveToXMLFile(Object inputObject, String filename){
+		FileOutputStream fos = null;
+		try {
+		    fos = new FileOutputStream(filename);
+		    byte[] bytes = serializeToXML(inputObject).getBytes("UTF-8");
+		    fos.write(bytes);
+
+		} catch(Exception e) {
+			System.err.println("Error: Can't save the file.");
+		} finally {
+		    if(fos!=null) {
+		        try{ 
+		            fos.close();
+		        } catch (IOException e) {
+		        	System.err.println("Error: Can't close File Output Stream");
+		        }
+		    }
+		}
+	}
+	
+	private String serializeToXML(Object input){
+		XStream saveXStream = new XStream(new StaxDriver());
+		saveXStream.alias("list", TodoList.class);
+		saveXStream.alias("category", TodoCategory.class);
+		saveXStream.alias("task", TodoTask.class);	
+		saveXStream.alias("client_settings", ClientSettings.class);
+		return saveXStream.toXML(input);
+	}
+	
+	/**
+	 * Load something from a xml file.
+	 * @param filename
+	 * @return
+	 */
+	public Object loadXMLFile(String filename){
+		File xmlFile = new File(filename);
+		XStream loadXStream = new XStream(new StaxDriver());
+		loadXStream.alias("list", TodoList.class);
+		loadXStream.alias("category", TodoCategory.class);
+		loadXStream.alias("task", TodoTask.class);	
+		loadXStream.alias("client_settings", ClientSettings.class);
+		Object loadedObject = loadXStream.fromXML(xmlFile);
+		return loadedObject;
+	}
+	
 }

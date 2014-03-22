@@ -13,11 +13,6 @@ import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoTask;
 
 public class ToxicTodo_UnitTest {
-
-	@Test
-	public void createNewTodoList(){
-		TodoList todoList = new TodoList();
-	}
 	
 	@Test
 	public void addCategoryToTodoList(){

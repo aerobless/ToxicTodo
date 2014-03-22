@@ -3,7 +3,6 @@ package ch.theowinter.ToxicTodo.server;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,16 +11,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.Semaphore;
 
-import ch.theowinter.ToxicTodo.utilities.primitives.TodoCategory;
+import ch.theowinter.ToxicTodo.utilities.LogicEngine;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
-import ch.theowinter.ToxicTodo.utilities.primitives.TodoTask;
-
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 public class ServerToxicTodo {
 	//Server data:
 	static TodoList serverTodoList = new TodoList();
+	static LogicEngine logic = new LogicEngine();
 	public static final String localTodoDataStorage = "ToxicTodo.xml";
 	public final static String password = "thisShouldBeSavedInAConfig";
 	
@@ -35,7 +31,7 @@ public class ServerToxicTodo {
 
 		//Load sample data or stored data
 		if(!firstTimeRun()){
-			serverTodoList = (TodoList)loadXMLFile(localTodoDataStorage);
+			serverTodoList = (TodoList)logic.loadXMLFile(localTodoDataStorage);
 		}
 		
 		//Open up a connection:
@@ -55,7 +51,7 @@ public class ServerToxicTodo {
 				String input = buffer.readLine();
 				if(input.equals("stop") || input.equals("exit") || input.equals("q")){
 					//Save before shutting the server down
-		        	saveToXMLFile(serverTodoList, localTodoDataStorage);
+					logic.saveToXMLFile(serverTodoList, localTodoDataStorage);
 		        	
 		        	//After this the main method is finished and the daemon threads get killed
 					serverRunning.acquire();
@@ -66,44 +62,6 @@ public class ServerToxicTodo {
 				System.err.println("InterruptedException");
 			}
 		}
-	}
-	
-	static void saveToXMLFile(Object inputObject, String filename){
-		FileOutputStream fos = null;
-		try {
-		    fos = new FileOutputStream(filename);
-		    byte[] bytes = serializeToXML(inputObject).getBytes("UTF-8");
-		    fos.write(bytes);
-
-		} catch(Exception e) {
-			System.err.println("Error: Can't save the file.");
-		} finally {
-		    if(fos!=null) {
-		        try{ 
-		            fos.close();
-		        } catch (IOException e) {
-		        	System.err.println("Error: Can't close File Output Stream");
-		        }
-		    }
-		}
-	}
-	
-	private static String serializeToXML(Object input){
-		XStream saveXStream = new XStream(new StaxDriver());
-		saveXStream.alias("list", TodoList.class);
-		saveXStream.alias("category", TodoCategory.class);
-		saveXStream.alias("task", TodoTask.class);		
-		return saveXStream.toXML(input);
-	}
-	
-	private static Object loadXMLFile(String filename){
-		File xmlFile = new File(filename);
-		XStream loadXStream = new XStream(new StaxDriver());
-		loadXStream.alias("list", TodoList.class);
-		loadXStream.alias("category", TodoCategory.class);
-		loadXStream.alias("task", TodoTask.class);	
-		Object loadedObject = loadXStream.fromXML(xmlFile);
-		return loadedObject;
 	}
 	
 	/**
@@ -152,7 +110,7 @@ public class ServerToxicTodo {
 	}
 	
 	public static void writeChangesToDisk(){
-		saveToXMLFile(serverTodoList, localTodoDataStorage);
+		logic.saveToXMLFile(serverTodoList, localTodoDataStorage);
 	}
 
 	static class ConnectionBuilderThread implements Runnable{

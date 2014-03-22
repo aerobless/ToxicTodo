@@ -1,5 +1,6 @@
 package ch.theowinter.ToxicTodo.client;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -12,24 +13,26 @@ import javax.crypto.SealedObject;
 import org.fusesource.jansi.AnsiConsole;
 
 import ch.theowinter.ToxicTodo.utilities.EncryptionEngine;
+import ch.theowinter.ToxicTodo.utilities.LogicEngine;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
 import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
 
 public class ClientToxicTodo {
 	//Local storage
+	private static LogicEngine logic = new LogicEngine();
 	private static ClientTodoManager todoManager;
 	private static EncryptionEngine crypto;
 	
 	//Settings
-	private final static String HOST = "192.168.0.134";
-	private final static int PORT = 5222;
-	private final static String password = "thisShouldBeSavedInAConfig";
-	public static boolean debug = false;
+	private final static String settingsFile = "client_config.xml";
+	private static ClientSettings settings;
 
 	public static void main(String[] args) {
 		//0. Load config & init stuff
+		loadSettings();
+		
 		try {
-			crypto = new EncryptionEngine(password);
+			crypto = new EncryptionEngine(settings.getPassword());
 		} catch (Exception anEx) {
 			System.err.println("Crypto Error - Unable to load the Encryption Engine");
 		}
@@ -68,13 +71,13 @@ public class ClientToxicTodo {
 		TodoList todoList = null;
 		if(encryptedData!=null){
 			try {
-		    	Socket s = new Socket(HOST, PORT);  
+		    	Socket s = new Socket(settings.getHOST(), settings.getPORT());  
 		    	OutputStream os = s.getOutputStream();  
 		    	ObjectOutputStream oos = new ObjectOutputStream(os);  
 		
 				oos.writeObject(encryptedData);
 				
-				print("Request sent - awaiting server response", debug);
+				print("Request sent - awaiting server response", settings.isDebug());
 				
 				InputStream is = s.getInputStream();  
 	        	ObjectInputStream ois = new ObjectInputStream(is);
@@ -91,7 +94,7 @@ public class ClientToxicTodo {
 	    		}
 	        	
 	        	todoList = dataFromServer.getTodoList();
-	        	print("Received response from server: "+dataFromServer.getServerControlMessage(), debug);
+	        	print("Received response from server: "+dataFromServer.getServerControlMessage(), settings.isDebug());
 				
 		    	oos.close();  
 		    	os.close();  
@@ -111,8 +114,33 @@ public class ClientToxicTodo {
 	
 	public static void print(String input, boolean debug){
 		if(debug == true){
-			//TODO: add support for colours and stuff
 			System.out.println("DEBUG INFO:"+input);
 		}
+	}
+	
+	public static void loadSettings(){
+		if(!firstTimeRun()){
+			settings = (ClientSettings) logic.loadXMLFile(settingsFile);
+		}
+	}
+	
+	public static boolean firstTimeRun(){
+		boolean firstTime = false;
+		File f = new File(settingsFile);
+		if(!f.exists()){
+			print("INFORMATION:");
+			print("client_settings.xml has been created because you run ToxicTodo for the first time.");
+			print("Please edit the settings to chose your own server & port. - Localhost can be used for testing only.");
+			firstTime = true;
+			settings = new ClientSettings();
+			logic.saveToXMLFile(settings, settingsFile);
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return firstTime;
 	}
 }
