@@ -21,7 +21,7 @@ public class ClientToxicTodo {
 	private static EncryptionEngine crypto;
 	
 	//Settings
-	private final static String HOST = "localhost";
+	private final static String HOST = "192.168.0.134";
 	private final static int PORT = 5222;
 	private final static String password = "thisShouldBeSavedInAConfig";
 	public static boolean debug = false;

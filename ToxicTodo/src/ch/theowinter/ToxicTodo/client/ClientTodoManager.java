@@ -100,9 +100,9 @@ public class ClientTodoManager {
 			else if (userInputArray[0].equals("remove") && userInputArray[1].equals("category")){
 					datagram = removeCategory(userInputArray);		
 				}
-			else if (userInputArray[0].equals("complete")){
+			else if (userInputArray[0].equals("complete") && userInputArray[1].equals("task")){
 				try{
-					int userChoice = Integer.parseInt(userInputArray[1]);
+					int userChoice = Integer.parseInt(userInputArray[2]);
 					if(userChoice<=localCategoryBinding.size()){
 						datagram = new ToxicDatagram("REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER", "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1)); 
 					}
@@ -114,9 +114,9 @@ public class ClientTodoManager {
 				}
 			}
 			
-			else if (userInputArray[0].equals("remove")){
+			else if (userInputArray[0].equals("remove") && userInputArray[1].equals("task")){
 				try{
-					int userChoice = Integer.parseInt(userInputArray[1]);
+					int userChoice = Integer.parseInt(userInputArray[2]);
 					if(userChoice<=localCategoryBinding.size()){
 						datagram = new ToxicDatagram("REMOVE_TASK_ON_SERVER", "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1));	
 					}
