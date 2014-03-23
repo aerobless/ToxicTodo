@@ -22,33 +22,33 @@ public class ClientTodoManager {
 		this.todoList = todoList;
 	}
 	
-	public ToxicDatagram run(String[] args){
+	public ToxicDatagram run(String[] arguments){
 		ToxicDatagram datagram = null;
 		ClientToxicTodo.print("app started", false);
-		if(args.length == 0){
+		if(arguments.length == 0){
 			ClientToxicTodo.print("Toxic Todo Version 0.2 - Please specify some arguments first.");
 			datagram = drawTodoList(false);			
 		}
-		else if(args[0].equals("list")){
+		else if(arguments[0].equals("list")){
 			datagram = drawTodoList(false);
 		}
-		else if(args[0].equals("clist")){
+		else if(arguments[0].equals("clist")){
 			//Display complete list
 			datagram = drawTodoList(true);
 		}
-		else if(args[0].equals("remove")){
-			datagram = removeCategory(args);
+		else if(arguments[0].equals("remove")){
+			datagram = removeCategory(arguments);
 		}
-		else if(args[0].equals("add")){
-			if(args.length>=2 && args[1].equals("category")){
-				datagram = addCategory(args);
+		else if(arguments[0].equals("add")){
+			if(arguments.length>=2 && arguments[1].equals("category")){
+				datagram = addCategory(arguments);
 			}
 			else{
-				datagram = addTask(args);
+				datagram = addTask(arguments);
 			}
 		}
 		else{
-			ClientToxicTodo.print("This command: "+args[0]+" does not exist.");
+			ClientToxicTodo.print("This command: "+arguments[0]+" does not exist.");
 		}
 		return datagram;
 	}
