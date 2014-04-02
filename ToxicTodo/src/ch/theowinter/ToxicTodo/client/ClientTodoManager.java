@@ -13,9 +13,14 @@ import ch.theowinter.ToxicTodo.utilities.primitives.TodoTask;
 import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
 
 public class ClientTodoManager {
-	TodoList todoList;
+	//Integrated Systems
 	private LogicEngine logic = new LogicEngine();
 	private JansiFormats jansi = new JansiFormats();
+	
+	//Class variables
+	TodoList todoList;
+	ArrayList<String> localCategoryBinding;
+	ArrayList<TodoTask> localTaskBinding;
 
 	public ClientTodoManager(TodoList todoList) {
 		super();
@@ -59,8 +64,8 @@ public class ClientTodoManager {
 	 */
 	private ToxicDatagram drawTodoList(boolean displayEmptyCategories){
 		//Used for local bindings when we want to delete a task by entering 1
-		ArrayList<String> localCategoryBinding = new ArrayList<String>();
-		ArrayList<TodoTask> localTaskBinding = new ArrayList<TodoTask>();
+		ArrayList<String> internalCategoryBinding = new ArrayList<String>();
+		ArrayList<TodoTask> internalTaskBinding = new ArrayList<TodoTask>();
 		
 		//Clear ANSI console
 		ClientToxicTodo.print(jansi.ANSI_CLS);
@@ -75,23 +80,26 @@ public class ClientTodoManager {
 					++taskID;
 					ClientToxicTodo.print(jansi.GREEN+"    ["+taskID+"] "+todoList.getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey).getTaskText()+jansi.ANSI_NORMAL);
 					//adding task to local bindings map
-					localCategoryBinding.add(categoryKey);
-					localTaskBinding.add(todoList.getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey));
+					internalCategoryBinding.add(categoryKey);
+					internalTaskBinding.add(todoList.getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey));
 				}
 			}
 		}
-		//Use inListActionHandler to check if user wants to remove or complete as task, if empty enter --> the program exits
-		return commandHandler(localCategoryBinding, localTaskBinding);
+		//Update local bindings:
+		localCategoryBinding = internalCategoryBinding;
+		localTaskBinding = internalTaskBinding;
+		return commandHandler();
 	}
 
-	private ToxicDatagram commandHandler(ArrayList<String> localCategoryBinding, ArrayList<TodoTask> localTaskBinding){
+	private ToxicDatagram commandHandler(){
 		ToxicDatagram datagram = null;
 		String[] userInputArray  = readInput().split(" ");
-		// adding task -  "add school xy" = 3args
+		
+		
 		if(userInputArray.length>=3){
-			if(userInputArray[0].equals("add") && userInputArray[1].equals("category")){
+			if(argCheck(new String[]{"add","category","arg", "args"}, userInputArray)){
 				datagram = addCategory(userInputArray);
-				}
+			}
 			else if(userInputArray[0].equals("add")){
 				datagram = addTask(userInputArray);
 				}
@@ -127,6 +135,21 @@ public class ClientTodoManager {
 			}
 		}
 		return datagram;
+	}
+	
+	private boolean argCheck(String[] commands, String[] userArgs){
+		boolean success = true;
+		if(commands.length <= userArgs.length){
+			for(int i = 0; i<commands.length; i++){
+				if(!(commands[i].equals(userArgs[i]) || commands[i].equals("args")|| commands[i].equals("arg"))){
+					success = false;
+				}
+			}
+		}
+		else{
+			success = false;
+		}
+		return success;
 	}
 	
 	private ToxicDatagram addTask(String[] args){
