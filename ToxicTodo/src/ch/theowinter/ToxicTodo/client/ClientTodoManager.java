@@ -94,38 +94,34 @@ public class ClientTodoManager {
 	private ToxicDatagram commandHandler(){
 		ToxicDatagram datagram = null;
 		String[] userInputArray  = readInput().split(" ");
-
-		if(userInputArray.length>=3){
-			if(argCheck(new String[]{"add","category","arg", "args"}, userInputArray)){
-				datagram = addCategory(userInputArray);
-			}
-			else if(argCheck(new String[]{"add","arg", "args"}, userInputArray)){
-				datagram = addTask(userInputArray);
-			}
-			else if(argCheck(new String[]{"remove","category", "arg"}, userInputArray)){
-				datagram = removeCategory(userInputArray);	
-			}
-			else if(argCheck(new String[]{"complete","task", "arg"}, userInputArray)){
-				datagram = removeTask(userInputArray, true);
-			}
-			else if(argCheck(new String[]{"remove","task", "arg"}, userInputArray)){
-				datagram = removeTask(userInputArray, false);
-			}
+		if(argCheck(new String[]{"add","category","arg", "args"}, userInputArray)){
+			datagram = addCategory(userInputArray);
+		}
+		else if(argCheck(new String[]{"add","arg", "args"}, userInputArray)){
+			datagram = addTask(userInputArray);
+		}
+		else if(argCheck(new String[]{"remove","category", "arg"}, userInputArray)){
+			datagram = removeCategory(userInputArray);	
+		}
+		else if(argCheck(new String[]{"complete","task", "arg"}, userInputArray)){
+			datagram = removeTask(userInputArray, true);
+		}
+		else if(argCheck(new String[]{"remove","task", "arg"}, userInputArray)){
+			datagram = removeTask(userInputArray, false);
 		}
 		return datagram;
 	}
 
-	private ToxicDatagram removeTask(String[] userInputArray, boolean log) {
+	private ToxicDatagram removeTask(String[] userInputArray, boolean writeToLog) {
 		ToxicDatagram datagram = null;
 		try{
 			int userChoice = Integer.parseInt(userInputArray[2]);
 			if(userChoice<=localCategoryBinding.size()){
-				if(log){
-					datagram = new ToxicDatagram("REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER", "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1)); 
+				String dataMessage = "REMOVE_TASK_ON_SERVER";
+				if(writeToLog){
+					dataMessage = "REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER";
 				}
-				else{
-					datagram = new ToxicDatagram("REMOVE_TASK_ON_SERVER", "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1));	
-				}
+				datagram = new ToxicDatagram(dataMessage, "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1));	
 			}
 			else{
 				ClientToxicTodo.print("There's no task with that ID.");
