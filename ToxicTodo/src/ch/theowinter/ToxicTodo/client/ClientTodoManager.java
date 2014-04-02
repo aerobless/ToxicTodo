@@ -94,45 +94,44 @@ public class ClientTodoManager {
 	private ToxicDatagram commandHandler(){
 		ToxicDatagram datagram = null;
 		String[] userInputArray  = readInput().split(" ");
-		
-		
+
 		if(userInputArray.length>=3){
 			if(argCheck(new String[]{"add","category","arg", "args"}, userInputArray)){
 				datagram = addCategory(userInputArray);
 			}
-			else if(userInputArray[0].equals("add")){
+			else if(argCheck(new String[]{"add","arg", "args"}, userInputArray)){
 				datagram = addTask(userInputArray);
+			}
+			else if(argCheck(new String[]{"remove","category", "arg"}, userInputArray)){
+				datagram = removeCategory(userInputArray);	
+			}
+			else if(argCheck(new String[]{"complete","task", "arg"}, userInputArray)){
+				datagram = removeTask(userInputArray, true);
+			}
+			else if(argCheck(new String[]{"remove","task", "arg"}, userInputArray)){
+				datagram = removeTask(userInputArray, false);
+			}
+		}
+		return datagram;
+	}
+
+	private ToxicDatagram removeTask(String[] userInputArray, boolean log) {
+		ToxicDatagram datagram = null;
+		try{
+			int userChoice = Integer.parseInt(userInputArray[2]);
+			if(userChoice<=localCategoryBinding.size()){
+				if(log){
+					datagram = new ToxicDatagram("REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER", "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1)); 
 				}
-			else if (userInputArray[0].equals("remove") && userInputArray[1].equals("category")){
-					datagram = removeCategory(userInputArray);		
-				}
-			else if (userInputArray[0].equals("complete") && userInputArray[1].equals("task")){
-				try{
-					int userChoice = Integer.parseInt(userInputArray[2]);
-					if(userChoice<=localCategoryBinding.size()){
-						datagram = new ToxicDatagram("REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER", "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1)); 
-					}
-					else{
-						ClientToxicTodo.print("There's no task with that ID.");
-					}
-				} catch(NumberFormatException e){
-					ClientToxicTodo.print("Please enter a valid number.");
+				else{
+					datagram = new ToxicDatagram("REMOVE_TASK_ON_SERVER", "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1));	
 				}
 			}
-			
-			else if (userInputArray[0].equals("remove") && userInputArray[1].equals("task")){
-				try{
-					int userChoice = Integer.parseInt(userInputArray[2]);
-					if(userChoice<=localCategoryBinding.size()){
-						datagram = new ToxicDatagram("REMOVE_TASK_ON_SERVER", "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1));	
-					}
-					else{
-						ClientToxicTodo.print("There's no task with that ID.");
-					}
-				} catch(NumberFormatException e){
-					ClientToxicTodo.print("Please enter a valid number.");
-				}
+			else{
+				ClientToxicTodo.print("There's no task with that ID.");
 			}
+		} catch(NumberFormatException e){
+			ClientToxicTodo.print("Please enter a valid number.");
 		}
 		return datagram;
 	}
