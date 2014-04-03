@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import ch.theowinter.ToxicTodo.utilities.JansiFormats;
 import ch.theowinter.ToxicTodo.utilities.LogicEngine;
@@ -108,6 +109,9 @@ public class ClientTodoManager {
 		}
 		else if(argCheck(new String[]{"remove","task", "arg"}, userInputArray)){
 			datagram = removeTask(userInputArray, false);
+		}
+		else {
+			ClientToxicTodo.print("Your command: "+Arrays.toString(userInputArray) +" was not recognized.");
 		}
 		return datagram;
 	}
