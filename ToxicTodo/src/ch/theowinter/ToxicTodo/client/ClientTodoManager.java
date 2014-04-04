@@ -75,13 +75,21 @@ public class ClientTodoManager {
 		return commandHandler();
 	}
 	
+	/**
+	 * Draws all categories (incl. empty categories) and lists their keyword
+	 * and how many active tasks they contain.
+	 * @return launches the commandHandler() which in turn returns a datagram containing instructions for the server.
+	 */
 	private ToxicDatagram drawCategories(){
 		//Clear ANSI console
 		ClientToxicTodo.print(jansi.ANSI_CLS);
 		for(String categoryKey : todoList.getCategoryMap().keySet()){
-			String category = todoList.getCategoryMap().get(categoryKey).getName().toUpperCase();
+			String category = todoList.getCategoryMap().get(categoryKey).getName();
+			String space = "  ";
 			int nofTasks = todoList.getCategoryMap().get(categoryKey).getTasksHashMap().keySet().size();
-			ClientToxicTodo.print(jansi.ANSI_BOLD+jansi.CYAN+categoryKey+jansi.ANSI_NORMAL+" contains "+nofTasks+" tasks. "+"Description: "+category);
+			ClientToxicTodo.print(jansi.ANSI_BOLD+jansi.CYAN+"[<-"+category+"->]"+jansi.ANSI_NORMAL);
+			ClientToxicTodo.print(jansi.GREEN+space+"Category Key: "+categoryKey+jansi.ANSI_NORMAL);
+			ClientToxicTodo.print(jansi.GREEN+space+"Number of active tasks: "+nofTasks);
 		}
 		return commandHandler();
 	}
