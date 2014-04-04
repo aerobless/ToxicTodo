@@ -102,6 +102,7 @@ public class ClientTodoManager {
 		String[] userInputArray  = readInput().split(" ");
 		return commandHandler(userInputArray);
 	}
+	
 	/* 
 	 * Originally intended to handle the remove command. Then I refactored it to handle all commands
 	 * from the list view. But now I've decided to let it handle all commands over the entire client-side.
