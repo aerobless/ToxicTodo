@@ -40,6 +40,7 @@ public class ClientToxicTodo {
 		} catch (Exception anEx) {
 			System.err.println("Crypto Error - Unable to load the Encryption Engine");
 		}
+		
 		//1. GET todo-LIST from server
 		todoManager = new ClientTodoManager(sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "")));
 		
