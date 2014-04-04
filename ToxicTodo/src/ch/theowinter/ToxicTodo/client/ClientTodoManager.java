@@ -41,6 +41,50 @@ public class ClientTodoManager {
 		return datagram;
 	}
 	
+	/* 
+	 * Originally intended to handle the remove command. Then I refactored it to handle all commands
+	 * from the list view. But now I've decided to let it handle all commands over the entire client-side.
+	 * So even commandline-args get handled here.
+	 */
+	/**
+	 * Handles commands issued by the user as commandline arg or in list-view.
+	 * @return datagram if the command was successfully recognize, otherwise null.
+	 */
+	private ToxicDatagram commandHandler(String[] userInputArray){
+		ToxicDatagram datagram = null;
+		if(argCheck(new String[]{"add","category","arg", "args"}, userInputArray)){
+			datagram = addCategory(userInputArray);
+		}
+		else if(argCheck(new String[]{"add","arg", "args"}, userInputArray)){
+			datagram = addTask(userInputArray);
+		}
+		else if(argCheck(new String[]{"remove","category", "arg"}, userInputArray)){
+			datagram = removeCategory(userInputArray);	
+		}
+		else if(argCheck(new String[]{"complete","task", "arg"}, userInputArray)){
+			datagram = removeTask(userInputArray[2], true);
+		}
+		else if(argCheck(new String[]{"complete", "arg"}, userInputArray)){
+			datagram = removeTask(userInputArray[1], true);
+		}
+		else if(argCheck(new String[]{"remove","task", "arg"}, userInputArray)){
+			datagram = removeTask(userInputArray[2], false);
+		}
+		else if(argCheck(new String[]{"remove", "arg"}, userInputArray)){
+			datagram = removeTask(userInputArray[1], false);
+		}
+		else if(argCheck(new String[]{"categories"}, userInputArray)||argCheck(new String[]{"list", "categories"}, userInputArray)){
+			drawCategories();
+		}
+		else if(argCheck(new String[]{"about"}, userInputArray)||argCheck(new String[]{"info"}, userInputArray)||argCheck(new String[]{"identify"}, userInputArray)){
+			drawAbout();
+		}
+		else if(userInputArray.length>=1 && !userInputArray[0].equals("")){
+			ClientToxicTodo.print("Your command: "+Arrays.toString(userInputArray) +" was not recognized.");
+		}
+		return datagram;
+	}
+	
 	/**
 	 * Draws the todoList, that means all categories that contain tasks unless you specify that you also want
 	 * to list categories that are empty by setting "displayEmptyCategories" to true.
@@ -94,6 +138,16 @@ public class ClientTodoManager {
 		return commandHandler();
 	}
 	
+	private void drawAbout(){
+		//Clear ANSI console
+		ClientToxicTodo.print(jansi.ANSI_CLS);
+		ClientToxicTodo.print(jansi.ANSI_BOLD+jansi.CYAN+"### - ABOUT TOXIC TODO - ###");
+		String space = "  ";
+		ClientToxicTodo.print(jansi.GREEN+space+"Version: "+ClientToxicTodo.versionNumber);
+		ClientToxicTodo.print(jansi.GREEN+space+"Author:  "+ClientToxicTodo.author);
+		ClientToxicTodo.print(jansi.GREEN+space+"Website: "+ClientToxicTodo.website);
+	}
+	
 	/**
 	 * Waits for user input and then handles it through the main commandHandler.
 	 * @return datagram if the command was successfully recognize, otherwise null.
@@ -101,47 +155,6 @@ public class ClientTodoManager {
 	private ToxicDatagram commandHandler(){
 		String[] userInputArray  = readInput().split(" ");
 		return commandHandler(userInputArray);
-	}
-	
-	/* 
-	 * Originally intended to handle the remove command. Then I refactored it to handle all commands
-	 * from the list view. But now I've decided to let it handle all commands over the entire client-side.
-	 * So even commandline-args get handled here.
-	 */
-	/**
-	 * Handles commands issued by the user as commandline arg or in list-view.
-	 * @return datagram if the command was successfully recognize, otherwise null.
-	 */
-	private ToxicDatagram commandHandler(String[] userInputArray){
-		ToxicDatagram datagram = null;
-		if(argCheck(new String[]{"add","category","arg", "args"}, userInputArray)){
-			datagram = addCategory(userInputArray);
-		}
-		else if(argCheck(new String[]{"add","arg", "args"}, userInputArray)){
-			datagram = addTask(userInputArray);
-		}
-		else if(argCheck(new String[]{"remove","category", "arg"}, userInputArray)){
-			datagram = removeCategory(userInputArray);	
-		}
-		else if(argCheck(new String[]{"complete","task", "arg"}, userInputArray)){
-			datagram = removeTask(userInputArray[2], true);
-		}
-		else if(argCheck(new String[]{"complete", "arg"}, userInputArray)){
-			datagram = removeTask(userInputArray[1], true);
-		}
-		else if(argCheck(new String[]{"remove","task", "arg"}, userInputArray)){
-			datagram = removeTask(userInputArray[2], false);
-		}
-		else if(argCheck(new String[]{"remove", "arg"}, userInputArray)){
-			datagram = removeTask(userInputArray[1], false);
-		}
-		else if(argCheck(new String[]{"categories"}, userInputArray)||argCheck(new String[]{"list", "categories"}, userInputArray)){
-			drawCategories();
-		}
-		else if(userInputArray.length>=1 && !userInputArray[0].equals("")){
-			ClientToxicTodo.print("Your command: "+Arrays.toString(userInputArray) +" was not recognized.");
-		}
-		return datagram;
 	}
 
 	private ToxicDatagram removeTask(String task, boolean writeToLog) {
