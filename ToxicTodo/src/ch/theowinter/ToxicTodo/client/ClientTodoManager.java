@@ -59,7 +59,7 @@ public class ClientTodoManager {
 			//Only list category if it contains tasks or we want to display empty categories too.
 			if(todoList.getCategoryMap().get(categoryKey).containsTasks() || displayEmptyCategories==true){
 				ClientToxicTodo.print(jansi.ANSI_BOLD+jansi.CYAN+"###-"+todoList.getCategoryMap().get(categoryKey).getName().toUpperCase()+"-###"+jansi.ANSI_NORMAL);
-				todoList.getCategoryMap().get(categoryKey).getTasksHashMap();
+				//todoList.getCategoryMap().get(categoryKey).getTasksHashMap();
 				for(String taskKey : todoList.getCategoryMap().get(categoryKey).getTasksHashMap().keySet()){
 					++taskID;
 					ClientToxicTodo.print(jansi.GREEN+"    ["+taskID+"] "+todoList.getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey).getTaskText()+jansi.ANSI_NORMAL);
@@ -75,12 +75,22 @@ public class ClientTodoManager {
 		return commandHandler();
 	}
 	
+	private ToxicDatagram drawCategories(){
+		//Clear ANSI console
+		ClientToxicTodo.print(jansi.ANSI_CLS);
+		for(String categoryKey : todoList.getCategoryMap().keySet()){
+			String category = todoList.getCategoryMap().get(categoryKey).getName().toUpperCase();
+			int nofTasks = todoList.getCategoryMap().get(categoryKey).getTasksHashMap().keySet().size();
+			ClientToxicTodo.print(jansi.ANSI_BOLD+jansi.CYAN+categoryKey+jansi.ANSI_NORMAL+" contains "+nofTasks+" tasks. "+"Description: "+category);
+		}
+		return commandHandler();
+	}
+	
 	/**
 	 * Waits for user input and then handles it through the main commandHandler.
 	 * @return datagram if the command was successfully recognize, otherwise null.
 	 */
 	private ToxicDatagram commandHandler(){
-		System.out.println("HERE");
 		String[] userInputArray  = readInput().split(" ");
 		return commandHandler(userInputArray);
 	}
@@ -89,7 +99,6 @@ public class ClientTodoManager {
 	 * from the list view. But now I've decided to let it handle all commands over the entire client-side.
 	 * So even commandline-args get handled here.
 	 */
-	
 	/**
 	 * Handles commands issued by the user as commandline arg or in list-view.
 	 * @return datagram if the command was successfully recognize, otherwise null.
@@ -116,6 +125,9 @@ public class ClientTodoManager {
 		}
 		else if(argCheck(new String[]{"remove", "arg"}, userInputArray)){
 			datagram = removeTask(userInputArray[1], false);
+		}
+		else if(argCheck(new String[]{"categories"}, userInputArray)||argCheck(new String[]{"list", "categories"}, userInputArray)){
+			drawCategories();
 		}
 		else if(userInputArray.length>=1 && !userInputArray[0].equals("")){
 			ClientToxicTodo.print("Your command: "+Arrays.toString(userInputArray) +" was not recognized.");
@@ -191,6 +203,7 @@ public class ClientTodoManager {
 		}
 		return datagram;	
 	}	
+	
 	private String readInput(){
 		String input = null;
 		BufferedReader buffer=new BufferedReader(new InputStreamReader(System.in));
