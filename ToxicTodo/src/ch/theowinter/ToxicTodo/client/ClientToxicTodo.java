@@ -82,10 +82,8 @@ public class ClientToxicTodo {
 				oos.writeObject(encryptedData);
 				
 				print("Request sent - awaiting server response", settings.isDebug());
-				
 				InputStream is = s.getInputStream();  
 	        	ObjectInputStream ois = new ObjectInputStream(is);
-	        	
 	        	SealedObject encryptedDataFromServer = (SealedObject)ois.readObject();
 	        	
 	        	//Decrypt data from server
