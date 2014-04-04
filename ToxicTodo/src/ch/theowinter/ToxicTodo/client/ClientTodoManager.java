@@ -159,20 +159,25 @@ public class ClientTodoManager {
 	
 	private ToxicDatagram removeTask(String task, boolean writeToLog) {
 		ToxicDatagram datagram = null;
-		try{
-			int userChoice = Integer.parseInt(task);
-			if(userChoice<=localCategoryBinding.size()){
-				String dataMessage = "REMOVE_TASK_ON_SERVER";
-				if(writeToLog){
-					dataMessage = "REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER";
+		if(localCategoryBinding==null||localTaskBinding==null){
+			ClientToxicTodo.print("You can't blindly remove or complete tasks.");
+		}
+		else{
+			try{
+				int userChoice = Integer.parseInt(task);
+				if(userChoice<=localCategoryBinding.size()){
+					String dataMessage = "REMOVE_TASK_ON_SERVER";
+					if(writeToLog){
+						dataMessage = "REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER";
+					}
+					datagram = new ToxicDatagram(dataMessage, "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1));	
 				}
-				datagram = new ToxicDatagram(dataMessage, "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1));	
+				else{
+					ClientToxicTodo.print("There's no task with that ID.");
+				}
+			} catch(NumberFormatException e){
+				ClientToxicTodo.print("'"+task+"' is not a valid number.");
 			}
-			else{
-				ClientToxicTodo.print("There's no task with that ID.");
-			}
-		} catch(NumberFormatException e){
-			ClientToxicTodo.print("'"+task+"' is not a valid number.");
 		}
 		return datagram;
 	}
