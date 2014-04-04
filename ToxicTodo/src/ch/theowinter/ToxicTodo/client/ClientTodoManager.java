@@ -113,6 +113,9 @@ public class ClientTodoManager {
 		else if(argCheck(new String[]{"remove","task", "arg"}, userInputArray)){
 			datagram = removeTask(userInputArray[2], false);
 		}
+		else if(argCheck(new String[]{"remove", "arg"}, userInputArray)){
+			datagram = removeTask(userInputArray[1], false);
+		}
 		else {
 			ClientToxicTodo.print("Your command: "+Arrays.toString(userInputArray) +" was not recognized.");
 		}
