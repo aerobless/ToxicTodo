@@ -92,6 +92,16 @@ public class ClientTodoManager {
 		return commandHandler();
 	}
 
+	/* 
+	 * Originally intended to handle the remove command. Then I refactored it to handle all commands
+	 * from the list view. But now I've decided to let it handle all commands over the entire client-side.
+	 * So even commandline-args get handled here.
+	 */
+	
+	/**
+	 * Handles commands issued by the user as commandline arg or in list-view.
+	 * @return datagram if the command was successfully recognize, otherwise null.
+	 */
 	private ToxicDatagram commandHandler(){
 		ToxicDatagram datagram = null;
 		String[] userInputArray  = readInput().split(" ");

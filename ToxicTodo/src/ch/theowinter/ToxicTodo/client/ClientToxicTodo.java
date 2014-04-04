@@ -18,6 +18,11 @@ import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
 import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
 
 public class ClientToxicTodo {
+	//Vanity info
+	public static final double versionNumber = 1.1;
+	public static final String author = "Theo Winter";
+	public static final String website = "theowinter.ch";
+	
 	//Local storage
 	private static LogicEngine logic = new LogicEngine();
 	private static ClientTodoManager todoManager;
