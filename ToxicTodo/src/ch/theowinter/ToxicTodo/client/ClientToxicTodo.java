@@ -13,6 +13,7 @@ import javax.crypto.SealedObject;
 import org.fusesource.jansi.AnsiConsole;
 
 import ch.theowinter.ToxicTodo.utilities.EncryptionEngine;
+import ch.theowinter.ToxicTodo.utilities.JansiFormats;
 import ch.theowinter.ToxicTodo.utilities.LogicEngine;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
 import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
@@ -27,6 +28,7 @@ public class ClientToxicTodo {
 	private static LogicEngine logic = new LogicEngine();
 	private static ClientTodoManager todoManager;
 	private static EncryptionEngine crypto;
+	private static JansiFormats jansi = new JansiFormats();
 	
 	//Settings
 	private final static String settingsFile = logic.getJarDirectory("client_config.xml");
@@ -110,7 +112,7 @@ public class ClientToxicTodo {
 	}
 	
 	public static void print(String input){
-		AnsiConsole.out.println(input);
+		AnsiConsole.out.println(input+jansi.ANSI_NORMAL);
 	}
 	
 	public static void print(String input, boolean debug){
