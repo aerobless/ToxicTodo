@@ -32,36 +32,19 @@ public class ClientTodoManager {
 		ToxicDatagram datagram = null;
 		ClientToxicTodo.print("app started", false);
 		if(arguments.length == 0){
-			ClientToxicTodo.print("Toxic Todo Version 0.2 - Please specify some arguments first.");
 			datagram = drawTodoList(false);			
 		}
-		else if(arguments[0].equals("list")){
-			datagram = drawTodoList(false);
-		}
-		else if(arguments[0].equals("clist")){
-			//Display complete list
-			datagram = drawTodoList(true);
-		}
-		else if(arguments[0].equals("remove")){
-			datagram = removeCategory(arguments);
-		}
-		else if(arguments[0].equals("add")){
-			if(arguments.length>=2 && arguments[1].equals("category")){
-				datagram = addCategory(arguments);
-			}
-			else{
-				datagram = addTask(arguments);
-			}
-		}
 		else{
-			ClientToxicTodo.print("This command: "+arguments[0]+" does not exist.");
+			drawTodoList(false);	
+			datagram = commandHandler(arguments);
 		}
 		return datagram;
 	}
 	
 	/**
-	 * Draw the todolist, that means all categories that contain tasks.
-	 * @return 
+	 * Draws the todoList, that means all categories that contain tasks unless you specify that you also want
+	 * to list categories that are empty by setting "displayEmptyCategories" to true.
+	 * @return launches the commandHandler() which in turn returns a datagram containing instructions for the server.
 	 */
 	private ToxicDatagram drawTodoList(boolean displayEmptyCategories){
 		//Used for local bindings when we want to delete a task by entering 1
@@ -91,7 +74,16 @@ public class ClientTodoManager {
 		localTaskBinding = internalTaskBinding;
 		return commandHandler();
 	}
-
+	
+	/**
+	 * Waits for user input and then handles it through the main commandHandler.
+	 * @return datagram if the command was successfully recognize, otherwise null.
+	 */
+	private ToxicDatagram commandHandler(){
+		System.out.println("HERE");
+		String[] userInputArray  = readInput().split(" ");
+		return commandHandler(userInputArray);
+	}
 	/* 
 	 * Originally intended to handle the remove command. Then I refactored it to handle all commands
 	 * from the list view. But now I've decided to let it handle all commands over the entire client-side.
@@ -102,9 +94,8 @@ public class ClientTodoManager {
 	 * Handles commands issued by the user as commandline arg or in list-view.
 	 * @return datagram if the command was successfully recognize, otherwise null.
 	 */
-	private ToxicDatagram commandHandler(){
+	private ToxicDatagram commandHandler(String[] userInputArray){
 		ToxicDatagram datagram = null;
-		String[] userInputArray  = readInput().split(" ");
 		if(argCheck(new String[]{"add","category","arg", "args"}, userInputArray)){
 			datagram = addCategory(userInputArray);
 		}
@@ -126,7 +117,7 @@ public class ClientTodoManager {
 		else if(argCheck(new String[]{"remove", "arg"}, userInputArray)){
 			datagram = removeTask(userInputArray[1], false);
 		}
-		else {
+		else if(userInputArray.length>=1 && !userInputArray[0].equals("")){
 			ClientToxicTodo.print("Your command: "+Arrays.toString(userInputArray) +" was not recognized.");
 		}
 		return datagram;
