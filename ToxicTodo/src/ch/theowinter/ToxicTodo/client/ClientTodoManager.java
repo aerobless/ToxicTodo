@@ -35,7 +35,6 @@ public class ClientTodoManager {
 			datagram = drawTodoList(false);			
 		}
 		else{
-			drawTodoList(false);	
 			datagram = commandHandler(arguments);
 		}
 		return datagram;
@@ -84,6 +83,16 @@ public class ClientTodoManager {
 		}
 		return datagram;
 	}
+	
+	/**
+	 * Waits for user input and then handles it through the main commandHandler.
+	 * @return datagram if the command was successfully recognize, otherwise null.
+	 */
+	private ToxicDatagram commandHandler(){
+		String[] userInputArray  = readInput().split(" ");
+		return commandHandler(userInputArray);
+	}
+
 	
 	/**
 	 * Draws the todoList, that means all categories that contain tasks unless you specify that you also want
@@ -148,15 +157,6 @@ public class ClientTodoManager {
 		ClientToxicTodo.print(jansi.GREEN+space+"Website: "+ClientToxicTodo.website);
 	}
 	
-	/**
-	 * Waits for user input and then handles it through the main commandHandler.
-	 * @return datagram if the command was successfully recognize, otherwise null.
-	 */
-	private ToxicDatagram commandHandler(){
-		String[] userInputArray  = readInput().split(" ");
-		return commandHandler(userInputArray);
-	}
-
 	private ToxicDatagram removeTask(String task, boolean writeToLog) {
 		ToxicDatagram datagram = null;
 		try{
