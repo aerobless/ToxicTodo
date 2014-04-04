@@ -6,7 +6,6 @@ The server itself is multi-threaded and can handle connections from multiple cli
 
 ![Toxic Todo Client](http://w1nter.com/downloads/toxicTodoClient.png)
 
-
 **Client-Commands:**
 
 What | Command | Example use
@@ -25,3 +24,6 @@ Remove a category | remove category [categoryKeyword] | remove category school
 
 
 ![Toxic Todo Diagram](http://w1nter.com/downloads/toxicTodoDiag.png)
+
+**Download:**
+To get the latested, binary version please visit my [jenkins](http://w1nter.net:8080/job/ToxicTodo/).
