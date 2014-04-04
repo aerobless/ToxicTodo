@@ -105,10 +105,13 @@ public class ClientTodoManager {
 			datagram = removeCategory(userInputArray);	
 		}
 		else if(argCheck(new String[]{"complete","task", "arg"}, userInputArray)){
-			datagram = removeTask(userInputArray, true);
+			datagram = removeTask(userInputArray[2], true);
+		}
+		else if(argCheck(new String[]{"complete", "arg"}, userInputArray)){
+			datagram = removeTask(userInputArray[1], true);
 		}
 		else if(argCheck(new String[]{"remove","task", "arg"}, userInputArray)){
-			datagram = removeTask(userInputArray, false);
+			datagram = removeTask(userInputArray[2], false);
 		}
 		else {
 			ClientToxicTodo.print("Your command: "+Arrays.toString(userInputArray) +" was not recognized.");
@@ -116,10 +119,10 @@ public class ClientTodoManager {
 		return datagram;
 	}
 
-	private ToxicDatagram removeTask(String[] userInputArray, boolean writeToLog) {
+	private ToxicDatagram removeTask(String task, boolean writeToLog) {
 		ToxicDatagram datagram = null;
 		try{
-			int userChoice = Integer.parseInt(userInputArray[2]);
+			int userChoice = Integer.parseInt(task);
 			if(userChoice<=localCategoryBinding.size()){
 				String dataMessage = "REMOVE_TASK_ON_SERVER";
 				if(writeToLog){
@@ -131,7 +134,7 @@ public class ClientTodoManager {
 				ClientToxicTodo.print("There's no task with that ID.");
 			}
 		} catch(NumberFormatException e){
-			ClientToxicTodo.print("Please enter a valid number.");
+			ClientToxicTodo.print("'"+task+"' is not a valid number.");
 		}
 		return datagram;
 	}
