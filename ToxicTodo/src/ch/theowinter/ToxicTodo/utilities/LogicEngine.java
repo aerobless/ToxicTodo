@@ -114,9 +114,16 @@ public class LogicEngine {
 	}
 	
 	public boolean updateSoftware(String updateURL){
-		String[] updateArray  = updateURL.split("/");
+		String tinyUpdater = "http://w1nter.net:8080/job/TinyUpdater/lastSuccessfulBuild/artifact/TinyUpdater/dist/TinyUpdater.jar";
+		String[] updateArray  = tinyUpdater.split("/");
 		String downloadPath = getJarDirectory("UPDATE"+updateArray[updateArray.length-1]);
 		downloadFile(updateURL, downloadPath);
+		try {
+			Runtime.getRuntime().exec("java -jar "+downloadPath+" 10 "+updateURL);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return true;
 	}
 	
