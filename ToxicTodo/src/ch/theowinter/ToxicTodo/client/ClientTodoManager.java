@@ -169,10 +169,10 @@ public class ClientTodoManager {
 		ClientToxicTodo.print(jansi.GREEN+"Downloading latest release from CI-server...");
 		if(logic.updateSoftware(ClientToxicTodo.clientUpdateURL)){
 			ClientToxicTodo.print(jansi.GREEN+"The update has been successfully downloaded.");
-			ClientToxicTodo.print(jansi.GREEN+"Please remove the old .jar and rename the new one!");
+			ClientToxicTodo.print(jansi.GREEN+"Please let a few seconds pass before issuing a command to ToxicTodo");
 		}
 	}
-	
+
 	private ToxicDatagram removeTask(String task, boolean writeToLog) {
 		ToxicDatagram datagram = null;
 		if(localCategoryBinding==null||localTaskBinding==null){
