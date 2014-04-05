@@ -78,6 +78,9 @@ public class ClientTodoManager {
 		else if(argCheck(new String[]{"about"}, userInputArray)||argCheck(new String[]{"info"}, userInputArray)||argCheck(new String[]{"identify"}, userInputArray)){
 			drawAbout();
 		}
+		else if(argCheck(new String[]{"update", "arg"}, userInputArray)){
+			updateTheClient();
+		}
 		else if(userInputArray.length>=1 && !userInputArray[0].equals("")){
 			ClientToxicTodo.print("Your command: "+Arrays.toString(userInputArray) +" was not recognized.");
 		}
@@ -146,7 +149,9 @@ public class ClientTodoManager {
 		}
 		return commandHandler();
 	}
-	
+	/**
+	 * Draws some pretty about the program stuff. Like author and copyright.
+	 */
 	private void drawAbout(){
 		//Clear ANSI console
 		ClientToxicTodo.print(jansi.ANSI_CLS);
@@ -155,6 +160,17 @@ public class ClientTodoManager {
 		ClientToxicTodo.print(jansi.GREEN+space+"Version: "+ClientToxicTodo.versionNumber);
 		ClientToxicTodo.print(jansi.GREEN+space+"Author:  "+ClientToxicTodo.author);
 		ClientToxicTodo.print(jansi.GREEN+space+"Website: "+ClientToxicTodo.website);
+	}
+	
+	private void updateTheClient(){
+		//Clear ANSI console
+		ClientToxicTodo.print(jansi.ANSI_CLS);
+		ClientToxicTodo.print(jansi.ANSI_BOLD+jansi.CYAN+"### - TOXIC TODO UPDATER - ###");
+		ClientToxicTodo.print(jansi.GREEN+"Downloading latest release from CI-server...");
+		if(logic.updateSoftware(ClientToxicTodo.clientUpdateURL)){
+			ClientToxicTodo.print(jansi.GREEN+"The update has been successfully downloaded.");
+			ClientToxicTodo.print(jansi.GREEN+"Please remove the old .jar and rename the new one!");
+		}
 	}
 	
 	private ToxicDatagram removeTask(String task, boolean writeToLog) {

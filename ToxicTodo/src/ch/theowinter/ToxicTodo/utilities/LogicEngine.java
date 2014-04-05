@@ -1,10 +1,12 @@
 package ch.theowinter.ToxicTodo.utilities;
 
+import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 
 import ch.theowinter.ToxicTodo.client.ClientSettings;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoCategory;
@@ -111,4 +113,29 @@ public class LogicEngine {
 		return dataXML.getPath();
 	}
 	
+	public boolean updateSoftware(String updateURL){
+		String[] updateArray  = updateURL.split("/");
+		downloadFile(updateURL, "UPDATE"+updateArray[updateArray.length-1]);
+		return true;
+	}
+	
+	public static void downloadFile(String downloadURL, String filename) {
+		try {
+			URL url = new URL(downloadURL);
+			URLConnection con = url.openConnection(); 
+			DataInputStream dis = new DataInputStream(con.getInputStream());
+			byte[] fileData = new byte[con.getContentLength()];
+			for (int x = 0; x < fileData.length; x++) {
+				fileData[x] = dis.readByte();
+			}
+			dis.close(); 
+			FileOutputStream fos = new FileOutputStream(new File(filename));
+			fos.write(fileData); 
+			fos.close();
+		} catch (MalformedURLException m) {
+			System.out.println(m);
+		} catch (IOException io) {
+			System.out.println(io);
+		}
+	}
 }
