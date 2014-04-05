@@ -78,7 +78,7 @@ public class ClientTodoManager {
 		else if(argCheck(new String[]{"about"}, userInputArray)||argCheck(new String[]{"info"}, userInputArray)||argCheck(new String[]{"identify"}, userInputArray)){
 			drawAbout();
 		}
-		else if(argCheck(new String[]{"update", "arg"}, userInputArray)){
+		else if(argCheck(new String[]{"update"}, userInputArray)){
 			updateTheClient();
 		}
 		else if(userInputArray.length>=1 && !userInputArray[0].equals("")){
