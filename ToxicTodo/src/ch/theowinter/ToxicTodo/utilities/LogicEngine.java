@@ -117,7 +117,7 @@ public class LogicEngine {
 		String tinyUpdater = "http://w1nter.net:8080/job/TinyUpdater/lastSuccessfulBuild/artifact/TinyUpdater/dist/TinyUpdater.jar";
 		String[] updateArray  = tinyUpdater.split("/");
 		String downloadPath = getJarDirectory(updateArray[updateArray.length-1]);
-		downloadFile(updateURL, downloadPath);
+		downloadFile(tinyUpdater, downloadPath);
 		try {
 			Runtime.getRuntime().exec("java -jar "+downloadPath+" 10 "+updateURL);
 		} catch (IOException e) {
