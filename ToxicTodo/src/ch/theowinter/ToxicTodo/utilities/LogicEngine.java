@@ -115,11 +115,12 @@ public class LogicEngine {
 	
 	public boolean updateSoftware(String updateURL){
 		String[] updateArray  = updateURL.split("/");
-		downloadFile(updateURL, "UPDATE"+updateArray[updateArray.length-1]);
+		String downloadPath = getJarDirectory("UPDATE"+updateArray[updateArray.length-1]);
+		downloadFile(updateURL, downloadPath);
 		return true;
 	}
 	
-	public static void downloadFile(String downloadURL, String filename) {
+	public void downloadFile(String downloadURL, String filenameAndPath) {
 		try {
 			URL url = new URL(downloadURL);
 			URLConnection con = url.openConnection(); 
@@ -129,7 +130,7 @@ public class LogicEngine {
 				fileData[x] = dis.readByte();
 			}
 			dis.close(); 
-			FileOutputStream fos = new FileOutputStream(new File(filename));
+			FileOutputStream fos = new FileOutputStream(new File(filenameAndPath));
 			fos.write(fileData); 
 			fos.close();
 		} catch (MalformedURLException m) {
