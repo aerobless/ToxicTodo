@@ -15,7 +15,13 @@ import ch.theowinter.ToxicTodo.utilities.LogicEngine;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
 
 public class ServerToxicTodo {
-	//Server data:
+	//Vanity info
+	public static final double serverVersion = 1.21;
+	public static final String author = "Theo Winter";
+	public static final String website = "theowinter.ch";
+	public static final String serverUpdateURL = "http://w1nter.net:8080/job/ToxicTodo/lastSuccessfulBuild/artifact/ToxicTodo/dist/ToxicTodoServer.jar";	
+	
+	//Class variables
 	static TodoList serverTodoList = new TodoList();
 	static LogicEngine logic = new LogicEngine();
 	static String settingsFile = logic.getJarDirectory("server_config.xml");
@@ -23,10 +29,9 @@ public class ServerToxicTodo {
 	static ServerSettings settings;
 	
 	//Locks
-	private static Semaphore serverRunning = new Semaphore(1);
+	private static Semaphore stopServer = new Semaphore(1);
 
 	public static void main(String[] args) { 
-
 		//Load sample data or stored data
 		loadSettings();
 		
@@ -41,16 +46,18 @@ public class ServerToxicTodo {
 	
 	private static void serverController() {
 		System.out.println("Toxic Todo: Server Controller started");
-		while(serverRunning.availablePermits()>0){
+		while(stopServer.availablePermits()>0){
 			BufferedReader buffer=new BufferedReader(new InputStreamReader(System.in));
 			try {
 				String input = buffer.readLine();
 				if(input.equals("stop") || input.equals("exit") || input.equals("q")){
-					//Save before shutting the server down
 					logic.saveToXMLFile(serverTodoList, todoDataFile);
-		        	
-		        	//After this the main method is finished and the daemon threads get killed
-					serverRunning.acquire();
+					stopServer.acquire();
+				}
+				else if(input.equals("update")){
+					logic.updateSoftware(serverUpdateURL);
+					serverPrint("Updating... Please wait a few seconds before starting the server again!");
+					stopServer.acquire();
 				}
 			} catch (IOException e) {
 				System.err.println("Toxic Todo: Server Control Thread - IO Exception");
@@ -130,7 +137,7 @@ public class ServerToxicTodo {
 		@Override
 		public void run() {
 			try {
-			while(serverRunning.availablePermits()>0){
+			while(stopServer.availablePermits()>0){
 				@SuppressWarnings("resource") //socket gets closed in the OpenConnectionThread
 				Socket client = new Socket();
 				client.setSoTimeout(100);

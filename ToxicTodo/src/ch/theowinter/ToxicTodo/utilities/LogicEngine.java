@@ -119,7 +119,7 @@ public class LogicEngine {
 		String downloadPath = getJarDirectory(updateArray[updateArray.length-1]);
 		downloadFile(tinyUpdater, downloadPath);
 		try {
-			Runtime.getRuntime().exec("java -jar "+downloadPath+" 10 "+updateURL);
+			Runtime.getRuntime().exec("java -jar "+downloadPath+" 2 "+updateURL);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

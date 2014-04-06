@@ -157,7 +157,7 @@ public class ClientTodoManager {
 		ClientToxicTodo.print(jansi.ANSI_CLS);
 		ClientToxicTodo.print(jansi.ANSI_BOLD+jansi.CYAN+"### - ABOUT TOXIC TODO - ###");
 		String space = "  ";
-		ClientToxicTodo.print(jansi.GREEN+space+"Version: "+ClientToxicTodo.versionNumber);
+		ClientToxicTodo.print(jansi.GREEN+space+"Version: "+ClientToxicTodo.clientVersion);
 		ClientToxicTodo.print(jansi.GREEN+space+"Author:  "+ClientToxicTodo.author);
 		ClientToxicTodo.print(jansi.GREEN+space+"Website: "+ClientToxicTodo.website);
 	}
