@@ -16,7 +16,7 @@ import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
 
 public class ServerToxicTodo {
 	//Vanity info
-	public static final double serverVersion = 1.22;
+	public static final double serverVersion = 1.23;
 	public static final String author = "Theo Winter";
 	public static final String website = "theowinter.ch";
 	public static final String serverUpdateURL = "http://w1nter.net:8080/job/ToxicTodo/lastSuccessfulBuild/artifact/ToxicTodo/dist/ToxicTodoServer.jar";	
@@ -55,8 +55,8 @@ public class ServerToxicTodo {
 					stopServer.acquire();
 				}
 				else if(input.equals("update")){
-					logic.updateSoftware(serverUpdateURL);
 					serverPrint("Updating... Please wait a few seconds before starting the server again!");
+					logic.updateSoftware(serverUpdateURL);
 					stopServer.acquire();
 				}
 				else if(input.equals("about")||input.equals("identify")){
