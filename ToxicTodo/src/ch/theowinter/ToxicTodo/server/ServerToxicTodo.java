@@ -66,6 +66,9 @@ public class ServerToxicTodo {
 					serverPrint(space+"Author:  "+author);
 					serverPrint(space+"Website: "+website);
 				}
+				else{
+					serverPrint("Command *"+input+"* not recognized.");
+				}
 			} catch (IOException e) {
 				System.err.println("Toxic Todo: Server Control Thread - IO Exception");
 			} catch (InterruptedException e) {
