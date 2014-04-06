@@ -104,7 +104,10 @@ public class ClientToxicTodo {
 		    	os.close();  
 		    	s.close();
 			} catch (IOException anEx) {
-				anEx.printStackTrace();
+				print("ERROR: Unable to establish a connection with the server.");
+				print("Are you certain that you're running a server on "+settings.getHOST()+":"+settings.getPORT()+"?");
+				print("If you're running the server on a different IP or port, then you should change the client_config.xml!");
+				System.exit(0);
 			} catch (ClassNotFoundException anEx) {
 				anEx.printStackTrace();
 			} 
