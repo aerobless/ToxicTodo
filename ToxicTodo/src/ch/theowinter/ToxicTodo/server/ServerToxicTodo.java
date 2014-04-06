@@ -32,7 +32,7 @@ public class ServerToxicTodo {
 	private static Semaphore stopServer = new Semaphore(1);
 
 	public static void main(String[] args) { 
-		//Load sample data or stored data
+		//Load sample data or stored data 
 		loadSettings();
 		
 		//Open up a connection:
