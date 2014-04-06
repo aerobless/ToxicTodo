@@ -57,7 +57,7 @@ public class ServerToxicTodo {
 				else if(input.equals("update")){
 					serverPrint("Updating... Please wait a few seconds before starting the server again!");
 					logic.updateSoftware(serverUpdateURL);
-					stopServer.acquire();
+					//stopServer.acquire();
 				}
 				else if(input.equals("about")||input.equals("identify")){
 					serverPrint("### - ABOUT TOXIC TODO - ###");
