@@ -30,7 +30,6 @@ public class ClientTodoManager {
 	
 	public ToxicDatagram run(String[] arguments){
 		ToxicDatagram datagram = null;
-		ClientToxicTodo.print("app started", false);
 		if(arguments.length == 0){
 			datagram = drawTodoList(false);			
 		}

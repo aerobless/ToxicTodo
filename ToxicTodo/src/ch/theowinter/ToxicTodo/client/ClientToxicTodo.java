@@ -83,7 +83,6 @@ public class ClientToxicTodo {
 		
 				oos.writeObject(encryptedData);
 				
-				print("Request sent - awaiting server response", settings.isDebug());
 				InputStream is = s.getInputStream();  
 	        	ObjectInputStream ois = new ObjectInputStream(is);
 	        	SealedObject encryptedDataFromServer = (SealedObject)ois.readObject();
@@ -98,8 +97,7 @@ public class ClientToxicTodo {
 	    		}
 	        	
 	        	todoList = dataFromServer.getTodoList();
-	        	print("Received response from server: "+dataFromServer.getServerControlMessage(), settings.isDebug());
-				
+		
 		    	oos.close();  
 		    	os.close();  
 		    	s.close();
@@ -115,14 +113,14 @@ public class ClientToxicTodo {
 		return todoList;
 	}
 	
-	public static void print(String input){
-		AnsiConsole.out.println(input+jansi.ANSI_NORMAL);
+	public static void print(String input, int indentation){
+		String indentStr = new String(new char[indentation]).replace('\0', ' ');
+		String output = input.replaceAll("(?m)^", indentStr);
+		print(output);
 	}
 	
-	public static void print(String input, boolean debug){
-		if(debug == true){
-			System.out.println("DEBUG INFO:"+input);
-		}
+	public static void print(String input){
+		AnsiConsole.out.println(input+jansi.ANSI_NORMAL);
 	}
 	
 	public static void loadSettings(){
