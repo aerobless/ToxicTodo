@@ -10,8 +10,6 @@ import java.net.Socket;
 
 import javax.crypto.SealedObject;
 
-import org.fusesource.jansi.AnsiConsole;
-
 import ch.theowinter.ToxicTodo.utilities.EncryptionEngine;
 import ch.theowinter.ToxicTodo.utilities.JansiFormats;
 import ch.theowinter.ToxicTodo.utilities.LogicEngine;
@@ -120,7 +118,8 @@ public class ClientToxicTodo {
 	}
 	
 	public static void print(String input){
-		AnsiConsole.out.println(input+jansi.ANSI_NORMAL);
+		System.out.println(input);
+		//AnsiConsole.out.println(input+jansi.ANSI_NORMAL);
 	}
 	
 	public static void loadSettings(){
