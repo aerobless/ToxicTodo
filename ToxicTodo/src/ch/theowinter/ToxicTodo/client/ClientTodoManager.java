@@ -117,7 +117,7 @@ public class ClientTodoManager {
 				//todoList.getCategoryMap().get(categoryKey).getTasksHashMap();
 				for(String taskKey : todoList.getCategoryMap().get(categoryKey).getTasksHashMap().keySet()){
 					++taskID;
-					ClientToxicTodo.print(jansi.GREEN+"["+taskID+"] "+todoList.getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey).getTaskText(), 2);
+					ClientToxicTodo.print(jansi.GREEN+"["+taskID+"] "+formatString(todoList.getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey).getTaskText()), 2);
 					//adding task to local bindings map
 					internalCategoryBinding.add(categoryKey);
 					internalTaskBinding.add(todoList.getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey));
@@ -128,6 +128,24 @@ public class ClientTodoManager {
 		localCategoryBinding = internalCategoryBinding;
 		localTaskBinding = internalTaskBinding;
 		return commandHandler();
+	}
+	
+	/**
+	 * Used in drawTodoList to color important **text**.
+	 * @return String without **, containing jansi.RED instead.
+	 */
+	private String formatString(String input){
+		String[] markers = input.split("**");
+		for(int i = 0; i<markers.length; i++){
+			if(!(i%2==0)){
+				markers[i] = jansi.RED+markers[i]+jansi.GREEN;
+			}
+		}
+		StringBuilder outputBuilder = new StringBuilder();
+		for(String s : markers) {
+			outputBuilder.append(s);
+		}
+		return outputBuilder.toString();
 	}
 	
 	/**
