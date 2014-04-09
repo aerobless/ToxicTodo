@@ -8,6 +8,7 @@ import javax.crypto.SealedObject;
 
 import org.junit.Test;
 
+import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.utilities.EncryptionEngine;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoTask;
@@ -192,5 +193,11 @@ public class ToxicTodo_UnitTest {
 			testFailedCorrectly = true;
 		}
 		assertTrue(testFailedCorrectly);
+	}
+	
+	@Test
+	public void redFormatterTest(){
+		ClientTodoManager test = new ClientTodoManager(null);
+		System.out.println(test.formatString("this is **some** random text"));
 	}
 }

@@ -134,8 +134,8 @@ public class ClientTodoManager {
 	 * Used in drawTodoList to color important **text**.
 	 * @return String without **, containing jansi.RED instead.
 	 */
-	private String formatString(String input){
-		String[] markers = input.split("**");
+	public String formatString(String input){
+		String[] markers = input.split("\\*\\*");
 		for(int i = 0; i<markers.length; i++){
 			if(!(i%2==0)){
 				markers[i] = jansi.RED+markers[i]+jansi.GREEN;
