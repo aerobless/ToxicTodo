@@ -5,6 +5,7 @@ public class ClientSettings {
 	private int PORT = 5222;
 	private String password = "secretPassword";
 	private boolean debug = false;
+	private int consoleSize = 80;
 	
 	/** 
 	 * Empty constructor because we will always load settings directly from the xml file.
@@ -25,5 +26,8 @@ public class ClientSettings {
 	}
 	public boolean isDebug() {
 		return debug;
+	}
+	public int getConsoleSize() {
+		return consoleSize;
 	}
 }

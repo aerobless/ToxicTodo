@@ -114,7 +114,7 @@ public class ClientToxicTodo {
 	}
 	
 	public static void print(String input, int indentation){
-		int charactersPerLine = 75;
+		int charactersPerLine = settings.getConsoleSize();
 		for(int i=charactersPerLine; i < input.length(); i+=charactersPerLine){
 			input = new StringBuilder(input).insert(i, "\n").toString();
 		}
