@@ -115,7 +115,7 @@ public class ClientToxicTodo {
 	
 	public static void print(String input, int indentation){
 		String indentStr = new String(new char[indentation]).replace('\0', ' ');
-		String output = input.replaceAll("(?m)^", indentStr);
+		String output = input.replaceAll("(?m)^", "\t");
 		print(output);
 	}
 	
