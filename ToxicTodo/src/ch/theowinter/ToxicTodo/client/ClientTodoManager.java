@@ -113,11 +113,11 @@ public class ClientTodoManager {
 		for(String categoryKey : todoList.getCategoryMap().keySet()){
 			//Only list category if it contains tasks or we want to display empty categories too.
 			if(todoList.getCategoryMap().get(categoryKey).containsTasks() || displayEmptyCategories==true){
-				ClientToxicTodo.print(jansi.ANSI_BOLD+jansi.CYAN+"###-"+todoList.getCategoryMap().get(categoryKey).getName().toUpperCase()+"-###"+jansi.ANSI_NORMAL);
+				ClientToxicTodo.print(jansi.ANSI_BOLD+jansi.CYAN+"###-"+todoList.getCategoryMap().get(categoryKey).getName().toUpperCase()+"-###");
 				//todoList.getCategoryMap().get(categoryKey).getTasksHashMap();
 				for(String taskKey : todoList.getCategoryMap().get(categoryKey).getTasksHashMap().keySet()){
 					++taskID;
-					ClientToxicTodo.print(jansi.GREEN+"    ["+taskID+"] "+todoList.getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey).getTaskText()+jansi.ANSI_NORMAL);
+					ClientToxicTodo.print(jansi.GREEN+"["+taskID+"] "+todoList.getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey).getTaskText(), 2);
 					//adding task to local bindings map
 					internalCategoryBinding.add(categoryKey);
 					internalTaskBinding.add(todoList.getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey));
@@ -140,11 +140,10 @@ public class ClientTodoManager {
 		ClientToxicTodo.print(jansi.ANSI_CLS);
 		for(String categoryKey : todoList.getCategoryMap().keySet()){
 			String category = todoList.getCategoryMap().get(categoryKey).getName();
-			String space = "  ";
 			int nofTasks = todoList.getCategoryMap().get(categoryKey).getTasksHashMap().keySet().size();
-			ClientToxicTodo.print(jansi.ANSI_BOLD+jansi.CYAN+"[<-"+category+"->]"+jansi.ANSI_NORMAL);
-			ClientToxicTodo.print(jansi.GREEN+space+"Category Key: "+categoryKey+jansi.ANSI_NORMAL);
-			ClientToxicTodo.print(jansi.GREEN+space+"Number of active tasks: "+nofTasks);
+			ClientToxicTodo.print(jansi.ANSI_BOLD+jansi.CYAN+"[<-"+category+"->]");
+			ClientToxicTodo.print(jansi.GREEN+"Category Key: "+categoryKey, 2);
+			ClientToxicTodo.print(jansi.GREEN+"Number of active tasks: "+nofTasks, 2);
 		}
 		return commandHandler();
 	}
@@ -155,10 +154,9 @@ public class ClientTodoManager {
 		//Clear ANSI console
 		ClientToxicTodo.print(jansi.ANSI_CLS);
 		ClientToxicTodo.print(jansi.ANSI_BOLD+jansi.CYAN+"### - ABOUT TOXIC TODO - ###");
-		String space = "  ";
-		ClientToxicTodo.print(jansi.GREEN+space+"Version: "+ClientToxicTodo.clientVersion);
-		ClientToxicTodo.print(jansi.GREEN+space+"Author:  "+ClientToxicTodo.author);
-		ClientToxicTodo.print(jansi.GREEN+space+"Website: "+ClientToxicTodo.website);
+		ClientToxicTodo.print(jansi.GREEN+"Version: "+ClientToxicTodo.clientVersion, 2);
+		ClientToxicTodo.print(jansi.GREEN+"Author:  "+ClientToxicTodo.author, 2);
+		ClientToxicTodo.print(jansi.GREEN+"Website: "+ClientToxicTodo.website, 2);
 	}
 	
 	private void updateTheClient(){
