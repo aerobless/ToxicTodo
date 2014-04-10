@@ -7,10 +7,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.ListModel;
 
-public class MainWindow {
-
+public class MainWindowView {
 	private JFrame frame;
+	private JList todoList;
 
 	/**
 	 * Launch the GUI application.
@@ -19,8 +20,9 @@ public class MainWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainWindow window = new MainWindow();
+					MainWindowView window = new MainWindowView();
 					window.frame.setVisible(true);
+					// methods here.
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -31,7 +33,7 @@ public class MainWindow {
 	/**
 	 * Create the application.
 	 */
-	public MainWindow() {
+	public MainWindowView() {
 		initialize();
 	}
 
@@ -49,9 +51,11 @@ public class MainWindow {
 		
 		JPanel centerPanel = new JPanel();
 		frame.getContentPane().add(centerPanel, BorderLayout.CENTER);
-		
-		JList todoList = new JList();
-		centerPanel.add(todoList);
+		centerPanel.setLayout(new BorderLayout(0, 0));
+
+		todoList = new JList();
+		centerPanel.add(todoList, BorderLayout.CENTER);
+		ListModel todoListModel = todoList.getModel();
 		
 		JPanel bottomPanel = new JPanel();
 		frame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
@@ -62,5 +66,10 @@ public class MainWindow {
 		JButton btnNewButton_1 = new JButton("New button");
 		bottomPanel.add(btnNewButton_1);
 	}
+	
+	private void populateTodoList(){
+		// Create some items to add to the list
+		
 
+	}
 }
