@@ -12,6 +12,7 @@ import javax.crypto.SealedObject;
 
 import org.fusesource.jansi.AnsiConsole;
 
+import ch.theowinter.ToxicTodo.client.UI.MainWindow;
 import ch.theowinter.ToxicTodo.utilities.EncryptionEngine;
 import ch.theowinter.ToxicTodo.utilities.JansiFormats;
 import ch.theowinter.ToxicTodo.utilities.LogicEngine;
@@ -43,6 +44,18 @@ public class ClientToxicTodo {
 		} catch (Exception anEx) {
 			System.err.println("Crypto Error - Unable to load the Encryption Engine");
 		}
+		if(args.length<1){
+			print("temp: no args specified - launching GUI");
+			MainWindow mainGUI = new MainWindow();
+			mainGUI.launchGUI(args);
+		}
+		else{
+			print("temp: args specified - launching terminal");
+			runAsConsoleApp(args);
+		}
+	}
+	
+	private static void runAsConsoleApp(String[] args){
 		//1. GET todo-LIST from server
 		todoManager = new ClientTodoManager(sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "")));
 		
