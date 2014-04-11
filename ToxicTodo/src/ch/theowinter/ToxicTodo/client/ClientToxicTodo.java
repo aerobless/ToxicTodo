@@ -42,7 +42,7 @@ public class ClientToxicTodo {
 		try {
 			crypto = new EncryptionEngine(settings.getPassword());
 		} catch (Exception anEx) {
-			System.err.println("Crypto Error - Unable to load the Encryption Engine");
+			System.err.println("Crypto Error: Unable to load the Encryption Engine");
 		}
 		if(args.length<1){
 			print("temp: no args specified - launching GUI");
