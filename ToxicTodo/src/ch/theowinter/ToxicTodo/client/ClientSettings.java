@@ -9,7 +9,7 @@ public class ClientSettings {
 	
 	/** 
 	 * Empty constructor because we will always load settings directly from the xml file.
-	 * Changing the config during runtime is not supported.
+	 * Changing the config during runtime is not supported. 
 	 */
 	public ClientSettings() {
 		super();
