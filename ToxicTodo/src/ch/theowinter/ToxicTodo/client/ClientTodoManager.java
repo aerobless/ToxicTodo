@@ -28,17 +28,6 @@ public class ClientTodoManager {
 		this.todoList = todoList;
 	}
 	
-	public ToxicDatagram run(String[] arguments){
-		ToxicDatagram datagram = null;
-		if(arguments.length == 0){
-			datagram = drawTodoList(false);			
-		}
-		else{
-			datagram = commandHandler(arguments);
-		}
-		return datagram;
-	}
-	
 	/* 
 	 * Originally intended to handle the remove command. Then I refactored it to handle all commands
 	 * from the list view. But now I've decided to let it handle all commands over the entire client-side.
@@ -48,10 +37,13 @@ public class ClientTodoManager {
 	 * Handles commands issued by the user as commandline arg or in list-view.
 	 * @return datagram if the command was successfully recognize, otherwise null.
 	 */
-	private ToxicDatagram commandHandler(String[] userInputArray){
+	protected ToxicDatagram commandHandler(String[] userInputArray){
 		ToxicDatagram datagram = null;
 		if(argCheck(new String[]{"add","category","arg", "args"}, userInputArray)){
 			datagram = addCategory(userInputArray);
+		}
+		else if(argCheck(new String[]{"list"}, userInputArray)){
+			datagram = drawTodoList(false);
 		}
 		else if(argCheck(new String[]{"add","arg", "args"}, userInputArray)){
 			datagram = addTask(userInputArray);
