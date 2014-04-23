@@ -45,7 +45,7 @@ public class CliController {
 		
 		//3. Return answer to the server unless we're finished
 		if(datagramForServer != null){
-			ClientApplication.sendToServer(datagramForServer);
+			todoManager.setTodoList(ClientApplication.sendToServer(datagramForServer));
 			voidDrawList();
 		}
 	}
