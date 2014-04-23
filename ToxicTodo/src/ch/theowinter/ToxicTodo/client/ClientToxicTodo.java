@@ -70,8 +70,9 @@ public class ClientToxicTodo {
 	}
 	
 	private static void voidDrawList(){
+		System.out.println("voidDraw");
 		todoManager = new ClientTodoManager(sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "")));
-		ToxicDatagram datagramForServer = todoManager.commandHandler(new String[]{});
+		ToxicDatagram datagramForServer = todoManager.commandHandler(new String[]{"list"});
 		if(datagramForServer != null){
 			sendToServer(datagramForServer);
 			voidDrawList();
