@@ -3,17 +3,17 @@ package ch.theowinter.ToxicTodo.client.UI.View;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.ListModel;
+
+import ch.theowinter.ToxicTodo.client.UI.Model.TodoListModel;
 
 public class MainWindowView {
 	private JFrame frame;
 	private JList todoList;
-	private DefaultListModel todoListModel;
+	private TodoListModel todoListModel;
 
 	/**
 	 * Launch the GUI application.
@@ -44,9 +44,7 @@ public class MainWindowView {
 	 */
 	private void initialize() {
 		//Data and stuff (temp)
-		todoListModel = new DefaultListModel();
-		
-		
+		todoListModel = new TodoListModel();
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 376, 493);
@@ -60,9 +58,8 @@ public class MainWindowView {
 		frame.getContentPane().add(centerPanel, BorderLayout.CENTER);
 		centerPanel.setLayout(new BorderLayout(0, 0));
 
-		todoList = new JList();
+		todoList = new JList(todoListModel);
 		centerPanel.add(todoList, BorderLayout.CENTER);
-		ListModel todoListModel = todoList.getModel();
 		
 		JPanel bottomPanel = new JPanel();
 		frame.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
