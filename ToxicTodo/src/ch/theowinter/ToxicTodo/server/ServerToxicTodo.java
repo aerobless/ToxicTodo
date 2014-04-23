@@ -12,7 +12,7 @@ import java.net.Socket;
 import java.util.concurrent.Semaphore;
 
 import ch.theowinter.ToxicTodo.utilities.LogicEngine;
-import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
+import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoList;
 
 public class ServerToxicTodo {
 	//Vanity info

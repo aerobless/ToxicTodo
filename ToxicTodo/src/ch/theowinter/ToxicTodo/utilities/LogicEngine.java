@@ -9,9 +9,9 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import ch.theowinter.ToxicTodo.client.CLI.ClientSettings;
-import ch.theowinter.ToxicTodo.utilities.primitives.TodoCategory;
-import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
-import ch.theowinter.ToxicTodo.utilities.primitives.TodoTask;
+import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
+import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoList;
+import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;

@@ -10,8 +10,8 @@ import org.junit.Test;
 
 import ch.theowinter.ToxicTodo.client.CLI.ClientTodoManager;
 import ch.theowinter.ToxicTodo.utilities.EncryptionEngine;
-import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
-import ch.theowinter.ToxicTodo.utilities.primitives.TodoTask;
+import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoList;
+import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
 
 public class ToxicTodo_UnitTest {
 	

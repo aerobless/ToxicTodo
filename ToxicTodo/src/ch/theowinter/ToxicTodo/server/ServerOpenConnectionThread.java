@@ -12,7 +12,7 @@ import java.util.concurrent.Semaphore;
 import javax.crypto.SealedObject;
 
 import ch.theowinter.ToxicTodo.utilities.EncryptionEngine;
-import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
+import ch.theowinter.ToxicTodo.utilities.primitiveModels.ToxicDatagram;
 
 class ServerOpenConnectionThread implements Runnable {
 	private Semaphore writeLock = new Semaphore(1);

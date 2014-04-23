@@ -16,8 +16,8 @@ import ch.theowinter.ToxicTodo.client.UI.Controller.ClientController;
 import ch.theowinter.ToxicTodo.utilities.EncryptionEngine;
 import ch.theowinter.ToxicTodo.utilities.JansiFormats;
 import ch.theowinter.ToxicTodo.utilities.LogicEngine;
-import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
-import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
+import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoList;
+import ch.theowinter.ToxicTodo.utilities.primitiveModels.ToxicDatagram;
 
 public class ClientToxicTodo {
 	//Vanity info

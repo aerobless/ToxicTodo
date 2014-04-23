@@ -3,6 +3,7 @@ package ch.theowinter.ToxicTodo.client.UI.View;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -12,6 +13,7 @@ import javax.swing.ListModel;
 public class MainWindowView {
 	private JFrame frame;
 	private JList todoList;
+	private DefaultListModel todoListModel;
 
 	/**
 	 * Launch the GUI application.
@@ -41,6 +43,11 @@ public class MainWindowView {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		//Data and stuff (temp)
+		todoListModel = new DefaultListModel();
+		
+		
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 376, 493);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
