@@ -37,7 +37,6 @@ public class ClientToxicTodo {
 	private static ClientSettings settings;
 
 	public static void main(String[] args) {
-		args = new String[]{"list"};
 		//0. Load config & init stuff
 		loadSettings();
 		try {
