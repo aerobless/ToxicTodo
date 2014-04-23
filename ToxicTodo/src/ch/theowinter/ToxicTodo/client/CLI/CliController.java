@@ -45,14 +45,14 @@ public class CliController {
 		
 		//3. Return answer to the server unless we're finished
 		if(datagramForServer != null){
-			todoManager.setTodoList(ClientApplication.sendToServer(datagramForServer));
+			ClientApplication.sendToServer(datagramForServer);
 			voidDrawList();
 		}
 	}
-
+	
+	//TODO: add good description
 	public void voidDrawList(){
-		System.out.println("voidDraw");
-		ClientApplication.todoManager = new ClientTodoManager(ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "")));
+		todoManager.setTodoList(ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "")));
 		ToxicDatagram datagramForServer = commandHandler(new String[]{"list"});
 		if(datagramForServer != null){
 			ClientApplication.sendToServer(datagramForServer);
