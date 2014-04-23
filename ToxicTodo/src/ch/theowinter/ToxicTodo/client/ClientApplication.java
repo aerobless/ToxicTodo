@@ -10,8 +10,7 @@ import java.net.Socket;
 
 import javax.crypto.SealedObject;
 
-import org.fusesource.jansi.AnsiConsole;
-
+import ch.theowinter.ToxicTodo.client.CLI.CliController;
 import ch.theowinter.ToxicTodo.client.UI.Controller.ClientController;
 import ch.theowinter.ToxicTodo.utilities.EncryptionEngine;
 import ch.theowinter.ToxicTodo.utilities.JansiFormats;
@@ -28,13 +27,13 @@ public class ClientApplication {
 	
 	//Local storage
 	private static LogicEngine logic = new LogicEngine();
-	private static ClientTodoManager todoManager;
+	public static ClientTodoManager todoManager;
 	private static EncryptionEngine crypto;
-	private static JansiFormats jansi = new JansiFormats();
+	public static JansiFormats jansi = new JansiFormats();
 	
 	//Settings
 	private final static String settingsFile = logic.getJarDirectory("client_config.xml");
-	private static ClientSettings settings;
+	public static ClientSettings settings;
 
 	public static void main(String[] args) {
 		//0. Load config & init stuff
@@ -44,42 +43,22 @@ public class ClientApplication {
 		} catch (Exception anEx) {
 			System.err.println("Crypto Error: Unable to load the Encryption Engine");
 		}
-		if(args.length<1){
-			print("temp: no args specified - launching GUI");
-			ClientController guiClient = new ClientController();
-			guiClient.start();
-		}
-		else{
-			print("temp: args specified - launching terminal");
-			runAsConsoleApp(args);
-		}
-	}
-	
-	private static void runAsConsoleApp(String[] args){
 		//1. GET todo-LIST from server
 		todoManager = new ClientTodoManager(sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "")));
 		
-		//2. Run manipulations (add/remove/etc.)
-		ToxicDatagram datagramForServer = todoManager.commandHandler(args);
-		
-		//3. Return answer to the server unless we're finished
-		if(datagramForServer != null){
-			sendToServer(datagramForServer);
-			voidDrawList();
+		//2. Create either GUI or CLI controller
+		if(args.length<1){
+			print("temp: no args specified - launching GUI");
+			ClientController guiClient = new ClientController();
+			guiClient.start(todoManager);
+		}
+		else{
+			CliController cli = new CliController(todoManager);
+			cli.start(args);
 		}
 	}
 	
-	private static void voidDrawList(){
-		System.out.println("voidDraw");
-		todoManager = new ClientTodoManager(sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "")));
-		ToxicDatagram datagramForServer = todoManager.commandHandler(new String[]{"list"});
-		if(datagramForServer != null){
-			sendToServer(datagramForServer);
-			voidDrawList();
-		}
-	}
-	
-	private static TodoList sendToServer(ToxicDatagram datagram){
+	public static TodoList sendToServer(ToxicDatagram datagram){
 		//Encrypt before sending off
 		Object encryptedData = null;
 		try {
@@ -127,20 +106,6 @@ public class ClientApplication {
 		return todoList;
 	}
 	
-	public static void print(String input, int indentation){
-		int charactersPerLine = settings.getConsoleSize();
-		for(int i=charactersPerLine; i < input.length(); i+=charactersPerLine){
-			input = new StringBuilder(input).insert(i, "\n").toString();
-		}
-		String indentStr = new String(new char[indentation]).replace('\0', ' ');
-		String output = input.replaceAll("(?m)^", indentStr);
-		print(output);
-	}
-	
-	public static void print(String input){
-		AnsiConsole.out.println(input+jansi.ANSI_NORMAL);
-	}
-	
 	public static void loadSettings(){
 		if(!firstTimeRun()){
 			settings = (ClientSettings) logic.loadXMLFile(settingsFile);
@@ -165,5 +130,9 @@ public class ClientApplication {
 			}
 		}
 		return firstTime;
+	}
+	
+	public static void print(String input){
+		System.out.println(input);
 	}
 }
