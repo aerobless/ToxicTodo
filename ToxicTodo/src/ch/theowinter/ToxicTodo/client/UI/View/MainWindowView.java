@@ -1,6 +1,7 @@
 package ch.theowinter.ToxicTodo.client.UI.View;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JButton;
@@ -57,8 +58,11 @@ public class MainWindowView {
 		JPanel topPanel = new JPanel();
 		frmToxictodo.getContentPane().add(topPanel, BorderLayout.NORTH);
 		
+
 		JSplitPane splitPane = new JSplitPane();
+		splitPane.setContinuousLayout(true);
 		splitPane.setResizeWeight(0.2);
+
 		frmToxictodo.getContentPane().add(splitPane, BorderLayout.CENTER);
 		todoList = new JList(todoListModel);
 		splitPane.setLeftComponent(todoList);
@@ -66,6 +70,10 @@ public class MainWindowView {
 		
 		JPanel panel = new JPanel();
 		splitPane.setRightComponent(panel);
+		
+		Dimension splitPaneMinimumSize = new Dimension(0, 0);
+		splitPane.getRightComponent().setMinimumSize(splitPaneMinimumSize);
+		splitPane.getLeftComponent().setMinimumSize(splitPaneMinimumSize);
 
 		JPanel bottomPanel = new JPanel();
 		frmToxictodo.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
