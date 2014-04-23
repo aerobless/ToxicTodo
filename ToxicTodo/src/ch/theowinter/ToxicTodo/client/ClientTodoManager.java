@@ -119,7 +119,7 @@ public class ClientTodoManager {
 		//Update local bindings:
 		localCategoryBinding = internalCategoryBinding;
 		localTaskBinding = internalTaskBinding;
-		return commandHandler();
+		return commandHandler(new String[]{"list"});
 	}
 	
 	/**
