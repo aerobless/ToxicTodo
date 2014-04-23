@@ -43,9 +43,6 @@ public class MainWindowView {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		//Data and stuff (temp)
-		todoListModel = new TodoListModel();
-		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 376, 493);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,6 +55,7 @@ public class MainWindowView {
 		frame.getContentPane().add(centerPanel, BorderLayout.CENTER);
 		centerPanel.setLayout(new BorderLayout(0, 0));
 
+		todoListModel = new TodoListModel();
 		todoList = new JList(todoListModel);
 		centerPanel.add(todoList, BorderLayout.CENTER);
 		
