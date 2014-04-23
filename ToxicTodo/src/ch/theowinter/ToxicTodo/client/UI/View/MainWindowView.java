@@ -16,7 +16,7 @@ public class MainWindowView {
 	/**
 	 * Launch the GUI application.
 	 */
-	public void launchGUI(String[] args) {
+	public void launchGUI() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

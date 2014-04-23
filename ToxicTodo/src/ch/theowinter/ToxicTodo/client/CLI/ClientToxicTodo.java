@@ -12,7 +12,7 @@ import javax.crypto.SealedObject;
 
 import org.fusesource.jansi.AnsiConsole;
 
-import ch.theowinter.ToxicTodo.client.UI.View.MainWindowView;
+import ch.theowinter.ToxicTodo.client.UI.Controller.ClientController;
 import ch.theowinter.ToxicTodo.utilities.EncryptionEngine;
 import ch.theowinter.ToxicTodo.utilities.JansiFormats;
 import ch.theowinter.ToxicTodo.utilities.LogicEngine;
@@ -46,8 +46,8 @@ public class ClientToxicTodo {
 		}
 		if(args.length<1){
 			print("temp: no args specified - launching GUI");
-			MainWindowView mainGUI = new MainWindowView();
-			mainGUI.launchGUI(args);
+			ClientController guiClient = new ClientController();
+			guiClient.start();
 		}
 		else{
 			print("temp: args specified - launching terminal");
