@@ -1,11 +1,17 @@
 package ch.theowinter.ToxicTodo.client;
 
-import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoList;
+import java.util.Observable;
+import java.util.concurrent.Semaphore;
 
-public class ClientTodoManager {
-	
+import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoList;
+import ch.theowinter.ToxicTodo.utilities.primitiveModels.ToxicDatagram;
+
+public class ClientTodoManager extends Observable{
 	//Class variables
-	TodoList todoList;
+	private TodoList todoList;
+	
+	//Locks
+	private Semaphore writeLock = new Semaphore(1);
 
 	public ClientTodoManager(TodoList todoList) {
 		super();
@@ -18,10 +24,20 @@ public class ClientTodoManager {
 	public TodoList getTodoList() {
 		return todoList;
 	}
-	
-	//TODO: possible multi-threading issue, we need to make sure we only write in one thread
-	//CLI version is single-threaded but we may use multiple threads in the UI version..
+
 	public void setTodoList(TodoList input){
-		todoList = input;
+		try {
+			writeLock.acquire();
+			todoList = input;
+			writeLock.release();
+			notifyObservers();
+		} catch (InterruptedException anEx) {
+			System.out.println("Interruped while trying to setTodoList()");
+			anEx.printStackTrace();
+		}
+	}
+	
+	public void updateList(){
+		setTodoList(ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "")));
 	}
 }

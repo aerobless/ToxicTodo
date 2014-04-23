@@ -9,12 +9,14 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.client.UI.Model.TodoListModel;
 
 public class MainWindowView {
 	private JFrame frmToxictodo;
 	private JList<String> todoList;
 	private TodoListModel todoListModel;
+	private ClientTodoManager todoManager;
 
 	/**
 	 * Launch the GUI application.
@@ -23,7 +25,7 @@ public class MainWindowView {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainWindowView window = new MainWindowView();
+					MainWindowView window = new MainWindowView(todoManager);
 					window.frmToxictodo.setVisible(true);
 					// methods here.
 				} catch (Exception e) {
@@ -36,7 +38,8 @@ public class MainWindowView {
 	/**
 	 * Create the application.
 	 */
-	public MainWindowView() {
+	public MainWindowView(ClientTodoManager aTodoManager) {
+		todoManager = aTodoManager;
 		initialize();
 	}
 
@@ -44,7 +47,7 @@ public class MainWindowView {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		todoListModel = new TodoListModel();
+		todoListModel = new TodoListModel(null);
 		frmToxictodo = new JFrame();
 		frmToxictodo.setTitle("ToxicTodo");
 		frmToxictodo.setBounds(100, 100, 844, 495);

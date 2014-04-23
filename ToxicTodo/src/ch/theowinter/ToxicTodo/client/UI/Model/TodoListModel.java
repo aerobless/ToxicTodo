@@ -1,11 +1,16 @@
 package ch.theowinter.ToxicTodo.client.UI.Model;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.AbstractListModel;
 
-public class TodoListModel  extends AbstractListModel<Object> {
+import ch.theowinter.ToxicTodo.client.ClientTodoManager;
+
+public class TodoListModel  extends AbstractListModel<Object> implements Observer{
 	private static final long serialVersionUID = -2197405934803803950L;
+	ClientTodoManager todoManager;
 	ArrayList<String> data = new ArrayList<String>();
 	
 	/**
@@ -13,8 +18,9 @@ public class TodoListModel  extends AbstractListModel<Object> {
 	 *
 	 * @param aStorage
 	 */
-	public TodoListModel() {
+	public TodoListModel(ClientTodoManager aTodoManager) {
 		super();
+		todoManager = aTodoManager;
 		data.add("test 1");
 		data.add("test 2");
 	}
@@ -36,8 +42,12 @@ public class TodoListModel  extends AbstractListModel<Object> {
 		// TODO Auto-generated method stub
 		return data.get(aIndex);
 	}
-	
-	private void updateData(){
+
+	/* (non-Javadoc)
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
+	@Override
+	public void update(Observable observedList, Object aArg) {
 		
 	}
 }

@@ -5,7 +5,7 @@ import ch.theowinter.ToxicTodo.client.UI.View.MainWindowView;
 
 public class ClientController {
 	public void start(ClientTodoManager aTodoManager){
-		MainWindowView mainWindow = new MainWindowView();
+		MainWindowView mainWindow = new MainWindowView(aTodoManager);
 		mainWindow.launchGUI();
 	}
 }
