@@ -6,7 +6,7 @@ import javax.swing.AbstractListModel;
 
 public class TodoListModel  extends AbstractListModel<Object> {
 	private static final long serialVersionUID = -2197405934803803950L;
-	ArrayList<String> storage = new ArrayList<String>();
+	ArrayList<String> data = new ArrayList<String>();
 	
 	/**
 	 * Creates a new instance of this class.
@@ -15,8 +15,8 @@ public class TodoListModel  extends AbstractListModel<Object> {
 	 */
 	public TodoListModel() {
 		super();
-		storage.add("test 1");
-		storage.add("test 2");
+		data.add("test 1");
+		data.add("test 2");
 	}
 
 	/* (non-Javadoc)
@@ -25,7 +25,7 @@ public class TodoListModel  extends AbstractListModel<Object> {
 	@Override
 	public int getSize() {
 		// TODO Auto-generated method stub
-		return storage.size();
+		return data.size();
 	}
 
 	/* (non-Javadoc)
@@ -34,9 +34,10 @@ public class TodoListModel  extends AbstractListModel<Object> {
 	@Override
 	public Object getElementAt(int aIndex) {
 		// TODO Auto-generated method stub
-		return storage.get(aIndex);
+		return data.get(aIndex);
 	}
-
-
-
+	
+	private void updateData(){
+		
+	}
 }

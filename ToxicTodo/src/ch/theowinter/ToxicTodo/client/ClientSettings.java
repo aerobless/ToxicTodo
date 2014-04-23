@@ -1,4 +1,4 @@
-package ch.theowinter.ToxicTodo.client.CLI;
+package ch.theowinter.ToxicTodo.client;
 
 public class ClientSettings {
 	private String HOST = "localhost";

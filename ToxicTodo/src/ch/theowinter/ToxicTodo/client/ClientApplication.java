@@ -1,4 +1,4 @@
-package ch.theowinter.ToxicTodo.client.CLI;
+package ch.theowinter.ToxicTodo.client;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +19,7 @@ import ch.theowinter.ToxicTodo.utilities.LogicEngine;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoList;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.ToxicDatagram;
 
-public class ClientToxicTodo {
+public class ClientApplication {
 	//Vanity info
 	public static final double clientVersion = 1.24;
 	public static final String author = "Theo Winter";

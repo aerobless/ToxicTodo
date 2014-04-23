@@ -1,16 +1,13 @@
 package ch.theowinter.ToxicTodo.client.UI.View;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.EventQueue;
 
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.SoftBevelBorder;
+import javax.swing.JSplitPane;
 
 import ch.theowinter.ToxicTodo.client.UI.Model.TodoListModel;
 
@@ -47,36 +44,26 @@ public class MainWindowView {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		todoListModel = new TodoListModel();
 		frmToxictodo = new JFrame();
 		frmToxictodo.setTitle("ToxicTodo");
-		frmToxictodo.setBounds(100, 100, 376, 493);
+		frmToxictodo.setBounds(100, 100, 844, 495);
 		frmToxictodo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmToxictodo.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel topPanel = new JPanel();
 		frmToxictodo.getContentPane().add(topPanel, BorderLayout.NORTH);
 		
-		JPanel centerPanel = new JPanel();
-		frmToxictodo.getContentPane().add(centerPanel, BorderLayout.CENTER);
-		centerPanel.setLayout(new BorderLayout(0, 0));
-
-		todoListModel = new TodoListModel();
+		JSplitPane splitPane = new JSplitPane();
+		splitPane.setResizeWeight(0.2);
+		frmToxictodo.getContentPane().add(splitPane, BorderLayout.CENTER);
 		todoList = new JList(todoListModel);
-		todoList.setBorder(new SoftBevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		centerPanel.add(todoList, BorderLayout.CENTER);
+		splitPane.setLeftComponent(todoList);
+		todoList.setBorder(null);
 		
 		JPanel panel = new JPanel();
-		centerPanel.add(panel, BorderLayout.WEST);
-		
-		Component horizontalStrut = Box.createHorizontalStrut(2);
-		panel.add(horizontalStrut);
-		
-		JPanel panel_1 = new JPanel();
-		centerPanel.add(panel_1, BorderLayout.EAST);
-		
-		Component horizontalStrut_1 = Box.createHorizontalStrut(2);
-		panel_1.add(horizontalStrut_1);
-		
+		splitPane.setRightComponent(panel);
+
 		JPanel bottomPanel = new JPanel();
 		frmToxictodo.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
 		

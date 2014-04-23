@@ -1,4 +1,4 @@
-package ch.theowinter.ToxicTodo.client.CLI;
+package ch.theowinter.ToxicTodo.client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,7 +37,7 @@ public class ClientTodoManager {
 	 * Handles commands issued by the user as commandline arg or in list-view.
 	 * @return datagram if the command was successfully recognize, otherwise null.
 	 */
-	protected ToxicDatagram commandHandler(String[] userInputArray){
+	public ToxicDatagram commandHandler(String[] userInputArray){
 		ToxicDatagram datagram = null;
 		if(argCheck(new String[]{"add","category","arg", "args"}, userInputArray)){
 			datagram = addCategory(userInputArray);
@@ -73,7 +73,7 @@ public class ClientTodoManager {
 			updateTheClient();
 		}
 		else if(userInputArray.length>=1 && !userInputArray[0].equals("")){
-			ClientToxicTodo.print("Your command: "+Arrays.toString(userInputArray) +" was not recognized.");
+			ClientApplication.print("Your command: "+Arrays.toString(userInputArray) +" was not recognized.");
 		}
 		return datagram;
 	}
@@ -99,17 +99,17 @@ public class ClientTodoManager {
 		ArrayList<TodoTask> internalTaskBinding = new ArrayList<TodoTask>();
 		
 		//Clear ANSI console
-		ClientToxicTodo.print(jansi.ANSI_CLS);
+		ClientApplication.print(jansi.ANSI_CLS);
 		
 		int taskID = 0;
 		for(String categoryKey : todoList.getCategoryMap().keySet()){
 			//Only list category if it contains tasks or we want to display empty categories too.
 			if(todoList.getCategoryMap().get(categoryKey).containsTasks() || displayEmptyCategories==true){
-				ClientToxicTodo.print(jansi.ANSI_BOLD+jansi.CYAN+"###-"+todoList.getCategoryMap().get(categoryKey).getName().toUpperCase()+"-###");
+				ClientApplication.print(jansi.ANSI_BOLD+jansi.CYAN+"###-"+todoList.getCategoryMap().get(categoryKey).getName().toUpperCase()+"-###");
 				//todoList.getCategoryMap().get(categoryKey).getTasksHashMap();
 				for(String taskKey : todoList.getCategoryMap().get(categoryKey).getTasksHashMap().keySet()){
 					++taskID;
-					ClientToxicTodo.print(jansi.GREEN+"["+taskID+"] "+formatString(todoList.getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey).getTaskText()), 2);
+					ClientApplication.print(jansi.GREEN+"["+taskID+"] "+formatString(todoList.getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey).getTaskText()), 2);
 					//adding task to local bindings map
 					internalCategoryBinding.add(categoryKey);
 					internalTaskBinding.add(todoList.getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey));
@@ -147,13 +147,13 @@ public class ClientTodoManager {
 	 */
 	private ToxicDatagram drawCategories(){
 		//Clear ANSI console
-		ClientToxicTodo.print(jansi.ANSI_CLS);
+		ClientApplication.print(jansi.ANSI_CLS);
 		for(String categoryKey : todoList.getCategoryMap().keySet()){
 			String category = todoList.getCategoryMap().get(categoryKey).getName();
 			int nofTasks = todoList.getCategoryMap().get(categoryKey).getTasksHashMap().keySet().size();
-			ClientToxicTodo.print(jansi.ANSI_BOLD+jansi.CYAN+"[<-"+category+"->]");
-			ClientToxicTodo.print(jansi.GREEN+"Category Key: "+categoryKey, 2);
-			ClientToxicTodo.print(jansi.GREEN+"Number of active tasks: "+nofTasks, 2);
+			ClientApplication.print(jansi.ANSI_BOLD+jansi.CYAN+"[<-"+category+"->]");
+			ClientApplication.print(jansi.GREEN+"Category Key: "+categoryKey, 2);
+			ClientApplication.print(jansi.GREEN+"Number of active tasks: "+nofTasks, 2);
 		}
 		return commandHandler();
 	}
@@ -162,28 +162,28 @@ public class ClientTodoManager {
 	 */
 	private void drawAbout(){
 		//Clear ANSI console
-		ClientToxicTodo.print(jansi.ANSI_CLS);
-		ClientToxicTodo.print(jansi.ANSI_BOLD+jansi.CYAN+"### - ABOUT TOXIC TODO - ###");
-		ClientToxicTodo.print(jansi.GREEN+"Version: "+ClientToxicTodo.clientVersion, 2);
-		ClientToxicTodo.print(jansi.GREEN+"Author:  "+ClientToxicTodo.author, 2);
-		ClientToxicTodo.print(jansi.GREEN+"Website: "+ClientToxicTodo.website, 2);
+		ClientApplication.print(jansi.ANSI_CLS);
+		ClientApplication.print(jansi.ANSI_BOLD+jansi.CYAN+"### - ABOUT TOXIC TODO - ###");
+		ClientApplication.print(jansi.GREEN+"Version: "+ClientApplication.clientVersion, 2);
+		ClientApplication.print(jansi.GREEN+"Author:  "+ClientApplication.author, 2);
+		ClientApplication.print(jansi.GREEN+"Website: "+ClientApplication.website, 2);
 	}
 	
 	private void updateTheClient(){
 		//Clear ANSI console
-		ClientToxicTodo.print(jansi.ANSI_CLS);
-		ClientToxicTodo.print(jansi.ANSI_BOLD+jansi.CYAN+"### - TOXIC TODO UPDATER - ###");
-		ClientToxicTodo.print(jansi.GREEN+"Downloading latest release from CI-server...");
-		if(logic.updateSoftware(ClientToxicTodo.clientUpdateURL)){
-			ClientToxicTodo.print(jansi.GREEN+"The update has been successfully downloaded.");
-			ClientToxicTodo.print(jansi.GREEN+"Please let a few seconds pass before issuing a command to ToxicTodo");
+		ClientApplication.print(jansi.ANSI_CLS);
+		ClientApplication.print(jansi.ANSI_BOLD+jansi.CYAN+"### - TOXIC TODO UPDATER - ###");
+		ClientApplication.print(jansi.GREEN+"Downloading latest release from CI-server...");
+		if(logic.updateSoftware(ClientApplication.clientUpdateURL)){
+			ClientApplication.print(jansi.GREEN+"The update has been successfully downloaded.");
+			ClientApplication.print(jansi.GREEN+"Please let a few seconds pass before issuing a command to ToxicTodo");
 		}
 	}
 
 	private ToxicDatagram removeTask(String task, boolean writeToLog) {
 		ToxicDatagram datagram = null;
 		if(localCategoryBinding==null||localTaskBinding==null){
-			ClientToxicTodo.print("You can't blindly remove or complete tasks.");
+			ClientApplication.print("You can't blindly remove or complete tasks.");
 		}
 		else{
 			try{
@@ -196,10 +196,10 @@ public class ClientTodoManager {
 					datagram = new ToxicDatagram(dataMessage, "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1));	
 				}
 				else{
-					ClientToxicTodo.print("There's no task with that ID.");
+					ClientApplication.print("There's no task with that ID.");
 				}
 			} catch(NumberFormatException e){
-				ClientToxicTodo.print("'"+task+"' is not a valid number.");
+				ClientApplication.print("'"+task+"' is not a valid number.");
 			}
 		}
 		return datagram;
@@ -235,8 +235,8 @@ public class ClientTodoManager {
 			datagram = new ToxicDatagram("ADD_CATEGORY_TO_LIST_ON_SERVER", "",category);
 		}
 		else{
-			ClientToxicTodo.print("You can add a category like this:");
-			ClientToxicTodo.print("add category keyword long category name");
+			ClientApplication.print("You can add a category like this:");
+			ClientApplication.print("add category keyword long category name");
 		}
 		return datagram;
 	}
@@ -248,8 +248,8 @@ public class ClientTodoManager {
 			datagram = new ToxicDatagram("REMOVE_CATEGORY_ON_SERVER", "",category);
 		}
 		else{
-			ClientToxicTodo.print("You can remove a category like this:");
-			ClientToxicTodo.print("remove category keyword");
+			ClientApplication.print("You can remove a category like this:");
+			ClientApplication.print("remove category keyword");
 		}
 		return datagram;	
 	}	
