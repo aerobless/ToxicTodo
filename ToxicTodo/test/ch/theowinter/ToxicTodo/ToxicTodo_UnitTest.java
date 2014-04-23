@@ -8,7 +8,7 @@ import javax.crypto.SealedObject;
 
 import org.junit.Test;
 
-import ch.theowinter.ToxicTodo.client.ClientTodoManager;
+import ch.theowinter.ToxicTodo.client.CLI.ClientTodoManager;
 import ch.theowinter.ToxicTodo.utilities.EncryptionEngine;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoList;
 import ch.theowinter.ToxicTodo.utilities.primitives.TodoTask;

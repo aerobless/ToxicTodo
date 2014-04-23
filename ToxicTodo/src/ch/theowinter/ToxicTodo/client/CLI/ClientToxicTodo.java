@@ -1,4 +1,4 @@
-package ch.theowinter.ToxicTodo.client;
+package ch.theowinter.ToxicTodo.client.CLI;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import javax.crypto.SealedObject;
 
 import org.fusesource.jansi.AnsiConsole;
 
-import ch.theowinter.ToxicTodo.client.UI.MainWindowView;
+import ch.theowinter.ToxicTodo.client.UI.View.MainWindowView;
 import ch.theowinter.ToxicTodo.utilities.EncryptionEngine;
 import ch.theowinter.ToxicTodo.utilities.JansiFormats;
 import ch.theowinter.ToxicTodo.utilities.LogicEngine;
@@ -21,9 +21,9 @@ import ch.theowinter.ToxicTodo.utilities.primitives.ToxicDatagram;
 
 public class ClientToxicTodo {
 	//Vanity info
-	public static final double clientVersion = 1.23;
+	public static final double clientVersion = 1.24;
 	public static final String author = "Theo Winter";
-	public static final String website = "theowinter.ch";
+	public static final String website = "http://theowinter.ch";
 	public static final String clientUpdateURL = "http://w1nter.net:8080/job/ToxicTodo/lastSuccessfulBuild/artifact/ToxicTodo/dist/ToxicTodoClient.jar";
 	
 	//Local storage

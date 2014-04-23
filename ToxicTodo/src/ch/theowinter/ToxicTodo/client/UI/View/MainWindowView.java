@@ -1,4 +1,4 @@
-package ch.theowinter.ToxicTodo.client.UI;
+package ch.theowinter.ToxicTodo.client.UI.View;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;

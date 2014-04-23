@@ -118,7 +118,7 @@ public class ServerToxicTodo {
 		File settingsOnDisk = new File(settingsFile);
 		if(!settingsOnDisk.exists()){
 			serverPrint("INFORMATION:");
-			serverPrint("server_config.xml has been created because you run ToxicTodo for the first time.");
+			serverPrint("Server_config.xml has been created because you run ToxicTodo for the first time.");
 			serverPrint("You can edit the settings to chose your prefered port and encryption password.");
 			firstTime = true;
 			settings = new ServerSettings();

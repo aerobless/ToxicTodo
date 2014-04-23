@@ -1,4 +1,4 @@
-package ch.theowinter.ToxicTodo.client;
+package ch.theowinter.ToxicTodo.client.CLI;
 
 import java.io.BufferedReader;
 import java.io.IOException;
