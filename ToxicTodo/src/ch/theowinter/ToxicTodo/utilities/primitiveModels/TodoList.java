@@ -98,5 +98,4 @@ public class TodoList implements Serializable {
 	public HashMap<String, TodoCategory> getCategoryMap() {
 		return categoryMap;
 	}
-	
 }

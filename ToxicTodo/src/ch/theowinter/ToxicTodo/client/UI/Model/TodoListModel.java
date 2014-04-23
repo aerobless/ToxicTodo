@@ -21,8 +21,7 @@ public class TodoListModel  extends AbstractListModel<Object> implements Observe
 	public TodoListModel(ClientTodoManager aTodoManager) {
 		super();
 		todoManager = aTodoManager;
-		data.add("test 1");
-		data.add("test 2");
+		data = todoManager.toArray();
 	}
 
 	/* (non-Javadoc)

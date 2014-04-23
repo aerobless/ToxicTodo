@@ -47,7 +47,7 @@ public class MainWindowView {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		todoListModel = new TodoListModel(null);
+		todoListModel = new TodoListModel(todoManager);
 		frmToxictodo = new JFrame();
 		frmToxictodo.setTitle("ToxicTodo");
 		frmToxictodo.setBounds(100, 100, 844, 495);
