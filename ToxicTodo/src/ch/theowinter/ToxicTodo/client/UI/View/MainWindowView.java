@@ -1,6 +1,7 @@
 package ch.theowinter.ToxicTodo.client.UI.View;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
@@ -8,7 +9,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.border.LineBorder;
 
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.client.UI.Model.TodoListModel;
@@ -56,26 +60,41 @@ public class MainWindowView {
 		frmToxictodo.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel topPanel = new JPanel();
+		topPanel.setBorder(null);
 		frmToxictodo.getContentPane().add(topPanel, BorderLayout.NORTH);
 		
 
 		JSplitPane splitPane = new JSplitPane();
 		splitPane.setContinuousLayout(true);
-		splitPane.setResizeWeight(0.2);
+		splitPane.setResizeWeight(0.3);
+		//splitPane.setBorder(new LineBorder(Color.blue,0)); //no main border
 
 		frmToxictodo.getContentPane().add(splitPane, BorderLayout.CENTER);
-		todoList = new JList(todoListModel);
-		splitPane.setLeftComponent(todoList);
-		todoList.setBorder(null);
 		
 		JPanel panel = new JPanel();
 		splitPane.setRightComponent(panel);
 		
 		Dimension splitPaneMinimumSize = new Dimension(0, 0);
 		splitPane.getRightComponent().setMinimumSize(splitPaneMinimumSize);
+		
+		JScrollPane todoListscrollPane = new JScrollPane();
+		//todoListscrollPane.setViewportBorder(new LineBorder(Color.blue,3));
+		todoListscrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+		todoListscrollPane.setBorder(new LineBorder(Color.black,0));
+		splitPane.setLeftComponent(todoListscrollPane);
+		
 		splitPane.getLeftComponent().setMinimumSize(splitPaneMinimumSize);
+		
+		JPanel todoListPanel = new JPanel();
+		todoListscrollPane.setViewportView(todoListPanel);
+		todoListPanel.setLayout(new BorderLayout(0, 0));
+		
+		todoList = new JList(todoListModel);
+		todoListPanel.add(todoList, BorderLayout.CENTER);
+		todoList.setBorder(null);
 
 		JPanel bottomPanel = new JPanel();
+		bottomPanel.setBorder(null);
 		frmToxictodo.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
 		
 		JButton btnNewButton = new JButton("New button");

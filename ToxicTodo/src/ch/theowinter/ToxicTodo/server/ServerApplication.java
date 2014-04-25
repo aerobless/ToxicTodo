@@ -14,7 +14,7 @@ import java.util.concurrent.Semaphore;
 import ch.theowinter.ToxicTodo.utilities.LogicEngine;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoList;
 
-public class ServerToxicTodo {
+public class ServerApplication {
 	//Vanity info
 	public static final double serverVersion = 1.24;
 	public static final String author = "Theo Winter";
@@ -87,7 +87,7 @@ public class ServerToxicTodo {
 	}
 
 	public static void setServerTodoList(TodoList serverTodoList) {
-		ServerToxicTodo.serverTodoList = serverTodoList;
+		ServerApplication.serverTodoList = serverTodoList;
 	}
 	
 	public static void writeLogToFile(String logFilename, String logMessage){
