@@ -120,6 +120,8 @@ public class MainWindowView {
 	 */
 	private void initToolbar(){
 		UnifiedToolBar unifiedToolbar = new UnifiedToolBar();
+		//Make the entire toolbar draggable, that's actually really awesome!
+		unifiedToolbar.installWindowDraggerOnWindow(frmToxictodo);
 		frmToxictodo.getContentPane().add(unifiedToolbar.getComponent(), BorderLayout.NORTH);
 		
 		//Toolbar buttons:
