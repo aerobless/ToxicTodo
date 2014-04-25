@@ -5,11 +5,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
-import java.awt.Image;
 
 import javax.swing.AbstractButton;
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -24,6 +22,7 @@ import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.client.UI.Model.TodoListModel;
 
 import com.bulenkov.iconloader.IconLoader;
+import com.bulenkov.iconloader.IsRetina;
 import com.explodingpixels.macwidgets.MacButtonFactory;
 import com.explodingpixels.macwidgets.MacUtils;
 import com.explodingpixels.macwidgets.UnifiedToolBar;
@@ -148,7 +147,13 @@ public class MainWindowView {
 		cogButton.setHorizontalTextPosition(SwingConstants.CENTER);
 		 
 		//Working on getting retina ready images as button...http://bulenkov.com/iconloader/
-		cogButton.setIcon(IconLoader.findIcon(SettingsWindow.class.getResource("/resources/icon-32.png")));
+		Icon test = IconLoader.findIcon(SettingsWindow.class.getResource("/resources/icon-32.png"));
+		
+		IsRetina retinaTest = new IsRetina();
+		System.out.println("retina"+retinaTest.isRetina());
+		
+		System.out.println(test.getIconHeight()+" "+test.getIconWidth());
+		cogButton.setIcon(test);
 		cogButton.putClientProperty("JButton.buttonType", "textured");
 		 
 		// Make the dimensions of the button consistant
