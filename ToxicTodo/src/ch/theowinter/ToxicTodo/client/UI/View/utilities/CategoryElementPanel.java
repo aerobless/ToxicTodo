@@ -3,31 +3,30 @@ package ch.theowinter.ToxicTodo.client.UI.View.utilities;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class CategoryElement extends JPanel {
+public class CategoryElementPanel extends JPanel {
 	private static final long serialVersionUID = -2314006883111515559L;
 	JLabel lblIcon;
 	JLabel lblCategory;
 
 	/**
-	 * Create the panel.
+	 * CategoryElementPanel is used in categoryList's cell-renderer.
 	 */
-	public CategoryElement() {
+	public CategoryElementPanel() {
 		FlowLayout flowLayout = (FlowLayout) getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		
-		
-		lblIcon = new JLabel();
+
+		lblIcon = new JLabel("loading");
 		add(lblIcon);
 		
-		lblCategory = new JLabel();
+		lblCategory = new JLabel("x");
 		add(lblCategory);
-
 	}
 	
 	public void setText(char awesomeIcon, String category){
@@ -38,12 +37,16 @@ public class CategoryElement extends JPanel {
 		    ttfReal = ttfBase.deriveFont(Font.BOLD, 40);
 		    //setText(String.valueOf('\uf15b'));
 		} catch (FontFormatException | IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("font IO exception");
 			e.printStackTrace();
 		}
 		lblIcon.setFont(ttfReal);
 		lblIcon.setText(String.valueOf(awesomeIcon));
-		
 		lblCategory.setText(category);
+	}
+	
+	public void setFontColor(Color color){
+		lblIcon.setForeground(color);
+		lblCategory.setForeground(color);
 	}
 }
