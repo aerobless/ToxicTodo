@@ -22,8 +22,6 @@ import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.client.UI.Model.TodoListModel;
 import ch.theowinter.ToxicTodo.client.UI.View.utilities.FontIconButton;
 
-import com.bulenkov.iconloader.IconLoader;
-import com.bulenkov.iconloader.IsRetina;
 import com.explodingpixels.macwidgets.MacButtonFactory;
 import com.explodingpixels.macwidgets.MacUtils;
 import com.explodingpixels.macwidgets.UnifiedToolBar;

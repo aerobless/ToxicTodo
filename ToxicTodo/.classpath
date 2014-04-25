@@ -8,6 +8,5 @@
 	<classpathentry kind="lib" path="/Users/theowinter/Dropbox/Libraries/jansi-1.11.jar"/>
 	<classpathentry kind="lib" path="/Users/theowinter/Dropbox/Libraries/mac_widgets-0.10.0/MacWidgets.jar"/>
 	<classpathentry kind="lib" path="/Users/theowinter/Dropbox/Libraries/mac_widgets-0.10.0/forms-1.2.1.jar"/>
-	<classpathentry kind="lib" path="/Users/theowinter/Dropbox/Libraries/iconloader.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
