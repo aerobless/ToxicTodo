@@ -78,8 +78,7 @@ public class MainWindowView {
 		splitPane.getRightComponent().setMinimumSize(splitPaneMinimumSize);
 		
 		JScrollPane todoListscrollPane = new JScrollPane();
-		//todoListscrollPane.setViewportBorder(new LineBorder(Color.blue,3));
-		todoListscrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+		todoListscrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		todoListscrollPane.setBorder(new LineBorder(Color.black,0));
 		splitPane.setLeftComponent(todoListscrollPane);
 		
