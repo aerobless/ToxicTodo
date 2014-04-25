@@ -48,7 +48,7 @@
 			<compilerarg value="-Xbootclasspath/p:${toString:classpath}" />
 		</javac>
 		<move todir="build/resources/">
-		    <fileset dir="/ToxicTodo/resources/">
+		    <fileset dir="/src/resources/">
 		      <include name="*"/>
 		    </fileset>
 		</move>
