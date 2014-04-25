@@ -2,6 +2,10 @@ package ch.theowinter.ToxicTodo.client.UI.View.utilities;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -20,8 +24,17 @@ public class CategoryListCellRenderer extends JLabel implements ListCellRenderer
 
         Color background;
         Color foreground;
-        
-        
+
+		try {
+	        InputStream in = this.getClass().getResourceAsStream("/resources/fontawesome-webfont.ttf");
+			Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, in);
+		    Font ttfReal = ttfBase.deriveFont(Font.BOLD, 40);
+		    setFont(ttfReal);
+		    setText(String.valueOf('\uf15b'));
+		} catch (FontFormatException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
         // check if this cell represents the current DnD drop location
         JList.DropLocation dropLocation = list.getDropLocation();
