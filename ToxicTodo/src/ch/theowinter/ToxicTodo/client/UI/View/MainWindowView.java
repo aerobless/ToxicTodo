@@ -133,9 +133,9 @@ public class MainWindowView {
 		saveButton.putClientProperty("JButton.buttonType", "textured");
 		 
 		// Make the dimensions of the button consistant
-		saveButton.setPreferredSize(new Dimension(80, 60));
-		saveButton.setMinimumSize(new Dimension(80, 60));
-		saveButton.setMaximumSize(new Dimension(80, 60));
+		saveButton.setPreferredSize(new Dimension(50, 35));
+		saveButton.setMinimumSize(new Dimension(50, 35));
+		saveButton.setMaximumSize(new Dimension(50, 35));
 		 
 		AbstractButton macSaveButton = MacButtonFactory.makeUnifiedToolBarButton(saveButton);
 		// Add the button to the toolbar
@@ -152,9 +152,9 @@ public class MainWindowView {
 		cogButton.putClientProperty("JButton.buttonType", "textured");
 		 
 		// Make the dimensions of the button consistant
-		cogButton.setPreferredSize(new Dimension(80, 60));
-		cogButton.setMinimumSize(new Dimension(80, 60));
-		cogButton.setMaximumSize(new Dimension(80, 60));
+		cogButton.setPreferredSize(new Dimension(50, 35));
+		cogButton.setMinimumSize(new Dimension(50, 35));
+		cogButton.setMaximumSize(new Dimension(50, 35));
 		 
 		AbstractButton macCogButton = MacButtonFactory.makeUnifiedToolBarButton(cogButton);
 		
