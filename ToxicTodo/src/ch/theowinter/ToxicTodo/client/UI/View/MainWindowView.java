@@ -5,6 +5,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -74,9 +78,11 @@ public class MainWindowView {
 		//splitPane.setBorder(new LineBorder(Color.blue,0)); //no main border
 
 		frmToxictodo.getContentPane().add(splitPane, BorderLayout.CENTER);
-		
-		JPanel panel = new JPanel();
-		splitPane.setRightComponent(panel);
+	
+		//RIGHT PANEL:
+		JPanel rightPanel = new JPanel();
+		rightPanel.setBackground(new Color(237, 237, 237));
+		splitPane.setRightComponent(rightPanel);
 		
 		Dimension splitPaneMinimumSize = new Dimension(0, 0);
 		splitPane.getRightComponent().setMinimumSize(splitPaneMinimumSize);
@@ -88,6 +94,7 @@ public class MainWindowView {
 		
 		splitPane.getLeftComponent().setMinimumSize(splitPaneMinimumSize);
 		
+		//SIDEBAR:
 		JPanel todoListPanel = new JPanel();
 		todoListscrollPane.setViewportView(todoListPanel);
 		todoListPanel.setLayout(new BorderLayout(0, 0));
@@ -96,7 +103,9 @@ public class MainWindowView {
 		todoListPanel.add(todoList, BorderLayout.CENTER);
 		todoList.setBorder(null);
 		todoList.setBackground(new Color(230, 234, 239));
-
+		
+		
+		//OTHER STUFF:
 		JPanel bottomPanel = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) bottomPanel.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.RIGHT);
@@ -158,4 +167,5 @@ public class MainWindowView {
 		removeTask.setMaximumSize(uniBarButtonSize);
 		unifiedToolbar.addComponentToLeft(removeTask);	
 	}
+	
 }
