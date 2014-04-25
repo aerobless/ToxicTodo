@@ -8,6 +8,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+
+import ch.theowinter.ToxicTodo.client.UI.View.utilities.FontIconButton;
 
 public class SettingsWindow extends JFrame {
 
@@ -40,9 +43,8 @@ public class SettingsWindow extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon(SettingsWindow.class.getResource("/resources/test.png")));
-		contentPane.add(lblNewLabel, BorderLayout.CENTER);
+		FontIconButton btnNewButton = new FontIconButton('\uf04b');
+		contentPane.add(btnNewButton, BorderLayout.CENTER);
 	}
 
 }

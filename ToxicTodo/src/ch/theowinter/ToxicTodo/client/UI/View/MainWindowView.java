@@ -20,6 +20,7 @@ import javax.swing.border.LineBorder;
 
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.client.UI.Model.TodoListModel;
+import ch.theowinter.ToxicTodo.client.UI.View.utilities.FontIconButton;
 
 import com.bulenkov.iconloader.IconLoader;
 import com.bulenkov.iconloader.IsRetina;
@@ -128,7 +129,6 @@ public class MainWindowView {
 		saveButton.setHorizontalTextPosition(SwingConstants.CENTER);
 		 
 		// Set the icon of the button
-		saveButton.setIcon(IconLoader.findIcon(SettingsWindow.class.getResource("/resources/icon-32.png")));
 		saveButton.putClientProperty("JButton.buttonType", "textured");
 		 
 		// Make the dimensions of the button consistant
@@ -137,33 +137,26 @@ public class MainWindowView {
 		saveButton.setMaximumSize(new Dimension(50, 35));
 		 
 		AbstractButton macSaveButton = MacButtonFactory.makeUnifiedToolBarButton(saveButton);
+		
 		// Add the button to the toolbar
 		unifiedToolbar.addComponentToLeft(macSaveButton);
 		 
 		// Create a button for the toolbar
-		JButton cogButton = new JButton("Configure");
+		FontIconButton cogButton = new FontIconButton('\uf04b');
 		// Make sure the text is in the correct position
 		cogButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		cogButton.setHorizontalTextPosition(SwingConstants.CENTER);
-		 
-		//Working on getting retina ready images as button...http://bulenkov.com/iconloader/
-		Icon test = IconLoader.findIcon(SettingsWindow.class.getResource("/resources/icon-32.png"));
 		
-		IsRetina retinaTest = new IsRetina();
-		System.out.println("retina"+retinaTest.isRetina());
-		
-		System.out.println(test.getIconHeight()+" "+test.getIconWidth());
-		cogButton.setIcon(test);
-		cogButton.putClientProperty("JButton.buttonType", "textured");
+		//cogButton.putClientProperty("JButton.buttonType", "textured");
 		 
 		// Make the dimensions of the button consistant
 		cogButton.setPreferredSize(new Dimension(50, 35));
 		cogButton.setMinimumSize(new Dimension(50, 35));
 		cogButton.setMaximumSize(new Dimension(50, 35));
 		 
-		AbstractButton macCogButton = MacButtonFactory.makeUnifiedToolBarButton(cogButton);
+		//AbstractButton macCogButton = MacButtonFactory.makeUnifiedToolBarButton(cogButton);
 		
 		// Add the button to the toolbar
-		unifiedToolbar.addComponentToLeft(macCogButton);	
+		unifiedToolbar.addComponentToLeft(cogButton);	
 	}
 }
