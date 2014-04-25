@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.concurrent.Semaphore;
 
+import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoList;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.ToxicDatagram;
@@ -75,13 +76,11 @@ public class ClientTodoManager extends Observable{
 	}
 	
 	//TODO: optimize, temporary for sidebar test
-	public ArrayList<String> categoriesToArray(){
-		ArrayList<String> returnArray = new ArrayList<String>();
+	public ArrayList<TodoCategory> categoriesToArray(){
+		ArrayList<TodoCategory> returnArray = new ArrayList<TodoCategory>();
 		for(String categoryKey : getTodoList().getCategoryMap().keySet()){
 			//Only list category if it contains tasks or we want to display empty categories too.
-			if(getTodoList().getCategoryMap().get(categoryKey).containsTasks()){
-				returnArray.add(getTodoList().getCategoryMap().get(categoryKey).getName().toUpperCase());
-			}
+			returnArray.add(getTodoList().getCategoryMap().get(categoryKey));
 		}
 		return returnArray;
 	}

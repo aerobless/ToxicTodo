@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,21 +17,24 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.ListModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.client.UI.Model.TodoListModel;
+import ch.theowinter.ToxicTodo.client.UI.View.utilities.CategoryListCellRenderer;
 import ch.theowinter.ToxicTodo.client.UI.View.utilities.FontIconButton;
+import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 
 import com.explodingpixels.macwidgets.MacUtils;
 import com.explodingpixels.macwidgets.UnifiedToolBar;
 
 public class MainWindowView {
 	private JFrame frmToxictodo;
-	private JList<String> todoList;
-	private TodoListModel todoListModel;
+	private JList<TodoCategory> todoList;
+	private ListModel<TodoCategory> todoListModel;
 	private ClientTodoManager todoManager;
 
 	/**
@@ -99,10 +103,12 @@ public class MainWindowView {
 		todoListscrollPane.setViewportView(todoListPanel);
 		todoListPanel.setLayout(new BorderLayout(0, 0));
 		
-		todoList = new JList(todoListModel);
+		todoList = new JList<TodoCategory>(todoListModel);
 		todoListPanel.add(todoList, BorderLayout.CENTER);
 		todoList.setBorder(null);
 		todoList.setBackground(new Color(230, 234, 239));
+
+		todoList.setCellRenderer(new CategoryListCellRenderer());
 		
 		
 		//OTHER STUFF:
