@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 
-import javax.swing.AbstractButton;
-import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -22,7 +20,6 @@ import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.client.UI.Model.TodoListModel;
 import ch.theowinter.ToxicTodo.client.UI.View.utilities.FontIconButton;
 
-import com.explodingpixels.macwidgets.MacButtonFactory;
 import com.explodingpixels.macwidgets.MacUtils;
 import com.explodingpixels.macwidgets.UnifiedToolBar;
 
@@ -112,49 +109,50 @@ public class MainWindowView {
 		JButton btnRemoveTask = new JButton("complete task");
 		btnRemoveTask.setToolTipText("Complete a task.");
 		bottomPanel.add(btnRemoveTask);
-		
-		/*
-		 * Creating a unified toolbar according to:
-		 * http://jtechdev.com/2013/05/29/style-java-application-for-mac-os-x/
-		 */
+		initToolbar();
+	}
+	
+	/*
+	 * Creating a UNIFIED mac toolbar according to:
+	 * http://jtechdev.com/2013/05/29/style-java-application-for-mac-os-x/
+	 * 
+	 * TODO: maybe needs to be replaced by a standard toolbar on windows, needs testing
+	 */
+	private void initToolbar(){
 		UnifiedToolBar unifiedToolbar = new UnifiedToolBar();
 		frmToxictodo.getContentPane().add(unifiedToolbar.getComponent(), BorderLayout.NORTH);
 		
-		// Create a button for the toolbar
-		JButton saveButton = new JButton("Save");
-		// Make sure the text is in the correct position
-		saveButton.setVerticalTextPosition(SwingConstants.BOTTOM);
-		saveButton.setHorizontalTextPosition(SwingConstants.CENTER);
-		 
-		// Set the icon of the button
-		saveButton.putClientProperty("JButton.buttonType", "textured");
-		 
-		// Make the dimensions of the button consistant
-		saveButton.setPreferredSize(new Dimension(50, 25));
-		saveButton.setMinimumSize(new Dimension(50, 25));
-		saveButton.setMaximumSize(new Dimension(50, 25));
-		 
-		AbstractButton macSaveButton = MacButtonFactory.makeUnifiedToolBarButton(saveButton);
+		//Toolbar buttons:
+		Dimension uniBarButtonSize = new Dimension(50, 25);
 		
-		// Add the button to the toolbar
-		unifiedToolbar.addComponentToLeft(macSaveButton);
+		//New Task:
+		FontIconButton newTask = new FontIconButton('\uf15b');
+		newTask.setVerticalTextPosition(SwingConstants.BOTTOM);
+		newTask.setHorizontalTextPosition(SwingConstants.CENTER);
+		newTask.putClientProperty("JButton.buttonType", "textured");
+		newTask.setPreferredSize(uniBarButtonSize);
+		newTask.setMinimumSize(uniBarButtonSize);
+		newTask.setMaximumSize(uniBarButtonSize);
+		unifiedToolbar.addComponentToLeft(newTask);
 		 
-		// Create a button for the toolbar
-		FontIconButton cogButton = new FontIconButton('\uf04b');
-		// Make sure the text is in the correct position
-		cogButton.setVerticalTextPosition(SwingConstants.BOTTOM);
-		cogButton.setHorizontalTextPosition(SwingConstants.CENTER);
+		//Complete Task:
+		FontIconButton completeTask = new FontIconButton('\uf00c');
+		completeTask.setVerticalTextPosition(SwingConstants.BOTTOM);
+		completeTask.setHorizontalTextPosition(SwingConstants.CENTER);	
+		completeTask.putClientProperty("JButton.buttonType", "textured");
+		completeTask.setPreferredSize(uniBarButtonSize);
+		completeTask.setMinimumSize(uniBarButtonSize);
+		completeTask.setMaximumSize(uniBarButtonSize);
+		unifiedToolbar.addComponentToLeft(completeTask);	
 		
-		cogButton.putClientProperty("JButton.buttonType", "textured");
-		 
-		// Make the dimensions of the button consistant
-		cogButton.setPreferredSize(new Dimension(50, 25));
-		cogButton.setMinimumSize(new Dimension(50, 25));
-		cogButton.setMaximumSize(new Dimension(50, 25));
-		 
-		//AbstractButton macCogButton = MacButtonFactory.makeUnifiedToolBarButton(cogButton);
-		
-		// Add the button to the toolbar
-		unifiedToolbar.addComponentToLeft(cogButton);	
+		//Remove Task:
+		FontIconButton removeTask = new FontIconButton('\uf014');
+		removeTask.setVerticalTextPosition(SwingConstants.BOTTOM);
+		removeTask.setHorizontalTextPosition(SwingConstants.CENTER);	
+		removeTask.putClientProperty("JButton.buttonType", "textured");
+		removeTask.setPreferredSize(uniBarButtonSize);
+		removeTask.setMinimumSize(uniBarButtonSize);
+		removeTask.setMaximumSize(uniBarButtonSize);
+		unifiedToolbar.addComponentToLeft(removeTask);	
 	}
 }
