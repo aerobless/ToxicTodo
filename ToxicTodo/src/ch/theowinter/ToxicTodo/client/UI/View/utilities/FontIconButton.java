@@ -15,7 +15,7 @@ public class FontIconButton extends JButton{
 		  //http://stackoverflow.com/questions/21050003/jbutton-text-having-different-custom-fonts
 		      InputStream in = this.getClass().getResourceAsStream("/resources/fontawesome-webfont.ttf");
 		      Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, in);
-		      Font ttfReal = ttfBase.deriveFont(Font.BOLD, 24);
+		      Font ttfReal = ttfBase.deriveFont(Font.BOLD, 13);
 		      setFont(ttfReal);
 		      setText(String.valueOf(awesomeIcon));
 		    } catch (FontFormatException e) {

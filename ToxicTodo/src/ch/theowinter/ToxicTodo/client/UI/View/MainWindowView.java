@@ -132,9 +132,9 @@ public class MainWindowView {
 		saveButton.putClientProperty("JButton.buttonType", "textured");
 		 
 		// Make the dimensions of the button consistant
-		saveButton.setPreferredSize(new Dimension(50, 35));
-		saveButton.setMinimumSize(new Dimension(50, 35));
-		saveButton.setMaximumSize(new Dimension(50, 35));
+		saveButton.setPreferredSize(new Dimension(50, 25));
+		saveButton.setMinimumSize(new Dimension(50, 25));
+		saveButton.setMaximumSize(new Dimension(50, 25));
 		 
 		AbstractButton macSaveButton = MacButtonFactory.makeUnifiedToolBarButton(saveButton);
 		
@@ -147,12 +147,12 @@ public class MainWindowView {
 		cogButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		cogButton.setHorizontalTextPosition(SwingConstants.CENTER);
 		
-		//cogButton.putClientProperty("JButton.buttonType", "textured");
+		cogButton.putClientProperty("JButton.buttonType", "textured");
 		 
 		// Make the dimensions of the button consistant
-		cogButton.setPreferredSize(new Dimension(50, 35));
-		cogButton.setMinimumSize(new Dimension(50, 35));
-		cogButton.setMaximumSize(new Dimension(50, 35));
+		cogButton.setPreferredSize(new Dimension(50, 25));
+		cogButton.setMinimumSize(new Dimension(50, 25));
+		cogButton.setMaximumSize(new Dimension(50, 25));
 		 
 		//AbstractButton macCogButton = MacButtonFactory.makeUnifiedToolBarButton(cogButton);
 		
