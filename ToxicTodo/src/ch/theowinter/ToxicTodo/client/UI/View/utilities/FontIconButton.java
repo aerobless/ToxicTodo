@@ -9,22 +9,30 @@ import javax.swing.JButton;
 
 public class FontIconButton extends JButton{
 	private static final long serialVersionUID = -2573050760508438145L;
-	public FontIconButton(char awesomeIcon) {
-		
-	 try {
-		  //http://stackoverflow.com/questions/21050003/jbutton-text-having-different-custom-fonts
-		      InputStream in = this.getClass().getResourceAsStream("/resources/fontawesome-webfont.ttf");
-		      Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, in);
-		      Font ttfReal = ttfBase.deriveFont(Font.BOLD, 13);
-		      setFont(ttfReal);
-		      setText(String.valueOf(awesomeIcon));
+	/**
+	 * A button with an icon from the "fontawesome"-font. You must specify a tooltip
+	 * because a button with just an icon and no further instructions is bad design.
+	 * 
+	 * ICON SOURCE: http://fortawesome.github.io/Font-Awesome/cheatsheet/
+	 * 
+	 * @param awesomeIcon
+	 * @param tooltip
+	 */
+	public FontIconButton(char awesomeIcon, String tooltip) {
+		try {
+			InputStream in = this.getClass().getResourceAsStream("/resources/fontawesome-webfont.ttf");
+		    Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, in);
+		    Font ttfReal = ttfBase.deriveFont(Font.BOLD, 13);
+		    setFont(ttfReal);
+		    setText(String.valueOf(awesomeIcon));
 		    } catch (FontFormatException e) {
 		        e.printStackTrace();
 		    } catch (IOException e) {
 		        e.printStackTrace();
 		    }
-		setFocusPainted(false);
-		setContentAreaFilled(false);
-		setBorderPainted(true);
-	  }
+	 setToolTipText(tooltip);
+	 setFocusPainted(false);
+	 setContentAreaFilled(false);
+	 setBorderPainted(true);
+	}
 }

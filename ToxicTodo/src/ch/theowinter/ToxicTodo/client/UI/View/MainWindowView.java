@@ -126,7 +126,7 @@ public class MainWindowView {
 		Dimension uniBarButtonSize = new Dimension(50, 25);
 		
 		//New Task:
-		FontIconButton newTask = new FontIconButton('\uf15b');
+		FontIconButton newTask = new FontIconButton('\uf15b', "Create a new task.");
 		newTask.setVerticalTextPosition(SwingConstants.BOTTOM);
 		newTask.setHorizontalTextPosition(SwingConstants.CENTER);
 		newTask.putClientProperty("JButton.buttonType", "textured");
@@ -136,7 +136,7 @@ public class MainWindowView {
 		unifiedToolbar.addComponentToLeft(newTask);
 		 
 		//Complete Task:
-		FontIconButton completeTask = new FontIconButton('\uf00c');
+		FontIconButton completeTask = new FontIconButton('\uf00c', "Complete the selcted task.");
 		completeTask.setVerticalTextPosition(SwingConstants.BOTTOM);
 		completeTask.setHorizontalTextPosition(SwingConstants.CENTER);	
 		completeTask.putClientProperty("JButton.buttonType", "textured");
@@ -146,7 +146,7 @@ public class MainWindowView {
 		unifiedToolbar.addComponentToLeft(completeTask);	
 		
 		//Remove Task:
-		FontIconButton removeTask = new FontIconButton('\uf014');
+		FontIconButton removeTask = new FontIconButton('\uf014', "Remove the selected task without logging success.");
 		removeTask.setVerticalTextPosition(SwingConstants.BOTTOM);
 		removeTask.setHorizontalTextPosition(SwingConstants.CENTER);	
 		removeTask.putClientProperty("JButton.buttonType", "textured");

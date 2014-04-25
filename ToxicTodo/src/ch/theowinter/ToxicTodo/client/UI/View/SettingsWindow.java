@@ -40,7 +40,7 @@ public class SettingsWindow extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
-		FontIconButton btnNewButton = new FontIconButton('\uf04b');
+		FontIconButton btnNewButton = new FontIconButton('\uf04b', "test");
 		contentPane.add(btnNewButton, BorderLayout.CENTER);
 	}
 
