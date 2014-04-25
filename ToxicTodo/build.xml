@@ -33,6 +33,11 @@
 		<get src="http://w1nter.com/downloads/jansi-1.11.jar" dest="lib/jansi-1.11.jar" />
 		<get src="https://macwidgets.googlecode.com/files/mac_widgets-0.10.0.zip" dest="lib/mac_widgets-0.10.0.zip" />
 		<unzip src="lib/mac_widgets-0.10.0.zip" dest="lib/"></unzip>
+		<move todir="lib/">
+		    <fileset dir="lib/mac_widgets-0.10.0/">
+		      <include name="**/*.jar"/>
+		    </fileset>
+		</move>
 	</target>	
   
 	<!-- compile -->
