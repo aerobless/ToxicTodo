@@ -129,7 +129,7 @@ public class MainWindowView {
 		saveButton.setHorizontalTextPosition(SwingConstants.CENTER);
 		 
 		// Set the icon of the button
-		saveButton.setIcon(new ImageIcon("resources/test@2x.png"));
+		saveButton.setIcon(IconLoader.findIcon(SettingsWindow.class.getResource("/resources/icon-32.png")));
 		saveButton.putClientProperty("JButton.buttonType", "textured");
 		 
 		// Make the dimensions of the button consistant
@@ -147,31 +147,8 @@ public class MainWindowView {
 		cogButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		cogButton.setHorizontalTextPosition(SwingConstants.CENTER);
 		 
-		// Set the icon of the button
-		//IconLoader.getIcon("resources/test@2x.png");
-		//ImageIcon img = new ImageIcon("resources/test@2x.png");
-		
-		//Image image = Toolkit.getDefaultToolkit().getImage("NSImage://test");//img.getImage();
-		
-		/*BufferedImage bi = new BufferedImage(128, 128, BufferedImage.TRANSLUCENT);
-		Graphics2D g2d = (Graphics2D) bi.createGraphics();
-		g2d.scale(0.5, 0.5);
-		g2d.drawImage(image, 0, 0, null);*/
-		
-		//img.setImage(image);
-		Icon test = IconLoader.findIcon(SettingsWindow.class.getResource("/javax/swing/plaf/metal/icons/Error.gif"));
-		Image test2 = IconLoader.loadFromResource("resources/test.png");
-		if(test2 == null){
-			System.out.println("imagenull");
-		}
-		if(test == null){
-			System.out.println("NULLLLLLLL");
-		}
-		else{
-			System.out.println(test.getIconHeight()+" "+test.getIconWidth());
-		}
 		//Working on getting retina ready images as button...http://bulenkov.com/iconloader/
-		cogButton.setIcon(test);
+		cogButton.setIcon(IconLoader.findIcon(SettingsWindow.class.getResource("/resources/icon-32.png")));
 		cogButton.putClientProperty("JButton.buttonType", "textured");
 		 
 		// Make the dimensions of the button consistant

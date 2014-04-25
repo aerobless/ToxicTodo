@@ -41,7 +41,7 @@ public class SettingsWindow extends JFrame {
 		setContentPane(contentPane);
 		
 		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon(SettingsWindow.class.getResource("/javax/swing/plaf/metal/icons/Error.gif")));
+		lblNewLabel.setIcon(new ImageIcon(SettingsWindow.class.getResource("/resources/test.png")));
 		contentPane.add(lblNewLabel, BorderLayout.CENTER);
 	}
 
