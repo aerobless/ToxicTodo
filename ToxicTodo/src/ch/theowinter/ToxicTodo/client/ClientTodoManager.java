@@ -73,4 +73,16 @@ public class ClientTodoManager extends Observable{
 		//localTaskBinding = internalTaskBinding;
 		return returnArray;
 	}
+	
+	//TODO: optimize, temporary for sidebar test
+	public ArrayList<String> categoriesToArray(){
+		ArrayList<String> returnArray = new ArrayList<String>();
+		for(String categoryKey : getTodoList().getCategoryMap().keySet()){
+			//Only list category if it contains tasks or we want to display empty categories too.
+			if(getTodoList().getCategoryMap().get(categoryKey).containsTasks()){
+				returnArray.add(getTodoList().getCategoryMap().get(categoryKey).getName().toUpperCase());
+			}
+		}
+		return returnArray;
+	}
 }

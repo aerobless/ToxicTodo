@@ -21,7 +21,8 @@ public class TodoListModel  extends AbstractListModel<Object> implements Observe
 	public TodoListModel(ClientTodoManager aTodoManager) {
 		super();
 		todoManager = aTodoManager;
-		data = formatTodoArray(todoManager.toArray());
+		//data = formatTodoArray(todoManager.toArray()); //old test
+		data = newFormatTodoArray(todoManager.categoriesToArray());
 	}
 
 	/* (non-Javadoc)
@@ -50,12 +51,21 @@ public class TodoListModel  extends AbstractListModel<Object> implements Observe
 		
 	}
 	
+	@Deprecated
 	private ArrayList<String> formatTodoArray(ArrayList<String> input){
 		for(int i=0; i<input.size(); i++){
 			String currentItem = input.get(i);
 			if(currentItem.charAt(0) == '#'){
 				input.set(i,  "<html><h3>"+currentItem+"</h3></html>");
 			}
+		}
+		return input;
+	}
+	
+	private ArrayList<String> newFormatTodoArray(ArrayList<String> input){
+		for(int i=0; i<input.size(); i++){
+			String currentItem = input.get(i);
+				input.set(i,  "<html><h3>"+currentItem+"</h3></html>");
 		}
 		return input;
 	}

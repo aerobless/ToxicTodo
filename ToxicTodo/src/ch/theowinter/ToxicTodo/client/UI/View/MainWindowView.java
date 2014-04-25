@@ -95,6 +95,7 @@ public class MainWindowView {
 		todoList = new JList(todoListModel);
 		todoListPanel.add(todoList, BorderLayout.CENTER);
 		todoList.setBorder(null);
+		todoList.setBackground(new Color(230, 234, 239));
 
 		JPanel bottomPanel = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) bottomPanel.getLayout();
