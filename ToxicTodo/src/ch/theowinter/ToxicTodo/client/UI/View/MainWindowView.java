@@ -35,8 +35,9 @@ import com.explodingpixels.macwidgets.UnifiedToolBar;
 public class MainWindowView {
 	private JFrame frmToxictodo;
 	private JList<TodoCategory> categoryList;
-	private ListModel<TodoCategory> categoryListModel;
-	private ListModel<TodoTask> taskListModel;
+	private CategoryListModel categoryListModel;
+	private TaskListModel taskListModel;
+	private JList<TodoTask> taskList;
 	private ClientTodoManager todoManager;
 
 	/**
@@ -106,17 +107,17 @@ public class MainWindowView {
 		categoryList.setCellRenderer(new CategoryListCellRenderer());
 		ListSelectionModel listSelectionModel = categoryList.getSelectionModel();
 	    listSelectionModel.addListSelectionListener(
-	                            new SharedListSelectionHandler());
+	                            new CategoryListSelectionHandler());
 		
 		JScrollPane taskListScrollPane = new JScrollPane();
 		taskListScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		splitPane.setRightComponent(taskListScrollPane);
 		
 		//TASK LIST:
-		categoryList.setSelectedIndex(1); //We need this for now so that it has always something selected..
-		taskListModel = new TaskListModel(categoryListModel.getElementAt(categoryList.getSelectedIndex()).getTaskInCategoryAsArrayList()); //TODO: ddd
+		//categoryList.setSelectedIndex(1); //We need this for now so that it has always something selected..
+		taskListModel = new TaskListModel(categoryListModel.getElementAt(0).getTaskInCategoryAsArrayList()); //TODO: ddd
 		System.out.println(taskListModel.getSize());
-		JList<TodoTask> taskList = new JList<TodoTask>(taskListModel);
+		taskList = new JList<TodoTask>(taskListModel);
 		taskList.setCellRenderer(new TaskListCellRenderer());
 		taskList.setBackground(new Color(237, 237, 237));
 		
@@ -187,20 +188,15 @@ public class MainWindowView {
 		unifiedToolbar.addComponentToLeft(removeTask);	
 	}
 	
-	class SharedListSelectionHandler implements ListSelectionListener {
+	class CategoryListSelectionHandler implements ListSelectionListener {
 	    public void valueChanged(ListSelectionEvent e) {
-	        ListSelectionModel lsm = (ListSelectionModel)e.getSource();
+	    	ListSelectionModel lsm = (ListSelectionModel)e.getSource();
+	    	taskListModel.changeCategory(categoryListModel.getElementAt(categoryList.getSelectedIndex()).getTaskInCategoryAsArrayList());
 
-	        int firstIndex = e.getFirstIndex();
-	        int lastIndex = e.getLastIndex();
-	        boolean isAdjusting = e.getValueIsAdjusting();
-	        System.out.println("Event for indexes "
-	                      + firstIndex + " - " + lastIndex
-	                      + "; isAdjusting is " + isAdjusting
-	                      + "; selected indexes:");
-
+	        //TODO: update left list
 	        if (lsm.isSelectionEmpty()) {
-	        	System.out.println(" <none>");
+	        	//should be impossible to achieve
+	        	System.out.println("empty selection, o'really?");
 	        } else {
 	            // Find out which indexes are selected.
 	            int minIndex = lsm.getMinSelectionIndex();

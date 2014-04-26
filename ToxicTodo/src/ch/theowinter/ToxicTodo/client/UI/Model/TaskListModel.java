@@ -11,6 +11,7 @@ import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
 
 public class TaskListModel implements Observer, ListModel<TodoTask>{
 	ArrayList<TodoTask> taskList;
+	ArrayList<ListDataListener> listners = new ArrayList<ListDataListener>();
 	
 	public TaskListModel(ArrayList<TodoTask> taskList) {
 		super();
@@ -29,20 +30,29 @@ public class TaskListModel implements Observer, ListModel<TodoTask>{
 
 	@Override
 	public void addListDataListener(ListDataListener l) {
-		// TODO Auto-generated method stub
-		
+		listners.add(l);
 	}
 
 	@Override
 	public void removeListDataListener(ListDataListener l) {
-		// TODO Auto-generated method stub
-		
+		listners.remove(l);
 	}
+	
+	private void notifyListeners() {
+	for (ListDataListener l : listners)
+	    {
+	      l.contentsChanged(null);
+	    } 
+	  }
 
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	public void changeCategory(ArrayList<TodoTask> aTasklist){
+		taskList = aTasklist;
+		notifyListeners();
+	}
 }
