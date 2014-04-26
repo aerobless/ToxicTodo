@@ -46,6 +46,7 @@ public class MainWindow {
 	
 	//Windows
 	private SettingsWindow settingsWindow;
+	private TaskWindow taskWindow;
 	
 	//Construction Finals
 	final Dimension uniBarButtonSize = new Dimension(50, 25);
@@ -188,6 +189,18 @@ public class MainWindow {
 		btnNewTask.setMinimumSize(uniBarButtonSize);
 		btnNewTask.setMaximumSize(uniBarButtonSize);
 		unifiedToolbar.addComponentToLeft(btnNewTask);
+		btnNewTask.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(taskWindow == null){
+					taskWindow = new TaskWindow();
+					taskWindow.setVisible(true);
+					taskWindow.setDefaultCloseOperation(2);
+				} else{
+					taskWindow.setVisible(true);
+				}
+			}
+        });  
 		 
 		//Complete Task:
 		FontIconButton btnCompleteTask = new FontIconButton('\uf00c', "Complete the selcted task.");
