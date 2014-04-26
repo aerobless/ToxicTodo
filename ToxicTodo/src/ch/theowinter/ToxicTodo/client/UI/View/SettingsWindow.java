@@ -184,8 +184,9 @@ public class SettingsWindow extends JFrame {
 			System.out.println("bad input");
 			//TODO: warn user or something with a window or red colored input box
 		}
-		settings.setPassword(passwordField.getPassword().toString());
+		settings.setPassword(new String(passwordField.getPassword()));
 		settings.saveSettingsToDisk();
+		this.setVisible(false);
 	}
 	
 	private void cancelChanges(){
