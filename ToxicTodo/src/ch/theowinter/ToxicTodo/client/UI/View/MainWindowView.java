@@ -19,19 +19,20 @@ import javax.swing.border.LineBorder;
 
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.client.UI.Model.CategoryListModel;
+import ch.theowinter.ToxicTodo.client.UI.Model.TaskListModel;
 import ch.theowinter.ToxicTodo.client.UI.View.utilities.CategoryListCellRenderer;
 import ch.theowinter.ToxicTodo.client.UI.View.utilities.FontIconButton;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
+import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
 
 import com.explodingpixels.macwidgets.MacUtils;
 import com.explodingpixels.macwidgets.UnifiedToolBar;
-import java.awt.GridBagLayout;
-import javax.swing.JTable;
 
 public class MainWindowView {
 	private JFrame frmToxictodo;
 	private JList<TodoCategory> categoryList;
-	private ListModel<TodoCategory> todoListModel;
+	private ListModel<TodoCategory> categoryListModel;
+	private ListModel<TodoTask> taskListModel;
 	private ClientTodoManager todoManager;
 
 	/**
@@ -63,7 +64,7 @@ public class MainWindowView {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		todoListModel = new CategoryListModel(todoManager);
+		categoryListModel = new CategoryListModel(todoManager);
 		frmToxictodo = new JFrame();
 		frmToxictodo.setTitle("ToxicTodo");
 		frmToxictodo.setBounds(100, 100, 844, 495);
@@ -94,7 +95,7 @@ public class MainWindowView {
 		categoryListscrollPane.setViewportView(categoryPanel);
 		categoryPanel.setLayout(new BorderLayout(0, 0));
 		
-		categoryList = new JList<TodoCategory>(todoListModel);
+		categoryList = new JList<TodoCategory>(categoryListModel);
 		categoryPanel.add(categoryList, BorderLayout.CENTER);
 		categoryList.setBackground(new Color(230, 234, 239));
 
@@ -105,7 +106,10 @@ public class MainWindowView {
 		splitPane.setRightComponent(taskListScrollPane);
 		
 		//TASK LIST:
-		JList taskList = new JList();
+		categoryList.setSelectedIndex(1); //We need this for now so that it has always something selected..
+		taskListModel = new TaskListModel(categoryListModel.getElementAt(categoryList.getSelectedIndex()).getTaskInCategoryAsArrayList()); //TODO: ddd
+		System.out.println(taskListModel.getSize());
+		JList<TodoTask> taskList = new JList<TodoTask>(taskListModel);
 		taskList.setBackground(new Color(237, 237, 237));
 		
 		taskListScrollPane.setViewportView(taskList);

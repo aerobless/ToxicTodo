@@ -1,5 +1,6 @@
 package ch.theowinter.ToxicTodo.client.UI.Model;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -9,17 +10,21 @@ import javax.swing.event.ListDataListener;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
 
 public class TaskListModel implements Observer, ListModel<TodoTask>{
+	ArrayList<TodoTask> taskList;
+	
+	public TaskListModel(ArrayList<TodoTask> taskList) {
+		super();
+		this.taskList = taskList;
+	}
 
 	@Override
 	public int getSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		return taskList.size();
 	}
 
 	@Override
 	public TodoTask getElementAt(int index) {
-		// TODO Auto-generated method stub
-		return null;
+		return taskList.get(index);
 	}
 
 	@Override
