@@ -22,6 +22,7 @@ import ch.theowinter.ToxicTodo.client.UI.Model.CategoryListModel;
 import ch.theowinter.ToxicTodo.client.UI.Model.TaskListModel;
 import ch.theowinter.ToxicTodo.client.UI.View.utilities.CategoryListCellRenderer;
 import ch.theowinter.ToxicTodo.client.UI.View.utilities.FontIconButton;
+import ch.theowinter.ToxicTodo.client.UI.View.utilities.TaskListCellRenderer;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
 
@@ -110,12 +111,12 @@ public class MainWindowView {
 		taskListModel = new TaskListModel(categoryListModel.getElementAt(categoryList.getSelectedIndex()).getTaskInCategoryAsArrayList()); //TODO: ddd
 		System.out.println(taskListModel.getSize());
 		JList<TodoTask> taskList = new JList<TodoTask>(taskListModel);
+		taskList.setCellRenderer(new TaskListCellRenderer());
 		taskList.setBackground(new Color(237, 237, 237));
 		
 		taskListScrollPane.setViewportView(taskList);
 		taskListScrollPane.setBackground(new Color(237, 237, 237));
 		taskListScrollPane.setBorder(new LineBorder(Color.black,0));
-
 		
 		//OTHER STUFF:
 		JPanel bottomPanel = new JPanel();
