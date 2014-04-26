@@ -27,6 +27,9 @@ public class CategoryElementPanel extends JPanel {
 		
 		lblCategory = new JLabel("x");
 		add(lblCategory);
+		
+		JLabel lblCount = new JLabel("count");
+		add(lblCount);
 	}
 	
 	public void setText(char awesomeIcon, String category){
