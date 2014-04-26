@@ -20,14 +20,13 @@ public class TaskCounterPanel extends JPanel {
 	public TaskCounterPanel() {
 		setLayout(null);
 		lblONE = new JLabel("4");
-		lblONE.setBounds(9, 5, 29, 27);
+		lblONE.setBounds(9, 13, 29, 27);
 		lblONE.setFont(new Font("Lucida Grande", Font.BOLD, 16));
 		add(lblONE);
 		
 		lblTWO = new JLabel("IC");
-		lblTWO.setBounds(0, 5, 29, 27);
+		lblTWO.setBounds(0, 13, 29, 27);
 		add(lblTWO);
-		this.setBounds(0,0,40,40);
 		try{
 			InputStream in = this.getClass().getResourceAsStream("/resources/fontawesome-webfont.ttf");
 		    Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, in);
@@ -45,9 +44,9 @@ public class TaskCounterPanel extends JPanel {
 	
 	public void setCounter(int number){
 		if(number>9){
-			lblONE.setBounds(3, 5, 29, 27);
+			lblONE.setBounds(3, 13, 29, 27);
 		}else{
-			lblONE.setBounds(9, 5, 29, 27);
+			lblONE.setBounds(9, 13, 29, 27);
 		}
 		lblONE.setText(number+"");
 	}
