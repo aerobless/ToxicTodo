@@ -26,7 +26,7 @@ public class TaskCounter extends JPanel {
 		lblTWO = new JLabel("IC");
 		lblTWO.setBounds(0, 5, 29, 27);
 		add(lblTWO);
-		
+		this.setBounds(0,0,40,40);
 		try{
 			InputStream in = this.getClass().getResourceAsStream("/resources/fontawesome-webfont.ttf");
 		    Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, in);
@@ -46,9 +46,15 @@ public class TaskCounter extends JPanel {
 		lblONE.setText(number+"");
 	}
 	
-	public void highlight(Color panelColor, Color box, Color number){
+	public void setCounterBackgroundColor(Color panelColor){
 		setBackground(panelColor);
-		lblTWO.setForeground(box);
-		lblONE.setForeground(number);
+	}
+	
+	public void setCounterFontColor(Color fontColor){
+		lblONE.setForeground(fontColor);
+	}
+	
+	public void setCounterBoxColor(Color boxColor){
+		lblTWO.setForeground(boxColor);
 	}
 }

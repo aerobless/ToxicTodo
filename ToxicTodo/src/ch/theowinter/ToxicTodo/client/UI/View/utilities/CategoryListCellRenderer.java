@@ -23,11 +23,13 @@ public class CategoryListCellRenderer extends CategoryElementPanel implements Li
         // check if this cell is selected
         if (isSelected) {
             background = new Color(83, 145, 206);
+            this.setBackgroundColor(background);
             this.setFontColor(Color.WHITE);
 
         // unselected, and not the DnD drop location
         } else {
             background = new Color(230, 234, 239);
+            this.setBackgroundColor(background);
             this.setFontColor(Color.BLACK);
         };
         setBackground(background);
