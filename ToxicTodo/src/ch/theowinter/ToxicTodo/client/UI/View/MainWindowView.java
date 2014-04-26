@@ -13,9 +13,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.ListModel;
+import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.client.UI.Model.CategoryListModel;
@@ -101,6 +104,9 @@ public class MainWindowView {
 		categoryList.setBackground(new Color(230, 234, 239));
 
 		categoryList.setCellRenderer(new CategoryListCellRenderer());
+		ListSelectionModel listSelectionModel = categoryList.getSelectionModel();
+	    listSelectionModel.addListSelectionListener(
+	                            new SharedListSelectionHandler());
 		
 		JScrollPane taskListScrollPane = new JScrollPane();
 		taskListScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -179,6 +185,33 @@ public class MainWindowView {
 		removeTask.setMinimumSize(uniBarButtonSize);
 		removeTask.setMaximumSize(uniBarButtonSize);
 		unifiedToolbar.addComponentToLeft(removeTask);	
+	}
+	
+	class SharedListSelectionHandler implements ListSelectionListener {
+	    public void valueChanged(ListSelectionEvent e) {
+	        ListSelectionModel lsm = (ListSelectionModel)e.getSource();
+
+	        int firstIndex = e.getFirstIndex();
+	        int lastIndex = e.getLastIndex();
+	        boolean isAdjusting = e.getValueIsAdjusting();
+	        System.out.println("Event for indexes "
+	                      + firstIndex + " - " + lastIndex
+	                      + "; isAdjusting is " + isAdjusting
+	                      + "; selected indexes:");
+
+	        if (lsm.isSelectionEmpty()) {
+	        	System.out.println(" <none>");
+	        } else {
+	            // Find out which indexes are selected.
+	            int minIndex = lsm.getMinSelectionIndex();
+	            int maxIndex = lsm.getMaxSelectionIndex();
+	            for (int i = minIndex; i <= maxIndex; i++) {
+	                if (lsm.isSelectedIndex(i)) {
+	                	System.out.println(" " + i);
+	                }
+	            }
+	        }
+	    }
 	}
 	
 }
