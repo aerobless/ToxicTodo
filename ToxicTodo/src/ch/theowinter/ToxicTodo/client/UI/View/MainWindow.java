@@ -129,7 +129,7 @@ public class MainWindow{
 		splitPane.setRightComponent(taskListScrollPane);
 		
 		//TASK LIST:
-		taskListModel = new TaskListModel(categoryListModel.getElementAt(0).getTaskInCategoryAsArrayList());
+		taskListModel = new TaskListModel(categoryListModel.getElementAt(0).getKeyword(), todoManager);
 		System.out.println(taskListModel.getSize());
 		taskList = new JList<TodoTask>(taskListModel);
 		taskList.setCellRenderer(new TaskListCellRenderer());
@@ -245,8 +245,7 @@ public class MainWindow{
 	class CategoryListSelectionHandler implements ListSelectionListener {
 	    public void valueChanged(ListSelectionEvent e) {
 	    	ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-	    	taskListModel.changeCategory(categoryListModel.getElementAt(categoryList.getSelectedIndex()).getTaskInCategoryAsArrayList());
-
+	    	taskListModel.changeCategory(categoryListModel.getElementAt(categoryList.getSelectedIndex()).getKeyword());
 	        if (lsm.isSelectionEmpty()) {
 	        	//should be impossible to achieve
 	        	System.out.println("empty selection, o'really?");

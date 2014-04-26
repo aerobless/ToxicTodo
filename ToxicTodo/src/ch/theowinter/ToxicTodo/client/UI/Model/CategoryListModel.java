@@ -34,9 +34,7 @@ public class CategoryListModel extends AbstractListModel<TodoCategory> implement
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println(categoryList.size());
 		categoryList = todoManager.categoriesToArray();
-		System.out.println(categoryList.size());
 		fireContentsChanged(this, 0, categoryList.size()-1);
 	}
 }
