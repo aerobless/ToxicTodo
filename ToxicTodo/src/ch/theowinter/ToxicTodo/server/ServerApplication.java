@@ -16,7 +16,7 @@ import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoList;
 
 public class ServerApplication {
 	//Vanity info
-	public static final double serverVersion = 1.24;
+	public static final double serverVersion = 1.25;
 	public static final String author = "Theo Winter";
 	public static final String website = "theowinter.ch";
 	public static final String serverUpdateURL = "http://w1nter.net:8080/job/ToxicTodo/lastSuccessfulBuild/artifact/ToxicTodo/dist/ToxicTodoServer.jar";	

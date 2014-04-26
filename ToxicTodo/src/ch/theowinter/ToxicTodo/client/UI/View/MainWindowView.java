@@ -25,10 +25,12 @@ import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 
 import com.explodingpixels.macwidgets.MacUtils;
 import com.explodingpixels.macwidgets.UnifiedToolBar;
+import java.awt.GridBagLayout;
+import javax.swing.JTable;
 
 public class MainWindowView {
 	private JFrame frmToxictodo;
-	private JList<TodoCategory> todoList;
+	private JList<TodoCategory> categoryList;
 	private ListModel<TodoCategory> todoListModel;
 	private ClientTodoManager todoManager;
 
@@ -73,38 +75,43 @@ public class MainWindowView {
 
 		JSplitPane splitPane = new JSplitPane();
 		splitPane.setContinuousLayout(true);
-		splitPane.setResizeWeight(0.3);
+		splitPane.setResizeWeight(0.25);
 		//splitPane.setBorder(new LineBorder(Color.blue,0)); //no main border
 
 		frmToxictodo.getContentPane().add(splitPane, BorderLayout.CENTER);
-	
-		//RIGHT PANEL:
-		JPanel rightPanel = new JPanel();
-		rightPanel.setBackground(new Color(237, 237, 237));
-		splitPane.setRightComponent(rightPanel);
 		
 		Dimension splitPaneMinimumSize = new Dimension(0, 0);
-		splitPane.getRightComponent().setMinimumSize(splitPaneMinimumSize);
 		
-		JScrollPane todoListscrollPane = new JScrollPane();
-		todoListscrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		todoListscrollPane.setBorder(new LineBorder(Color.black,0));
-		splitPane.setLeftComponent(todoListscrollPane);
+		JScrollPane categoryListscrollPane = new JScrollPane();
+		categoryListscrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		categoryListscrollPane.setBorder(new LineBorder(Color.black,0));
+		splitPane.setLeftComponent(categoryListscrollPane);
 		
 		splitPane.getLeftComponent().setMinimumSize(splitPaneMinimumSize);
 		
-		//SIDEBAR:
-		JPanel todoListPanel = new JPanel();
-		todoListscrollPane.setViewportView(todoListPanel);
-		todoListPanel.setLayout(new BorderLayout(0, 0));
+		//CATEGORY SIDEBAR:
+		JPanel categoryPanel = new JPanel();
+		categoryListscrollPane.setViewportView(categoryPanel);
+		categoryPanel.setLayout(new BorderLayout(0, 0));
 		
-		todoList = new JList<TodoCategory>(todoListModel);
-		todoListPanel.add(todoList, BorderLayout.CENTER);
-		todoList.setBorder(null);
-		todoList.setBackground(new Color(230, 234, 239));
+		categoryList = new JList<TodoCategory>(todoListModel);
+		categoryPanel.add(categoryList, BorderLayout.CENTER);
+		categoryList.setBackground(new Color(230, 234, 239));
 
-		todoList.setCellRenderer(new CategoryListCellRenderer());
+		categoryList.setCellRenderer(new CategoryListCellRenderer());
 		
+		JScrollPane taskListScrollPane = new JScrollPane();
+		taskListScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		splitPane.setRightComponent(taskListScrollPane);
+		
+		//TASK LIST:
+		JList taskList = new JList();
+		taskList.setBackground(new Color(237, 237, 237));
+		
+		taskListScrollPane.setViewportView(taskList);
+		taskListScrollPane.setBackground(new Color(237, 237, 237));
+		taskListScrollPane.setBorder(new LineBorder(Color.black,0));
+
 		
 		//OTHER STUFF:
 		JPanel bottomPanel = new JPanel();
