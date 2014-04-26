@@ -15,7 +15,7 @@ public class CategoryElementPanel extends JPanel {
 	private static final long serialVersionUID = -2314006883111515559L;
 	JLabel lblIcon;
 	JLabel lblCategory;
-	TaskCounter backCounter;
+	TaskCounterPanel backCounter;
 	private JPanel frontPanel;
 
 	/**
@@ -25,7 +25,6 @@ public class CategoryElementPanel extends JPanel {
 		setLayout(new BorderLayout(0, 0));
 		
 		frontPanel = new JPanel();
-		//frontPanel.setBackground(bg);
 		add(frontPanel, BorderLayout.WEST);
 		
 		lblIcon = new JLabel("loading");
@@ -34,7 +33,7 @@ public class CategoryElementPanel extends JPanel {
 		lblCategory = new JLabel("x");
 		frontPanel.add(lblCategory);
 		
-		backCounter = new TaskCounter();
+		backCounter = new TaskCounterPanel();
 		add(backCounter, BorderLayout.EAST);
 		backCounter.setPreferredSize(new Dimension(35, 35));
 	}

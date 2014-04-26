@@ -9,7 +9,7 @@ import java.io.InputStream;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
-public class TaskCounter extends JPanel {
+public class TaskCounterPanel extends JPanel {
 	private static final long serialVersionUID = -728870559027172774L;
 	JLabel lblONE;
 	JLabel lblTWO;
@@ -17,10 +17,11 @@ public class TaskCounter extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public TaskCounter() {
+	public TaskCounterPanel() {
 		setLayout(null);
-		lblONE = new JLabel("44");
-		lblONE.setBounds(6, 5, 29, 27);
+		lblONE = new JLabel("4");
+		lblONE.setBounds(9, 5, 29, 27);
+		lblONE.setFont(new Font("Lucida Grande", Font.BOLD, 16));
 		add(lblONE);
 		
 		lblTWO = new JLabel("IC");
@@ -43,6 +44,11 @@ public class TaskCounter extends JPanel {
 	}
 	
 	public void setCounter(int number){
+		if(number>9){
+			lblONE.setBounds(3, 5, 29, 27);
+		}else{
+			lblONE.setBounds(9, 5, 29, 27);
+		}
 		lblONE.setText(number+"");
 	}
 	
