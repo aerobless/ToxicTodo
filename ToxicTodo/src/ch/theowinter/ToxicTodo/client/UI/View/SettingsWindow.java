@@ -23,23 +23,7 @@ public class SettingsWindow extends JFrame {
 	private JTextField textFieldHostPort;
 	private JPasswordField passwordField;
 	private JTextField txtFieldConsoleSize;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SettingsWindow frame = new SettingsWindow();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Create the frame.
 	 */

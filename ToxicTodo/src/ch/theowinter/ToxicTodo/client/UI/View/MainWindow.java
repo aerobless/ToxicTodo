@@ -4,15 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
@@ -35,13 +34,19 @@ import com.explodingpixels.macwidgets.MacUtils;
 import com.explodingpixels.macwidgets.MacWidgetFactory;
 import com.explodingpixels.macwidgets.UnifiedToolBar;
 
-public class MainWindowView {
+public class MainWindow {
 	private JFrame frmToxictodo;
 	private JList<TodoCategory> categoryList;
 	private CategoryListModel categoryListModel;
 	private TaskListModel taskListModel;
 	private JList<TodoTask> taskList;
 	private ClientTodoManager todoManager;
+	
+	//Windows
+	private SettingsWindow settingsWindow;
+	
+	//Construction Finals
+	final Dimension uniBarButtonSize = new Dimension(50, 25);
 
 	/**
 	 * Launch the GUI application.
@@ -50,7 +55,7 @@ public class MainWindowView {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainWindowView window = new MainWindowView(todoManager);
+					MainWindow window = new MainWindow(todoManager);
 					window.frmToxictodo.setVisible(true);
 					// methods here.
 				} catch (Exception e) {
@@ -63,7 +68,7 @@ public class MainWindowView {
 	/**
 	 * Create the application.
 	 */
-	public MainWindowView(ClientTodoManager aTodoManager) {
+	public MainWindow(ClientTodoManager aTodoManager) {
 		todoManager = aTodoManager;
 		initialize();
 	}
@@ -133,6 +138,30 @@ public class MainWindowView {
 		BottomBar bottomBar = new BottomBar(BottomBarSize.LARGE);
 	    bottomBar.addComponentToLeft(MacWidgetFactory.createEmphasizedLabel("Status"));  
 		frmToxictodo.getContentPane().add(bottomBar.getComponent(), BorderLayout.SOUTH);  
+		
+		//Settings:
+		FontIconButton btnSettings = new FontIconButton('\uf013', "Change the program settings.");
+		btnSettings.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnSettings.setHorizontalTextPosition(SwingConstants.CENTER);	
+		btnSettings.putClientProperty("JButton.buttonType", "textured");
+		btnSettings.setPreferredSize(uniBarButtonSize);
+		btnSettings.setMinimumSize(uniBarButtonSize);
+		btnSettings.setMaximumSize(uniBarButtonSize);
+		btnSettings.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(settingsWindow == null){
+					settingsWindow = new SettingsWindow();
+					settingsWindow.setVisible(true);
+					settingsWindow.setAlwaysOnTop(true);
+					settingsWindow.setDefaultCloseOperation(2);
+				} else{
+					System.out.println(settingsWindow.isVisible());
+					settingsWindow.setVisible(true);
+				}
+			}
+        });      
+		bottomBar.addComponentToRight(btnSettings);
 	}
 	
 	/*
@@ -148,37 +177,35 @@ public class MainWindowView {
 		frmToxictodo.getContentPane().add(unifiedToolbar.getComponent(), BorderLayout.NORTH);
 		
 		//Toolbar buttons:
-		Dimension uniBarButtonSize = new Dimension(50, 25);
-		
 		//New Task:
-		FontIconButton newTask = new FontIconButton('\uf15b', "Create a new task.");
-		newTask.setVerticalTextPosition(SwingConstants.BOTTOM);
-		newTask.setHorizontalTextPosition(SwingConstants.CENTER);
-		newTask.putClientProperty("JButton.buttonType", "textured");
-		newTask.setPreferredSize(uniBarButtonSize);
-		newTask.setMinimumSize(uniBarButtonSize);
-		newTask.setMaximumSize(uniBarButtonSize);
-		unifiedToolbar.addComponentToLeft(newTask);
+		FontIconButton btnNewTask = new FontIconButton('\uf15b', "Create a new task.");
+		btnNewTask.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnNewTask.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnNewTask.putClientProperty("JButton.buttonType", "textured");
+		btnNewTask.setPreferredSize(uniBarButtonSize);
+		btnNewTask.setMinimumSize(uniBarButtonSize);
+		btnNewTask.setMaximumSize(uniBarButtonSize);
+		unifiedToolbar.addComponentToLeft(btnNewTask);
 		 
 		//Complete Task:
-		FontIconButton completeTask = new FontIconButton('\uf00c', "Complete the selcted task.");
-		completeTask.setVerticalTextPosition(SwingConstants.BOTTOM);
-		completeTask.setHorizontalTextPosition(SwingConstants.CENTER);	
-		completeTask.putClientProperty("JButton.buttonType", "textured");
-		completeTask.setPreferredSize(uniBarButtonSize);
-		completeTask.setMinimumSize(uniBarButtonSize);
-		completeTask.setMaximumSize(uniBarButtonSize);
-		unifiedToolbar.addComponentToLeft(completeTask);	
+		FontIconButton btnCompleteTask = new FontIconButton('\uf00c', "Complete the selcted task.");
+		btnCompleteTask.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnCompleteTask.setHorizontalTextPosition(SwingConstants.CENTER);	
+		btnCompleteTask.putClientProperty("JButton.buttonType", "textured");
+		btnCompleteTask.setPreferredSize(uniBarButtonSize);
+		btnCompleteTask.setMinimumSize(uniBarButtonSize);
+		btnCompleteTask.setMaximumSize(uniBarButtonSize);
+		unifiedToolbar.addComponentToLeft(btnCompleteTask);	
 		
 		//Remove Task:
-		FontIconButton removeTask = new FontIconButton('\uf014', "Remove the selected task without logging success.");
-		removeTask.setVerticalTextPosition(SwingConstants.BOTTOM);
-		removeTask.setHorizontalTextPosition(SwingConstants.CENTER);	
-		removeTask.putClientProperty("JButton.buttonType", "textured");
-		removeTask.setPreferredSize(uniBarButtonSize);
-		removeTask.setMinimumSize(uniBarButtonSize);
-		removeTask.setMaximumSize(uniBarButtonSize);
-		unifiedToolbar.addComponentToLeft(removeTask);	
+		FontIconButton btnRemoveTask = new FontIconButton('\uf014', "Remove the selected task without logging success.");
+		btnRemoveTask.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnRemoveTask.setHorizontalTextPosition(SwingConstants.CENTER);	
+		btnRemoveTask.putClientProperty("JButton.buttonType", "textured");
+		btnRemoveTask.setPreferredSize(uniBarButtonSize);
+		btnRemoveTask.setMinimumSize(uniBarButtonSize);
+		btnRemoveTask.setMaximumSize(uniBarButtonSize);
+		unifiedToolbar.addComponentToLeft(btnRemoveTask);	
 	}
 	
 	class CategoryListSelectionHandler implements ListSelectionListener {

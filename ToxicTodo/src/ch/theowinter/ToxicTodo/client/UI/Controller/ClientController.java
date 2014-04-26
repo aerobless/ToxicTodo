@@ -1,11 +1,11 @@
 package ch.theowinter.ToxicTodo.client.UI.Controller;
 
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
-import ch.theowinter.ToxicTodo.client.UI.View.MainWindowView;
+import ch.theowinter.ToxicTodo.client.UI.View.MainWindow;
 
 public class ClientController {
 	public void start(ClientTodoManager aTodoManager){
-		MainWindowView mainWindow = new MainWindowView(aTodoManager);
+		MainWindow mainWindow = new MainWindow(aTodoManager);
 		mainWindow.launchGUI();
 	}
 }
