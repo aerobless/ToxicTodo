@@ -159,7 +159,7 @@ public class SettingsWindow extends JFrame {
 		btnCancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("not done yet");
+				cancelChanges();
 			}
         }); 
 		
@@ -186,5 +186,13 @@ public class SettingsWindow extends JFrame {
 		}
 		settings.setPassword(passwordField.getPassword().toString());
 		settings.saveSettingsToDisk();
+	}
+	
+	private void cancelChanges(){
+		textFieldHostIP.setText(settings.getHOST());
+		textFieldHostPort.setText(settings.getPORT()+"");
+		passwordField.setText(settings.getPassword());
+		txtFieldConsoleSize.setText(settings.getConsoleSize()+"");
+		this.setVisible(false);
 	}
 }

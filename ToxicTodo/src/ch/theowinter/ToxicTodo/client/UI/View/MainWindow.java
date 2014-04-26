@@ -159,7 +159,6 @@ public class MainWindow {
 					settingsWindow.setAlwaysOnTop(true);
 					settingsWindow.setDefaultCloseOperation(2);
 				} else{
-					System.out.println(settingsWindow.isVisible());
 					settingsWindow.setVisible(true);
 				}
 			}
