@@ -50,7 +50,7 @@ public class ClientApplication {
 		if(args.length<1){
 			print("temp: no args specified - launching GUI");
 			ClientController guiClient = new ClientController();
-			guiClient.start(todoManager);
+			guiClient.start(todoManager, settings);
 		}
 		else{
 			CliController cli = new CliController(todoManager);
@@ -130,6 +130,10 @@ public class ClientApplication {
 			}
 		}
 		return firstTime;
+	}
+	
+	public static void saveSettingsToDisk(){
+		logic.saveToXMLFile(settings, settingsFile);
 	}
 	
 	public static void print(String input){

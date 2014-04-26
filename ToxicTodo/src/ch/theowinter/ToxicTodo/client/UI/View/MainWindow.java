@@ -19,6 +19,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import ch.theowinter.ToxicTodo.client.ClientSettings;
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.client.UI.Model.CategoryListModel;
 import ch.theowinter.ToxicTodo.client.UI.Model.TaskListModel;
@@ -41,6 +42,7 @@ public class MainWindow {
 	private TaskListModel taskListModel;
 	private JList<TodoTask> taskList;
 	private ClientTodoManager todoManager;
+	private ClientSettings settings;
 	
 	//Windows
 	private SettingsWindow settingsWindow;
@@ -55,7 +57,7 @@ public class MainWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainWindow window = new MainWindow(todoManager);
+					MainWindow window = new MainWindow(todoManager, settings);
 					window.frmToxictodo.setVisible(true);
 					// methods here.
 				} catch (Exception e) {
@@ -68,8 +70,9 @@ public class MainWindow {
 	/**
 	 * Create the application.
 	 */
-	public MainWindow(ClientTodoManager aTodoManager) {
+	public MainWindow(ClientTodoManager aTodoManager, ClientSettings someSettings) {
 		todoManager = aTodoManager;
+		settings = someSettings;
 		initialize();
 	}
 
@@ -151,7 +154,7 @@ public class MainWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(settingsWindow == null){
-					settingsWindow = new SettingsWindow();
+					settingsWindow = new SettingsWindow(settings);
 					settingsWindow.setVisible(true);
 					settingsWindow.setAlwaysOnTop(true);
 					settingsWindow.setDefaultCloseOperation(2);

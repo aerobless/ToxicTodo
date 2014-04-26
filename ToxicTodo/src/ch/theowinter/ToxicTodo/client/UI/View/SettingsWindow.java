@@ -1,33 +1,44 @@
 package ch.theowinter.ToxicTodo.client.UI.View;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+
 import java.awt.Font;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.InputMismatchException;
+
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
-public class SettingsWindow extends JFrame {
+import ch.theowinter.ToxicTodo.client.ClientSettings;
 
+public class SettingsWindow extends JFrame {
+	private static final long serialVersionUID = 5091902326508795291L;
+	
 	private JPanel contentPane;
 	private JTextField textFieldHostIP;
 	private JTextField textFieldHostPort;
 	private JPasswordField passwordField;
 	private JTextField txtFieldConsoleSize;
+	private ClientSettings settings;
+	
 	
 	/**
 	 * Create the frame.
 	 */
-	public SettingsWindow() {
+	public SettingsWindow(ClientSettings someSettings) {
+		settings = someSettings;
+				
 		setTitle("Settings");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 376, 312);
@@ -45,96 +56,135 @@ public class SettingsWindow extends JFrame {
 		lblSettings.setFont(new Font("Lucida Grande", Font.PLAIN, 23));
 		panel.add(lblSettings);
 		
-		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1, BorderLayout.CENTER);
-		GridBagLayout gbl_panel_1 = new GridBagLayout();
-		gbl_panel_1.columnWidths = new int[]{111, 0, 0, 0};
-		gbl_panel_1.rowHeights = new int[]{10, 0, 0, 0, 0, 0, 0};
-		gbl_panel_1.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_1.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panel_1.setLayout(gbl_panel_1);
+		JPanel settingsPanel = new JPanel();
+		contentPane.add(settingsPanel, BorderLayout.CENTER);
+		GridBagLayout settingsGridBag = new GridBagLayout();
+		settingsGridBag.columnWidths = new int[]{111, 0, 0, 0};
+		settingsGridBag.rowHeights = new int[]{10, 0, 0, 0, 0, 0, 0};
+		settingsGridBag.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		settingsGridBag.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		settingsPanel.setLayout(settingsGridBag);
 		
+		//HOST IP:
 		JLabel lblHostIP = new JLabel("Host-IP:");
+		String hostTooltip = "The IP address of the computer where ToxicTodoServer is running. This can be localhost if you're running a local server.";
+		lblHostIP.setToolTipText(hostTooltip);
 		GridBagConstraints gbc_lblHostIP = new GridBagConstraints();
 		gbc_lblHostIP.insets = new Insets(0, 0, 5, 5);
 		gbc_lblHostIP.anchor = GridBagConstraints.EAST;
 		gbc_lblHostIP.gridx = 0;
 		gbc_lblHostIP.gridy = 1;
-		panel_1.add(lblHostIP, gbc_lblHostIP);
-		
+		settingsPanel.add(lblHostIP, gbc_lblHostIP);
 		textFieldHostIP = new JTextField();
-		textFieldHostIP.setToolTipText("The IP address of the computer where ToxicTodoServer is running. This can be localhost if you're running a local server.");
+		textFieldHostIP.setToolTipText(hostTooltip);
 		GridBagConstraints gbc_textFieldHostIP = new GridBagConstraints();
 		gbc_textFieldHostIP.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldHostIP.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldHostIP.gridx = 1;
 		gbc_textFieldHostIP.gridy = 1;
-		panel_1.add(textFieldHostIP, gbc_textFieldHostIP);
+		settingsPanel.add(textFieldHostIP, gbc_textFieldHostIP);
 		textFieldHostIP.setColumns(10);
-		
+		textFieldHostIP.setText(settings.getHOST());
+
+		//HOST PORT:
 		JLabel lblHostport = new JLabel("Host-Port:");
+		String hostPortTooltip = "The default port of ToxicTodo is 5222.";
+		lblHostport.setToolTipText(hostPortTooltip);
 		GridBagConstraints gbc_lblHostport = new GridBagConstraints();
 		gbc_lblHostport.insets = new Insets(0, 0, 5, 5);
 		gbc_lblHostport.anchor = GridBagConstraints.EAST;
 		gbc_lblHostport.gridx = 0;
 		gbc_lblHostport.gridy = 2;
-		panel_1.add(lblHostport, gbc_lblHostport);
-		
+		settingsPanel.add(lblHostport, gbc_lblHostport);
 		textFieldHostPort = new JTextField();
-		textFieldHostPort.setToolTipText("The default port of ToxicTodo is 5222.");
+		textFieldHostPort.setToolTipText(hostPortTooltip);
 		GridBagConstraints gbc_textFieldHostPort = new GridBagConstraints();
 		gbc_textFieldHostPort.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldHostPort.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldHostPort.gridx = 1;
 		gbc_textFieldHostPort.gridy = 2;
-		panel_1.add(textFieldHostPort, gbc_textFieldHostPort);
+		settingsPanel.add(textFieldHostPort, gbc_textFieldHostPort);
 		textFieldHostPort.setColumns(10);
+		textFieldHostPort.setText(settings.getPORT()+"");
 		
+		//HOST PASSWORD:
 		JLabel lblPassword = new JLabel("Password:");
+		String passwordTooltop = "All communication between server and client gets AES-128 encrypted based on this password.";
+		lblPassword.setToolTipText(passwordTooltop);
 		GridBagConstraints gbc_lblPassword = new GridBagConstraints();
 		gbc_lblPassword.insets = new Insets(0, 0, 5, 5);
 		gbc_lblPassword.anchor = GridBagConstraints.EAST;
 		gbc_lblPassword.gridx = 0;
 		gbc_lblPassword.gridy = 3;
-		panel_1.add(lblPassword, gbc_lblPassword);
-		
+		settingsPanel.add(lblPassword, gbc_lblPassword);
 		passwordField = new JPasswordField();
-		passwordField.setToolTipText("All communication between server and client gets AES-128 encrypted based on this password. Be sure to chose a good one or your communication can be intercepted.");
+		passwordField.setToolTipText(passwordTooltop);
 		GridBagConstraints gbc_passwordField = new GridBagConstraints();
 		gbc_passwordField.insets = new Insets(0, 0, 5, 5);
 		gbc_passwordField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_passwordField.gridx = 1;
 		gbc_passwordField.gridy = 3;
-		panel_1.add(passwordField, gbc_passwordField);
+		settingsPanel.add(passwordField, gbc_passwordField);
+		passwordField.setText(settings.getPassword());
 		
-		JLabel lblConsolesize = new JLabel("Console-Size:");
+		//CONSOLE SIZE:
+		JLabel lblConsoleSize = new JLabel("Console-Size:");
+		String consoleSizeTooltip = "If you're using ToxicTodo in CLI mode enter the default size of your console window. This is used to make correct line-breaks.";
+		lblConsoleSize.setToolTipText(consoleSizeTooltip);
 		GridBagConstraints gbc_lblConsolesize = new GridBagConstraints();
 		gbc_lblConsolesize.insets = new Insets(0, 0, 0, 5);
 		gbc_lblConsolesize.anchor = GridBagConstraints.EAST;
 		gbc_lblConsolesize.gridx = 0;
 		gbc_lblConsolesize.gridy = 5;
-		panel_1.add(lblConsolesize, gbc_lblConsolesize);
-		
+		settingsPanel.add(lblConsoleSize, gbc_lblConsolesize);
 		txtFieldConsoleSize = new JTextField();
-		txtFieldConsoleSize.setToolTipText("If you're using ToxicTodo in CLI mode enter the default size of your console window. This is used to make correct line-breaks.");
+		txtFieldConsoleSize.setToolTipText(consoleSizeTooltip);
 		GridBagConstraints gbc_txtFieldConsoleSize = new GridBagConstraints();
 		gbc_txtFieldConsoleSize.insets = new Insets(0, 0, 0, 5);
 		gbc_txtFieldConsoleSize.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtFieldConsoleSize.gridx = 1;
 		gbc_txtFieldConsoleSize.gridy = 5;
-		panel_1.add(txtFieldConsoleSize, gbc_txtFieldConsoleSize);
+		settingsPanel.add(txtFieldConsoleSize, gbc_txtFieldConsoleSize);
 		txtFieldConsoleSize.setColumns(10);
+		txtFieldConsoleSize.setText(settings.getConsoleSize()+"");
 		
 		JPanel panel_2 = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel_2.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.RIGHT);
 		contentPane.add(panel_2, BorderLayout.SOUTH);
 		
+		//BUTTONS
 		JButton btnCancel = new JButton("cancel");
 		panel_2.add(btnCancel);
+		btnCancel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("not done yet");
+			}
+        }); 
 		
 		JButton btnSave = new JButton("save");
 		panel_2.add(btnSave);
+		btnSave.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				saveChanges();
+			}
+        }); 
 	}
-
+	
+	private void saveChanges(){
+		settings.setHOST(textFieldHostIP.getText());
+		try{
+			int port =  Integer.parseInt(textFieldHostPort.getText());
+			settings.setPORT(port);
+			int consoleSize = Integer.parseInt(txtFieldConsoleSize.getText());
+			settings.setConsoleSize(consoleSize);
+		} catch (InputMismatchException e){
+			System.out.println("bad input");
+			//TODO: warn user or something with a window or red colored input box
+		}
+		settings.setPassword(passwordField.getPassword().toString());
+		settings.saveSettingsToDisk();
+	}
 }

@@ -7,14 +7,10 @@ public class ClientSettings {
 	private boolean debug = false;
 	private int consoleSize = 80;
 	
-	/** 
-	 * Empty constructor because we will always load settings directly from the xml file.
-	 * Changing the config during runtime is not supported. 
-	 */
+	//Getters (CLI & GUI)
 	public ClientSettings() {
 		super();
 	}
-	
 	public String getHOST() {
 		return HOST;
 	}
@@ -29,5 +25,25 @@ public class ClientSettings {
 	}
 	public int getConsoleSize() {
 		return consoleSize;
+	}
+	
+	//Setters (only supported in GUI)
+	public void setHOST(String hOST) {
+		HOST = hOST;
+	}
+	public void setPORT(int pORT) {
+		PORT = pORT;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public void setDebug(boolean debug) {
+		this.debug = debug;
+	}
+	public void setConsoleSize(int consoleSize) {
+		this.consoleSize = consoleSize;
+	}
+	public void saveSettingsToDisk(){
+		ClientApplication.saveSettingsToDisk();
 	}
 }
