@@ -10,10 +10,10 @@ import javax.swing.event.ListDataListener;
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 
-public class TodoListModel implements Observer, ListModel<TodoCategory>{
+public class CategoryListModel implements Observer, ListModel<TodoCategory>{
 	ArrayList<TodoCategory> categoryList;
 	
-	public TodoListModel(ClientTodoManager aTodoManager) {
+	public CategoryListModel(ClientTodoManager aTodoManager) {
 		super();
 		categoryList = aTodoManager.categoriesToArray();
 	}

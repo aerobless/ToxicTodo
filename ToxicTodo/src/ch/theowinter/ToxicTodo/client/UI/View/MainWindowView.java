@@ -18,7 +18,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
-import ch.theowinter.ToxicTodo.client.UI.Model.TodoListModel;
+import ch.theowinter.ToxicTodo.client.UI.Model.CategoryListModel;
 import ch.theowinter.ToxicTodo.client.UI.View.utilities.CategoryListCellRenderer;
 import ch.theowinter.ToxicTodo.client.UI.View.utilities.FontIconButton;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
@@ -63,7 +63,7 @@ public class MainWindowView {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		todoListModel = new TodoListModel(todoManager);
+		todoListModel = new CategoryListModel(todoManager);
 		frmToxictodo = new JFrame();
 		frmToxictodo.setTitle("ToxicTodo");
 		frmToxictodo.setBounds(100, 100, 844, 495);
