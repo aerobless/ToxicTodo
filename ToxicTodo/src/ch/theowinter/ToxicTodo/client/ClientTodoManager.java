@@ -33,6 +33,7 @@ public class ClientTodoManager extends Observable{
 			writeLock.acquire();
 			todoList = input;
 			writeLock.release();
+			setChanged();
 			notifyObservers();
 		} catch (InterruptedException anEx) {
 			System.out.println("Interruped while trying to setTodoList()");

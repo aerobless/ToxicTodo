@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -35,7 +37,7 @@ import com.explodingpixels.macwidgets.MacUtils;
 import com.explodingpixels.macwidgets.MacWidgetFactory;
 import com.explodingpixels.macwidgets.UnifiedToolBar;
 
-public class MainWindow {
+public class MainWindow{
 	private JFrame frmToxictodo;
 	private JList<TodoCategory> categoryList;
 	private CategoryListModel categoryListModel;
@@ -82,6 +84,7 @@ public class MainWindow {
 	 */
 	private void initialize() {
 		categoryListModel = new CategoryListModel(todoManager);
+		
 		frmToxictodo = new JFrame();
 		frmToxictodo.setTitle("ToxicTodo");
 		frmToxictodo.setBounds(100, 100, 844, 495);
@@ -120,7 +123,7 @@ public class MainWindow {
 		ListSelectionModel listSelectionModel = categoryList.getSelectionModel();
 	    listSelectionModel.addListSelectionListener(
 	                            new CategoryListSelectionHandler());
-		
+
 		JScrollPane taskListScrollPane = new JScrollPane();
 		taskListScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		splitPane.setRightComponent(taskListScrollPane);
@@ -154,7 +157,7 @@ public class MainWindow {
 		btnRefresh.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO: do refresh
+				todoManager.updateList();
 			}
         });      
 		bottomBar.addComponentToRight(btnRefresh);

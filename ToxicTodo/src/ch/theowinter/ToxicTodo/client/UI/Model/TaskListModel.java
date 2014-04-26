@@ -1,15 +1,13 @@
 package ch.theowinter.ToxicTodo.client.UI.Model;
 
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.ListModel;
 import javax.swing.event.ListDataListener;
 
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
 
-public class TaskListModel implements Observer, ListModel<TodoTask>{
+public class TaskListModel implements ListModel<TodoTask>{
 	ArrayList<TodoTask> taskList;
 	ArrayList<ListDataListener> listners = new ArrayList<ListDataListener>();
 	
@@ -44,11 +42,6 @@ public class TaskListModel implements Observer, ListModel<TodoTask>{
 	      l.contentsChanged(null);
 	    } 
 	  }
-
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-	}
 	
 	public void changeCategory(ArrayList<TodoTask> aTasklist){
 		taskList = aTasklist;

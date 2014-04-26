@@ -4,18 +4,22 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.ListModel;
-import javax.swing.event.ListDataListener;
+import javax.swing.AbstractListModel;
 
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 
-public class CategoryListModel implements Observer, ListModel<TodoCategory>{
+public class CategoryListModel extends AbstractListModel<TodoCategory> implements Observer{
+	private static final long serialVersionUID = -8918372750130357388L;
+	
 	ArrayList<TodoCategory> categoryList;
+	ClientTodoManager todoManager; 
 	
 	public CategoryListModel(ClientTodoManager aTodoManager) {
 		super();
 		categoryList = aTodoManager.categoriesToArray();
+		todoManager = aTodoManager;
+		todoManager.addObserver(this);
 	}
 
 	@Override
@@ -28,21 +32,11 @@ public class CategoryListModel implements Observer, ListModel<TodoCategory>{
 		return categoryList.get(aIndex);
 	}
 
-	//TODO: for update
 	@Override
-	public void update(Observable observedList, Object aArg) {
-		
-	}
-
-	@Override
-	public void addListDataListener(ListDataListener l) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeListDataListener(ListDataListener l) {
-		// TODO Auto-generated method stub
-		
+	public void update(Observable o, Object arg) {
+		System.out.println(categoryList.size());
+		categoryList = todoManager.categoriesToArray();
+		System.out.println(categoryList.size());
+		fireContentsChanged(this, 0, categoryList.size()-1);
 	}
 }
