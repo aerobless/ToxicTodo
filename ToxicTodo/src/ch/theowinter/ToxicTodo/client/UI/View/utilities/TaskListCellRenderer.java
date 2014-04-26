@@ -18,7 +18,7 @@ public class TaskListCellRenderer extends TaskElementPanel implements ListCellRe
 
 		this.setText('\uf15b', currentTask.getTaskText());
 
-		Color background = new Color(83, 145, 206);
+		Color background = new Color(237, 237, 237);
             
         // check if this cell is selected
         if (isSelected) {
@@ -27,7 +27,7 @@ public class TaskListCellRenderer extends TaskElementPanel implements ListCellRe
 
         // unselected, and not the DnD drop location
         } else {
-            background = new Color(230, 234, 239);
+            background = new Color(237, 237, 237);
             this.setFontColor(Color.BLACK);
         };
         setBackground(background);

@@ -29,7 +29,10 @@ import ch.theowinter.ToxicTodo.client.UI.View.utilities.TaskListCellRenderer;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
 
+import com.explodingpixels.macwidgets.BottomBar;
+import com.explodingpixels.macwidgets.BottomBarSize;
 import com.explodingpixels.macwidgets.MacUtils;
+import com.explodingpixels.macwidgets.MacWidgetFactory;
 import com.explodingpixels.macwidgets.UnifiedToolBar;
 
 public class MainWindowView {
@@ -82,7 +85,7 @@ public class MainWindowView {
 		JSplitPane splitPane = new JSplitPane();
 		splitPane.setContinuousLayout(true);
 		splitPane.setResizeWeight(0.25);
-		//splitPane.setBorder(new LineBorder(Color.blue,0)); //no main border
+		splitPane.setBorder(new LineBorder(Color.blue,0));
 
 		frmToxictodo.getContentPane().add(splitPane, BorderLayout.CENTER);
 		
@@ -114,8 +117,7 @@ public class MainWindowView {
 		splitPane.setRightComponent(taskListScrollPane);
 		
 		//TASK LIST:
-		//categoryList.setSelectedIndex(1); //We need this for now so that it has always something selected..
-		taskListModel = new TaskListModel(categoryListModel.getElementAt(0).getTaskInCategoryAsArrayList()); //TODO: ddd
+		taskListModel = new TaskListModel(categoryListModel.getElementAt(0).getTaskInCategoryAsArrayList());
 		System.out.println(taskListModel.getSize());
 		taskList = new JList<TodoTask>(taskListModel);
 		taskList.setCellRenderer(new TaskListCellRenderer());
@@ -125,21 +127,12 @@ public class MainWindowView {
 		taskListScrollPane.setBackground(new Color(237, 237, 237));
 		taskListScrollPane.setBorder(new LineBorder(Color.black,0));
 		
-		//OTHER STUFF:
-		JPanel bottomPanel = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) bottomPanel.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.RIGHT);
-		bottomPanel.setBorder(null);
-		frmToxictodo.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
-		
-		JButton btnNewTask = new JButton("new task");
-		btnNewTask.setToolTipText("Add a new task to the todo list.");
-		bottomPanel.add(btnNewTask);
-		
-		JButton btnRemoveTask = new JButton("complete task");
-		btnRemoveTask.setToolTipText("Complete a task.");
-		bottomPanel.add(btnRemoveTask);
 		initToolbar();
+		 
+		//BOTTOM STATUS BAR
+		BottomBar bottomBar = new BottomBar(BottomBarSize.LARGE);
+	    bottomBar.addComponentToLeft(MacWidgetFactory.createEmphasizedLabel("Status"));  
+		frmToxictodo.getContentPane().add(bottomBar.getComponent(), BorderLayout.SOUTH);  
 	}
 	
 	/*
@@ -193,21 +186,10 @@ public class MainWindowView {
 	    	ListSelectionModel lsm = (ListSelectionModel)e.getSource();
 	    	taskListModel.changeCategory(categoryListModel.getElementAt(categoryList.getSelectedIndex()).getTaskInCategoryAsArrayList());
 
-	        //TODO: update left list
 	        if (lsm.isSelectionEmpty()) {
 	        	//should be impossible to achieve
 	        	System.out.println("empty selection, o'really?");
-	        } else {
-	            // Find out which indexes are selected.
-	            int minIndex = lsm.getMinSelectionIndex();
-	            int maxIndex = lsm.getMaxSelectionIndex();
-	            for (int i = minIndex; i <= maxIndex; i++) {
-	                if (lsm.isSelectedIndex(i)) {
-	                	System.out.println(" " + i);
-	                }
-	            }
 	        }
 	    }
 	}
-	
 }

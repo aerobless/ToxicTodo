@@ -48,7 +48,6 @@ public class TaskListModel implements Observer, ListModel<TodoTask>{
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		
 	}
 	
 	public void changeCategory(ArrayList<TodoTask> aTasklist){
