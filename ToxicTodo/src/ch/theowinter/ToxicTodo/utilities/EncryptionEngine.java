@@ -1,9 +1,12 @@
 package ch.theowinter.ToxicTodo.utilities;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.security.spec.KeySpec;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.SealedObject;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -42,7 +45,7 @@ public class EncryptionEngine {
       return so;
     }
 	
-	public Object dec(SealedObject input) throws Exception{
+	public Object dec(SealedObject input) throws ClassNotFoundException, IllegalBlockSizeException, BadPaddingException, IOException {
        Object decryptedPacket = (Object) input.getObject(dcipher);
       return decryptedPacket;
     }

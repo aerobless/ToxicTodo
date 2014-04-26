@@ -46,16 +46,15 @@ class ServerOpenConnectionThread implements Runnable {
     			dataFromClient = (ToxicDatagram) crypto.dec(encryptedDataFromClient);
     		} catch (Exception anEx1) {
     			System.err.println("Encryption ERROR - Unable to encrypt & send data!");
-    			anEx1.printStackTrace();
     		}
 			
 			ToxicDatagram dataToClient = new ToxicDatagram("ERROR - 400 - The server has no response for you.", "");
 		        	
 			try {
-				dataToClient = runServerAction(dataFromClient.getServerControlMessage(), dataFromClient);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					dataToClient = runServerAction(dataFromClient.getServerControlMessage(), dataFromClient);
+				} catch (Exception e) {
+					System.err.println("Client tried to send a packet with a bad cipher - cannot decrypt");
+					//TODO: make log or something to track such attempts.
 				}
 		        	
 			OutputStream os = inputSocket.getOutputStream();  

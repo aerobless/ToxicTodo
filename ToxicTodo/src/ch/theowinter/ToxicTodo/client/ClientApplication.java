@@ -65,7 +65,7 @@ public class ClientApplication {
 			encryptedData = crypto.enc(datagram);
 		} catch (Exception anEx1) {
 			System.err.println("Encryption ERROR - Unable to encrypt & send data!");
-			anEx1.printStackTrace();
+			System.exit(0);
 		}
 		TodoList todoList = null;
 		if(encryptedData!=null){
@@ -86,7 +86,7 @@ public class ClientApplication {
 	    			dataFromServer = (ToxicDatagram) crypto.dec(encryptedDataFromServer);
 	    		} catch (Exception anEx1) {
 	    			System.err.println("Encryption ERROR - Unable to encrypt & send data!");
-	    			anEx1.printStackTrace();
+	    			System.exit(0);
 	    		}
 	        	
 	        	todoList = dataFromServer.getTodoList();
