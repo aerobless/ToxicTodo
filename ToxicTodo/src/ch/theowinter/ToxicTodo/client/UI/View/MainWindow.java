@@ -143,6 +143,22 @@ public class MainWindow {
 	    bottomBar.addComponentToLeft(MacWidgetFactory.createEmphasizedLabel("Status"));  
 		frmToxictodo.getContentPane().add(bottomBar.getComponent(), BorderLayout.SOUTH);  
 		
+		//Refresh:
+		FontIconButton btnRefresh = new FontIconButton('\uf021', "Change the program settings.");
+		btnRefresh.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnRefresh.setHorizontalTextPosition(SwingConstants.CENTER);	
+		btnRefresh.putClientProperty("JButton.buttonType", "textured");
+		btnRefresh.setPreferredSize(uniBarButtonSize);
+		btnRefresh.setMinimumSize(uniBarButtonSize);
+		btnRefresh.setMaximumSize(uniBarButtonSize);
+		btnRefresh.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//TODO: do refresh
+			}
+        });      
+		bottomBar.addComponentToRight(btnRefresh);
+		
 		//Settings:
 		FontIconButton btnSettings = new FontIconButton('\uf013', "Change the program settings.");
 		btnSettings.setVerticalTextPosition(SwingConstants.BOTTOM);

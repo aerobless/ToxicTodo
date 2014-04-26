@@ -4,17 +4,24 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+
 import java.awt.Font;
 import java.awt.FlowLayout;
+
 import javax.swing.JButton;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
-import javax.swing.JTextPane;
+
 import java.awt.Insets;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.ScrollPaneConstants;
 
 public class TaskWindow extends JFrame {
 	private static final long serialVersionUID = -2022909795010691054L;
@@ -50,25 +57,25 @@ public class TaskWindow extends JFrame {
 		contentPane.add(centerPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_centerPanel = new GridBagLayout();
 		gbl_centerPanel.columnWidths = new int[]{124, 0, 0, 0};
-		gbl_centerPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
+		gbl_centerPanel.rowHeights = new int[]{0, 0, 0, 0, 0};
 		gbl_centerPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_centerPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_centerPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		centerPanel.setLayout(gbl_centerPanel);
 		
-		JLabel lblType = new JLabel("Type:");
+		JLabel lblType = new JLabel("Category:");
 		GridBagConstraints gbc_lblType = new GridBagConstraints();
 		gbc_lblType.anchor = GridBagConstraints.EAST;
 		gbc_lblType.insets = new Insets(0, 0, 5, 5);
 		gbc_lblType.gridx = 0;
-		gbc_lblType.gridy = 1;
+		gbc_lblType.gridy = 0;
 		centerPanel.add(lblType, gbc_lblType);
 		
-		JComboBox comboBox = new JComboBox();
+		JComboBox<String> comboBox = new JComboBox<String>();
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 1;
-		gbc_comboBox.gridy = 1;
+		gbc_comboBox.gridy = 0;
 		centerPanel.add(comboBox, gbc_comboBox);
 		
 		JLabel lblCompletedUntil = new JLabel("Completed until:");
@@ -76,7 +83,7 @@ public class TaskWindow extends JFrame {
 		gbc_lblCompletedUntil.anchor = GridBagConstraints.EAST;
 		gbc_lblCompletedUntil.insets = new Insets(0, 0, 5, 5);
 		gbc_lblCompletedUntil.gridx = 0;
-		gbc_lblCompletedUntil.gridy = 2;
+		gbc_lblCompletedUntil.gridy = 1;
 		centerPanel.add(lblCompletedUntil, gbc_lblCompletedUntil);
 		
 		textField = new JTextField();
@@ -84,7 +91,7 @@ public class TaskWindow extends JFrame {
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 2;
+		gbc_textField.gridy = 1;
 		centerPanel.add(textField, gbc_textField);
 		textField.setColumns(10);
 		
@@ -93,16 +100,22 @@ public class TaskWindow extends JFrame {
 		gbc_lblDescription.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDescription.anchor = GridBagConstraints.NORTHEAST;
 		gbc_lblDescription.gridx = 0;
-		gbc_lblDescription.gridy = 3;
+		gbc_lblDescription.gridy = 2;
 		centerPanel.add(lblDescription, gbc_lblDescription);
 		
-		JTextPane textPane = new JTextPane();
-		GridBagConstraints gbc_textPane = new GridBagConstraints();
-		gbc_textPane.insets = new Insets(0, 0, 5, 5);
-		gbc_textPane.fill = GridBagConstraints.BOTH;
-		gbc_textPane.gridx = 1;
-		gbc_textPane.gridy = 3;
-		centerPanel.add(textPane, gbc_textPane);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.insets = new Insets(0, 3, 8, 8);
+		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.gridx = 1;
+		gbc_scrollPane.gridy = 2;
+		centerPanel.add(scrollPane, gbc_scrollPane);
+		
+		JTextArea textPane = new JTextArea();
+		textPane.setLineWrap(true);
+		scrollPane.setViewportView(textPane);
+		scrollPane.setBorder(textField.getBorder());
 		
 		JPanel bottomPanel = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) bottomPanel.getLayout();
