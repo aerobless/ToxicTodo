@@ -16,6 +16,8 @@ import javax.swing.JButton;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -28,14 +30,15 @@ import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicColors;
 public class TaskPanel extends JPanel {
 	private static final long serialVersionUID = -2022909795010691054L;
 
-	private JTextField textField;
-	ClientTodoManager todoManager; 
+	private JTextArea txtAreaTaskDescription;
+	private JTextField txtFieldCompletedUntil;
+	private MainWindow main;
 
 	/**
 	 * Create the frame.
 	 */
-	public TaskPanel(ClientTodoManager todoManager) {
-		this.todoManager = todoManager;
+	public TaskPanel(MainWindow main, ClientTodoManager todoManager) {
+		this.main = main;
 		setBackground(ToxicColors.softGrey);
 		setBounds(100, 100, 450, 300);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -89,14 +92,14 @@ public class TaskPanel extends JPanel {
 		gbc_lblCompletedUntil.gridy = 1;
 		centerPanel.add(lblCompletedUntil, gbc_lblCompletedUntil);
 		
-		textField = new JTextField();
+		txtFieldCompletedUntil = new JTextField();
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField.gridx = 1;
 		gbc_textField.gridy = 1;
-		centerPanel.add(textField, gbc_textField);
-		textField.setColumns(10);
+		centerPanel.add(txtFieldCompletedUntil, gbc_textField);
+		txtFieldCompletedUntil.setColumns(10);
 		
 		JLabel lblDescription = new JLabel("Description:");
 		GridBagConstraints gbc_lblDescription = new GridBagConstraints();
@@ -115,10 +118,10 @@ public class TaskPanel extends JPanel {
 		gbc_scrollPane.gridy = 2;
 		centerPanel.add(scrollPane, gbc_scrollPane);
 		
-		JTextArea textPane = new JTextArea();
-		textPane.setLineWrap(true);
-		scrollPane.setViewportView(textPane);
-		scrollPane.setBorder(textField.getBorder());
+		txtAreaTaskDescription = new JTextArea();
+		txtAreaTaskDescription.setLineWrap(true);
+		scrollPane.setViewportView(txtAreaTaskDescription);
+		scrollPane.setBorder(txtFieldCompletedUntil.getBorder());
 		
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setBackground(ToxicColors.softGrey);
@@ -128,8 +131,33 @@ public class TaskPanel extends JPanel {
 		
 		JButton btnCancel = new JButton("Cancel");
 		bottomPanel.add(btnCancel);
+		btnCancel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cancelTask();
+			}
+        }); 
 		
 		JButton btnSave = new JButton("Save");
 		bottomPanel.add(btnSave);
+		btnSave.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				saveTask();
+			}
+        }); 
+	}
+	
+	private void cancelTask(){
+		//TODO: reset combobox
+		txtAreaTaskDescription.setText("");
+		txtFieldCompletedUntil.setText("");
+		main.switchToTasks();
+	}
+	
+	private void saveTask(){
+		//TODO: reset combobox
+
+		main.switchToTasks();
 	}
 }

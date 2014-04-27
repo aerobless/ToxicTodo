@@ -189,13 +189,10 @@ public class MainWindow{
 				if(settingsPanel == null){
 					settingsPanel = new SettingsPanel(settings, main);
 					setRightContent(settingsPanel);
-					settingsPanel.setVisible(true);
 				}else if(settingsPanel.isVisible() == true){
 					switchToTasks();
-					settingsPanel.setVisible(false);
 				}else{
 					setRightContent(settingsPanel);
-					settingsPanel.setVisible(true);
 				}
 			}
         });    
@@ -228,17 +225,12 @@ public class MainWindow{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(taskWindow == null){
-					taskWindow = new TaskPanel(todoManager);
-					taskWindow.setVisible(true);
+					taskWindow = new TaskPanel(main, todoManager);
 					setRightContent(taskWindow);
-					//rightScrollPane.setViewportView(taskWindow);
 				}else if(taskWindow.isVisible() == true){
 					switchToTasks();
-					taskWindow.setVisible(false);
 				} else{
-					taskWindow.setVisible(true);
 					setRightContent(taskWindow);
-					//rightScrollPane.setViewportView(taskWindow);
 				}
 			}
         });  
@@ -265,12 +257,14 @@ public class MainWindow{
 	}
 	
 	public void switchToTasks(){
+		splitPane.getRightComponent().setVisible(false);
 		setRightContent(taskScrollPane);
 	}
 	
 	public void setRightContent(Component content){
 		int oldDividerLocation = splitPane.getDividerLocation();
 		splitPane.setRightComponent(content);
+		splitPane.getRightComponent().setVisible(true);
 		splitPane.setDividerLocation(oldDividerLocation);
 	}
 	
