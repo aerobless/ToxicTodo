@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,8 +19,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import org.omg.CORBA.Bounds;
 
 import ch.theowinter.ToxicTodo.client.ClientSettings;
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
@@ -235,6 +232,9 @@ public class MainWindow{
 					taskWindow.setVisible(true);
 					setRightContent(taskWindow);
 					//rightScrollPane.setViewportView(taskWindow);
+				}else if(taskWindow.isVisible() == true){
+					switchToTasks();
+					taskWindow.setVisible(false);
 				} else{
 					taskWindow.setVisible(true);
 					setRightContent(taskWindow);
@@ -265,7 +265,7 @@ public class MainWindow{
 	}
 	
 	public void switchToTasks(){
-		splitPane.setRightComponent(taskScrollPane);
+		setRightContent(taskScrollPane);
 	}
 	
 	public void setRightContent(Component content){

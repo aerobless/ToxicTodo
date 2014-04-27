@@ -15,12 +15,13 @@ import javax.swing.JButton;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
-
 import java.awt.Insets;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.ScrollPaneConstants;
+
+import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicColors;
 
 public class TaskPanel extends JPanel {
 	private static final long serialVersionUID = -2022909795010691054L;
@@ -31,11 +32,13 @@ public class TaskPanel extends JPanel {
 	 * Create the frame.
 	 */
 	public TaskPanel() {
+		setBackground(ToxicColors.softGrey);
 		setBounds(100, 100, 450, 300);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel topPanel = new JPanel();
+		topPanel.setBackground(ToxicColors.softGrey);
 		FlowLayout flowLayout = (FlowLayout) topPanel.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		add(topPanel, BorderLayout.NORTH);
@@ -49,6 +52,7 @@ public class TaskPanel extends JPanel {
 		topPanel.add(lblTitel);
 		
 		JPanel centerPanel = new JPanel();
+		centerPanel.setBackground(ToxicColors.softGrey);
 		add(centerPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_centerPanel = new GridBagLayout();
 		gbl_centerPanel.columnWidths = new int[]{124, 0, 0, 0};
@@ -113,6 +117,7 @@ public class TaskPanel extends JPanel {
 		scrollPane.setBorder(textField.getBorder());
 		
 		JPanel bottomPanel = new JPanel();
+		bottomPanel.setBackground(ToxicColors.softGrey);
 		FlowLayout flowLayout_1 = (FlowLayout) bottomPanel.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.RIGHT);
 		add(bottomPanel, BorderLayout.SOUTH);
