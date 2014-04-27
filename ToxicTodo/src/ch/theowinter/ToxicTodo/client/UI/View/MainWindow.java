@@ -2,8 +2,10 @@ package ch.theowinter.ToxicTodo.client.UI.View;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,6 +20,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import org.omg.CORBA.Bounds;
 
 import ch.theowinter.ToxicTodo.client.ClientSettings;
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
@@ -187,13 +191,13 @@ public class MainWindow{
 			public void actionPerformed(ActionEvent e) {
 				if(settingsPanel == null){
 					settingsPanel = new SettingsPanel(settings, main);
-					splitPane.setRightComponent(settingsPanel);
+					setRightContent(settingsPanel);
 					settingsPanel.setVisible(true);
 				}else if(settingsPanel.isVisible() == true){
 					switchToTasks();
 					settingsPanel.setVisible(false);
 				}else{
-					splitPane.setRightComponent(settingsPanel);
+					setRightContent(settingsPanel);
 					settingsPanel.setVisible(true);
 				}
 			}
@@ -229,11 +233,11 @@ public class MainWindow{
 				if(taskWindow == null){
 					taskWindow = new TaskPanel();
 					taskWindow.setVisible(true);
-					splitPane.setRightComponent(taskWindow);
+					setRightContent(taskWindow);
 					//rightScrollPane.setViewportView(taskWindow);
 				} else{
 					taskWindow.setVisible(true);
-					splitPane.setRightComponent(taskWindow);
+					setRightContent(taskWindow);
 					//rightScrollPane.setViewportView(taskWindow);
 				}
 			}
@@ -262,6 +266,12 @@ public class MainWindow{
 	
 	public void switchToTasks(){
 		splitPane.setRightComponent(taskScrollPane);
+	}
+	
+	public void setRightContent(Component content){
+		int oldDividerLocation = splitPane.getDividerLocation();
+		splitPane.setRightComponent(content);
+		splitPane.setDividerLocation(oldDividerLocation);
 	}
 	
 	class CategoryListSelectionHandler implements ListSelectionListener {
