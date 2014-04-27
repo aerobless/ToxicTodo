@@ -268,6 +268,10 @@ public class MainWindow{
 		splitPane.setDividerLocation(oldDividerLocation);
 	}
 	
+	public String getSelectedCategoryKeyword(){
+		return categoryList.getSelectedValue().getKeyword();
+	}
+	
 	class CategoryListSelectionHandler implements ListSelectionListener {
 	    public void valueChanged(ListSelectionEvent e) {
 	    	ListSelectionModel lsm = (ListSelectionModel)e.getSource();

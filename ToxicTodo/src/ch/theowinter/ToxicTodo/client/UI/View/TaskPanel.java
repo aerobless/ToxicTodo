@@ -33,12 +33,14 @@ public class TaskPanel extends JPanel {
 	private JTextArea txtAreaTaskDescription;
 	private JTextField txtFieldCompletedUntil;
 	private MainWindow main;
+	private ClientTodoManager todoManager;
 
 	/**
 	 * Create the frame.
 	 */
 	public TaskPanel(MainWindow main, ClientTodoManager todoManager) {
 		this.main = main;
+		this.todoManager = todoManager;
 		setBackground(ToxicColors.softGrey);
 		setBounds(100, 100, 450, 300);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -156,8 +158,7 @@ public class TaskPanel extends JPanel {
 	}
 	
 	private void saveTask(){
-		//TODO: reset combobox
-
 		main.switchToTasks();
+		todoManager.addNewTask(main.getSelectedCategoryKeyword(), txtAreaTaskDescription.getText());
 	}
 }
