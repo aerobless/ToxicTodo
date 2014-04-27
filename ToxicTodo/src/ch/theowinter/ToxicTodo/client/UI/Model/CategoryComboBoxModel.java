@@ -1,14 +1,17 @@
 package ch.theowinter.ToxicTodo.client.UI.Model;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
+import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
-import javax.swing.event.ListDataListener;
 
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 
-public class CategoryComboBoxModel implements ComboBoxModel<String>{
+public class CategoryComboBoxModel extends AbstractListModel<String> implements ComboBoxModel<String>, Observer{
+	private static final long serialVersionUID = -2267676861577121046L;
 	private Object selectedItem;
 	ClientTodoManager todoManager;
 	ArrayList<TodoCategory> categoryList;
@@ -29,18 +32,6 @@ public class CategoryComboBoxModel implements ComboBoxModel<String>{
 	}
 
 	@Override
-	public void addListDataListener(ListDataListener l) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeListDataListener(ListDataListener l) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void setSelectedItem(Object anItem) {
 		 selectedItem = anItem;
 	}
@@ -50,4 +41,9 @@ public class CategoryComboBoxModel implements ComboBoxModel<String>{
 		return selectedItem;
 	}
 
+	@Override
+	public void update(Observable o, Object arg) {
+		categoryList = todoManager.categoriesToArray();	
+		fireContentsChanged(this, 0, categoryList.size()-1);
+	}
 }
