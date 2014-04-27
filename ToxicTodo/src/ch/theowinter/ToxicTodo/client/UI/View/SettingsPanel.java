@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
@@ -20,6 +21,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
 import ch.theowinter.ToxicTodo.client.ClientSettings;
+import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicColors;
 
 public class SettingsPanel extends JPanel{
 	private static final long serialVersionUID = 5091902326508795291L;
@@ -35,28 +37,30 @@ public class SettingsPanel extends JPanel{
 	 */
 	public SettingsPanel(ClientSettings settings) {
 		this.settings = settings;
-		
+		setBackground(ToxicColors.softGrey);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
+		JPanel headerPanel = new JPanel();
+		headerPanel.setBackground(ToxicColors.softGrey);
+		FlowLayout flowLayout = (FlowLayout) headerPanel.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		add(panel, BorderLayout.NORTH);
+		add(headerPanel, BorderLayout.NORTH);
 		
 		JLabel lblSettings = new JLabel("Settings");
 		lblSettings.setFont(new Font("Lucida Grande", Font.PLAIN, 23));
-		panel.add(lblSettings);
+		headerPanel.add(lblSettings);
 		
-		JPanel settingsPanel = new JPanel();
-		add(settingsPanel, BorderLayout.CENTER);
+		JPanel centerPanel = new JPanel();
+		add(centerPanel, BorderLayout.CENTER);
+		centerPanel.setBackground(ToxicColors.softGrey);
 		GridBagLayout settingsGridBag = new GridBagLayout();
 		settingsGridBag.columnWidths = new int[]{111, 0, 0, 0};
 		settingsGridBag.rowHeights = new int[]{10, 0, 0, 0, 0, 0, 0};
 		settingsGridBag.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		settingsGridBag.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		settingsPanel.setLayout(settingsGridBag);
+		centerPanel.setLayout(settingsGridBag);
 		
 		//HOST IP:
 		JLabel lblHostIP = new JLabel("Host-IP:");
@@ -67,7 +71,7 @@ public class SettingsPanel extends JPanel{
 		gbc_lblHostIP.anchor = GridBagConstraints.EAST;
 		gbc_lblHostIP.gridx = 0;
 		gbc_lblHostIP.gridy = 1;
-		settingsPanel.add(lblHostIP, gbc_lblHostIP);
+		centerPanel.add(lblHostIP, gbc_lblHostIP);
 		textFieldHostIP = new JTextField();
 		textFieldHostIP.setToolTipText(hostTooltip);
 		GridBagConstraints gbc_textFieldHostIP = new GridBagConstraints();
@@ -75,7 +79,7 @@ public class SettingsPanel extends JPanel{
 		gbc_textFieldHostIP.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldHostIP.gridx = 1;
 		gbc_textFieldHostIP.gridy = 1;
-		settingsPanel.add(textFieldHostIP, gbc_textFieldHostIP);
+		centerPanel.add(textFieldHostIP, gbc_textFieldHostIP);
 		textFieldHostIP.setColumns(10);
 		textFieldHostIP.setText(settings.getHOST());
 
@@ -88,7 +92,7 @@ public class SettingsPanel extends JPanel{
 		gbc_lblHostport.anchor = GridBagConstraints.EAST;
 		gbc_lblHostport.gridx = 0;
 		gbc_lblHostport.gridy = 2;
-		settingsPanel.add(lblHostport, gbc_lblHostport);
+		centerPanel.add(lblHostport, gbc_lblHostport);
 		textFieldHostPort = new JTextField();
 		textFieldHostPort.setToolTipText(hostPortTooltip);
 		GridBagConstraints gbc_textFieldHostPort = new GridBagConstraints();
@@ -96,7 +100,7 @@ public class SettingsPanel extends JPanel{
 		gbc_textFieldHostPort.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldHostPort.gridx = 1;
 		gbc_textFieldHostPort.gridy = 2;
-		settingsPanel.add(textFieldHostPort, gbc_textFieldHostPort);
+		centerPanel.add(textFieldHostPort, gbc_textFieldHostPort);
 		textFieldHostPort.setColumns(10);
 		textFieldHostPort.setText(settings.getPORT()+"");
 		
@@ -109,7 +113,7 @@ public class SettingsPanel extends JPanel{
 		gbc_lblPassword.anchor = GridBagConstraints.EAST;
 		gbc_lblPassword.gridx = 0;
 		gbc_lblPassword.gridy = 3;
-		settingsPanel.add(lblPassword, gbc_lblPassword);
+		centerPanel.add(lblPassword, gbc_lblPassword);
 		passwordField = new JPasswordField();
 		passwordField.setToolTipText(passwordTooltop);
 		GridBagConstraints gbc_passwordField = new GridBagConstraints();
@@ -117,7 +121,7 @@ public class SettingsPanel extends JPanel{
 		gbc_passwordField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_passwordField.gridx = 1;
 		gbc_passwordField.gridy = 3;
-		settingsPanel.add(passwordField, gbc_passwordField);
+		centerPanel.add(passwordField, gbc_passwordField);
 		passwordField.setText(settings.getPassword());
 		
 		//CONSOLE SIZE:
@@ -129,7 +133,7 @@ public class SettingsPanel extends JPanel{
 		gbc_lblConsolesize.anchor = GridBagConstraints.EAST;
 		gbc_lblConsolesize.gridx = 0;
 		gbc_lblConsolesize.gridy = 5;
-		settingsPanel.add(lblConsoleSize, gbc_lblConsolesize);
+		centerPanel.add(lblConsoleSize, gbc_lblConsolesize);
 		txtFieldConsoleSize = new JTextField();
 		txtFieldConsoleSize.setToolTipText(consoleSizeTooltip);
 		GridBagConstraints gbc_txtFieldConsoleSize = new GridBagConstraints();
@@ -137,18 +141,19 @@ public class SettingsPanel extends JPanel{
 		gbc_txtFieldConsoleSize.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtFieldConsoleSize.gridx = 1;
 		gbc_txtFieldConsoleSize.gridy = 5;
-		settingsPanel.add(txtFieldConsoleSize, gbc_txtFieldConsoleSize);
+		centerPanel.add(txtFieldConsoleSize, gbc_txtFieldConsoleSize);
 		txtFieldConsoleSize.setColumns(10);
 		txtFieldConsoleSize.setText(settings.getConsoleSize()+"");
 		
-		JPanel panel_2 = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) panel_2.getLayout();
+		JPanel bottomPanel = new JPanel();
+		bottomPanel.setBackground(ToxicColors.softGrey);
+		FlowLayout flowLayout_1 = (FlowLayout) bottomPanel.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.RIGHT);
-		add(panel_2, BorderLayout.SOUTH);
+		add(bottomPanel, BorderLayout.SOUTH);
 		
 		//BUTTONS
 		JButton btnCancel = new JButton("cancel");
-		panel_2.add(btnCancel);
+		bottomPanel.add(btnCancel);
 		btnCancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -157,7 +162,7 @@ public class SettingsPanel extends JPanel{
         }); 
 		
 		JButton btnSave = new JButton("save");
-		panel_2.add(btnSave);
+		bottomPanel.add(btnSave);
 		btnSave.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
