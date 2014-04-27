@@ -46,12 +46,13 @@ public class MainWindow{
 	private ClientSettings settings;
 	
 	//This window
-	JScrollPane rightScrollPane;
+	JSplitPane splitPane;
 	MainWindow main = this;
 	
 	//Panels
 	private SettingsPanel settingsPanel;
 	private TaskPanel taskWindow;
+	private JScrollPane taskScrollPane;
 	
 	//Construction Finals
 	final Dimension uniBarButtonSize = new Dimension(50, 25);
@@ -97,7 +98,7 @@ public class MainWindow{
 		//Enable unified style, probably needs to be disabled on windows..
 		MacUtils.makeWindowLeopardStyle(frmToxictodo.getRootPane());
 
-		JSplitPane splitPane = new JSplitPane();
+		splitPane = new JSplitPane();
 		splitPane.setContinuousLayout(true);
 		splitPane.setResizeWeight(0.25);
 		splitPane.setBorder(new LineBorder(Color.blue,0));
@@ -127,9 +128,9 @@ public class MainWindow{
 	    listSelectionModel.addListSelectionListener(
 	                            new CategoryListSelectionHandler());
 
-		rightScrollPane = new JScrollPane();
-		rightScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		splitPane.setRightComponent(rightScrollPane);
+	    taskScrollPane = new JScrollPane();
+		taskScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		splitPane.setRightComponent(taskScrollPane);
 		
 		//TASK LIST:
 		taskListModel = new TaskListModel(categoryListModel.getElementAt(0).getKeyword(), todoManager);
@@ -138,9 +139,9 @@ public class MainWindow{
 		taskList.setCellRenderer(new TaskListCellRenderer());
 		taskList.setBackground(ToxicColors.softGrey);
 		
-		rightScrollPane.setViewportView(taskList);
-		rightScrollPane.setBackground(ToxicColors.softGrey);
-		rightScrollPane.setBorder(new LineBorder(Color.black,0));
+		taskScrollPane.setViewportView(taskList);
+		taskScrollPane.setBackground(ToxicColors.softGrey);
+		taskScrollPane.setBorder(new LineBorder(Color.black,0));
 		
 		initToolbar();
 		 
@@ -186,13 +187,13 @@ public class MainWindow{
 			public void actionPerformed(ActionEvent e) {
 				if(settingsPanel == null){
 					settingsPanel = new SettingsPanel(settings, main);
-					rightScrollPane.setViewportView(settingsPanel);
+					splitPane.setRightComponent(settingsPanel);
 					settingsPanel.setVisible(true);
 				}else if(settingsPanel.isVisible() == true){
 					switchToTasks();
 					settingsPanel.setVisible(false);
 				}else{
-					rightScrollPane.setViewportView(settingsPanel);
+					splitPane.setRightComponent(settingsPanel);
 					settingsPanel.setVisible(true);
 				}
 			}
@@ -228,10 +229,12 @@ public class MainWindow{
 				if(taskWindow == null){
 					taskWindow = new TaskPanel();
 					taskWindow.setVisible(true);
-					rightScrollPane.setViewportView(taskWindow);
+					splitPane.setRightComponent(taskWindow);
+					//rightScrollPane.setViewportView(taskWindow);
 				} else{
 					taskWindow.setVisible(true);
-					rightScrollPane.setViewportView(taskWindow);
+					splitPane.setRightComponent(taskWindow);
+					//rightScrollPane.setViewportView(taskWindow);
 				}
 			}
         });  
@@ -258,7 +261,7 @@ public class MainWindow{
 	}
 	
 	public void switchToTasks(){
-		rightScrollPane.setViewportView(taskList);
+		splitPane.setRightComponent(taskScrollPane);
 	}
 	
 	class CategoryListSelectionHandler implements ListSelectionListener {
