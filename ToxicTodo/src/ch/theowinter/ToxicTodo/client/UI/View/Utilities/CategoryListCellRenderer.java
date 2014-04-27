@@ -17,19 +17,19 @@ public class CategoryListCellRenderer extends CategoryElementPanel implements Li
 		TodoCategory currentCategory = (TodoCategory)value;
 		this.setText('\uf15b', currentCategory.getName());
 		this.setCounter(currentCategory.size());
-		Color background = new Color(83, 145, 206);
+		Color background = ToxicColors.hardBlue;
             
         // check if this cell is selected
         if (isSelected) {
-            background = new Color(83, 145, 206);
+            background = ToxicColors.hardBlue;
             this.setBackgroundColor(background);
-            this.setFontColor(Color.WHITE);
+            this.setFontColor(ToxicColors.textWhite);
 
         // unselected, and not the DnD drop location
         } else {
-            background = new Color(230, 234, 239);
+            background = ToxicColors.softBlue;
             this.setBackgroundColor(background);
-            this.setFontColor(Color.BLACK);
+            this.setFontColor(ToxicColors.textBlack);
         };
         setBackground(background);
 
