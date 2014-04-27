@@ -176,12 +176,15 @@ public class MainWindow{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(settingsPanel == null){
-					settingsPanel = new SettingsPanel(settings, main);
+					settingsPanel = new SettingsPanel(settings);
 					rightScrollPane.setViewportView(settingsPanel);
-				} else if (settingsPanel.isVisible()==false){
+					settingsPanel.setVisible(true);
+				}else if(settingsPanel.isVisible() == true){
+					switchToTasks();
+					settingsPanel.setVisible(false);
+				}else{
 					rightScrollPane.setViewportView(settingsPanel);
-				} else{
-					
+					settingsPanel.setVisible(true);
 				}
 			}
         });      
@@ -244,10 +247,8 @@ public class MainWindow{
 		unifiedToolbar.addComponentToLeft(btnRemoveTask);	
 	}
 	
-	public void switchContent(String contentPane){
-		if(contentPane.equals("taskList")){
-			rightScrollPane.setViewportView(taskList);
-		}
+	public void switchToTasks(){
+		rightScrollPane.setViewportView(taskList);
 	}
 	
 	class CategoryListSelectionHandler implements ListSelectionListener {

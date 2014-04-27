@@ -29,15 +29,13 @@ public class SettingsPanel extends JPanel{
 	private JPasswordField passwordField;
 	private JTextField txtFieldConsoleSize;
 	private ClientSettings settings;
-	private MainWindow main;
-	
 	
 	/**
 	 * Create the frame.
 	 */
-	public SettingsPanel(ClientSettings settings, MainWindow main) {
+	public SettingsPanel(ClientSettings settings) {
 		this.settings = settings;
-		this.main = main;
+		
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setLayout(new BorderLayout(0, 0));
@@ -189,6 +187,5 @@ public class SettingsPanel extends JPanel{
 		textFieldHostPort.setText(settings.getPORT()+"");
 		passwordField.setText(settings.getPassword());
 		txtFieldConsoleSize.setText(settings.getConsoleSize()+"");
-		main.switchContent("taskList");
 	}
 }
