@@ -26,6 +26,7 @@ import ch.theowinter.ToxicTodo.client.UI.Model.TaskListModel;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.CategoryListCellRenderer;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.FontIconButton;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.TaskListCellRenderer;
+import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicColors;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
 
@@ -50,7 +51,7 @@ public class MainWindow{
 	
 	//Panels
 	private SettingsPanel settingsPanel;
-	private TaskWindow taskWindow;
+	private TaskPanel taskWindow;
 	
 	//Construction Finals
 	final Dimension uniBarButtonSize = new Dimension(50, 25);
@@ -119,7 +120,7 @@ public class MainWindow{
 		
 		categoryList = new JList<TodoCategory>(categoryListModel);
 		categoryPanel.add(categoryList, BorderLayout.CENTER);
-		categoryList.setBackground(new Color(230, 234, 239));
+		categoryList.setBackground(ToxicColors.softBlue);
 
 		categoryList.setCellRenderer(new CategoryListCellRenderer());
 		ListSelectionModel listSelectionModel = categoryList.getSelectionModel();
@@ -135,10 +136,10 @@ public class MainWindow{
 		System.out.println(taskListModel.getSize());
 		taskList = new JList<TodoTask>(taskListModel);
 		taskList.setCellRenderer(new TaskListCellRenderer());
-		taskList.setBackground(new Color(237, 237, 237));
+		taskList.setBackground(ToxicColors.softGrey);
 		
 		rightScrollPane.setViewportView(taskList);
-		rightScrollPane.setBackground(new Color(237, 237, 237));
+		rightScrollPane.setBackground(ToxicColors.softGrey);
 		rightScrollPane.setBorder(new LineBorder(Color.black,0));
 		
 		initToolbar();
@@ -225,11 +226,12 @@ public class MainWindow{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(taskWindow == null){
-					taskWindow = new TaskWindow();
+					taskWindow = new TaskPanel();
 					taskWindow.setVisible(true);
-					taskWindow.setDefaultCloseOperation(2);
+					rightScrollPane.setViewportView(taskWindow);
 				} else{
 					taskWindow.setVisible(true);
+					rightScrollPane.setViewportView(taskWindow);
 				}
 			}
         });  

@@ -2,7 +2,6 @@ package ch.theowinter.ToxicTodo.client.UI.View;
 
 import java.awt.BorderLayout;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -23,27 +22,23 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.ScrollPaneConstants;
 
-public class TaskWindow extends JFrame {
+public class TaskPanel extends JPanel {
 	private static final long serialVersionUID = -2022909795010691054L;
-	private JPanel contentPane;
+
 	private JTextField textField;
 
 	/**
 	 * Create the frame.
 	 */
-	public TaskWindow() {
-		setTitle("ToxicTask");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public TaskPanel() {
 		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+		setBorder(new EmptyBorder(5, 5, 5, 5));
+		setLayout(new BorderLayout(0, 0));
 		
 		JPanel topPanel = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) topPanel.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		contentPane.add(topPanel, BorderLayout.NORTH);
+		add(topPanel, BorderLayout.NORTH);
 		
 		JLabel lblIcon = new JLabel("(-)");
 		lblIcon.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
@@ -54,7 +49,7 @@ public class TaskWindow extends JFrame {
 		topPanel.add(lblTitel);
 		
 		JPanel centerPanel = new JPanel();
-		contentPane.add(centerPanel, BorderLayout.CENTER);
+		add(centerPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_centerPanel = new GridBagLayout();
 		gbl_centerPanel.columnWidths = new int[]{124, 0, 0, 0};
 		gbl_centerPanel.rowHeights = new int[]{0, 0, 0, 0, 0};
@@ -120,7 +115,7 @@ public class TaskWindow extends JFrame {
 		JPanel bottomPanel = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) bottomPanel.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.RIGHT);
-		contentPane.add(bottomPanel, BorderLayout.SOUTH);
+		add(bottomPanel, BorderLayout.SOUTH);
 		
 		JButton btnCancel = new JButton("Cancel");
 		bottomPanel.add(btnCancel);
