@@ -7,9 +7,6 @@ import javax.swing.JLabel;
 public class TaskListHeader extends JPanel {
 	private static final long serialVersionUID = 1231624288433035648L;
 
-	/**
-	 * Create the panel.
-	 */
 	public TaskListHeader() {
 		setLayout(new BorderLayout(0, 0));
 		
@@ -27,5 +24,4 @@ public class TaskListHeader extends JPanel {
 		textPanel.add(lblSubtitel, BorderLayout.CENTER);
 
 	}
-
 }

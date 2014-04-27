@@ -32,6 +32,7 @@ import ch.theowinter.ToxicTodo.client.UI.Model.TaskListModel;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.CategoryListCellRenderer;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.FontIconButton;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.TaskListCellRenderer;
+import ch.theowinter.ToxicTodo.client.UI.View.Utilities.TaskListHeader;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicColors;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
@@ -113,30 +114,6 @@ public class MainWindow{
 		
 		Dimension splitPaneMinimumSize = new Dimension(0, 0);
 		
-		JScrollPane categoryListscrollPane = new JScrollPane();
-		categoryListscrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		categoryListscrollPane.setBorder(new LineBorder(Color.black,0));
-		splitPane.setLeftComponent(categoryListscrollPane);
-		
-		splitPane.getLeftComponent().setMinimumSize(splitPaneMinimumSize);
-		
-		//CATEGORY SIDEBAR:
-		JPanel categoryPanel = new JPanel();
-		categoryListscrollPane.setViewportView(categoryPanel);
-		categoryPanel.setLayout(new BorderLayout(0, 0));
-		
-		categoryList = new JList<TodoCategory>(categoryListModel);
-		categoryPanel.add(categoryList, BorderLayout.CENTER);
-		categoryList.setBackground(ToxicColors.softBlue);
-
-		categoryList.setCellRenderer(new CategoryListCellRenderer());
-		ListSelectionModel listSelectionModel = categoryList.getSelectionModel();
-	    listSelectionModel.addListSelectionListener(new CategoryListSelectionHandler());
-
-	    taskScrollPane = new JScrollPane();
-		taskScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		splitPane.setRightComponent(taskScrollPane);
-		
 		//Custom Split Divider (thin & black)
 		splitPane.setUI(new BasicSplitPaneUI() {
 	        public BasicSplitPaneDivider createDefaultDivider() {
@@ -153,7 +130,39 @@ public class MainWindow{
 	        }
 	    });
 		
-		//TASK LIST:
+		//INIT CATEGORY PANEL
+		JScrollPane categoryListscrollPane = new JScrollPane();
+		categoryListscrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		categoryListscrollPane.setBorder(new LineBorder(Color.black,0));
+		
+		JPanel categoryPanel = new JPanel();
+		categoryListscrollPane.setViewportView(categoryPanel);
+		categoryPanel.setLayout(new BorderLayout(0, 0));
+		
+		categoryList = new JList<TodoCategory>(categoryListModel);
+		categoryPanel.add(categoryList, BorderLayout.CENTER);
+		categoryList.setBackground(ToxicColors.softBlue);
+
+		categoryList.setCellRenderer(new CategoryListCellRenderer());
+		ListSelectionModel listSelectionModel = categoryList.getSelectionModel();
+	    listSelectionModel.addListSelectionListener(new CategoryListSelectionHandler());
+		
+		splitPane.setLeftComponent(categoryListscrollPane);
+		splitPane.getLeftComponent().setMinimumSize(splitPaneMinimumSize);
+
+	    //TOTAL TASK PANEL
+	    TaskListHeader taskListHeader = new TaskListHeader();
+	    
+	    taskScrollPane = new JScrollPane();
+		taskScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+	    
+	    JPanel totalTaskPanel = new JPanel();
+	    totalTaskPanel.setLayout(new BorderLayout(0, 0));
+	    totalTaskPanel.add(taskListHeader, BorderLayout.NORTH);
+	    totalTaskPanel.add(taskScrollPane, BorderLayout.CENTER);
+	    
+		splitPane.setRightComponent(totalTaskPanel);
+
 		taskListModel = new TaskListModel(categoryListModel.getElementAt(0).getKeyword(), todoManager);
 		System.out.println(taskListModel.getSize());
 		taskList = new JList<TodoTask>(taskListModel);
@@ -163,7 +172,7 @@ public class MainWindow{
 		taskScrollPane.setViewportView(taskList);
 		taskScrollPane.setBackground(ToxicColors.softGrey);
 		taskScrollPane.setBorder(new LineBorder(Color.black,0));
-		
+
 		initToolbar();
 		 
 		//BOTTOM STATUS BAR
