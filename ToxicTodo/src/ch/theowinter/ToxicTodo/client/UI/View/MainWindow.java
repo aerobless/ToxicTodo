@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -22,9 +23,9 @@ import ch.theowinter.ToxicTodo.client.ClientSettings;
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.client.UI.Model.CategoryListModel;
 import ch.theowinter.ToxicTodo.client.UI.Model.TaskListModel;
-import ch.theowinter.ToxicTodo.client.UI.View.utilities.CategoryListCellRenderer;
-import ch.theowinter.ToxicTodo.client.UI.View.utilities.FontIconButton;
-import ch.theowinter.ToxicTodo.client.UI.View.utilities.TaskListCellRenderer;
+import ch.theowinter.ToxicTodo.client.UI.View.Utilities.CategoryListCellRenderer;
+import ch.theowinter.ToxicTodo.client.UI.View.Utilities.FontIconButton;
+import ch.theowinter.ToxicTodo.client.UI.View.Utilities.TaskListCellRenderer;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
 
@@ -43,8 +44,12 @@ public class MainWindow{
 	private ClientTodoManager todoManager;
 	private ClientSettings settings;
 	
-	//Windows
-	private SettingsWindow settingsWindow;
+	//This window
+	JScrollPane rightScrollPane;
+	MainWindow main = this;
+	
+	//Panels
+	private SettingsPanel settingsPanel;
 	private TaskWindow taskWindow;
 	
 	//Construction Finals
@@ -121,9 +126,9 @@ public class MainWindow{
 	    listSelectionModel.addListSelectionListener(
 	                            new CategoryListSelectionHandler());
 
-		JScrollPane taskListScrollPane = new JScrollPane();
-		taskListScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		splitPane.setRightComponent(taskListScrollPane);
+		rightScrollPane = new JScrollPane();
+		rightScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		splitPane.setRightComponent(rightScrollPane);
 		
 		//TASK LIST:
 		taskListModel = new TaskListModel(categoryListModel.getElementAt(0).getKeyword(), todoManager);
@@ -132,9 +137,9 @@ public class MainWindow{
 		taskList.setCellRenderer(new TaskListCellRenderer());
 		taskList.setBackground(new Color(237, 237, 237));
 		
-		taskListScrollPane.setViewportView(taskList);
-		taskListScrollPane.setBackground(new Color(237, 237, 237));
-		taskListScrollPane.setBorder(new LineBorder(Color.black,0));
+		rightScrollPane.setViewportView(taskList);
+		rightScrollPane.setBackground(new Color(237, 237, 237));
+		rightScrollPane.setBorder(new LineBorder(Color.black,0));
 		
 		initToolbar();
 		 
@@ -170,13 +175,13 @@ public class MainWindow{
 		btnSettings.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(settingsWindow == null){
-					settingsWindow = new SettingsWindow(settings);
-					settingsWindow.setVisible(true);
-					settingsWindow.setAlwaysOnTop(true);
-					settingsWindow.setDefaultCloseOperation(2);
+				if(settingsPanel == null){
+					settingsPanel = new SettingsPanel(settings, main);
+					rightScrollPane.setViewportView(settingsPanel);
+				} else if (settingsPanel.isVisible()==false){
+					rightScrollPane.setViewportView(settingsPanel);
 				} else{
-					settingsWindow.setVisible(true);
+					
 				}
 			}
         });      
@@ -237,6 +242,12 @@ public class MainWindow{
 		btnRemoveTask.setMinimumSize(uniBarButtonSize);
 		btnRemoveTask.setMaximumSize(uniBarButtonSize);
 		unifiedToolbar.addComponentToLeft(btnRemoveTask);	
+	}
+	
+	public void switchContent(String contentPane){
+		if(contentPane.equals("taskList")){
+			rightScrollPane.setViewportView(taskList);
+		}
 	}
 	
 	class CategoryListSelectionHandler implements ListSelectionListener {

@@ -10,11 +10,11 @@ import java.net.Socket;
 
 import javax.crypto.SealedObject;
 
-import ch.theowinter.ToxicTodo.client.CLI.CliController;
-import ch.theowinter.ToxicTodo.client.UI.Controller.ClientController;
 import ch.theowinter.ToxicTodo.utilities.EncryptionEngine;
 import ch.theowinter.ToxicTodo.utilities.JansiFormats;
 import ch.theowinter.ToxicTodo.utilities.LogicEngine;
+import ch.theowinter.ToxicTodo.client.CLI.CliController;
+import ch.theowinter.ToxicTodo.client.UI.Controller.ClientController;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoList;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.ToxicDatagram;
 

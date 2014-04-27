@@ -2,7 +2,6 @@ package ch.theowinter.ToxicTodo.client.UI.View;
 
 import java.awt.BorderLayout;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -22,42 +21,38 @@ import javax.swing.JButton;
 
 import ch.theowinter.ToxicTodo.client.ClientSettings;
 
-public class SettingsWindow extends JFrame {
+public class SettingsPanel extends JPanel{
 	private static final long serialVersionUID = 5091902326508795291L;
 	
-	private JPanel contentPane;
 	private JTextField textFieldHostIP;
 	private JTextField textFieldHostPort;
 	private JPasswordField passwordField;
 	private JTextField txtFieldConsoleSize;
 	private ClientSettings settings;
+	private MainWindow main;
 	
 	
 	/**
 	 * Create the frame.
 	 */
-	public SettingsWindow(ClientSettings someSettings) {
-		settings = someSettings;
-				
-		setTitle("Settings");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 376, 312);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
+	public SettingsPanel(ClientSettings settings, MainWindow main) {
+		this.settings = settings;
+		this.main = main;
+		setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
-		contentPane.add(panel, BorderLayout.NORTH);
+		add(panel, BorderLayout.NORTH);
 		
 		JLabel lblSettings = new JLabel("Settings");
 		lblSettings.setFont(new Font("Lucida Grande", Font.PLAIN, 23));
 		panel.add(lblSettings);
 		
 		JPanel settingsPanel = new JPanel();
-		contentPane.add(settingsPanel, BorderLayout.CENTER);
+		add(settingsPanel, BorderLayout.CENTER);
 		GridBagLayout settingsGridBag = new GridBagLayout();
 		settingsGridBag.columnWidths = new int[]{111, 0, 0, 0};
 		settingsGridBag.rowHeights = new int[]{10, 0, 0, 0, 0, 0, 0};
@@ -151,7 +146,7 @@ public class SettingsWindow extends JFrame {
 		JPanel panel_2 = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel_2.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.RIGHT);
-		contentPane.add(panel_2, BorderLayout.SOUTH);
+		add(panel_2, BorderLayout.SOUTH);
 		
 		//BUTTONS
 		JButton btnCancel = new JButton("cancel");
@@ -194,6 +189,6 @@ public class SettingsWindow extends JFrame {
 		textFieldHostPort.setText(settings.getPORT()+"");
 		passwordField.setText(settings.getPassword());
 		txtFieldConsoleSize.setText(settings.getConsoleSize()+"");
-		this.setVisible(false);
+		main.switchContent("taskList");
 	}
 }

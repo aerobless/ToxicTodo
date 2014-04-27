@@ -1,4 +1,4 @@
-package ch.theowinter.ToxicTodo.client.UI.View.utilities;
+package ch.theowinter.ToxicTodo.client.UI.View.Utilities;
 
 import java.awt.Color;
 import java.awt.Component;

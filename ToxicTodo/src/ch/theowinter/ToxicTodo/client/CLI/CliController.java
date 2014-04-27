@@ -8,10 +8,10 @@ import java.util.Arrays;
 
 import org.fusesource.jansi.AnsiConsole;
 
-import ch.theowinter.ToxicTodo.client.ClientApplication;
-import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.utilities.JansiFormats;
 import ch.theowinter.ToxicTodo.utilities.LogicEngine;
+import ch.theowinter.ToxicTodo.client.ClientApplication;
+import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.ToxicDatagram;

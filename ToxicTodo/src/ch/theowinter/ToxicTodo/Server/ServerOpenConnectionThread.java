@@ -1,4 +1,4 @@
-package ch.theowinter.ToxicTodo.server;
+package ch.theowinter.ToxicTodo.Server;
 
 import java.io.IOException;
 import java.io.InputStream;

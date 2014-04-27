@@ -1,4 +1,4 @@
-package ch.theowinter.ToxicTodo.server;
+package ch.theowinter.ToxicTodo.Server;
 
 public class ServerSettings {
 	private int PORT = 5222;

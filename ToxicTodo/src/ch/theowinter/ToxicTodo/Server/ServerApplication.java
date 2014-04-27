@@ -1,4 +1,4 @@
-package ch.theowinter.ToxicTodo.server;
+package ch.theowinter.ToxicTodo.Server;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
