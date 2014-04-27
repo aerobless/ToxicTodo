@@ -126,8 +126,7 @@ public class MainWindow{
 
 		categoryList.setCellRenderer(new CategoryListCellRenderer());
 		ListSelectionModel listSelectionModel = categoryList.getSelectionModel();
-	    listSelectionModel.addListSelectionListener(
-	                            new CategoryListSelectionHandler());
+	    listSelectionModel.addListSelectionListener(new CategoryListSelectionHandler());
 
 	    taskScrollPane = new JScrollPane();
 		taskScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -169,6 +168,9 @@ public class MainWindow{
 		
   
 		bottomBar.addComponentToRight(settingsButtonFactory());
+		
+		//Needs to be called last or we get a nullpointer in the category-listener.
+		categoryList.setSelectedIndex(0);
 	}
 	
 	/**
