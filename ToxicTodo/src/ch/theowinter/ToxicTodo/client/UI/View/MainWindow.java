@@ -164,7 +164,15 @@ public class MainWindow{
         });      
 		bottomBar.addComponentToRight(btnRefresh);
 		
-		//Settings:
+  
+		bottomBar.addComponentToRight(settingsButtonFactory());
+	}
+	
+	/**
+	 * Create the settings button and initialize it's ActionListener
+	 * @return settings-button of type FontIconButton 
+	 */
+	private FontIconButton settingsButtonFactory(){
 		FontIconButton btnSettings = new FontIconButton('\uf013', "Change the program settings.");
 		btnSettings.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnSettings.setHorizontalTextPosition(SwingConstants.CENTER);	
@@ -187,8 +195,8 @@ public class MainWindow{
 					settingsPanel.setVisible(true);
 				}
 			}
-        });      
-		bottomBar.addComponentToRight(btnSettings);
+        });    
+		return btnSettings;
 	}
 	
 	/*
