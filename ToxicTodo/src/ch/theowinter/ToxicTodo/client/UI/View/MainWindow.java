@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -105,7 +106,7 @@ public class MainWindow{
 
 		splitPane = new JSplitPane();
 		splitPane.setContinuousLayout(true);
-		splitPane.setResizeWeight(0.25);
+		splitPane.setResizeWeight(0.2);
 		splitPane.setBorder(new LineBorder(Color.blue,0));
 
 		frmToxictodo.getContentPane().add(splitPane, BorderLayout.CENTER);
@@ -249,6 +250,9 @@ public class MainWindow{
 				System.out.println("not implemented yet.");
 			}
         });
+		
+		JComponent sidebarSpace = MacWidgetFactory.createSpacer(22, 5);
+		unifiedToolbar.addComponentToLeft(sidebarSpace);
 		
 		//New Task:
 		FontIconButton btnNewTask = new FontIconButton('\uf15b', "Create a new task.");
