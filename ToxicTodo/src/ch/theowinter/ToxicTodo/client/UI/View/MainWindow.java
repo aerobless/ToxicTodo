@@ -184,7 +184,7 @@ public class MainWindow{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(settingsPanel == null){
-					settingsPanel = new SettingsPanel(settings);
+					settingsPanel = new SettingsPanel(settings, main);
 					rightScrollPane.setViewportView(settingsPanel);
 					settingsPanel.setVisible(true);
 				}else if(settingsPanel.isVisible() == true){

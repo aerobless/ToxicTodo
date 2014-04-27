@@ -6,7 +6,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
@@ -14,7 +13,6 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.InputMismatchException;
 
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -31,11 +29,13 @@ public class SettingsPanel extends JPanel{
 	private JPasswordField passwordField;
 	private JTextField txtFieldConsoleSize;
 	private ClientSettings settings;
+	private MainWindow main;
 	
 	/**
 	 * Create the frame.
 	 */
-	public SettingsPanel(ClientSettings settings) {
+	public SettingsPanel(ClientSettings settings, MainWindow main) {
+		this.main = main;
 		this.settings = settings;
 		setBackground(ToxicColors.softGrey);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -172,19 +172,20 @@ public class SettingsPanel extends JPanel{
 	}
 	
 	private void saveChanges(){
-		settings.setHOST(textFieldHostIP.getText());
 		try{
+			settings.setHOST(textFieldHostIP.getText());
 			int port =  Integer.parseInt(textFieldHostPort.getText());
 			settings.setPORT(port);
 			int consoleSize = Integer.parseInt(txtFieldConsoleSize.getText());
 			settings.setConsoleSize(consoleSize);
-		} catch (InputMismatchException e){
+			settings.setPassword(new String(passwordField.getPassword()));
+			settings.saveSettingsToDisk();
+			setVisible(false);
+			main.switchToTasks();
+		} catch (IllegalArgumentException e){
 			System.out.println("bad input");
 			//TODO: warn user or something with a window or red colored input box
 		}
-		settings.setPassword(new String(passwordField.getPassword()));
-		settings.saveSettingsToDisk();
-		this.setVisible(false);
 	}
 	
 	private void cancelChanges(){
@@ -192,5 +193,7 @@ public class SettingsPanel extends JPanel{
 		textFieldHostPort.setText(settings.getPORT()+"");
 		passwordField.setText(settings.getPassword());
 		txtFieldConsoleSize.setText(settings.getConsoleSize()+"");
+		setVisible(false);
+		main.switchToTasks();
 	}
 }
