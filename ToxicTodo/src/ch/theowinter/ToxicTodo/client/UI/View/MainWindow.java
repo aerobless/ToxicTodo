@@ -271,7 +271,13 @@ public class MainWindow{
 		btnRemoveTask.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				TodoTask task = getSelectedTask();
+				TodoCategory categoryKey = getSelectedCategory();
+				if(task != null && categoryKey != null){
+					todoManager.removeTask(false, task, categoryKey.getKeyword());
+				}else{
+					System.out.println("category or task is null");
+				}
 			}
         });  
 	}
