@@ -55,6 +55,7 @@ public class MainWindow{
 	//This window
 	JSplitPane splitPane;
 	MainWindow main = this;
+	TaskListHeader taskListHeader;
 	
 	//Panels
 	private SettingsPanel settingsPanel;
@@ -122,13 +123,14 @@ public class MainWindow{
 				public void setBorder(Border b) {}
 	            @Override
 	                public void paint(Graphics g) {
-	                g.setColor(ToxicColors.textBlack);
+	                g.setColor(ToxicColors.textGreySoft);
 	                g.fillRect(0, 0, 1, getSize().height);
 	                    super.paint(g);
 	                }
 	        };
 	        }
 	    });
+		splitPane.setDividerSize(1);
 		
 		//INIT CATEGORY PANEL
 		JScrollPane categoryListscrollPane = new JScrollPane();
@@ -151,7 +153,7 @@ public class MainWindow{
 		splitPane.getLeftComponent().setMinimumSize(splitPaneMinimumSize);
 
 	    //TOTAL TASK PANEL
-	    TaskListHeader taskListHeader = new TaskListHeader();
+	    taskListHeader = new TaskListHeader();
 	    
 	    taskScrollPane = new JScrollPane();
 		taskScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -162,6 +164,7 @@ public class MainWindow{
 	    totalTaskPanel.add(taskScrollPane, BorderLayout.CENTER);
 	    
 		splitPane.setRightComponent(totalTaskPanel);
+		//splitPane.setBackground(Color.black);
 
 		taskListModel = new TaskListModel(categoryListModel.getElementAt(0).getKeyword(), todoManager);
 		System.out.println(taskListModel.getSize());
@@ -355,7 +358,8 @@ public class MainWindow{
 	    public void valueChanged(ListSelectionEvent e) {
 	    	ListSelectionModel lsm = (ListSelectionModel)e.getSource();
 	    	taskListModel.changeCategory(categoryListModel.getElementAt(categoryList.getSelectedIndex()).getKeyword());
-	        if (lsm.isSelectionEmpty()) {
+	    	taskListHeader.setTitel(categoryListModel.getElementAt(categoryList.getSelectedIndex()).getName().toUpperCase());
+	    	if (lsm.isSelectionEmpty()) {
 	        	//should be impossible to achieve
 	        	System.out.println("empty selection, o'really?");
 	        }
