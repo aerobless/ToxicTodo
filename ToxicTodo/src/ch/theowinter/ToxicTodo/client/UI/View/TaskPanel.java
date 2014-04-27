@@ -26,6 +26,7 @@ import javax.swing.ScrollPaneConstants;
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.client.UI.Model.CategoryComboBoxModel;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicColors;
+import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 
 public class TaskPanel extends JPanel {
 	private static final long serialVersionUID = -2022909795010691054L;
@@ -159,6 +160,13 @@ public class TaskPanel extends JPanel {
 	
 	private void saveTask(){
 		main.switchToTasks();
-		todoManager.addNewTask(main.getSelectedCategory().getKeyword(), txtAreaTaskDescription.getText());
+		TodoCategory category = main.getSelectedCategory();
+		if(category != null){
+			todoManager.addNewTask(category.getKeyword(), txtAreaTaskDescription.getText());
+			txtAreaTaskDescription.setText("");
+			txtFieldCompletedUntil.setText("");
+		}else{
+			System.out.println("No category selected.");
+		}
 	}
 }
