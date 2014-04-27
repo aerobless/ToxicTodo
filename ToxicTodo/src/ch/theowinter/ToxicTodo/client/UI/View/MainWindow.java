@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,9 +17,12 @@ import javax.swing.JSplitPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.plaf.basic.BasicSplitPaneDivider;
+import javax.swing.plaf.basic.BasicSplitPaneUI;
 
 import ch.theowinter.ToxicTodo.client.ClientSettings;
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
@@ -132,6 +136,22 @@ public class MainWindow{
 		taskScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		splitPane.setRightComponent(taskScrollPane);
 		
+		//Custom Split Divider (thin & black)
+		splitPane.setUI(new BasicSplitPaneUI() {
+	        public BasicSplitPaneDivider createDefaultDivider() {
+	        return new BasicSplitPaneDivider(this) {
+				private static final long serialVersionUID = -3373489858114729264L;
+				public void setBorder(Border b) {}
+	            @Override
+	                public void paint(Graphics g) {
+	                g.setColor(ToxicColors.textBlack);
+	                g.fillRect(0, 0, 1, getSize().height);
+	                    super.paint(g);
+	                }
+	        };
+	        }
+	    });
+		
 		//TASK LIST:
 		taskListModel = new TaskListModel(categoryListModel.getElementAt(0).getKeyword(), todoManager);
 		System.out.println(taskListModel.getSize());
@@ -214,6 +234,22 @@ public class MainWindow{
 		frmToxictodo.getContentPane().add(unifiedToolbar.getComponent(), BorderLayout.NORTH);
 		
 		//Toolbar buttons:
+		//New Category:
+		FontIconButton btnNewCategory = new FontIconButton('\uf07b', "Create a new task.");
+		btnNewCategory.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnNewCategory.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnNewCategory.putClientProperty("JButton.buttonType", "textured");
+		btnNewCategory.setPreferredSize(uniBarButtonSize);
+		btnNewCategory.setMinimumSize(uniBarButtonSize);
+		btnNewCategory.setMaximumSize(uniBarButtonSize);
+		unifiedToolbar.addComponentToLeft(btnNewCategory);
+		btnNewCategory.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("not implemented yet.");
+			}
+        });
+		
 		//New Task:
 		FontIconButton btnNewTask = new FontIconButton('\uf15b', "Create a new task.");
 		btnNewTask.setVerticalTextPosition(SwingConstants.BOTTOM);
