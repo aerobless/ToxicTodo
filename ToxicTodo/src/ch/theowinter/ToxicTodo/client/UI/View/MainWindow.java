@@ -255,8 +255,7 @@ public class MainWindow{
 					System.out.println("category or task is null");
 				}
 			}
-        });  
-		 
+        });   
 		
 		//Remove Task:
 		FontIconButton btnRemoveTask = new FontIconButton('\uf014', "Remove the selected task without logging success.");

@@ -49,7 +49,7 @@ public class TaskListModel extends AbstractListModel<TodoTask> implements Observ
 	@Override
 	public TodoTask getElementAt(int index) {
 		TodoTask task = null;
-		if(index<=taskList.size()){
+		if(index<=(taskList.size()-1)){
 			task =taskList.get(index);
 		}
 		return task;
