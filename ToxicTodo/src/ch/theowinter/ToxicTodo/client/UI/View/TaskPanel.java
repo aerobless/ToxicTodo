@@ -21,17 +21,21 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.ScrollPaneConstants;
 
+import ch.theowinter.ToxicTodo.client.ClientTodoManager;
+import ch.theowinter.ToxicTodo.client.UI.Model.CategoryComboBoxModel;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicColors;
 
 public class TaskPanel extends JPanel {
 	private static final long serialVersionUID = -2022909795010691054L;
 
 	private JTextField textField;
+	ClientTodoManager todoManager; 
 
 	/**
 	 * Create the frame.
 	 */
-	public TaskPanel() {
+	public TaskPanel(ClientTodoManager todoManager) {
+		this.todoManager = todoManager;
 		setBackground(ToxicColors.softGrey);
 		setBounds(100, 100, 450, 300);
 		setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -69,13 +73,13 @@ public class TaskPanel extends JPanel {
 		gbc_lblType.gridy = 0;
 		centerPanel.add(lblType, gbc_lblType);
 		
-		JComboBox<String> comboBox = new JComboBox<String>();
+		JComboBox<String> categoryCombobox = new JComboBox<String>(new CategoryComboBoxModel(todoManager));
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 1;
 		gbc_comboBox.gridy = 0;
-		centerPanel.add(comboBox, gbc_comboBox);
+		centerPanel.add(categoryCombobox, gbc_comboBox);
 		
 		JLabel lblCompletedUntil = new JLabel("Completed until:");
 		GridBagConstraints gbc_lblCompletedUntil = new GridBagConstraints();

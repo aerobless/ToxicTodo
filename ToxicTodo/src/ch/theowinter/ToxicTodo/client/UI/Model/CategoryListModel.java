@@ -15,10 +15,10 @@ public class CategoryListModel extends AbstractListModel<TodoCategory> implement
 	ArrayList<TodoCategory> categoryList;
 	ClientTodoManager todoManager; 
 	
-	public CategoryListModel(ClientTodoManager aTodoManager) {
+	public CategoryListModel(ClientTodoManager todoManager) {
 		super();
-		categoryList = aTodoManager.categoriesToArray();
-		todoManager = aTodoManager;
+		categoryList = todoManager.categoriesToArray();
+		this.todoManager = todoManager;
 		todoManager.addObserver(this);
 	}
 

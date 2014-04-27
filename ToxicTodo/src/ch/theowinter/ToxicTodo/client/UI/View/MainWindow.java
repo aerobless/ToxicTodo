@@ -228,7 +228,7 @@ public class MainWindow{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(taskWindow == null){
-					taskWindow = new TaskPanel();
+					taskWindow = new TaskPanel(todoManager);
 					taskWindow.setVisible(true);
 					setRightContent(taskWindow);
 					//rightScrollPane.setViewportView(taskWindow);
