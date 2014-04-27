@@ -27,9 +27,16 @@ public class CategoryListModel extends AbstractListModel<TodoCategory> implement
 		return categoryList.size();
 	}
 
+	/**
+	 * Returns null if the index is out of bounds.
+	 */
 	@Override
-	public TodoCategory getElementAt(int aIndex) {
-		return categoryList.get(aIndex);
+	public TodoCategory getElementAt(int index) {
+		TodoCategory category = null;
+		if(index<=categoryList.size()){
+			category =categoryList.get(index);
+		}
+		return category;
 	}
 
 	@Override

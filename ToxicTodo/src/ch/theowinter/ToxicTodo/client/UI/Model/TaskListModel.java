@@ -43,9 +43,16 @@ public class TaskListModel extends AbstractListModel<TodoTask> implements Observ
 		return taskList.size();
 	}
 
+	/**
+	 * Returns null if the index is out of bounds.
+	 */
 	@Override
 	public TodoTask getElementAt(int index) {
-		return taskList.get(index);
+		TodoTask task = null;
+		if(index<=taskList.size()){
+			task =taskList.get(index);
+		}
+		return task;
 	}
 	
 	private ArrayList<TodoTask> getTaskArray(String catKey){

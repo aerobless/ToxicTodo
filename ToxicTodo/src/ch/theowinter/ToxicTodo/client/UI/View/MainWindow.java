@@ -244,6 +244,19 @@ public class MainWindow{
 		btnCompleteTask.setMinimumSize(uniBarButtonSize);
 		btnCompleteTask.setMaximumSize(uniBarButtonSize);
 		unifiedToolbar.addComponentToLeft(btnCompleteTask);	
+		btnCompleteTask.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TodoTask task = getSelectedTask();
+				TodoCategory categoryKey = getSelectedCategory();
+				if(task != null && categoryKey != null){
+					todoManager.removeTask(true, task, categoryKey.getKeyword());
+				}else{
+					System.out.println("category or task is null");
+				}
+			}
+        });  
+		 
 		
 		//Remove Task:
 		FontIconButton btnRemoveTask = new FontIconButton('\uf014', "Remove the selected task without logging success.");
@@ -254,6 +267,12 @@ public class MainWindow{
 		btnRemoveTask.setMinimumSize(uniBarButtonSize);
 		btnRemoveTask.setMaximumSize(uniBarButtonSize);
 		unifiedToolbar.addComponentToLeft(btnRemoveTask);	
+		btnRemoveTask.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+        });  
 	}
 	
 	public void switchToTasks(){
@@ -268,8 +287,12 @@ public class MainWindow{
 		splitPane.setDividerLocation(oldDividerLocation);
 	}
 	
-	public String getSelectedCategoryKeyword(){
-		return categoryList.getSelectedValue().getKeyword();
+	public TodoCategory getSelectedCategory(){
+		return categoryList.getSelectedValue();
+	}
+	
+	public TodoTask getSelectedTask(){
+		return taskList.getSelectedValue();
 	}
 	
 	class CategoryListSelectionHandler implements ListSelectionListener {

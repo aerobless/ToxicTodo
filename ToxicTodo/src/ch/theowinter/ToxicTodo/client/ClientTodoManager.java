@@ -61,4 +61,13 @@ public class ClientTodoManager extends Observable{
 		ClientApplication.sendToServer(datagram);
 		updateList();
 	}
+	
+	public void removeTask(boolean writeToLog, TodoTask task, String categoryKeyword){
+		String dataMessage = "REMOVE_TASK_ON_SERVER";
+		if(writeToLog){
+			dataMessage = "REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER";
+		}
+		ClientApplication.sendToServer(new ToxicDatagram(dataMessage, "",task , categoryKeyword));	
+		updateList();
+	}
 }

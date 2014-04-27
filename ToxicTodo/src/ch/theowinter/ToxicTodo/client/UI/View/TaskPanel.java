@@ -159,6 +159,6 @@ public class TaskPanel extends JPanel {
 	
 	private void saveTask(){
 		main.switchToTasks();
-		todoManager.addNewTask(main.getSelectedCategoryKeyword(), txtAreaTaskDescription.getText());
+		todoManager.addNewTask(main.getSelectedCategory().getKeyword(), txtAreaTaskDescription.getText());
 	}
 }
