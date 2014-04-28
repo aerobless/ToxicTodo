@@ -20,6 +20,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
@@ -57,6 +59,7 @@ public class MainWindow{
 	JSplitPane splitPane;
 	MainWindow main = this;
 	TaskListHeader taskListHeader;
+	JTextField searchField;
 	
 	//Buttons
 	FontIconButton btnNewTask;
@@ -340,10 +343,10 @@ public class MainWindow{
         });
 		
 		//Search:
-		JTextField textField = new JTextField(10);
-        textField.putClientProperty("JTextField.variant", "search");
-        unifiedToolbar.addComponentToRight(textField);
-        
+		searchField = new JTextField(10);
+        searchField.putClientProperty("JTextField.variant", "search");
+        unifiedToolbar.addComponentToRight(searchField);
+        searchField.getDocument().addDocumentListener(new SearchListener());
 		
 	}
 	
@@ -387,5 +390,28 @@ public class MainWindow{
 	        	System.out.println("empty selection, o'really?");
 	        }
 	    }
+	}
+	
+	class SearchListener implements DocumentListener {
+
+		@Override
+		public void insertUpdate(DocumentEvent aE) {
+			runSearch();
+		}
+
+		@Override
+		public void removeUpdate(DocumentEvent aE) {
+			runSearch();
+		}
+
+		@Override
+		public void changedUpdate(DocumentEvent aE) {
+			runSearch();
+		}
+		
+		public void runSearch(){
+			System.out.println(searchField.getText());
+		}
+
 	}
 }
