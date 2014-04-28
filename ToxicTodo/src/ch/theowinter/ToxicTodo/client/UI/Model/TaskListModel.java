@@ -13,7 +13,8 @@ import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
 public class TaskListModel extends AbstractListModel<TodoTask> implements Observer{
 	private static final long serialVersionUID = 5378790622340613400L;
 	
-	ArrayList<TodoTask> taskList;
+	ArrayList<TodoTask> filteredTaskList;
+	ArrayList<TodoTask> originalTaskList;
 	ArrayList<ListDataListener> listners = new ArrayList<ListDataListener>();
 	ClientTodoManager todoManager;
 	String currentCategory;
@@ -21,26 +22,27 @@ public class TaskListModel extends AbstractListModel<TodoTask> implements Observ
 	public TaskListModel(String categoryKeyword, ClientTodoManager todoManager) {
 		super();
 		this.todoManager = todoManager;
-		this.taskList = getTaskArray(categoryKeyword);
+		this.originalTaskList = getTaskArray(categoryKeyword);
+		this.filteredTaskList = originalTaskList;
 		todoManager.addObserver(this);
 	}
 
 	public void changeCategory(String categoryKeyword){
-		taskList = getTaskArray(categoryKeyword);
-		fireContentsChanged(this, 0, taskList.size()-1);
+		filteredTaskList = getTaskArray(categoryKeyword);
+		fireContentsChanged(this, 0, filteredTaskList.size()-1);
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		if(currentCategory != null){
-			taskList = getTaskArray(currentCategory);
-			fireContentsChanged(this, 0, taskList.size()-1);
+			filteredTaskList = getTaskArray(currentCategory);
+			fireContentsChanged(this, 0, filteredTaskList.size()-1);
 		}
 	}
 
 	@Override
 	public int getSize() {
-		return taskList.size();
+		return filteredTaskList.size();
 	}
 
 	/**
@@ -49,8 +51,8 @@ public class TaskListModel extends AbstractListModel<TodoTask> implements Observ
 	@Override
 	public TodoTask getElementAt(int index) {
 		TodoTask task = null;
-		if(index<=(taskList.size()-1)){
-			task =taskList.get(index);
+		if(index<=(filteredTaskList.size()-1)){
+			task =filteredTaskList.get(index);
 		}
 		return task;
 	}
@@ -58,5 +60,17 @@ public class TaskListModel extends AbstractListModel<TodoTask> implements Observ
 	private ArrayList<TodoTask> getTaskArray(String catKey){
 		currentCategory = catKey;
 		return todoManager.getTodoList().getCategoryMap().get(catKey).getTaskInCategoryAsArrayList();
+	}
+	
+	//BETA WORKING ON
+	public void filter(String input){
+		ArrayList<TodoTask> workList = originalTaskList;
+		/*for(TodoTask aTask : originalTaskList){
+			if(!aTask.getTaskText().toLowerCase().contains(input.toLowerCase())){
+				workList.remove(aTask);
+			}
+		}*/
+		//filteredTaskList = workList;
+		//fireContentsChanged(this, 0, filteredTaskList.size()-1);
 	}
 }
