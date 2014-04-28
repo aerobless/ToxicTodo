@@ -62,15 +62,14 @@ public class TaskListModel extends AbstractListModel<TodoTask> implements Observ
 		return todoManager.getTodoList().getCategoryMap().get(catKey).getTaskInCategoryAsArrayList();
 	}
 	
-	//BETA WORKING ON
 	public void filter(String input){
-		ArrayList<TodoTask> workList = originalTaskList;
-		/*for(TodoTask aTask : originalTaskList){
-			if(!aTask.getTaskText().toLowerCase().contains(input.toLowerCase())){
-				workList.remove(aTask);
+		ArrayList<TodoTask> workList = new ArrayList<TodoTask>();
+		for(TodoTask aTask : originalTaskList){
+			if(aTask.getTaskText().toLowerCase().contains(input.toLowerCase())){
+				workList.add(aTask);
 			}
-		}*/
-		//filteredTaskList = workList;
-		//fireContentsChanged(this, 0, filteredTaskList.size()-1);
+		}
+		filteredTaskList = workList;
+		fireContentsChanged(this, 0, filteredTaskList.size()-1);
 	}
 }
