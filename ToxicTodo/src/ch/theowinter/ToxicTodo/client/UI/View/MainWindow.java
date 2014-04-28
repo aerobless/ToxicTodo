@@ -171,6 +171,7 @@ public class MainWindow{
 		taskList = new JList<TodoTask>(taskListModel);
 		taskList.setCellRenderer(new TaskListCellRenderer());
 		taskList.setBackground(ToxicColors.softGrey);
+//TODO Sort?
 		
 		taskScrollPane.setViewportView(taskList);
 		taskScrollPane.setBackground(ToxicColors.softGrey);

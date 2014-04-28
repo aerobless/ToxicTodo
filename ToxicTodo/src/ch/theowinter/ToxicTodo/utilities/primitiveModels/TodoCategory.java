@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class TodoCategory implements Serializable {
+public class TodoCategory implements Serializable, Comparable<TodoCategory> {
 	private static final long serialVersionUID = 2851662981886514578L;
 	private String categoryName;
 	private String keyword;
@@ -65,5 +65,19 @@ public class TodoCategory implements Serializable {
 			containsTasks = true;
 		}
 		return containsTasks;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(TodoCategory inputCategory) {
+		int returnValue;
+		if(inputCategory.getKeyword().equals(getKeyword())){
+			returnValue = 0;
+		}else {
+			returnValue = getName().toLowerCase().compareTo(inputCategory.getName().toLowerCase());
+		}
+		return returnValue;
 	}
 }

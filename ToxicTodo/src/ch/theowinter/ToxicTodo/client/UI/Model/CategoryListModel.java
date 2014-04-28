@@ -1,6 +1,7 @@
 package ch.theowinter.ToxicTodo.client.UI.Model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -19,6 +20,7 @@ public class CategoryListModel extends AbstractListModel<TodoCategory> implement
 		super();
 		categoryList = todoManager.categoriesToArray();
 		this.todoManager = todoManager;
+		sort();
 		todoManager.addObserver(this);
 	}
 
@@ -42,6 +44,11 @@ public class CategoryListModel extends AbstractListModel<TodoCategory> implement
 	@Override
 	public void update(Observable o, Object arg) {
 		categoryList = todoManager.categoriesToArray();
+		sort();
 		fireContentsChanged(this, 0, categoryList.size()-1);
+	}
+	
+	public void sort(){
+		Collections.sort(categoryList);
 	}
 }
