@@ -346,8 +346,7 @@ public class MainWindow{
 		searchField = new JTextField(10);
         searchField.putClientProperty("JTextField.variant", "search");
         unifiedToolbar.addComponentToRight(searchField);
-        searchField.getDocument().addDocumentListener(new SearchListener());
-		
+        searchField.getDocument().addDocumentListener(new SearchListener());	
 	}
 	
 	public void switchToTasks(){
