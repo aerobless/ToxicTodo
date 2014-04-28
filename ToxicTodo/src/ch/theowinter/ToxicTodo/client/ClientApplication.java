@@ -44,15 +44,16 @@ public class ClientApplication {
 			System.err.println("Crypto Error: Unable to load the Encryption Engine");
 		}
 		//1. GET todo-LIST from server
-		todoManager = new ClientTodoManager(sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "")));
 		
 		//2. Create either GUI or CLI controller
 		if(args.length<1){
+			todoManager = new ClientTodoManager();
 			print("temp: no args specified - launching GUI");
 			ClientController guiClient = new ClientController();
 			guiClient.start(todoManager, settings);
 		}
 		else{
+			todoManager = new ClientTodoManager(sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "")));
 			CliController cli = new CliController(todoManager);
 			cli.start(args);
 		}

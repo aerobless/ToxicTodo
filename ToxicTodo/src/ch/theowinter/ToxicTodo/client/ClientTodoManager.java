@@ -16,6 +16,10 @@ public class ClientTodoManager extends Observable{
 	//Locks
 	private Semaphore writeLock = new Semaphore(1);
 
+	public ClientTodoManager() {
+		super();
+		updateList();
+	}
 	public ClientTodoManager(TodoList todoList) {
 		super();
 		this.todoList = todoList;
@@ -42,14 +46,12 @@ public class ClientTodoManager extends Observable{
 	}
 	
 	public void updateList(){
-		setTodoList(ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "")));
+		setTodoList(generateAllTasksCategory(ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", ""))));
 	}
 	
-	//TODO: optimize, temporary for sidebar test
 	public ArrayList<TodoCategory> categoriesToArray(){
 		ArrayList<TodoCategory> returnArray = new ArrayList<TodoCategory>();
 		for(String categoryKey : getTodoList().getCategoryMap().keySet()){
-			//Only list category if it contains tasks or we want to display empty categories too.
 			returnArray.add(getTodoList().getCategoryMap().get(categoryKey));
 		}
 		return returnArray;
@@ -69,5 +71,22 @@ public class ClientTodoManager extends Observable{
 		}
 		ClientApplication.sendToServer(new ToxicDatagram(dataMessage, "",task , categoryKeyword));	
 		updateList();
+	}
+	
+	public TodoList generateAllTasksCategory(TodoList inputList){
+		System.out.println("ddd");
+		try {
+			inputList.addCategory("All tasks", "allTasksDoNotUse");
+			for(String categoryKey : inputList.getCategoryMap().keySet()){
+				ArrayList<TodoTask> currentCategoryTasks = inputList.getCategoryMap().get(categoryKey).getTaskInCategoryAsArrayList();
+				for(TodoTask currentTask : currentCategoryTasks){
+					inputList.addTask("allTasksDoNotUse", currentTask);
+				}
+			}
+		} catch (Exception anEx) {
+			//TODO: global error handler
+			System.out.println("error generating all-tasks category..");
+		}
+		return inputList;
 	}
 }
