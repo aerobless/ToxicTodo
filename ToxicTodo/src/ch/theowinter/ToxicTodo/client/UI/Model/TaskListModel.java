@@ -28,14 +28,16 @@ public class TaskListModel extends AbstractListModel<TodoTask> implements Observ
 	}
 
 	public void changeCategory(String categoryKeyword){
-		filteredTaskList = getTaskArray(categoryKeyword);
+		originalTaskList = getTaskArray(categoryKeyword);
+		filteredTaskList = originalTaskList;
 		fireContentsChanged(this, 0, filteredTaskList.size()-1);
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		if(currentCategory != null){
-			filteredTaskList = getTaskArray(currentCategory);
+			originalTaskList = getTaskArray(currentCategory);
+			filteredTaskList = originalTaskList;
 			fireContentsChanged(this, 0, filteredTaskList.size()-1);
 		}
 	}

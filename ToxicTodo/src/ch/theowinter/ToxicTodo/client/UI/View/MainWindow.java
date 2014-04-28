@@ -410,9 +410,7 @@ public class MainWindow{
 		}
 		
 		public void runSearch(){
-			System.out.println(searchField.getText());
 			taskListModel.filter(searchField.getText());
 		}
-
 	}
 }
