@@ -34,6 +34,7 @@ import ch.theowinter.ToxicTodo.client.UI.View.Utilities.FontIconButton;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.TaskListCellRenderer;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.TaskListHeader;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicColors;
+import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicStrings;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
 
@@ -56,6 +57,11 @@ public class MainWindow{
 	JSplitPane splitPane;
 	MainWindow main = this;
 	TaskListHeader taskListHeader;
+	
+	//Buttons
+	FontIconButton btnNewTask;
+	FontIconButton btnCompleteTask;
+	FontIconButton btnRemoveTask;
 	
 	//Panels
 	private SettingsPanel settingsPanel;
@@ -171,7 +177,6 @@ public class MainWindow{
 		taskList = new JList<TodoTask>(taskListModel);
 		taskList.setCellRenderer(new TaskListCellRenderer());
 		taskList.setBackground(ToxicColors.softGrey);
-//TODO Sort?
 		
 		taskScrollPane.setViewportView(taskList);
 		taskScrollPane.setBackground(ToxicColors.softGrey);
@@ -268,7 +273,7 @@ public class MainWindow{
 		unifiedToolbar.addComponentToLeft(sidebarSpace);
 		*/
 		//New Task:
-		FontIconButton btnNewTask = new FontIconButton('\uf15b', "Create a new task.");
+		btnNewTask = new FontIconButton('\uf15b', "Create a new task.");
 		btnNewTask.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnNewTask.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnNewTask.putClientProperty("JButton.buttonType", "textured");
@@ -291,7 +296,7 @@ public class MainWindow{
         });  
 		 
 		//Complete Task:
-		FontIconButton btnCompleteTask = new FontIconButton('\uf00c', "Complete the selcted task.");
+		btnCompleteTask = new FontIconButton('\uf00c', "Complete the selcted task.");
 		btnCompleteTask.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnCompleteTask.setHorizontalTextPosition(SwingConstants.CENTER);	
 		btnCompleteTask.putClientProperty("JButton.buttonType", "textured");
@@ -313,7 +318,7 @@ public class MainWindow{
         });   
 		
 		//Remove Task:
-		FontIconButton btnRemoveTask = new FontIconButton('\uf014', "Remove the selected task without logging success.");
+		btnRemoveTask = new FontIconButton('\uf014', "Remove the selected task without logging success.");
 		btnRemoveTask.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnRemoveTask.setHorizontalTextPosition(SwingConstants.CENTER);	
 		btnRemoveTask.putClientProperty("JButton.buttonType", "textured");
@@ -365,8 +370,18 @@ public class MainWindow{
 	class CategoryListSelectionHandler implements ListSelectionListener {
 	    public void valueChanged(ListSelectionEvent e) {
 	    	ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-	    	taskListModel.changeCategory(categoryListModel.getElementAt(categoryList.getSelectedIndex()).getKeyword());
-	    	taskListHeader.setTitel(categoryListModel.getElementAt(categoryList.getSelectedIndex()).getName().toUpperCase());
+	    	TodoCategory currentCategory = categoryListModel.getElementAt(categoryList.getSelectedIndex());
+	    	taskListModel.changeCategory(currentCategory.getKeyword());
+	    	taskListHeader.setTitel(currentCategory.getName().toUpperCase());
+	    	if(currentCategory.getKeyword().equals(ToxicStrings.allTaskTodoCategoryKey)){
+	    		btnNewTask.setEnabled(false);
+	    		btnCompleteTask.setEnabled(false);
+	    		btnRemoveTask.setEnabled(false);
+	    	} else{
+	    		btnNewTask.setEnabled(true);
+	    		btnCompleteTask.setEnabled(true);
+	    		btnRemoveTask.setEnabled(true);
+	    	}
 	    	if (lsm.isSelectionEmpty()) {
 	        	//should be impossible to achieve
 	        	System.out.println("empty selection, o'really?");
