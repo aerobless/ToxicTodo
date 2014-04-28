@@ -10,11 +10,11 @@ import java.net.Socket;
 
 import javax.crypto.SealedObject;
 
+import ch.theowinter.ToxicTodo.client.CLI.CliController;
+import ch.theowinter.ToxicTodo.client.UI.Controller.ClientController;
 import ch.theowinter.ToxicTodo.utilities.EncryptionEngine;
 import ch.theowinter.ToxicTodo.utilities.JansiFormats;
 import ch.theowinter.ToxicTodo.utilities.LogicEngine;
-import ch.theowinter.ToxicTodo.client.CLI.CliController;
-import ch.theowinter.ToxicTodo.client.UI.Controller.ClientController;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoList;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.ToxicDatagram;
 
@@ -122,12 +122,6 @@ public class ClientApplication {
 			firstTime = true;
 			settings = new ClientSettings();
 			logic.saveToXMLFile(settings, settingsFile);
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e) {
-				print("Unable to sleep in firstTimeRun()");
-				e.printStackTrace();
-			}
 		}
 		return firstTime;
 	}
