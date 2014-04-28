@@ -95,6 +95,7 @@ public class ClientApplication {
 		    	os.close();  
 		    	s.close();
 			} catch (IOException anEx) {
+				//TODO: we likely need a GUI error message for this too, just killing the app only works in CLI mode.
 				print("ERROR: Unable to establish a connection with the server.");
 				print("Are you certain that you're running a server on "+settings.getHOST()+":"+settings.getPORT()+"?");
 				print("If you're running the server on a different IP or port, then you should change the client_config.xml!");
@@ -116,6 +117,7 @@ public class ClientApplication {
 		boolean firstTime = false;
 		File f = new File(settingsFile);
 		if(!f.exists()){
+			//TODO: maybe add a better warning since this gets clear almost immediately in CLI version and not displayed at all in GUI.
 			print("INFORMATION:");
 			print("client_settings.xml has been created because you run ToxicTodo for the first time.");
 			print("Please edit the settings to chose your own server & port. - Localhost can be used for testing only.");

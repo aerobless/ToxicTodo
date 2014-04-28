@@ -9,12 +9,12 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
@@ -182,7 +182,7 @@ public class MainWindow{
 		BottomBar bottomBar = new BottomBar(BottomBarSize.LARGE);
 	    bottomBar.addComponentToLeft(MacWidgetFactory.createEmphasizedLabel("Status"));  
 		frmToxictodo.getContentPane().add(bottomBar.getComponent(), BorderLayout.SOUTH);  
-		
+
 		//Refresh:
 		FontIconButton btnRefresh = new FontIconButton('\uf021', "Change the program settings.");
 		btnRefresh.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -199,7 +199,7 @@ public class MainWindow{
         });      
 		bottomBar.addComponentToRight(btnRefresh);
 		
-  
+		//Settings:
 		bottomBar.addComponentToRight(settingsButtonFactory());
 		
 		//Needs to be called last or we get a nullpointer in the category-listener.
@@ -245,7 +245,7 @@ public class MainWindow{
 		//Make the entire toolbar draggable, that's actually really awesome!
 		unifiedToolbar.installWindowDraggerOnWindow(frmToxictodo);
 		frmToxictodo.getContentPane().add(unifiedToolbar.getComponent(), BorderLayout.NORTH);
-		
+		/*
 		//Toolbar buttons:
 		//New Category:
 		FontIconButton btnNewCategory = new FontIconButton('\uf07b', "Create a new task.");
@@ -265,7 +265,7 @@ public class MainWindow{
 		
 		JComponent sidebarSpace = MacWidgetFactory.createSpacer(22, 5);
 		unifiedToolbar.addComponentToLeft(sidebarSpace);
-		
+		*/
 		//New Task:
 		FontIconButton btnNewTask = new FontIconButton('\uf15b', "Create a new task.");
 		btnNewTask.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -331,7 +331,14 @@ public class MainWindow{
 					System.out.println("category or task is null");
 				}
 			}
-        });  
+        });
+		
+		//Search:
+		JTextField textField = new JTextField(10);
+        textField.putClientProperty("JTextField.variant", "search");
+        unifiedToolbar.addComponentToRight(textField);
+        
+		
 	}
 	
 	public void switchToTasks(){
