@@ -22,10 +22,11 @@ import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 
 public class CategoryPanel extends JPanel {
 	private static final long serialVersionUID = -2022909795010691054L;
-	private JTextField txtFieldCompletedUntil;
 	private MainWindow main;
 	private ClientTodoManager todoManager;
-	private JTextField textFieldOneWordID;
+	private JComboBox<String> iconCombobox;
+	private JTextField txtFieldCategoryTitel;
+	private JTextField txtFieldOneWordID;
 
 	/**
 	 * Create the frame.
@@ -69,7 +70,7 @@ public class CategoryPanel extends JPanel {
 		gbc_lblIcon.gridy = 1;
 		centerPanel.add(lblIcon, gbc_lblIcon);
 		
-		JComboBox<String> iconCombobox = new JComboBox<String>(new CategoryComboBoxModel(todoManager));
+		iconCombobox = new JComboBox<String>(new CategoryComboBoxModel(todoManager));
 		GridBagConstraints gbc_iconCombobox = new GridBagConstraints();
 		gbc_iconCombobox.insets = new Insets(0, 0, 5, 5);
 		gbc_iconCombobox.fill = GridBagConstraints.HORIZONTAL;
@@ -85,14 +86,14 @@ public class CategoryPanel extends JPanel {
 		gbc_lblCompletedUntil.gridy = 2;
 		centerPanel.add(lblCompletedUntil, gbc_lblCompletedUntil);
 		
-		txtFieldCompletedUntil = new JTextField();
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.gridx = 1;
-		gbc_textField_1.gridy = 2;
-		centerPanel.add(txtFieldCompletedUntil, gbc_textField_1);
-		txtFieldCompletedUntil.setColumns(10);
+		txtFieldCategoryTitel = new JTextField();
+		GridBagConstraints gbc_txtFieldCategoryTitel = new GridBagConstraints();
+		gbc_txtFieldCategoryTitel.insets = new Insets(0, 0, 5, 5);
+		gbc_txtFieldCategoryTitel.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtFieldCategoryTitel.gridx = 1;
+		gbc_txtFieldCategoryTitel.gridy = 2;
+		centerPanel.add(txtFieldCategoryTitel, gbc_txtFieldCategoryTitel);
+		txtFieldCategoryTitel.setColumns(10);
 		
 		JLabel lblDescription = new JLabel("One-Word-ID:");
 		GridBagConstraints gbc_lblDescription = new GridBagConstraints();
@@ -101,19 +102,19 @@ public class CategoryPanel extends JPanel {
 		gbc_lblDescription.gridx = 0;
 		gbc_lblDescription.gridy = 3;
 		centerPanel.add(lblDescription, gbc_lblDescription);
-		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.gridx = 1;
-		gbc_textField_1.gridy = 3;
+		gbc_txtFieldCategoryTitel.insets = new Insets(0, 0, 5, 5);
+		gbc_txtFieldCategoryTitel.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtFieldCategoryTitel.gridx = 1;
+		gbc_txtFieldCategoryTitel.gridy = 3;
 		
-		textFieldOneWordID = new JTextField();
-		GridBagConstraints gbc_textFieldOneWordID = new GridBagConstraints();
-		gbc_textFieldOneWordID.insets = new Insets(0, 0, 5, 5);
-		gbc_textFieldOneWordID.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textFieldOneWordID.gridx = 1;
-		gbc_textFieldOneWordID.gridy = 3;
-		centerPanel.add(textFieldOneWordID, gbc_textFieldOneWordID);
-		textFieldOneWordID.setColumns(10);
+		txtFieldOneWordID = new JTextField();
+		GridBagConstraints gbc_txtFieldOneWordID = new GridBagConstraints();
+		gbc_txtFieldOneWordID.insets = new Insets(0, 0, 5, 5);
+		gbc_txtFieldOneWordID.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtFieldOneWordID.gridx = 1;
+		gbc_txtFieldOneWordID.gridy = 3;
+		centerPanel.add(txtFieldOneWordID, gbc_txtFieldOneWordID);
+		txtFieldOneWordID.setColumns(10);
 		
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setBackground(ToxicColors.softGrey);
@@ -141,9 +142,9 @@ public class CategoryPanel extends JPanel {
 	}
 	
 	private void cancelTask(){
-		//TODO: reset combobox
-
-		txtFieldCompletedUntil.setText("");
+		iconCombobox.setSelectedIndex(0);
+		txtFieldCategoryTitel.setText("");
+		txtFieldOneWordID.setText("");
 		main.switchToTasks();
 	}
 	
@@ -152,7 +153,7 @@ public class CategoryPanel extends JPanel {
 		TodoCategory category = main.getSelectedCategory();
 		if(category != null){
 			todoManager.addNewTask(category.getKeyword(), "");
-			txtFieldCompletedUntil.setText("");
+			txtFieldCategoryTitel.setText("");
 		}else{
 			System.out.println("No category selected.");
 		}
