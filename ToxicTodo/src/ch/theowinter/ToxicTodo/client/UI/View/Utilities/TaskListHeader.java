@@ -1,17 +1,17 @@
 package ch.theowinter.ToxicTodo.client.UI.View.Utilities;
 
-import javax.swing.JPanel;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Font;
-
-import javax.swing.JLabel;
-import javax.swing.border.MatteBorder;
-
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.MatteBorder;
 
 public class TaskListHeader extends JPanel {
 	private static final long serialVersionUID = 1231624288433035648L;
@@ -24,6 +24,8 @@ public class TaskListHeader extends JPanel {
 	private JPanel topSpace;
 	private JPanel bottomSpace;
 	private Color background = ToxicColors.dirtyWhite;
+	private JPanel westSpace;
+	private JPanel eastSpace;
 
 	public TaskListHeader() {
 		setLayout(new BorderLayout(0, 0));
@@ -73,13 +75,31 @@ public class TaskListHeader extends JPanel {
 		bottomSpace.setBackground(background);
 		
 		iconPanel = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) iconPanel.getLayout();
-		flowLayout.setHgap(10);
 		add(iconPanel, BorderLayout.WEST);
 		iconPanel.setBackground(background);
 		
-		lblIcon = new JLabel("ICON");
+		lblIcon = new JLabel(String.valueOf('\uf15b'));
+		Font ttfReal = null;
+		try {
+	        InputStream in = this.getClass().getResourceAsStream("/resources/fontawesome-webfont.ttf");
+			Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, in);
+		    ttfReal = ttfBase.deriveFont(Font.BOLD, 40);
+		    //setText(String.valueOf('\uf15b'));
+		} catch (FontFormatException | IOException e) {
+			System.out.println("font IO exception");
+			e.printStackTrace();
+		}
+		iconPanel.setLayout(new BorderLayout(0, 0));
+		lblIcon.setFont(ttfReal);
 		iconPanel.add(lblIcon);
+		
+		westSpace = new JPanel();
+		westSpace.setBackground(background);
+		iconPanel.add(westSpace, BorderLayout.WEST);
+		
+		eastSpace = new JPanel();
+		eastSpace.setBackground(background);
+		iconPanel.add(eastSpace, BorderLayout.EAST);
 	}
 	
 	public void setTitel(String titel){
@@ -87,7 +107,7 @@ public class TaskListHeader extends JPanel {
 	}
 	
 	public void setSubTitel(String subtitel){
-		lblTitel.setText(subtitel);
+		lblSubtitel.setText(subtitel);
 	}
 	
 	public void setIcon(char icon){
