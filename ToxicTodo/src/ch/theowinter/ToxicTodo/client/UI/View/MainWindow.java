@@ -67,12 +67,15 @@ public class MainWindow{
 	FontIconButton btnNewTask;
 	FontIconButton btnCompleteTask;
 	FontIconButton btnRemoveTask;
+	FontIconButton btnEditCategory;
+	FontIconButton btnNewCategory;
+	
 	
 	//Panels
-	private SettingsPanel settingsPanel;
-	private TaskPanel newTaskPanel;
 	private JPanel totalTaskPanel;
+	private TaskPanel newTaskPanel;
 	private CategoryPanel categoryPanel;
+	private SettingsPanel settingsPanel;
 	
 	//Construction Finals
 	final Dimension uniBarButtonSize = new Dimension(50, 27);
@@ -263,7 +266,7 @@ public class MainWindow{
 		
 		//Toolbar buttons:
 		//New Category:
-		FontIconButton btnNewCategory = new FontIconButton('\uf07b', "Create a new task.");
+		btnNewCategory = new FontIconButton('\uf07b', "Create a new category.");
 		btnNewCategory.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnNewCategory.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnNewCategory.putClientProperty("JButton.buttonType", "segmentedTextured");
@@ -276,17 +279,19 @@ public class MainWindow{
 			public void actionPerformed(ActionEvent e) {
 				if(categoryPanel == null){
 					categoryPanel = new CategoryPanel(main, todoManager);
+					categoryPanel.newCategory();
 					setRightContent(categoryPanel);
 				}else if(categoryPanel.isVisible() == true){
 					switchToTasks();
 				} else{
+					categoryPanel.newCategory();
 					setRightContent(categoryPanel);
 				}
 			}
         });
 		
 		//Edit category:
-		FontIconButton btnEditCategory = new FontIconButton('\uf040', "Create a new task.");
+		btnEditCategory = new FontIconButton('\uf040', "Edit an existing category.");
 		btnEditCategory.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnEditCategory.setHorizontalTextPosition(SwingConstants.CENTER);
 		btnEditCategory.putClientProperty("JButton.buttonType", "segmentedTextured");
@@ -297,7 +302,20 @@ public class MainWindow{
 		btnEditCategory.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("not implemented yet.");
+				TodoCategory editCategory = getSelectedCategory();
+				//double-safety - we never want to edit all-tasks.
+				if(editCategory.getKeyword()!=ToxicStrings.allTaskTodoCategoryKey){
+					if(categoryPanel == null){
+						categoryPanel = new CategoryPanel(main, todoManager);
+						categoryPanel.setCategory(editCategory);
+						setRightContent(categoryPanel);
+					}else if(categoryPanel.isVisible() == true){
+						switchToTasks();
+					} else{
+						categoryPanel.setCategory(getSelectedCategory());
+						setRightContent(categoryPanel);
+					}
+				}
 			}
         });	
         ButtonGroup categoryGroup = new ButtonGroup();
@@ -421,10 +439,12 @@ public class MainWindow{
 	    		btnNewTask.setEnabled(false);
 	    		btnCompleteTask.setEnabled(false);
 	    		btnRemoveTask.setEnabled(false);
+	    		btnEditCategory.setEnabled(false);
 	    	} else{
 	    		btnNewTask.setEnabled(true);
 	    		btnCompleteTask.setEnabled(true);
 	    		btnRemoveTask.setEnabled(true);
+	    		btnEditCategory.setEnabled(true);
 	    	}
 	    	if (lsm.isSelectionEmpty()) {
 	        	//should be impossible to achieve

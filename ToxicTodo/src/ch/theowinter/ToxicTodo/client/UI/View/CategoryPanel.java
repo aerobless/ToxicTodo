@@ -18,6 +18,7 @@ import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.client.UI.Model.CategoryComboBoxModel;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.PanelHeaderWhite;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicColors;
+import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 
 public class CategoryPanel extends JPanel {
 	private static final long serialVersionUID = -2022909795010691054L;
@@ -26,6 +27,10 @@ public class CategoryPanel extends JPanel {
 	private JComboBox<String> iconCombobox;
 	private JTextField txtFieldCategoryTitel;
 	private JTextField txtFieldCategoryKeyword;
+	private PanelHeaderWhite header;
+	
+	//Buttons
+	private JButton btnSave;
 
 	/**
 	 * Create the frame.
@@ -38,9 +43,8 @@ public class CategoryPanel extends JPanel {
 		setBorder(null);
 		setLayout(new BorderLayout(0, 0));
 		
-		PanelHeaderWhite header = new PanelHeaderWhite();
+		header = new PanelHeaderWhite();
 		add(header, BorderLayout.NORTH);
-		header.setTitel("New Category");
 		header.setSubTitel("Press the 'save' button when you're done.");
 		header.setIcon('\uf07b');
 		
@@ -130,7 +134,7 @@ public class CategoryPanel extends JPanel {
 			}
         }); 
 		
-		JButton btnSave = new JButton("Save");
+		btnSave = new JButton("Save");
 		bottomPanel.add(btnSave);
 		btnSave.addActionListener(new ActionListener() {
 			@Override
@@ -138,6 +142,23 @@ public class CategoryPanel extends JPanel {
 				saveTask();
 			}
         }); 
+	}
+	
+	public void setCategory(TodoCategory todoCategory){
+		iconCombobox.setSelectedIndex(0);
+		txtFieldCategoryTitel.setText(todoCategory.getName());
+		txtFieldCategoryKeyword.setText(todoCategory.getKeyword());
+		btnSave.setEnabled(false);
+		btnSave.setToolTipText("Editing categories is currently not supported by the server.");
+		header.setTitel("Edit category: "+todoCategory.getName());
+	}
+	public void newCategory(){
+		iconCombobox.setSelectedIndex(0);
+		txtFieldCategoryTitel.setText("");
+		txtFieldCategoryKeyword.setText("");
+		btnSave.setEnabled(true);
+		btnSave.setToolTipText("All done? Press save.");
+		header.setTitel("New Category");
 	}
 	
 	private void cancelAndClearCategory(){
