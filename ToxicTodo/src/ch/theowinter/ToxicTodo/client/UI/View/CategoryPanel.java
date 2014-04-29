@@ -12,10 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
 
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.client.UI.Model.CategoryComboBoxModel;
@@ -25,11 +22,10 @@ import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 
 public class CategoryPanel extends JPanel {
 	private static final long serialVersionUID = -2022909795010691054L;
-
-	private JTextArea txtAreaTaskDescription;
 	private JTextField txtFieldCompletedUntil;
 	private MainWindow main;
 	private ClientTodoManager todoManager;
+	private JTextField textFieldOneWordID;
 
 	/**
 	 * Create the frame.
@@ -53,9 +49,9 @@ public class CategoryPanel extends JPanel {
 		add(centerPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_centerPanel = new GridBagLayout();
 		gbl_centerPanel.columnWidths = new int[]{124, 0, 0, 0};
-		gbl_centerPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
+		gbl_centerPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
 		gbl_centerPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_centerPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_centerPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		centerPanel.setLayout(gbl_centerPanel);
 		
 		JLabel label = new JLabel("  ");
@@ -81,7 +77,7 @@ public class CategoryPanel extends JPanel {
 		gbc_iconCombobox.gridy = 1;
 		centerPanel.add(iconCombobox, gbc_iconCombobox);
 		
-		JLabel lblCompletedUntil = new JLabel("Category Name:");
+		JLabel lblCompletedUntil = new JLabel("Category Titel:");
 		GridBagConstraints gbc_lblCompletedUntil = new GridBagConstraints();
 		gbc_lblCompletedUntil.anchor = GridBagConstraints.EAST;
 		gbc_lblCompletedUntil.insets = new Insets(0, 0, 5, 5);
@@ -90,35 +86,34 @@ public class CategoryPanel extends JPanel {
 		centerPanel.add(lblCompletedUntil, gbc_lblCompletedUntil);
 		
 		txtFieldCompletedUntil = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 2;
-		centerPanel.add(txtFieldCompletedUntil, gbc_textField);
+		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
+		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_1.gridx = 1;
+		gbc_textField_1.gridy = 2;
+		centerPanel.add(txtFieldCompletedUntil, gbc_textField_1);
 		txtFieldCompletedUntil.setColumns(10);
 		
-		JLabel lblDescription = new JLabel("Description:");
+		JLabel lblDescription = new JLabel("One-Word-ID:");
 		GridBagConstraints gbc_lblDescription = new GridBagConstraints();
 		gbc_lblDescription.insets = new Insets(0, 0, 5, 5);
-		gbc_lblDescription.anchor = GridBagConstraints.NORTHEAST;
+		gbc_lblDescription.anchor = GridBagConstraints.EAST;
 		gbc_lblDescription.gridx = 0;
 		gbc_lblDescription.gridy = 3;
 		centerPanel.add(lblDescription, gbc_lblDescription);
+		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_1.gridx = 1;
+		gbc_textField_1.gridy = 3;
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.insets = new Insets(0, 3, 8, 8);
-		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridx = 1;
-		gbc_scrollPane.gridy = 3;
-		centerPanel.add(scrollPane, gbc_scrollPane);
-		
-		txtAreaTaskDescription = new JTextArea();
-		txtAreaTaskDescription.setLineWrap(true);
-		scrollPane.setViewportView(txtAreaTaskDescription);
-		scrollPane.setBorder(txtFieldCompletedUntil.getBorder());
+		textFieldOneWordID = new JTextField();
+		GridBagConstraints gbc_textFieldOneWordID = new GridBagConstraints();
+		gbc_textFieldOneWordID.insets = new Insets(0, 0, 5, 5);
+		gbc_textFieldOneWordID.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldOneWordID.gridx = 1;
+		gbc_textFieldOneWordID.gridy = 3;
+		centerPanel.add(textFieldOneWordID, gbc_textFieldOneWordID);
+		textFieldOneWordID.setColumns(10);
 		
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setBackground(ToxicColors.softGrey);
@@ -147,7 +142,7 @@ public class CategoryPanel extends JPanel {
 	
 	private void cancelTask(){
 		//TODO: reset combobox
-		txtAreaTaskDescription.setText("");
+
 		txtFieldCompletedUntil.setText("");
 		main.switchToTasks();
 	}
@@ -156,8 +151,7 @@ public class CategoryPanel extends JPanel {
 		main.switchToTasks();
 		TodoCategory category = main.getSelectedCategory();
 		if(category != null){
-			todoManager.addNewTask(category.getKeyword(), txtAreaTaskDescription.getText());
-			txtAreaTaskDescription.setText("");
+			todoManager.addNewTask(category.getKeyword(), "");
 			txtFieldCompletedUntil.setText("");
 		}else{
 			System.out.println("No category selected.");

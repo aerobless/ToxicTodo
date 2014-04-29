@@ -84,7 +84,6 @@ public class PanelHeaderWhite extends JPanel {
 	        InputStream in = this.getClass().getResourceAsStream("/resources/fontawesome-webfont.ttf");
 			Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, in);
 		    ttfReal = ttfBase.deriveFont(Font.BOLD, 40);
-		    //setText(String.valueOf('\uf15b'));
 		} catch (FontFormatException | IOException e) {
 			System.out.println("font IO exception");
 			e.printStackTrace();
