@@ -22,7 +22,7 @@ public class FontIconButton extends JButton{
 		try {
 			InputStream in = this.getClass().getResourceAsStream("/resources/fontawesome-webfont.ttf");
 		    Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, in);
-		    Font ttfReal = ttfBase.deriveFont(Font.BOLD, 13);
+		    Font ttfReal = ttfBase.deriveFont(Font.BOLD, 14);
 		    setFont(ttfReal);
 		    setText(String.valueOf(awesomeIcon));
 		    } catch (FontFormatException e) {

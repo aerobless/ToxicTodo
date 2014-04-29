@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -42,6 +43,7 @@ import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
 
 import com.explodingpixels.macwidgets.BottomBar;
 import com.explodingpixels.macwidgets.BottomBarSize;
+import com.explodingpixels.macwidgets.LabeledComponentGroup;
 import com.explodingpixels.macwidgets.MacUtils;
 import com.explodingpixels.macwidgets.MacWidgetFactory;
 import com.explodingpixels.macwidgets.UnifiedToolBar;
@@ -72,7 +74,7 @@ public class MainWindow{
 	private JScrollPane taskScrollPane;
 	
 	//Construction Finals
-	final Dimension uniBarButtonSize = new Dimension(50, 25);
+	final Dimension uniBarButtonSize = new Dimension(45, 27);
 
 	/**
 	 * Launch the GUI application.
@@ -247,6 +249,9 @@ public class MainWindow{
 	 * Creating a UNIFIED mac toolbar according to:
 	 * http://jtechdev.com/2013/05/29/style-java-application-for-mac-os-x/
 	 * 
+	 * mac button theory:
+	 * http://nadeausoftware.com/articles/2008/11/mac_java_tip_how_create_aqua_single_and_segmented_buttons
+	 * 
 	 * TODO: maybe needs to be replaced by a standard toolbar on windows, needs testing
 	 */
 	private void initToolbar(){
@@ -279,7 +284,8 @@ public class MainWindow{
 		btnNewTask = new FontIconButton('\uf15b', "Create a new task.");
 		btnNewTask.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnNewTask.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnNewTask.putClientProperty("JButton.buttonType", "textured");
+		btnNewTask.putClientProperty("JButton.buttonType", "segmentedTextured");
+		btnNewTask.putClientProperty( "JButton.segmentPosition", "first" );
 		btnNewTask.setPreferredSize(uniBarButtonSize);
 		btnNewTask.setMinimumSize(uniBarButtonSize);
 		btnNewTask.setMaximumSize(uniBarButtonSize);
@@ -302,7 +308,8 @@ public class MainWindow{
 		btnCompleteTask = new FontIconButton('\uf00c', "Complete the selcted task.");
 		btnCompleteTask.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnCompleteTask.setHorizontalTextPosition(SwingConstants.CENTER);	
-		btnCompleteTask.putClientProperty("JButton.buttonType", "textured");
+		btnCompleteTask.putClientProperty("JButton.buttonType", "segmentedTextured");
+		btnCompleteTask.putClientProperty( "JButton.segmentPosition", "middle" );
 		btnCompleteTask.setPreferredSize(uniBarButtonSize);
 		btnCompleteTask.setMinimumSize(uniBarButtonSize);
 		btnCompleteTask.setMaximumSize(uniBarButtonSize);
@@ -318,13 +325,14 @@ public class MainWindow{
 					System.out.println("category or task is null");
 				}
 			}
-        });   
+        }); 
 		
 		//Remove Task:
 		btnRemoveTask = new FontIconButton('\uf014', "Remove the selected task without logging success.");
 		btnRemoveTask.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnRemoveTask.setHorizontalTextPosition(SwingConstants.CENTER);	
-		btnRemoveTask.putClientProperty("JButton.buttonType", "textured");
+		btnRemoveTask.putClientProperty("JButton.buttonType", "segmentedTextured");
+		btnRemoveTask.putClientProperty( "JButton.segmentPosition", "last" );
 		btnRemoveTask.setPreferredSize(uniBarButtonSize);
 		btnRemoveTask.setMinimumSize(uniBarButtonSize);
 		btnRemoveTask.setMaximumSize(uniBarButtonSize);
@@ -342,10 +350,20 @@ public class MainWindow{
 			}
         });
 		
+        ButtonGroup taskGroup = new ButtonGroup();
+        taskGroup.add(btnNewTask);
+        taskGroup.add(btnCompleteTask);
+        taskGroup.add(btnRemoveTask);
+       
+        unifiedToolbar.addComponentToLeft(new LabeledComponentGroup("Tasks",
+        		taskGroup).getComponent());
+		
+		
 		//Search:
 		searchField = new JTextField(10);
         searchField.putClientProperty("JTextField.variant", "search");
-        unifiedToolbar.addComponentToRight(searchField);
+        unifiedToolbar.addComponentToRight(new LabeledComponentGroup(" ",
+        		searchField).getComponent());
         searchField.getDocument().addDocumentListener(new SearchListener());	
 	}
 	
