@@ -29,7 +29,7 @@ public class TaskElementPanel extends JPanel{
 		add(lblTaskDescription);
 	}
 	
-	public void setText(char awesomeIcon, String category){
+	public void setText(char awesomeIcon, String taskDescription){
 		Font ttfReal = null;
 		try {
 	        InputStream in = this.getClass().getResourceAsStream("/resources/fontawesome-webfont.ttf");
@@ -42,11 +42,26 @@ public class TaskElementPanel extends JPanel{
 		}
 		lblIcon.setFont(ttfReal);
 		lblIcon.setText(String.valueOf(awesomeIcon));
-		lblTaskDescription.setText(category);
+		lblTaskDescription.setText(formatText(taskDescription));
 	}
 	
 	public void setFontColor(Color color){
 		lblIcon.setForeground(color);
 		lblTaskDescription.setForeground(color);
+	}
+	
+	private String formatText(String input){
+		//format ** -->
+		String[] markers = input.split("\\*\\*");
+		for(int i = 0; i<markers.length; i++){
+			if(!(i%2==0)){
+				markers[i] = "<font color=red>"+markers[i]+"</font>";
+			}
+		}
+		StringBuilder outputBuilder = new StringBuilder();
+		for(String s : markers) {
+			outputBuilder.append(s);
+		}
+		return "<html>"+outputBuilder.toString()+"</html>";
 	}
 }
