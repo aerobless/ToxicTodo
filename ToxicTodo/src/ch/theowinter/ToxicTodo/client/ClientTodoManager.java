@@ -60,8 +60,7 @@ public class ClientTodoManager extends Observable{
 	
 	public void addNewTask(String categoryKeyword, String taskDescription){
 		TodoTask task = new TodoTask(taskDescription);
-		ToxicDatagram datagram = new ToxicDatagram("ADD_TASK_TO_LIST_ON_SERVER", "", task, categoryKeyword);
-		ClientApplication.sendToServer(datagram);
+		ClientApplication.sendToServer(new ToxicDatagram("ADD_TASK_TO_LIST_ON_SERVER", "", task, categoryKeyword));
 		updateList();
 	}
 	
@@ -71,6 +70,12 @@ public class ClientTodoManager extends Observable{
 			dataMessage = "REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER";
 		}
 		ClientApplication.sendToServer(new ToxicDatagram(dataMessage, "",task , categoryKeyword));	
+		updateList();
+	}
+	
+	public void addNewCategory(String description, String keyword){
+		TodoCategory newCategory = new TodoCategory(description, keyword);
+		ClientApplication.sendToServer(new ToxicDatagram("ADD_CATEGORY_TO_LIST_ON_SERVER", "",newCategory));
 		updateList();
 	}
 	

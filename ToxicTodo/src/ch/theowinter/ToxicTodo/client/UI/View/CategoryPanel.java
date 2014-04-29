@@ -18,7 +18,6 @@ import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.client.UI.Model.CategoryComboBoxModel;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.PanelHeaderWhite;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicColors;
-import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 
 public class CategoryPanel extends JPanel {
 	private static final long serialVersionUID = -2022909795010691054L;
@@ -26,7 +25,7 @@ public class CategoryPanel extends JPanel {
 	private ClientTodoManager todoManager;
 	private JComboBox<String> iconCombobox;
 	private JTextField txtFieldCategoryTitel;
-	private JTextField txtFieldOneWordID;
+	private JTextField txtFieldCategoryKeyword;
 
 	/**
 	 * Create the frame.
@@ -107,14 +106,14 @@ public class CategoryPanel extends JPanel {
 		gbc_txtFieldCategoryTitel.gridx = 1;
 		gbc_txtFieldCategoryTitel.gridy = 3;
 		
-		txtFieldOneWordID = new JTextField();
+		txtFieldCategoryKeyword = new JTextField();
 		GridBagConstraints gbc_txtFieldOneWordID = new GridBagConstraints();
 		gbc_txtFieldOneWordID.insets = new Insets(0, 0, 5, 5);
 		gbc_txtFieldOneWordID.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtFieldOneWordID.gridx = 1;
 		gbc_txtFieldOneWordID.gridy = 3;
-		centerPanel.add(txtFieldOneWordID, gbc_txtFieldOneWordID);
-		txtFieldOneWordID.setColumns(10);
+		centerPanel.add(txtFieldCategoryKeyword, gbc_txtFieldOneWordID);
+		txtFieldCategoryKeyword.setColumns(10);
 		
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setBackground(ToxicColors.softGrey);
@@ -127,7 +126,7 @@ public class CategoryPanel extends JPanel {
 		btnCancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				cancelTask();
+				cancelAndClearCategory();
 			}
         }); 
 		
@@ -141,21 +140,21 @@ public class CategoryPanel extends JPanel {
         }); 
 	}
 	
-	private void cancelTask(){
+	private void cancelAndClearCategory(){
 		iconCombobox.setSelectedIndex(0);
 		txtFieldCategoryTitel.setText("");
-		txtFieldOneWordID.setText("");
+		txtFieldCategoryKeyword.setText("");
 		main.switchToTasks();
 	}
 	
 	private void saveTask(){
-		main.switchToTasks();
-		TodoCategory category = main.getSelectedCategory();
-		if(category != null){
-			todoManager.addNewTask(category.getKeyword(), "");
-			txtFieldCategoryTitel.setText("");
-		}else{
-			System.out.println("No category selected.");
+		//todoManager.addNewTask(category.getKeyword(), "");
+		//TODO: better check for empty name, empty description, bad description etc. same with new task
+		String categoryTitel = txtFieldCategoryTitel.getText();
+		String categoryKeyword = txtFieldCategoryKeyword.getText();
+		if(categoryTitel.length()>2&&categoryKeyword.length()>2){
+			todoManager.addNewCategory(categoryTitel, categoryKeyword);
+			cancelAndClearCategory();
 		}
 	}
 }
