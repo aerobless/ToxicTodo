@@ -21,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.client.UI.Model.CategoryComboBoxModel;
+import ch.theowinter.ToxicTodo.client.UI.View.Utilities.PanelHeaderWhite;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicColors;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 
@@ -40,22 +41,15 @@ public class TaskPanel extends JPanel {
 		this.todoManager = todoManager;
 		setBackground(ToxicColors.softGrey);
 		setBounds(100, 100, 450, 300);
-		setBorder(new EmptyBorder(5, 5, 5, 5));
+		setBorder(null);
 		setLayout(new BorderLayout(0, 0));
 		
-		JPanel topPanel = new JPanel();
-		topPanel.setBackground(ToxicColors.softGrey);
-		FlowLayout flowLayout = (FlowLayout) topPanel.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
-		add(topPanel, BorderLayout.NORTH);
-		
-		JLabel lblIcon = new JLabel("(-)");
-		lblIcon.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
-		topPanel.add(lblIcon);
-		
-		JLabel lblTitel = new JLabel("New Task");
-		lblTitel.setFont(new Font("Lucida Grande", Font.PLAIN, 24));
-		topPanel.add(lblTitel);
+		PanelHeaderWhite header = new PanelHeaderWhite();
+		header.setTitel("Add a new task");
+		header.setSubTitel("Press 'enter' when you're done.");
+		header.setIcon('\uf15b');
+
+		add(header, BorderLayout.NORTH);
 		
 		JPanel centerPanel = new JPanel();
 		centerPanel.setBackground(ToxicColors.softGrey);
