@@ -291,17 +291,13 @@ public class MainWindow{
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("not implemented yet.");
 			}
-        });
-		
+        });	
         ButtonGroup categoryGroup = new ButtonGroup();
         categoryGroup.add(btnNewCategory);
         categoryGroup.add(btnEditCategory);
         
         unifiedToolbar.addComponentToLeft(new LabeledComponentGroup("Categories", categoryGroup).getComponent());
-		/*
-		JComponent sidebarSpace = MacWidgetFactory.createSpacer(22, 5);
-		unifiedToolbar.addComponentToLeft(sidebarSpace);
-		*/
+
 		//New Task:
 		btnNewTask = new FontIconButton('\uf15b', "Create a new task.");
 		btnNewTask.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -314,6 +310,7 @@ public class MainWindow{
 		btnNewTask.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				searchField.setText("");
 				if(taskWindow == null){
 					taskWindow = new TaskPanel(main, todoManager);
 					setRightContent(taskWindow);
@@ -341,6 +338,7 @@ public class MainWindow{
 				TodoCategory categoryKey = getSelectedCategory();
 				if(task != null && categoryKey != null){
 					todoManager.removeTask(true, task, categoryKey.getKeyword());
+					taskListModel.filter(searchField.getText());
 				}else{
 					System.out.println("category or task is null");
 				}
@@ -363,6 +361,7 @@ public class MainWindow{
 				TodoCategory categoryKey = getSelectedCategory();
 				if(task != null && categoryKey != null){
 					todoManager.removeTask(false, task, categoryKey.getKeyword());
+					taskListModel.filter(searchField.getText());
 				}else{
 					System.out.println("category or task is null");
 				}
@@ -423,6 +422,7 @@ public class MainWindow{
 	        	//should be impossible to achieve
 	        	System.out.println("empty selection, o'really?");
 	        }
+	    	taskListModel.filter(searchField.getText());
 	    }
 	}
 	
@@ -445,6 +445,7 @@ public class MainWindow{
 		
 		public void runSearch(){
 			taskListModel.filter(searchField.getText());
+			taskList.setSelectedIndex(0);
 		}
 	}
 }
