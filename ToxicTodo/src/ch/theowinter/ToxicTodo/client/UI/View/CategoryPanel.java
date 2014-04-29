@@ -24,7 +24,7 @@ import ch.theowinter.ToxicTodo.client.UI.Model.CategoryComboBoxModel;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicColors;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 
-public class TaskPanel extends JPanel {
+public class CategoryPanel extends JPanel {
 	private static final long serialVersionUID = -2022909795010691054L;
 
 	private JTextArea txtAreaTaskDescription;
@@ -35,7 +35,7 @@ public class TaskPanel extends JPanel {
 	/**
 	 * Create the frame.
 	 */
-	public TaskPanel(MainWindow main, ClientTodoManager todoManager) {
+	public CategoryPanel(MainWindow main, ClientTodoManager todoManager) {
 		this.main = main;
 		this.todoManager = todoManager;
 		setBackground(ToxicColors.softGrey);
@@ -49,11 +49,7 @@ public class TaskPanel extends JPanel {
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		add(topPanel, BorderLayout.NORTH);
 		
-		JLabel lblIcon = new JLabel("(-)");
-		lblIcon.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
-		topPanel.add(lblIcon);
-		
-		JLabel lblTitel = new JLabel("New Task");
+		JLabel lblTitel = new JLabel("New Category");
 		lblTitel.setFont(new Font("Lucida Grande", Font.PLAIN, 24));
 		topPanel.add(lblTitel);
 		
@@ -83,7 +79,7 @@ public class TaskPanel extends JPanel {
 		gbc_comboBox.gridy = 0;
 		centerPanel.add(categoryCombobox, gbc_comboBox);
 		
-		JLabel lblCompletedUntil = new JLabel("Completed until:");
+		JLabel lblCompletedUntil = new JLabel("Category Name:");
 		GridBagConstraints gbc_lblCompletedUntil = new GridBagConstraints();
 		gbc_lblCompletedUntil.anchor = GridBagConstraints.EAST;
 		gbc_lblCompletedUntil.insets = new Insets(0, 0, 5, 5);

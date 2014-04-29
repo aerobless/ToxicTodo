@@ -70,8 +70,9 @@ public class MainWindow{
 	
 	//Panels
 	private SettingsPanel settingsPanel;
-	private TaskPanel taskWindow;
-	private JScrollPane taskScrollPane;
+	private TaskPanel newTaskPanel;
+	private JPanel totalTaskPanel;
+	private CategoryPanel categoryPanel;
 	
 	//Construction Finals
 	final Dimension uniBarButtonSize = new Dimension(50, 27);
@@ -166,10 +167,10 @@ public class MainWindow{
 	    //TOTAL TASK PANEL
 	    taskListHeader = new TaskListHeader();
 	    
-	    taskScrollPane = new JScrollPane();
+	    JScrollPane taskScrollPane = new JScrollPane();
 		taskScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 	    
-	    JPanel totalTaskPanel = new JPanel();
+	    totalTaskPanel = new JPanel();
 	    totalTaskPanel.setLayout(new BorderLayout(0, 0));
 	    totalTaskPanel.add(taskListHeader, BorderLayout.NORTH);
 	    totalTaskPanel.add(taskScrollPane, BorderLayout.CENTER);
@@ -273,7 +274,14 @@ public class MainWindow{
 		btnNewCategory.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("not implemented yet.");
+				if(categoryPanel == null){
+					categoryPanel = new CategoryPanel(main, todoManager);
+					setRightContent(categoryPanel);
+				}else if(categoryPanel.isVisible() == true){
+					switchToTasks();
+				} else{
+					setRightContent(categoryPanel);
+				}
 			}
         });
 		
@@ -310,14 +318,13 @@ public class MainWindow{
 		btnNewTask.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				searchField.setText("");
-				if(taskWindow == null){
-					taskWindow = new TaskPanel(main, todoManager);
-					setRightContent(taskWindow);
-				}else if(taskWindow.isVisible() == true){
+				if(newTaskPanel == null){
+					newTaskPanel = new TaskPanel(main, todoManager);
+					setRightContent(newTaskPanel);
+				}else if(newTaskPanel.isVisible() == true){
 					switchToTasks();
 				} else{
-					setRightContent(taskWindow);
+					setRightContent(newTaskPanel);
 				}
 			}
         });  
@@ -384,8 +391,9 @@ public class MainWindow{
 	}
 	
 	public void switchToTasks(){
+		searchField.setText("");
 		splitPane.getRightComponent().setVisible(false);
-		setRightContent(taskScrollPane);
+		setRightContent(totalTaskPanel);
 	}
 	
 	public void setRightContent(Component content){
