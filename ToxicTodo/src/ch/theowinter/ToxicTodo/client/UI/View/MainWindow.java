@@ -74,7 +74,7 @@ public class MainWindow{
 	private JScrollPane taskScrollPane;
 	
 	//Construction Finals
-	final Dimension uniBarButtonSize = new Dimension(45, 27);
+	final Dimension uniBarButtonSize = new Dimension(50, 27);
 
 	/**
 	 * Launch the GUI application.
@@ -259,17 +259,17 @@ public class MainWindow{
 		//Make the entire toolbar draggable, that's actually really awesome!
 		unifiedToolbar.installWindowDraggerOnWindow(frmToxictodo);
 		frmToxictodo.getContentPane().add(unifiedToolbar.getComponent(), BorderLayout.NORTH);
-		/*
+		
 		//Toolbar buttons:
 		//New Category:
 		FontIconButton btnNewCategory = new FontIconButton('\uf07b', "Create a new task.");
 		btnNewCategory.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnNewCategory.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnNewCategory.putClientProperty("JButton.buttonType", "textured");
+		btnNewCategory.putClientProperty("JButton.buttonType", "segmentedTextured");
+		btnNewCategory.putClientProperty( "JButton.segmentPosition", "first" );
 		btnNewCategory.setPreferredSize(uniBarButtonSize);
 		btnNewCategory.setMinimumSize(uniBarButtonSize);
 		btnNewCategory.setMaximumSize(uniBarButtonSize);
-		unifiedToolbar.addComponentToLeft(btnNewCategory);
 		btnNewCategory.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -277,6 +277,28 @@ public class MainWindow{
 			}
         });
 		
+		//Edit category:
+		FontIconButton btnEditCategory = new FontIconButton('\uf040', "Create a new task.");
+		btnEditCategory.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnEditCategory.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnEditCategory.putClientProperty("JButton.buttonType", "segmentedTextured");
+		btnEditCategory.putClientProperty( "JButton.segmentPosition", "last" );
+		btnEditCategory.setPreferredSize(uniBarButtonSize);
+		btnEditCategory.setMinimumSize(uniBarButtonSize);
+		btnEditCategory.setMaximumSize(uniBarButtonSize);
+		btnEditCategory.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("not implemented yet.");
+			}
+        });
+		
+        ButtonGroup categoryGroup = new ButtonGroup();
+        categoryGroup.add(btnNewCategory);
+        categoryGroup.add(btnEditCategory);
+        
+        unifiedToolbar.addComponentToLeft(new LabeledComponentGroup("Categories", categoryGroup).getComponent());
+		/*
 		JComponent sidebarSpace = MacWidgetFactory.createSpacer(22, 5);
 		unifiedToolbar.addComponentToLeft(sidebarSpace);
 		*/
@@ -289,7 +311,6 @@ public class MainWindow{
 		btnNewTask.setPreferredSize(uniBarButtonSize);
 		btnNewTask.setMinimumSize(uniBarButtonSize);
 		btnNewTask.setMaximumSize(uniBarButtonSize);
-		unifiedToolbar.addComponentToLeft(btnNewTask);
 		btnNewTask.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -313,7 +334,6 @@ public class MainWindow{
 		btnCompleteTask.setPreferredSize(uniBarButtonSize);
 		btnCompleteTask.setMinimumSize(uniBarButtonSize);
 		btnCompleteTask.setMaximumSize(uniBarButtonSize);
-		unifiedToolbar.addComponentToLeft(btnCompleteTask);	
 		btnCompleteTask.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -336,7 +356,6 @@ public class MainWindow{
 		btnRemoveTask.setPreferredSize(uniBarButtonSize);
 		btnRemoveTask.setMinimumSize(uniBarButtonSize);
 		btnRemoveTask.setMaximumSize(uniBarButtonSize);
-		unifiedToolbar.addComponentToLeft(btnRemoveTask);	
 		btnRemoveTask.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -355,9 +374,7 @@ public class MainWindow{
         taskGroup.add(btnCompleteTask);
         taskGroup.add(btnRemoveTask);
        
-        unifiedToolbar.addComponentToLeft(new LabeledComponentGroup("Tasks",
-        		taskGroup).getComponent());
-		
+        unifiedToolbar.addComponentToLeft(new LabeledComponentGroup("Tasks", taskGroup).getComponent());
 		
 		//Search:
 		searchField = new JTextField(10);
