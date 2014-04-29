@@ -35,7 +35,7 @@ import ch.theowinter.ToxicTodo.client.UI.Model.TaskListModel;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.CategoryListCellRenderer;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.FontIconButton;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.TaskListCellRenderer;
-import ch.theowinter.ToxicTodo.client.UI.View.Utilities.TaskListHeader;
+import ch.theowinter.ToxicTodo.client.UI.View.Utilities.PanelHeaderWhite;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicColors;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicStrings;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
@@ -60,7 +60,7 @@ public class MainWindow{
 	//This window
 	JSplitPane splitPane;
 	MainWindow main = this;
-	TaskListHeader taskListHeader;
+	PanelHeaderWhite taskListHeader;
 	JTextField searchField;
 	
 	//Buttons
@@ -165,7 +165,7 @@ public class MainWindow{
 		splitPane.getLeftComponent().setMinimumSize(splitPaneMinimumSize);
 
 	    //TOTAL TASK PANEL
-	    taskListHeader = new TaskListHeader();
+	    taskListHeader = new PanelHeaderWhite();
 	    
 	    JScrollPane taskScrollPane = new JScrollPane();
 		taskScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);

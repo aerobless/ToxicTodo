@@ -19,7 +19,7 @@ import javax.swing.ScrollPaneConstants;
 
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.client.UI.Model.CategoryComboBoxModel;
-import ch.theowinter.ToxicTodo.client.UI.View.Utilities.TaskListHeader;
+import ch.theowinter.ToxicTodo.client.UI.View.Utilities.PanelHeaderWhite;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicColors;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 
@@ -42,7 +42,7 @@ public class CategoryPanel extends JPanel {
 		setBorder(null);
 		setLayout(new BorderLayout(0, 0));
 		
-		TaskListHeader header = new TaskListHeader();
+		PanelHeaderWhite header = new PanelHeaderWhite();
 		add(header, BorderLayout.NORTH);
 		header.setTitel("New Category");
 		header.setSubTitel("Press the 'save' button when you're done.");

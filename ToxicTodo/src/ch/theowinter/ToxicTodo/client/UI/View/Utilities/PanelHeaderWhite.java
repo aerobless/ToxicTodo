@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.MatteBorder;
 
-public class TaskListHeader extends JPanel {
+public class PanelHeaderWhite extends JPanel {
 	private static final long serialVersionUID = 1231624288433035648L;
 	private JLabel lblTitel;
 	private JLabel lblSubtitel;
@@ -27,7 +27,7 @@ public class TaskListHeader extends JPanel {
 	private JPanel westSpace;
 	private JPanel eastSpace;
 
-	public TaskListHeader() {
+	public PanelHeaderWhite() {
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel textPanel = new JPanel();
