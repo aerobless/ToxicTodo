@@ -271,65 +271,6 @@ public class MainWindow{
 		frmToxictodo.getContentPane().add(unifiedToolbar.getComponent(), BorderLayout.NORTH);
 		
 		//Toolbar buttons:
-		//New Category:
-		btnNewCategory = new FontIconButton('\uf07b', "Create a new category.");
-		btnNewCategory.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnNewCategory.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnNewCategory.putClientProperty("JButton.buttonType", "segmentedTextured");
-		btnNewCategory.putClientProperty( "JButton.segmentPosition", "first" );
-		btnNewCategory.setPreferredSize(uniBarButtonSize);
-		btnNewCategory.setMinimumSize(uniBarButtonSize);
-		btnNewCategory.setMaximumSize(uniBarButtonSize);
-		btnNewCategory.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(categoryPanel == null){
-					categoryPanel = new CategoryPanel(main, todoManager);
-					categoryPanel.newCategory();
-					setRightContent(categoryPanel);
-				}else if(categoryPanel.isVisible() == true){
-					switchToTasks();
-				} else{
-					categoryPanel.newCategory();
-					setRightContent(categoryPanel);
-				}
-			}
-        });
-		
-		//Edit category:
-		btnEditCategory = new FontIconButton('\uf040', "Edit an existing category.");
-		btnEditCategory.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnEditCategory.setHorizontalTextPosition(SwingConstants.CENTER);
-		btnEditCategory.putClientProperty("JButton.buttonType", "segmentedTextured");
-		btnEditCategory.putClientProperty( "JButton.segmentPosition", "last" );
-		btnEditCategory.setPreferredSize(uniBarButtonSize);
-		btnEditCategory.setMinimumSize(uniBarButtonSize);
-		btnEditCategory.setMaximumSize(uniBarButtonSize);
-		btnEditCategory.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				TodoCategory editCategory = getSelectedCategory();
-				//double-safety - we never want to edit all-tasks.
-				if(editCategory.getKeyword()!=ToxicStrings.allTaskTodoCategoryKey){
-					if(categoryPanel == null){
-						categoryPanel = new CategoryPanel(main, todoManager);
-						categoryPanel.setCategory(editCategory);
-						setRightContent(categoryPanel);
-					}else if(categoryPanel.isVisible() == true){
-						switchToTasks();
-					} else{
-						categoryPanel.setCategory(getSelectedCategory());
-						setRightContent(categoryPanel);
-					}
-				}
-			}
-        });	
-        ButtonGroup categoryGroup = new ButtonGroup();
-        categoryGroup.add(btnNewCategory);
-        categoryGroup.add(btnEditCategory);
-        
-        unifiedToolbar.addComponentToLeft(new LabeledComponentGroup("Categories", categoryGroup).getComponent());
-
 		//New Task:
 		btnNewTask = new FontIconButton('\uf15b', "Create a new task.");
 		btnNewTask.setVerticalTextPosition(SwingConstants.BOTTOM);
@@ -407,12 +348,71 @@ public class MainWindow{
 			}
         });
 		
-        ButtonGroup taskGroup = new ButtonGroup();
+		//New Category:
+		btnNewCategory = new FontIconButton('\uf07b', "Create a new category.");
+		btnNewCategory.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnNewCategory.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnNewCategory.putClientProperty("JButton.buttonType", "segmentedTextured");
+		btnNewCategory.putClientProperty( "JButton.segmentPosition", "first" );
+		btnNewCategory.setPreferredSize(uniBarButtonSize);
+		btnNewCategory.setMinimumSize(uniBarButtonSize);
+		btnNewCategory.setMaximumSize(uniBarButtonSize);
+		btnNewCategory.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(categoryPanel == null){
+					categoryPanel = new CategoryPanel(main, todoManager);
+					categoryPanel.newCategory();
+					setRightContent(categoryPanel);
+				}else if(categoryPanel.isVisible() == true){
+					switchToTasks();
+				} else{
+					categoryPanel.newCategory();
+					setRightContent(categoryPanel);
+				}
+			}
+        });
+		
+		ButtonGroup taskGroup = new ButtonGroup();
         taskGroup.add(btnNewTask);
         taskGroup.add(btnCompleteTask);
         taskGroup.add(btnRemoveTask);
        
         unifiedToolbar.addComponentToLeft(new LabeledComponentGroup("Tasks", taskGroup).getComponent());
+		
+		//Edit category:
+		btnEditCategory = new FontIconButton('\uf040', "Edit an existing category.");
+		btnEditCategory.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnEditCategory.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnEditCategory.putClientProperty("JButton.buttonType", "segmentedTextured");
+		btnEditCategory.putClientProperty( "JButton.segmentPosition", "last" );
+		btnEditCategory.setPreferredSize(uniBarButtonSize);
+		btnEditCategory.setMinimumSize(uniBarButtonSize);
+		btnEditCategory.setMaximumSize(uniBarButtonSize);
+		btnEditCategory.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TodoCategory editCategory = getSelectedCategory();
+				//double-safety - we never want to edit all-tasks.
+				if(editCategory.getKeyword()!=ToxicStrings.allTaskTodoCategoryKey){
+					if(categoryPanel == null){
+						categoryPanel = new CategoryPanel(main, todoManager);
+						categoryPanel.setCategory(editCategory);
+						setRightContent(categoryPanel);
+					}else if(categoryPanel.isVisible() == true){
+						switchToTasks();
+					} else{
+						categoryPanel.setCategory(getSelectedCategory());
+						setRightContent(categoryPanel);
+					}
+				}
+			}
+        });	
+        ButtonGroup categoryGroup = new ButtonGroup();
+        categoryGroup.add(btnNewCategory);
+        categoryGroup.add(btnEditCategory);
+        
+        unifiedToolbar.addComponentToLeft(new LabeledComponentGroup("Categories", categoryGroup).getComponent());
 		
 		//Search:
 		searchField = new JTextField(10);
