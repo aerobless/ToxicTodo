@@ -99,7 +99,6 @@ public class ClientApplication {
 	    			System.err.println("Encryption ERROR - Unable to encrypt & send data!");
 	    			System.exit(0);
 	    		}
-	        	
 	        	todoList = dataFromServer.getTodoList();
 		
 		    	oos.close();  

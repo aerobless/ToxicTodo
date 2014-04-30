@@ -17,7 +17,6 @@ public class ClientController {
 		}else{
 			createGUI(aTodoManager, someSettings);
 		}
-
 	}
 	
 	private void createGUI(ClientTodoManager aTodoManager, ClientSettings someSettings){

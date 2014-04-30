@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -362,7 +363,7 @@ public class MainWindow{
 				TodoTask task = getSelectedTask();
 				TodoCategory categoryKey = getSelectedCategory();
 				if(task != null && categoryKey != null){
-					todoManager.removeTask(true, task, categoryKey.getKeyword());
+					boolean success = todoManager.removeTask(true, task, categoryKey.getKeyword());
 					taskListModel.filter(searchField.getText());
 				}else{
 					System.out.println("category or task is null");
@@ -427,6 +428,13 @@ public class MainWindow{
 	
 	public TodoTask getSelectedTask(){
 		return taskList.getSelectedValue();
+	}
+	
+	public void connectionWarning(){
+		JOptionPane.showMessageDialog(main.frmToxictodo,
+			    "You've lost connection to the server and we're unable to complete your request.",
+			    "Connection lost",
+			    JOptionPane.ERROR_MESSAGE);
 	}
 	
 	class CategoryListSelectionHandler implements ListSelectionListener {
