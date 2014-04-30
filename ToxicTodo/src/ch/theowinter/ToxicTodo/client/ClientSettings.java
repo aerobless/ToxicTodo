@@ -6,6 +6,7 @@ public class ClientSettings {
 	private String password = "secretPassword";
 	private boolean debug = false;
 	private int consoleSize = 80;
+	private boolean integratedServerEnabled = true;
 	
 	//Getters (CLI & GUI)
 	public ClientSettings() {
@@ -27,6 +28,10 @@ public class ClientSettings {
 		return consoleSize;
 	}
 	
+	public boolean getIntegratedServerEnabled(){
+		return integratedServerEnabled;
+	}
+	
 	//Setters (only supported in GUI)
 	public void setHOST(String hOST) {
 		HOST = hOST;
@@ -43,7 +48,13 @@ public class ClientSettings {
 	public void setConsoleSize(int consoleSize) {
 		this.consoleSize = consoleSize;
 	}
+	public void setIntegratedServerEnabled(boolean enabled){
+		this.integratedServerEnabled = enabled;
+	}
+	
+	//Save
 	public void saveSettingsToDisk(){
 		ClientApplication.saveSettingsToDisk();
 	}
+	
 }

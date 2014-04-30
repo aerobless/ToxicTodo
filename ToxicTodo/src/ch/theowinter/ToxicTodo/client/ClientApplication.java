@@ -34,6 +34,10 @@ public class ClientApplication {
 	//Settings
 	private final static String settingsFile = logic.getJarDirectory("client_config.xml");
 	public static ClientSettings settings;
+	
+	//Runtime settings
+	public static boolean isGUI = false;
+	public static boolean isCLI = !isGUI;
 
 	public static void main(String[] args) {
 		//0. Load config & init stuff
@@ -43,23 +47,29 @@ public class ClientApplication {
 		} catch (Exception anEx) {
 			System.err.println("Crypto Error: Unable to load the Encryption Engine");
 		}
-		//1. GET todo-LIST from server
 		
 		//2. Create either GUI or CLI controller
 		if(args.length<1){
+			isGUI = true;
 			todoManager = new ClientTodoManager();
-			print("temp: no args specified - launching GUI");
 			ClientController guiClient = new ClientController();
 			guiClient.start(todoManager, settings);
 		}
 		else{
-			todoManager = new ClientTodoManager(sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "")));
+			try {
+				todoManager = new ClientTodoManager(sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "")));
+			} catch (IOException anEx) {
+				print("ERROR: Unable to establish a connection with the server.");
+				print("Are you certain that you're running a server on "+settings.getHOST()+":"+settings.getPORT()+"?");
+				print("If you're running the server on a different IP or port, then you should change the client_config.xml!");
+				System.exit(0);
+			}
 			CliController cli = new CliController(todoManager);
 			cli.start(args);
 		}
 	}
 	
-	public static TodoList sendToServer(ToxicDatagram datagram){
+	public static TodoList sendToServer(ToxicDatagram datagram) throws IOException{
 		//Encrypt before sending off
 		Object encryptedData = null;
 		try {
@@ -95,12 +105,6 @@ public class ClientApplication {
 		    	oos.close();  
 		    	os.close();  
 		    	s.close();
-			} catch (IOException anEx) {
-				//TODO: we likely need a GUI error message for this too, just killing the app only works in CLI mode.
-				print("ERROR: Unable to establish a connection with the server.");
-				print("Are you certain that you're running a server on "+settings.getHOST()+":"+settings.getPORT()+"?");
-				print("If you're running the server on a different IP or port, then you should change the client_config.xml!");
-				System.exit(0);
 			} catch (ClassNotFoundException anEx) {
 				anEx.printStackTrace();
 			} 

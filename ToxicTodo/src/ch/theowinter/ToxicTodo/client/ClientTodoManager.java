@@ -1,5 +1,6 @@
 package ch.theowinter.ToxicTodo.client;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.concurrent.Semaphore;
@@ -46,8 +47,17 @@ public class ClientTodoManager extends Observable{
 		}
 	}
 	
-	public void updateList(){
-		setTodoList(generateAllTasksCategory(ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", ""))));
+	//ATM only used in GUI
+	public boolean updateList(){
+		TodoList currentList;
+		try {
+			currentList = ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", ""));
+			setTodoList(generateAllTasksCategory(currentList));
+		} catch (IOException anEx) {
+			// TODO Auto-generated catch block
+			anEx.printStackTrace();
+		}
+		return true;
 	}
 	
 	public ArrayList<TodoCategory> categoriesToArray(){
@@ -60,7 +70,12 @@ public class ClientTodoManager extends Observable{
 	
 	public void addNewTask(String categoryKeyword, String taskDescription){
 		TodoTask task = new TodoTask(taskDescription);
-		ClientApplication.sendToServer(new ToxicDatagram("ADD_TASK_TO_LIST_ON_SERVER", "", task, categoryKeyword));
+		try {
+			ClientApplication.sendToServer(new ToxicDatagram("ADD_TASK_TO_LIST_ON_SERVER", "", task, categoryKeyword));
+		} catch (IOException anEx) {
+			// TODO Auto-generated catch block
+			anEx.printStackTrace();
+		}
 		updateList();
 	}
 	
@@ -69,18 +84,27 @@ public class ClientTodoManager extends Observable{
 		if(writeToLog){
 			dataMessage = "REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER";
 		}
-		ClientApplication.sendToServer(new ToxicDatagram(dataMessage, "",task , categoryKeyword));	
+		try {
+			ClientApplication.sendToServer(new ToxicDatagram(dataMessage, "",task , categoryKeyword));
+		} catch (IOException anEx) {
+			// TODO Auto-generated catch block
+			anEx.printStackTrace();
+		}	
 		updateList();
 	}
 	
 	public void addNewCategory(String description, String keyword){
 		TodoCategory newCategory = new TodoCategory(description, keyword);
-		ClientApplication.sendToServer(new ToxicDatagram("ADD_CATEGORY_TO_LIST_ON_SERVER", "",newCategory));
+		try {
+			ClientApplication.sendToServer(new ToxicDatagram("ADD_CATEGORY_TO_LIST_ON_SERVER", "",newCategory));
+		} catch (IOException anEx) {
+			// TODO Auto-generated catch block
+			anEx.printStackTrace();
+		}
 		updateList();
 	}
 	
 	public TodoList generateAllTasksCategory(TodoList inputList){
-		System.out.println("ddd");
 		try {
 			inputList.addCategory("All tasks", ToxicStrings.allTaskTodoCategoryKey);
 			for(String categoryKey : inputList.getCategoryMap().keySet()){

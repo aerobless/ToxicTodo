@@ -71,7 +71,6 @@ public class MainWindow{
 	FontIconButton btnEditCategory;
 	FontIconButton btnNewCategory;
 	
-	
 	//Panels
 	private JPanel totalTaskPanel;
 	private TaskPanel newTaskPanel;

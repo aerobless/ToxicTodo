@@ -8,10 +8,10 @@ import java.util.Arrays;
 
 import org.fusesource.jansi.AnsiConsole;
 
-import ch.theowinter.ToxicTodo.utilities.JansiFormats;
-import ch.theowinter.ToxicTodo.utilities.LogicEngine;
 import ch.theowinter.ToxicTodo.client.ClientApplication;
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
+import ch.theowinter.ToxicTodo.utilities.JansiFormats;
+import ch.theowinter.ToxicTodo.utilities.LogicEngine;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.ToxicDatagram;
@@ -45,17 +45,35 @@ public class CliController {
 		
 		//3. Return answer to the server unless we're finished
 		if(datagramForServer != null){
-			ClientApplication.sendToServer(datagramForServer);
+			try {
+				ClientApplication.sendToServer(datagramForServer);
+			} catch (IOException anEx) {
+				print("ERROR: Unable to establish a connection with the server.");
+				print("If you're running the server on a different IP or port, then you should change the client_config.xml!");
+				System.exit(0);
+			}
 			voidDrawList();
 		}
 	}
 	
 	//TODO: add good description
 	public void voidDrawList(){
-		todoManager.setTodoList(ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "")));
+		try {
+			todoManager.setTodoList(ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "")));
+		} catch (IOException anEx) {
+			print("ERROR: Unable to establish a connection with the server.");
+			print("If you're running the server on a different IP or port, then you should change the client_config.xml!");
+			System.exit(0);
+		}
 		ToxicDatagram datagramForServer = commandHandler(new String[]{"list"});
 		if(datagramForServer != null){
-			ClientApplication.sendToServer(datagramForServer);
+			try {
+				ClientApplication.sendToServer(datagramForServer);
+			} catch (IOException anEx) {
+				print("ERROR: Unable to establish a connection with the server.");
+				print("If you're running the server on a different IP or port, then you should change the client_config.xml!");
+				System.exit(0);
+			}
 			voidDrawList();
 		}
 	}
