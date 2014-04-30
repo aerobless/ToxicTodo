@@ -8,6 +8,7 @@ import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
@@ -34,8 +35,8 @@ import ch.theowinter.ToxicTodo.client.UI.Model.CategoryListModel;
 import ch.theowinter.ToxicTodo.client.UI.Model.TaskListModel;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.CategoryListCellRenderer;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.FontIconButton;
-import ch.theowinter.ToxicTodo.client.UI.View.Utilities.TaskListCellRenderer;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.PanelHeaderWhite;
+import ch.theowinter.ToxicTodo.client.UI.View.Utilities.TaskListCellRenderer;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicColors;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicStrings;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
@@ -435,6 +436,7 @@ public class MainWindow{
 	    	TodoCategory currentCategory = categoryListModel.getElementAt(categoryList.getSelectedIndex());
 	    	taskListModel.changeCategory(currentCategory.getKeyword());
 	    	taskListHeader.setTitel(currentCategory.getName().toUpperCase());
+	    	taskListHeader.setSubTitel(getMotivationText());
 	    	if(currentCategory.getKeyword().equals(ToxicStrings.allTaskTodoCategoryKey)){
 	    		btnNewTask.setEnabled(false);
 	    		btnCompleteTask.setEnabled(false);
@@ -451,6 +453,21 @@ public class MainWindow{
 	        	System.out.println("empty selection, o'really?");
 	        }
 	    	taskListModel.filter(searchField.getText());
+	    }
+	    
+	    public String getMotivationText(){
+	    	ArrayList<String> motivationArray = new ArrayList<String>();
+	    	motivationArray.add("Strive not to be a success, but rather to be of value. – Albert Einstein");
+	    	motivationArray.add("You miss 100% of the shots you don’t take. – Wayne Gretzky");
+	    	//motivationArray.add("The most common way people give up their power is by thinking they don’t have any. – Alice Walker");
+	    	motivationArray.add("Your time is limited, so don’t waste it living someone else’s life. – Steve Jobs");
+	    	motivationArray.add("Start where you are. Use what you have.  Do what you can. – Arthur Ashe");
+	    	
+	    	return motivationArray.get(getRandomInRange(0,(motivationArray.size()-1)));
+	    }
+	    
+	    public int getRandomInRange(int min, int max){
+	    	return min + (int)(Math.random() * ((max - min) + 1));
 	    }
 	}
 	
