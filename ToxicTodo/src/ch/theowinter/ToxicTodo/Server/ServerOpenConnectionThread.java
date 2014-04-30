@@ -137,7 +137,7 @@ class ServerOpenConnectionThread implements Runnable {
 		else if(serverMessage.equals("ADD_CATEGORY_TO_LIST_ON_SERVER")){
 			writeLock.acquire();
 			try {
-				ServerApplication.serverTodoList.addCategory(dataFromClient.getTodoCategory().getName(), dataFromClient.getTodoCategory().getKeyword());
+				ServerApplication.serverTodoList.addCategory(dataFromClient.getTodoCategory());
 				dataToClient = new ToxicDatagram("Answering successful request to add category", "");
 				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {

@@ -12,6 +12,7 @@ import java.net.Socket;
 import java.util.concurrent.Semaphore;
 
 import ch.theowinter.ToxicTodo.SharedObjects.LogicEngine;
+import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoCategory;
 import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoList;
 
 public class ServerApplication implements Runnable{
@@ -127,9 +128,9 @@ public class ServerApplication implements Runnable{
 		File todoDataOnDisk = new File(todoDataFile);
 		if(!todoDataOnDisk.exists()){
 			try {
-				serverTodoList.addCategory("School work", "school");
-				serverTodoList.addCategory("Programming stuff", "programming");
-				serverTodoList.addCategory("To buy", "buy");
+				serverTodoList.addCategory(new TodoCategory("School work", "school"));
+				serverTodoList.addCategory(new TodoCategory("Programming projects", "programming"));
+				serverTodoList.addCategory(new TodoCategory("Shopping list", "buy"));
 				serverTodoList.addTask("school", "Complete exercise 1 for vssprog");
 				serverTodoList.addTask("school", "Complete exercise 1 for parprog");
 				serverTodoList.addTask("programming", "Build better todolist");

@@ -16,7 +16,7 @@ public class CategoryListCellRenderer extends CategoryElementPanel implements Li
 	public Component getListCellRendererComponent(JList<?> list, Object value,
 			int index, boolean isSelected, boolean cellHasFocus) {
 		TodoCategory currentCategory = (TodoCategory)value;
-		this.setText('\uf15b', currentCategory.getName());
+		this.setText(currentCategory.getIcon(), currentCategory.getName());
 		this.setCounter(currentCategory.size());
 		Color background = ToxicColors.hardBlue;
             

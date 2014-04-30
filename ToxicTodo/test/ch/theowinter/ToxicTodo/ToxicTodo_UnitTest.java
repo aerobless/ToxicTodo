@@ -9,6 +9,7 @@ import javax.crypto.SealedObject;
 import org.junit.Test;
 
 import ch.theowinter.ToxicTodo.SharedObjects.EncryptionEngine;
+import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoCategory;
 import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoList;
 import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoTask;
 import ch.theowinter.ToxicTodo.client.CLI.CliController;
@@ -20,14 +21,14 @@ public class ToxicTodo_UnitTest {
 		boolean success = false;
 		TodoList todoList = new TodoList();
 		try {
-			todoList.addCategory("test-category for lulz", "testcat_keyword");
+			todoList.addCategory(new TodoCategory("test-category for lulz", "testcat_keyword"));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//Check that we can't have two categories with the same keyword
 		try {
-			todoList.addCategory("test-category with same keyword", "testcat_keyword");
+			todoList.addCategory(new TodoCategory("test-category with same keyword", "testcat_keyword"));
 		} catch (Exception e) {
 			success = true;
 		}
@@ -40,8 +41,8 @@ public class ToxicTodo_UnitTest {
 		boolean throwsCorrectException = false;
 		TodoList todoList = new TodoList();
 		try {
-			todoList.addCategory("school work", "school");
-			todoList.addCategory("home work", "home");
+			todoList.addCategory(new TodoCategory("school work", "school"));
+			todoList.addCategory(new TodoCategory("home work", "home"));
 		} catch (Exception e) {
 			creationFailure = true;
 		}
@@ -75,8 +76,8 @@ public class ToxicTodo_UnitTest {
 		//SETUP
 		TodoList todoList = new TodoList();
 		try {
-			todoList.addCategory("school work", "school");
-			todoList.addCategory("home work", "home");
+			todoList.addCategory(new TodoCategory("school work", "school"));
+			todoList.addCategory(new TodoCategory("home work", "home"));
 		} catch (Exception e) {
 			successfulTest = false;
 		}
@@ -106,8 +107,8 @@ public class ToxicTodo_UnitTest {
 		TodoList todoList = new TodoList();
 		TodoTask testedTask = new TodoTask("Do homework");
 		try {
-			todoList.addCategory("school work", "school");
-			todoList.addCategory("home work", "home");
+			todoList.addCategory(new TodoCategory("school work", "school"));
+			todoList.addCategory(new TodoCategory("home work", "home"));
 			todoList.addTask("school", "Do VSS exercises");
 			todoList.addTask("school", testedTask);
 		} catch (Exception e) {
@@ -146,11 +147,11 @@ public class ToxicTodo_UnitTest {
 		TodoList todoList = new TodoList();
 		TodoTask testedTask = new TodoTask("Do homework");
 		try {
-			todoList.addCategory("school work", "school");
-			todoList.addCategory("home work", "home");
+			todoList.addCategory(new TodoCategory("school work", "school"));
+			todoList.addCategory(new TodoCategory("home work", "home"));
 			todoList.addTask("school", "Do VSS exercises");
 			todoList.addTask("school", testedTask);
-			todoList.addCategory("todo TEST", "todo");
+			todoList.addCategory(new TodoCategory("todo TEST", "todo"));
 			todoList.addTask("todo", "Do VSS exercises");
 		} catch (Exception e) {
 			successfulTest=false;

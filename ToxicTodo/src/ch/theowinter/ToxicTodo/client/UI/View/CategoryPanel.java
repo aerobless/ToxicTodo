@@ -144,7 +144,7 @@ public class CategoryPanel extends JPanel {
 		btnSave.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				saveTask();
+				saveCategory();
 			}
         }); 
 	}
@@ -173,9 +173,9 @@ public class CategoryPanel extends JPanel {
 		main.switchToTasks();
 	}
 	
-	private void saveTask(){
+	private void saveCategory(){
 		//TODO: better check for empty name, empty description, bad description etc. same with new task
-		char icon = ((FontString)iconCombobox.getSelectedItem()).getIcon();
+		char icon = 'a';//((FontString)iconCombobox.getSelectedItem()).getIcon();
 		String categoryTitel = txtFieldCategoryTitel.getText();
 		String categoryKeyword = txtFieldCategoryKeyword.getText();
 		if(categoryTitel.length()>2&&categoryKeyword.length()>2){

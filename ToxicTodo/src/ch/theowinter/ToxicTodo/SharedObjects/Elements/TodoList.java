@@ -19,17 +19,14 @@ public class TodoList implements Serializable {
 	}
 
 	/**
-	 * Add a new category to the todoList. A category consists of a "long" name and
-	 * a short keyword. The keyword is used to add tasks.
+	 * Add a new category to the todoList. 
 	 * 
-	 * @param categoryName
-	 * @param keyword
+	 * @param todoCategory
 	 * @throws Exception 
 	 */
-	public void addCategory(String categoryName, String keyword) throws Exception{
-		if(categoryMap.get(keyword)==null){
-			TodoCategory newCategory = new TodoCategory(categoryName, keyword);
-			categoryMap.put(keyword, newCategory);
+	public void addCategory(TodoCategory todoCategory) throws Exception{
+		if(categoryMap.get(todoCategory.getKeyword())==null){
+			categoryMap.put(todoCategory.getKeyword(), todoCategory);
 		}
 		else{
 			throw new Exception("A category with this keyword already exists. Keywords have to be unique.");

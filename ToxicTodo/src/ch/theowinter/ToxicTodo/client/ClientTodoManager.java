@@ -67,6 +67,7 @@ public class ClientTodoManager extends Observable{
 		ArrayList<TodoCategory> returnArray = new ArrayList<TodoCategory>();
 		for(String categoryKey : getTodoList().getCategoryMap().keySet()){
 			returnArray.add(getTodoList().getCategoryMap().get(categoryKey));
+			System.out.println(getTodoList().getCategoryMap().get(categoryKey).getIcon());
 		}
 		return returnArray;
 	}
@@ -94,7 +95,7 @@ public class ClientTodoManager extends Observable{
 	
 	public TodoList generateAllTasksCategory(TodoList inputList){
 		try {
-			inputList.addCategory("All tasks", ToxicStrings.allTaskTodoCategoryKey);
+			inputList.addCategory(new TodoCategory("All tasks", ToxicStrings.allTaskTodoCategoryKey));
 			for(String categoryKey : inputList.getCategoryMap().keySet()){
 				ArrayList<TodoTask> currentCategoryTasks = inputList.getCategoryMap().get(categoryKey).getTaskInCategoryAsArrayList();
 				for(TodoTask currentTask : currentCategoryTasks){
