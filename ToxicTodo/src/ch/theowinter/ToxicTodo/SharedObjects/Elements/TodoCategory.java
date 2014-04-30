@@ -61,7 +61,7 @@ public class TodoCategory implements Serializable, Comparable<TodoCategory> {
 	
 	//Contain-Setters:
 	public void add(TodoTask todo){
-		todoTaskList.put(todo.getTaskText(), todo);
+		todoTaskList.put(todo.getText(), todo);
 	}
 	public TodoTask removeTask(String key){
 		return todoTaskList.remove(key);

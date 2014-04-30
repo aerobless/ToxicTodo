@@ -175,11 +175,12 @@ public class CategoryPanel extends JPanel {
 	
 	private void saveTask(){
 		//TODO: better check for empty name, empty description, bad description etc. same with new task
+		char icon = ((FontString)iconCombobox.getSelectedItem()).getIcon();
 		String categoryTitel = txtFieldCategoryTitel.getText();
 		String categoryKeyword = txtFieldCategoryKeyword.getText();
 		if(categoryTitel.length()>2&&categoryKeyword.length()>2){
 			try {
-				todoManager.addNewCategory(categoryTitel, categoryKeyword);
+				todoManager.addNewCategory(categoryTitel, categoryKeyword, icon, false);
 			} catch (IOException anEx) {
 				main.connectionWarning();
 			}

@@ -86,8 +86,8 @@ public class ClientTodoManager extends Observable{
 		updateList();
 	}
 	
-	public void addNewCategory(String description, String keyword) throws IOException{
-		TodoCategory newCategory = new TodoCategory(description, keyword);
+	public void addNewCategory(String description, String keyword, char icon, boolean systemCategory) throws IOException{
+		TodoCategory newCategory = new TodoCategory(description, keyword, icon, systemCategory);
 		ClientApplication.sendToServer(new ToxicDatagram("ADD_CATEGORY_TO_LIST_ON_SERVER", "",newCategory));
 		updateList();
 	}

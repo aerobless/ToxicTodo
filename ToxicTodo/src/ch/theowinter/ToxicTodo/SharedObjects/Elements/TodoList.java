@@ -87,8 +87,8 @@ public class TodoList implements Serializable {
 	 * @throws Exception
 	 */
 	public void removeTask(TodoTask todoTask, String category) throws Exception{
-		if(categoryMap.get(category).get(todoTask.getTaskText())!=null){
-			categoryMap.get(category).removeTask(todoTask.getTaskText());	
+		if(categoryMap.get(category).get(todoTask.getText())!=null){
+			categoryMap.get(category).removeTask(todoTask.getText());	
 		}
 		else{
 			throw new Exception("Task doesn't exist.");
