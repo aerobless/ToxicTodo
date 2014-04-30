@@ -91,7 +91,6 @@ public class MainWindow{
 				try {
 					MainWindow window = new MainWindow(todoManager, settings);
 					window.frmToxictodo.setVisible(true);
-					// methods here.
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -120,7 +119,6 @@ public class MainWindow{
 		frmToxictodo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmToxictodo.getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		//Enable unified style, probably needs to be disabled on windows..
 		MacUtils.makeWindowLeopardStyle(frmToxictodo.getRootPane());
 
 		splitPane = new JSplitPane();

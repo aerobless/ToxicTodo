@@ -16,7 +16,7 @@ import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoList;
 
 public class ServerApplication implements Runnable{
 	//Vanity info
-	public static final double serverVersion = 1.26;
+	public static final double serverVersion = 1.27;
 	public static final String author = "Theo Winter";
 	public static final String website = "theowinter.ch";
 	public static final String serverUpdateURL = "http://w1nter.net:8080/job/ToxicTodo/lastSuccessfulBuild/artifact/ToxicTodo/dist/ToxicTodoServer.jar";	

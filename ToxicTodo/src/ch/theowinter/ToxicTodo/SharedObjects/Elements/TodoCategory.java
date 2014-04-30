@@ -6,54 +6,45 @@ import java.util.HashMap;
 
 public class TodoCategory implements Serializable, Comparable<TodoCategory> {
 	private static final long serialVersionUID = 2851662981886514578L;
-	private String categoryName;
+	
+	//Properties:
+	private String name;
 	private String keyword;
+	private char icon;
+	private boolean isSystemCategory; //<-- intended for internal use only
+	
+	//Container:
 	private HashMap<String, TodoTask> todoTaskList = new HashMap<String, TodoTask>();
 	
 	public TodoCategory(String categoryName, String keyword) {
 		super();
-		this.categoryName = categoryName;
+		this.name = categoryName;
 		this.keyword = keyword;
+		this.icon = '\uf07b';
+		this.isSystemCategory = false;
 	}
-	
-	
-	public void add(TodoTask todo){
-		todoTaskList.put(todo.getTaskText(), todo);
+
+	public TodoCategory(String categoryName, String keyword, char icon, boolean systemCategory) {
+		super();
+		this.name = categoryName;
+		this.keyword = keyword;
+		this.icon = icon;
+		this.isSystemCategory = systemCategory;
 	}
-	
-	@Deprecated
-	public void add(String todo){
-		todoTaskList.put(todo, new TodoTask(todo));
-	}
-	
-	public String getName(){
-		return categoryName;
-	}
-	
+
+	//Contain-Getters:
 	public HashMap<String, TodoTask> getTasksHashMap(){
 		return todoTaskList;
 	}
-	
 	public ArrayList<TodoTask> getTaskInCategoryAsArrayList(){
 		return new ArrayList<TodoTask>(todoTaskList.values());
 	}
-	
-	public String getKeyword(){
-		return keyword;
-	}
-	
 	public int size(){
 		return todoTaskList.size();
 	}
-	
-	public TodoTask removeTask(String key){
-		return todoTaskList.remove(key);
-	}
-	
 	public TodoTask get(String key){
 		return todoTaskList.get(key);
 	}
-	
 	/**
 	 * Check whether a category contains tasks
 	 * or whether it can be safely deleted.
@@ -66,10 +57,45 @@ public class TodoCategory implements Serializable, Comparable<TodoCategory> {
 		}
 		return containsTasks;
 	}
+	
+	
+	//Contain-Setters:
+	public void add(TodoTask todo){
+		todoTaskList.put(todo.getTaskText(), todo);
+	}
+	public TodoTask removeTask(String key){
+		return todoTaskList.remove(key);
+	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
-	 */
+	
+	//Property-Getters:
+	public String getName(){
+		return name;
+	}
+	public String getKeyword(){
+		return keyword;
+	}
+	public char getIcon() {
+		return icon;
+	}
+	public boolean isSystemCategory() {
+		return isSystemCategory;
+	}
+	
+	
+	//Property-Setters:
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+	public void setIcon(char icon) {
+		this.icon = icon;
+	}
+	
+
+	//Comparator:
 	@Override
 	public int compareTo(TodoCategory inputCategory) {
 		int returnValue;

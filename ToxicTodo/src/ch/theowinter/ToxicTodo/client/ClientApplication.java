@@ -20,7 +20,7 @@ import ch.theowinter.ToxicTodo.client.UI.Controller.ClientController;
 
 public class ClientApplication {
 	//Vanity info
-	public static final double clientVersion = 1.3;
+	public static final double clientVersion = 1.35;
 	public static final String author = "Theo Winter";
 	public static final String website = "http://theowinter.ch";
 	public static final String clientUpdateURL = "http://w1nter.net:8080/job/ToxicTodo/lastSuccessfulBuild/artifact/ToxicTodo/dist/ToxicTodoClient.jar";
