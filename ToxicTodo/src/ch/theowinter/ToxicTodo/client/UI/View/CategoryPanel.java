@@ -16,7 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
-import ch.theowinter.ToxicTodo.client.UI.Model.CategoryComboBoxModel;
+import ch.theowinter.ToxicTodo.client.UI.Model.FontString;
+import ch.theowinter.ToxicTodo.client.UI.Model.IconComboBoxModel;
+import ch.theowinter.ToxicTodo.client.UI.View.Utilities.IconComboBoxRenderer;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.PanelHeaderWhite;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicColors;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
@@ -25,7 +27,7 @@ public class CategoryPanel extends JPanel {
 	private static final long serialVersionUID = -2022909795010691054L;
 	private MainWindow main;
 	private ClientTodoManager todoManager;
-	private JComboBox<String> iconCombobox;
+	private JComboBox<FontString> iconCombobox;
 	private JTextField txtFieldCategoryTitel;
 	private JTextField txtFieldCategoryKeyword;
 	private PanelHeaderWhite header;
@@ -74,7 +76,8 @@ public class CategoryPanel extends JPanel {
 		gbc_lblIcon.gridy = 1;
 		centerPanel.add(lblIcon, gbc_lblIcon);
 		
-		iconCombobox = new JComboBox<String>(new CategoryComboBoxModel(todoManager));
+		iconCombobox = new JComboBox<FontString>(new IconComboBoxModel());
+		iconCombobox.setRenderer(new IconComboBoxRenderer());
 		GridBagConstraints gbc_iconCombobox = new GridBagConstraints();
 		gbc_iconCombobox.insets = new Insets(0, 0, 5, 5);
 		gbc_iconCombobox.fill = GridBagConstraints.HORIZONTAL;
@@ -170,7 +173,6 @@ public class CategoryPanel extends JPanel {
 	}
 	
 	private void saveTask(){
-		//todoManager.addNewTask(category.getKeyword(), "");
 		//TODO: better check for empty name, empty description, bad description etc. same with new task
 		String categoryTitel = txtFieldCategoryTitel.getText();
 		String categoryKeyword = txtFieldCategoryKeyword.getText();

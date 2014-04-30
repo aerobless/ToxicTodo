@@ -60,7 +60,7 @@ public class TaskPanel extends JPanel {
 		gbl_centerPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		centerPanel.setLayout(gbl_centerPanel);
 		
-		JLabel lblType = new JLabel("Category:");
+		JLabel lblType = new JLabel("Priority:");
 		GridBagConstraints gbc_lblType = new GridBagConstraints();
 		gbc_lblType.anchor = GridBagConstraints.EAST;
 		gbc_lblType.insets = new Insets(0, 0, 5, 5);
