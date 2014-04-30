@@ -176,7 +176,7 @@ public class CategoryPanel extends JPanel {
 	
 	private void saveCategory(){
 		//TODO: better check for empty name, empty description, bad description etc. same with new task
-		char icon = 'a';//((FontString)iconCombobox.getSelectedItem()).getIcon();
+		char icon = ((FontString)iconCombobox.getSelectedItem()).getIcon();
 		String categoryTitel = txtFieldCategoryTitel.getText();
 		String categoryKeyword = txtFieldCategoryKeyword.getText();
 		if(categoryTitel.length()>2&&categoryKeyword.length()>2){
