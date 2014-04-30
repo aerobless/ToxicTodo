@@ -156,6 +156,7 @@ public class CategoryPanel extends JPanel {
 		btnSave.setEnabled(false);
 		btnSave.setToolTipText("Editing categories is currently not supported by the server.");
 		header.setTitel("Edit category: "+todoCategory.getName());
+		header.setIcon(todoCategory.getIcon());
 	}
 	public void newCategory(){
 		iconCombobox.setSelectedIndex(0);
