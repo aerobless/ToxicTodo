@@ -25,6 +25,7 @@ public class FontIconButton extends JButton{
 		    Font ttfReal = ttfBase.deriveFont(Font.BOLD, 14);
 		    setFont(ttfReal);
 		    setText(String.valueOf(awesomeIcon));
+		    setForeground(ToxicColors.iconGrey);
 		    } catch (FontFormatException e) {
 		        e.printStackTrace();
 		    } catch (IOException e) {
