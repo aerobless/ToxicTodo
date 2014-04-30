@@ -14,7 +14,7 @@ import java.util.concurrent.Semaphore;
 import ch.theowinter.ToxicTodo.utilities.LogicEngine;
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoList;
 
-public class ServerApplication {
+public class ServerApplication implements Runnable{
 	//Vanity info
 	public static final double serverVersion = 1.26;
 	public static final String author = "Theo Winter";
@@ -171,6 +171,14 @@ public class ServerApplication {
 					e.printStackTrace();
 			}
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
+	@Override
+	public void run() {
+		main(new String[]{});		
 	}
 }
 

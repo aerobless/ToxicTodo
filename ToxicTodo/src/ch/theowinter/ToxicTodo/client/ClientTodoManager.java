@@ -17,10 +17,13 @@ public class ClientTodoManager extends Observable{
 	
 	//Locks
 	private Semaphore writeLock = new Semaphore(1);
+	
+	//Runtime variables:
+	private boolean initSuccess = false;
 
 	public ClientTodoManager() {
 		super();
-		updateList();
+		initSuccess = updateList();
 	}
 	public ClientTodoManager(TodoList todoList) {
 		super();
@@ -47,17 +50,20 @@ public class ClientTodoManager extends Observable{
 		}
 	}
 	
+	public boolean getInitSuccess(){
+		return initSuccess;
+	}
+	
 	//ATM only used in GUI
 	public boolean updateList(){
-		TodoList currentList;
+		boolean success = false;
 		try {
-			currentList = ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", ""));
-			setTodoList(generateAllTasksCategory(currentList));
+			setTodoList(generateAllTasksCategory(ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", ""))));
+			success = true;
 		} catch (IOException anEx) {
-			// TODO Auto-generated catch block
-			anEx.printStackTrace();
+			System.out.println("Unable to conntect to server");
 		}
-		return true;
+		return success;
 	}
 	
 	public ArrayList<TodoCategory> categoriesToArray(){
