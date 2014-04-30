@@ -117,11 +117,6 @@ public class TodoTask implements Serializable{
 		return text;
 	}
 
-	@Deprecated
-	public void setTaskText(String taskText) {
-		this.text = taskText;
-	}
-
 	public Date getCompletionDate() {
 		return completionDate;
 	}

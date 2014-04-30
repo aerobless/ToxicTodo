@@ -95,7 +95,7 @@ public class ClientTodoManager extends Observable{
 	
 	public TodoList generateAllTasksCategory(TodoList inputList){
 		try {
-			inputList.addCategory(new TodoCategory("All tasks", ToxicStrings.allTaskTodoCategoryKey));
+			inputList.addCategory(new TodoCategory("All tasks", ToxicStrings.allTaskTodoCategoryKey, '\uf135',true));
 			for(String categoryKey : inputList.getCategoryMap().keySet()){
 				ArrayList<TodoTask> currentCategoryTasks = inputList.getCategoryMap().get(categoryKey).getTaskInCategoryAsArrayList();
 				for(TodoTask currentTask : currentCategoryTasks){

@@ -111,7 +111,7 @@ class ServerOpenConnectionThread implements Runnable {
 			try {
 				ServerApplication.serverTodoList.removeTask(dataFromClient.getTodoTask(), dataFromClient.getAdditionalMessage());
 				java.util.Date date= new java.util.Date();
-				ServerApplication.writeLogToFile("CompletedTasks.txt", new Timestamp(date.getTime())+" : COMPLETED : "+dataFromClient.getTodoTask().getTaskText());
+				ServerApplication.writeLogToFile("CompletedTasks.txt", new Timestamp(date.getTime())+" : COMPLETED : "+dataFromClient.getTodoTask().getText());
 				dataToClient = new ToxicDatagram("Answering successful request to remove & log task", "");
 				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {

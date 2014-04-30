@@ -198,7 +198,7 @@ public class CliController {
 				//todoList.getCategoryMap().get(categoryKey).getTasksHashMap();
 				for(String taskKey : todoManager.getTodoList().getCategoryMap().get(categoryKey).getTasksHashMap().keySet()){
 					++taskID;
-					print(jansi.GREEN+"["+taskID+"] "+formatString(todoManager.getTodoList().getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey).getTaskText()), 2);
+					print(jansi.GREEN+"["+taskID+"] "+formatString(todoManager.getTodoList().getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey).getText()), 2);
 					//adding task to local bindings map
 					internalCategoryBinding.add(categoryKey);
 					internalTaskBinding.add(todoManager.getTodoList().getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey));

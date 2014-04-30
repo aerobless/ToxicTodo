@@ -103,7 +103,7 @@ public class CategoryPanel extends JPanel {
 		centerPanel.add(txtFieldCategoryTitel, gbc_txtFieldCategoryTitel);
 		txtFieldCategoryTitel.setColumns(10);
 		
-		JLabel lblDescription = new JLabel("One-Word-ID:");
+		JLabel lblDescription = new JLabel("Keyword:");
 		GridBagConstraints gbc_lblDescription = new GridBagConstraints();
 		gbc_lblDescription.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDescription.anchor = GridBagConstraints.EAST;
