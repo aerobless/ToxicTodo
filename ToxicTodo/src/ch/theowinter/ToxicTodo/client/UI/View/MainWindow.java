@@ -455,6 +455,10 @@ public class MainWindow{
 	    	taskListModel.filter(searchField.getText());
 	    }
 	    
+	    /*
+	     * Random motivational quotes:
+	     * Source: http://www.forbes.com/sites/kevinkruse/2013/05/28/inspirational-quotes/
+	     */
 	    public String getMotivationText(){
 	    	ArrayList<String> motivationArray = new ArrayList<String>();
 	    	motivationArray.add("Strive not to be a success, but rather to be of value. – Albert Einstein");
