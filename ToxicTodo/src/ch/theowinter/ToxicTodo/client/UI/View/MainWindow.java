@@ -8,6 +8,7 @@ import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
@@ -210,7 +211,12 @@ public class MainWindow{
 		btnRefresh.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				todoManager.updateList();
+				try {
+					todoManager.updateList();
+				} catch (IOException anEx) {
+					main.connectionWarning();
+					anEx.printStackTrace();
+				}
 			}
         });      
 		bottomBar.addComponentToRight(btnRefresh);
@@ -363,7 +369,12 @@ public class MainWindow{
 				TodoTask task = getSelectedTask();
 				TodoCategory categoryKey = getSelectedCategory();
 				if(task != null && categoryKey != null){
-					boolean success = todoManager.removeTask(true, task, categoryKey.getKeyword());
+					try {
+						todoManager.removeTask(true, task, categoryKey.getKeyword());
+					} catch (IOException anEx) {
+						main.connectionWarning();
+						anEx.printStackTrace();
+					}
 					taskListModel.filter(searchField.getText());
 				}else{
 					System.out.println("category or task is null");
@@ -386,7 +397,12 @@ public class MainWindow{
 				TodoTask task = getSelectedTask();
 				TodoCategory categoryKey = getSelectedCategory();
 				if(task != null && categoryKey != null){
-					todoManager.removeTask(false, task, categoryKey.getKeyword());
+					try {
+						todoManager.removeTask(false, task, categoryKey.getKeyword());
+					} catch (IOException anEx) {
+						main.connectionWarning();
+						anEx.printStackTrace();
+					}
 					taskListModel.filter(searchField.getText());
 				}else{
 					System.out.println("category or task is null");

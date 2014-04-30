@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -150,7 +151,12 @@ public class TaskPanel extends JPanel {
 		main.switchToTasks();
 		TodoCategory category = main.getSelectedCategory();
 		if(category != null){
-			todoManager.addNewTask(category.getKeyword(), txtAreaTaskDescription.getText());
+			try {
+				todoManager.addNewTask(category.getKeyword(), txtAreaTaskDescription.getText());
+			} catch (IOException anEx) {
+				main.connectionWarning();
+				anEx.printStackTrace();
+			}
 			txtAreaTaskDescription.setText("");
 			txtFieldCompletedUntil.setText("");
 		}else{

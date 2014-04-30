@@ -23,7 +23,12 @@ public class ClientTodoManager extends Observable{
 
 	public ClientTodoManager() {
 		super();
-		initSuccess = updateList();
+		try {
+			updateList();
+			initSuccess = true;
+		} catch (IOException anEx) {
+			initSuccess = false;
+		}
 	}
 	public ClientTodoManager(TodoList todoList) {
 		super();
@@ -55,15 +60,8 @@ public class ClientTodoManager extends Observable{
 	}
 	
 	//ATM only used in GUI
-	public boolean updateList(){
-		boolean success = false;
-		try {
-			setTodoList(generateAllTasksCategory(ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", ""))));
-			success = true;
-		} catch (IOException anEx) {
-			System.out.println("Unable to conntect to server");
-		}
-		return success;
+	public void updateList() throws IOException{
+		setTodoList(generateAllTasksCategory(ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", ""))));
 	}
 	
 	public ArrayList<TodoCategory> categoriesToArray(){
@@ -74,44 +72,25 @@ public class ClientTodoManager extends Observable{
 		return returnArray;
 	}
 	
-	public boolean addNewTask(String categoryKeyword, String taskDescription){
-		boolean success = false;
+	public void addNewTask(String categoryKeyword, String taskDescription) throws IOException{
 		TodoTask task = new TodoTask(taskDescription);
-		try {
-			ClientApplication.sendToServer(new ToxicDatagram("ADD_TASK_TO_LIST_ON_SERVER", "", task, categoryKeyword));
-			success = updateList();
-		} catch (IOException anEx) {
-			anEx.printStackTrace();
-		}
-		return success;
+		ClientApplication.sendToServer(new ToxicDatagram("ADD_TASK_TO_LIST_ON_SERVER", "", task, categoryKeyword));
+		updateList();
 	}
 	
-	public boolean removeTask(boolean writeToLog, TodoTask task, String categoryKeyword){
-		boolean success = false;
+	public void removeTask(boolean writeToLog, TodoTask task, String categoryKeyword) throws IOException{
 		String dataMessage = "REMOVE_TASK_ON_SERVER";
 		if(writeToLog){
 			dataMessage = "REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER";
 		}
-		try {
-			ClientApplication.sendToServer(new ToxicDatagram(dataMessage, "",task , categoryKeyword));
-			success = updateList();
-		} catch (IOException anEx) {
-			anEx.printStackTrace();
-		}	
-		return success;
+		ClientApplication.sendToServer(new ToxicDatagram(dataMessage, "",task , categoryKeyword));
+		updateList();
 	}
 	
-	public boolean addNewCategory(String description, String keyword){
-		boolean success = false;
+	public void addNewCategory(String description, String keyword) throws IOException{
 		TodoCategory newCategory = new TodoCategory(description, keyword);
-		try {
-			ClientApplication.sendToServer(new ToxicDatagram("ADD_CATEGORY_TO_LIST_ON_SERVER", "",newCategory));
-			success = updateList();
-		} catch (IOException anEx) {
-			// TODO Auto-generated catch block
-			anEx.printStackTrace();
-		}
-		return success;
+		ClientApplication.sendToServer(new ToxicDatagram("ADD_CATEGORY_TO_LIST_ON_SERVER", "",newCategory));
+		updateList();
 	}
 	
 	public TodoList generateAllTasksCategory(TodoList inputList){

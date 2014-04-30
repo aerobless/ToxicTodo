@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -174,7 +175,12 @@ public class CategoryPanel extends JPanel {
 		String categoryTitel = txtFieldCategoryTitel.getText();
 		String categoryKeyword = txtFieldCategoryKeyword.getText();
 		if(categoryTitel.length()>2&&categoryKeyword.length()>2){
-			todoManager.addNewCategory(categoryTitel, categoryKeyword);
+			try {
+				todoManager.addNewCategory(categoryTitel, categoryKeyword);
+			} catch (IOException anEx) {
+				main.connectionWarning();
+				anEx.printStackTrace();
+			}
 			cancelAndClearCategory();
 		}
 	}
