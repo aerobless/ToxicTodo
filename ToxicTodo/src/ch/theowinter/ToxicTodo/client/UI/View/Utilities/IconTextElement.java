@@ -10,7 +10,7 @@ import java.io.InputStream;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class TaskElementPanel extends JPanel{
+public class IconTextElement extends JPanel{
 	private static final long serialVersionUID = 6926949587536088474L;
 	JLabel lblIcon;
 	JLabel lblTaskDescription;
@@ -18,7 +18,7 @@ public class TaskElementPanel extends JPanel{
 	/**
 	 * CategoryElementPanel is used in categoryList's cell-renderer.
 	 */
-	public TaskElementPanel() {
+	public IconTextElement() {
 		FlowLayout flowLayout = (FlowLayout) getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 
@@ -28,13 +28,22 @@ public class TaskElementPanel extends JPanel{
 		lblTaskDescription = new JLabel("x");
 		add(lblTaskDescription);
 	}
-	
+	/**
+	 * Default size = 20
+	 *
+	 * @param awesomeIcon
+	 * @param taskDescription
+	 */
 	public void setText(char awesomeIcon, String taskDescription){
+		setText(awesomeIcon, taskDescription, 20, 999);
+	}
+	
+	public void setText(char awesomeIcon, String taskDescription, int iconSize, int textSize){
 		Font ttfReal = null;
 		try {
 	        InputStream in = this.getClass().getResourceAsStream("/resources/fontawesome-webfont.ttf");
 			Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, in);
-		    ttfReal = ttfBase.deriveFont(Font.BOLD, 20);
+		    ttfReal = ttfBase.deriveFont(Font.BOLD, iconSize);
 		    //setText(String.valueOf('\uf15b'));
 		} catch (FontFormatException | IOException e) {
 			System.out.println("font IO exception");
@@ -43,6 +52,9 @@ public class TaskElementPanel extends JPanel{
 		lblIcon.setFont(ttfReal);
 		lblIcon.setText(String.valueOf(awesomeIcon));
 		lblTaskDescription.setText(formatText(taskDescription));
+		if(textSize!=999){
+			lblTaskDescription.setFont(new Font("Lucida Grande", Font.PLAIN, textSize));
+		}
 	}
 	
 	public void setFontColor(Color color){
@@ -63,5 +75,9 @@ public class TaskElementPanel extends JPanel{
 			outputBuilder.append(s);
 		}
 		return "<html>"+outputBuilder.toString()+"</html>";
+	}
+	
+	public void setTextAndIconSize(int size){
+		
 	}
 }

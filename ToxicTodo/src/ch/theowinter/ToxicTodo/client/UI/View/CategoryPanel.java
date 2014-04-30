@@ -78,6 +78,7 @@ public class CategoryPanel extends JPanel {
 		
 		iconCombobox = new JComboBox<FontString>(new IconComboBoxModel());
 		iconCombobox.setRenderer(new IconComboBoxRenderer());
+
 		GridBagConstraints gbc_iconCombobox = new GridBagConstraints();
 		gbc_iconCombobox.insets = new Insets(0, 0, 5, 5);
 		gbc_iconCombobox.fill = GridBagConstraints.HORIZONTAL;

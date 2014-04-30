@@ -8,7 +8,7 @@ import javax.swing.ListCellRenderer;
 
 import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
 
-public class TaskListCellRenderer extends TaskElementPanel implements ListCellRenderer<Object>{
+public class TaskListCellRenderer extends IconTextElement implements ListCellRenderer<Object>{
 	private static final long serialVersionUID = 675589706298418336L;
 
 	@Override
