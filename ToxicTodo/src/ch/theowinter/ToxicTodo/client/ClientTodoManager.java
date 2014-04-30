@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.concurrent.Semaphore;
 
+import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoCategory;
+import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoList;
+import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoTask;
+import ch.theowinter.ToxicTodo.SharedObjects.Elements.ToxicDatagram;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicStrings;
-import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
-import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoList;
-import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
-import ch.theowinter.ToxicTodo.utilities.primitiveModels.ToxicDatagram;
 
 public class ClientTodoManager extends Observable{
 	//Class variables

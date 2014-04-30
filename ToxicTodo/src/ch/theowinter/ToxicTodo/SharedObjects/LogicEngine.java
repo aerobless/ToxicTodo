@@ -1,4 +1,4 @@
-package ch.theowinter.ToxicTodo.utilities;
+package ch.theowinter.ToxicTodo.SharedObjects;
 
 import java.io.DataInputStream;
 import java.io.File;
@@ -8,10 +8,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoCategory;
+import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoList;
+import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoTask;
 import ch.theowinter.ToxicTodo.client.ClientSettings;
-import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
-import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoList;
-import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;

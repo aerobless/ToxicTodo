@@ -15,13 +15,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoCategory;
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.client.UI.Model.FontString;
 import ch.theowinter.ToxicTodo.client.UI.Model.IconComboBoxModel;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.IconComboBoxRenderer;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.PanelHeaderWhite;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicColors;
-import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 
 public class CategoryPanel extends JPanel {
 	private static final long serialVersionUID = -2022909795010691054L;

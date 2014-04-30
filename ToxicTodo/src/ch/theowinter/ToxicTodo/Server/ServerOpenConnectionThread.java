@@ -11,8 +11,8 @@ import java.util.concurrent.Semaphore;
 
 import javax.crypto.SealedObject;
 
-import ch.theowinter.ToxicTodo.utilities.EncryptionEngine;
-import ch.theowinter.ToxicTodo.utilities.primitiveModels.ToxicDatagram;
+import ch.theowinter.ToxicTodo.SharedObjects.EncryptionEngine;
+import ch.theowinter.ToxicTodo.SharedObjects.Elements.ToxicDatagram;
 
 class ServerOpenConnectionThread implements Runnable {
 	private Semaphore writeLock = new Semaphore(1);

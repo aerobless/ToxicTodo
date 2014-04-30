@@ -1,4 +1,4 @@
-package ch.theowinter.ToxicTodo.utilities;
+package ch.theowinter.ToxicTodo.SharedObjects;
 
 import java.io.IOException;
 import java.io.Serializable;

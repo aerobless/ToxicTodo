@@ -7,8 +7,8 @@ import java.util.Observer;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
+import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoCategory;
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
-import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 
 public class CategoryComboBoxModel extends AbstractListModel<String> implements ComboBoxModel<String>, Observer{
 	private static final long serialVersionUID = -2267676861577121046L;

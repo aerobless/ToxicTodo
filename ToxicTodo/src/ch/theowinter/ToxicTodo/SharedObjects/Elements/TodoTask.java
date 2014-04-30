@@ -1,4 +1,4 @@
-package ch.theowinter.ToxicTodo.utilities.primitiveModels;
+package ch.theowinter.ToxicTodo.SharedObjects.Elements;
 
 import java.io.Serializable;
 import java.util.Date;

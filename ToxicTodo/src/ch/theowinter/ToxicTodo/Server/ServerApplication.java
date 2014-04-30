@@ -11,8 +11,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.Semaphore;
 
-import ch.theowinter.ToxicTodo.utilities.LogicEngine;
-import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoList;
+import ch.theowinter.ToxicTodo.SharedObjects.LogicEngine;
+import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoList;
 
 public class ServerApplication implements Runnable{
 	//Vanity info

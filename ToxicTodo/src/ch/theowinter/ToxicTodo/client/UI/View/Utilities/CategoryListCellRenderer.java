@@ -2,10 +2,11 @@ package ch.theowinter.ToxicTodo.client.UI.View.Utilities;
 
 import java.awt.Color;
 import java.awt.Component;
+
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
-import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
+import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoCategory;
 
 public class CategoryListCellRenderer extends CategoryElementPanel implements ListCellRenderer<Object>{
 

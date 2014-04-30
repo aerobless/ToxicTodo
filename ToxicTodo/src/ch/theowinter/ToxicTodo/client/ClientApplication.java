@@ -10,13 +10,13 @@ import java.net.Socket;
 
 import javax.crypto.SealedObject;
 
+import ch.theowinter.ToxicTodo.SharedObjects.EncryptionEngine;
+import ch.theowinter.ToxicTodo.SharedObjects.JansiFormats;
+import ch.theowinter.ToxicTodo.SharedObjects.LogicEngine;
+import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoList;
+import ch.theowinter.ToxicTodo.SharedObjects.Elements.ToxicDatagram;
 import ch.theowinter.ToxicTodo.client.CLI.CliController;
 import ch.theowinter.ToxicTodo.client.UI.Controller.ClientController;
-import ch.theowinter.ToxicTodo.utilities.EncryptionEngine;
-import ch.theowinter.ToxicTodo.utilities.JansiFormats;
-import ch.theowinter.ToxicTodo.utilities.LogicEngine;
-import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoList;
-import ch.theowinter.ToxicTodo.utilities.primitiveModels.ToxicDatagram;
 
 public class ClientApplication {
 	//Vanity info

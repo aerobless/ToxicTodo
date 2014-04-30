@@ -7,8 +7,8 @@ import java.util.Observer;
 import javax.swing.AbstractListModel;
 import javax.swing.event.ListDataListener;
 
+import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoTask;
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
-import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
 
 public class TaskListModel extends AbstractListModel<TodoTask> implements Observer{
 	private static final long serialVersionUID = 5378790622340613400L;

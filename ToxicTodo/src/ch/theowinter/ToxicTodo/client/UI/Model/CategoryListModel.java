@@ -7,8 +7,8 @@ import java.util.Observer;
 
 import javax.swing.AbstractListModel;
 
+import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoCategory;
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
-import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
 
 public class CategoryListModel extends AbstractListModel<TodoCategory> implements Observer{
 	private static final long serialVersionUID = -8918372750130357388L;

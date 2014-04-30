@@ -31,6 +31,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 
+import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoCategory;
+import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoTask;
 import ch.theowinter.ToxicTodo.client.ClientSettings;
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.client.UI.Model.CategoryListModel;
@@ -41,8 +43,6 @@ import ch.theowinter.ToxicTodo.client.UI.View.Utilities.PanelHeaderWhite;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.TaskListCellRenderer;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicColors;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicStrings;
-import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoCategory;
-import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
 
 import com.explodingpixels.macwidgets.BottomBar;
 import com.explodingpixels.macwidgets.BottomBarSize;

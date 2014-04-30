@@ -8,10 +8,10 @@ import javax.crypto.SealedObject;
 
 import org.junit.Test;
 
-import ch.theowinter.ToxicTodo.utilities.EncryptionEngine;
+import ch.theowinter.ToxicTodo.SharedObjects.EncryptionEngine;
+import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoList;
+import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoTask;
 import ch.theowinter.ToxicTodo.client.CLI.CliController;
-import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoList;
-import ch.theowinter.ToxicTodo.utilities.primitiveModels.TodoTask;
 
 public class ToxicTodo_UnitTest {
 	
