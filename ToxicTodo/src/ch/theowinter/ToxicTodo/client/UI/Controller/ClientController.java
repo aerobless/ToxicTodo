@@ -14,7 +14,13 @@ public class ClientController {
 		settings = someSettings;
 		if(!aTodoManager.getInitSuccess()){
 			createLocalServerDialog();
+		}else{
+			createGUI(aTodoManager, someSettings);
 		}
+
+	}
+	
+	private void createGUI(ClientTodoManager aTodoManager, ClientSettings someSettings){
 		MainWindow mainWindow = new MainWindow(aTodoManager, someSettings);
 		mainWindow.launchGUI();
 	}
@@ -35,7 +41,7 @@ public class ClientController {
 				anEx.printStackTrace();
 			}
 			ClientTodoManager todoManager = new ClientTodoManager();
-			start(todoManager, settings);
+			createGUI(todoManager, settings);
 		} else{
 			//NO - We exit here because the user doesn't want to run a local server.
 			System.exit(0);	
