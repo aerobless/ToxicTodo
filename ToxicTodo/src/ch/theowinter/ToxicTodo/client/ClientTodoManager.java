@@ -51,7 +51,6 @@ public class ClientTodoManager extends Observable{
 			notifyObservers();
 		} catch (InterruptedException anEx) {
 			System.out.println("Interruped while trying to setTodoList()");
-			anEx.printStackTrace();
 		}
 	}
 	

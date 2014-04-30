@@ -179,7 +179,6 @@ public class CategoryPanel extends JPanel {
 				todoManager.addNewCategory(categoryTitel, categoryKeyword);
 			} catch (IOException anEx) {
 				main.connectionWarning();
-				anEx.printStackTrace();
 			}
 			cancelAndClearCategory();
 		}

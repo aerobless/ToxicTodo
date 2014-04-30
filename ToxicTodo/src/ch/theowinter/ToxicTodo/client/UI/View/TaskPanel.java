@@ -155,7 +155,6 @@ public class TaskPanel extends JPanel {
 				todoManager.addNewTask(category.getKeyword(), txtAreaTaskDescription.getText());
 			} catch (IOException anEx) {
 				main.connectionWarning();
-				anEx.printStackTrace();
 			}
 			txtAreaTaskDescription.setText("");
 			txtFieldCompletedUntil.setText("");

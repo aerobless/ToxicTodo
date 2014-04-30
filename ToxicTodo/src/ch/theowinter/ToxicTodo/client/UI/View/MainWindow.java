@@ -215,7 +215,6 @@ public class MainWindow{
 					todoManager.updateList();
 				} catch (IOException anEx) {
 					main.connectionWarning();
-					anEx.printStackTrace();
 				}
 			}
         });      
@@ -373,7 +372,6 @@ public class MainWindow{
 						todoManager.removeTask(true, task, categoryKey.getKeyword());
 					} catch (IOException anEx) {
 						main.connectionWarning();
-						anEx.printStackTrace();
 					}
 					taskListModel.filter(searchField.getText());
 				}else{
@@ -401,7 +399,6 @@ public class MainWindow{
 						todoManager.removeTask(false, task, categoryKey.getKeyword());
 					} catch (IOException anEx) {
 						main.connectionWarning();
-						anEx.printStackTrace();
 					}
 					taskListModel.filter(searchField.getText());
 				}else{
@@ -448,9 +445,10 @@ public class MainWindow{
 	
 	public void connectionWarning(){
 		JOptionPane.showMessageDialog(main.frmToxictodo,
-			    "You've lost connection to the server and we're unable to complete your request.",
+			    "You've lost the connection to the server and we're unable to complete your request.",
 			    "Connection lost",
 			    JOptionPane.ERROR_MESSAGE);
+		System.out.println("ERROR 8: lost connection to server");
 	}
 	
 	class CategoryListSelectionHandler implements ListSelectionListener {
