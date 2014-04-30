@@ -32,16 +32,23 @@ public class ClientController {
 			    "Unable to detect server", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
 		if(result == 0){
 			//YES - We start a local server for the user.
+			System.out.println("Running integrated server!");
 			new Thread(new ServerApplication()).start();
-			 System.out.println("dd");
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException anEx) {
-				// TODO Auto-generated catch block
-				anEx.printStackTrace();
+			ClientTodoManager todoManager;
+			do{
+				try {
+					Thread.sleep(5);
+				} catch (InterruptedException anEx) {
+					System.out.println("Interrupted Sleep");
+				}
+				todoManager = new ClientTodoManager();
+			}while(!todoManager.getInitSuccess());
+			if(todoManager.getInitSuccess()){
+				createGUI(todoManager, settings);
+			}else{
+				System.out.println("ERROR 7: Unable to connect");
+				System.exit(0);
 			}
-			ClientTodoManager todoManager = new ClientTodoManager();
-			createGUI(todoManager, settings);
 		} else{
 			//NO - We exit here because the user doesn't want to run a local server.
 			System.exit(0);	
