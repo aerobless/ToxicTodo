@@ -2,6 +2,7 @@ package ch.theowinter.ToxicTodo.client;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Observable;
 import java.util.concurrent.Semaphore;
 
@@ -72,8 +73,9 @@ public class ClientTodoManager extends Observable{
 		return returnArray;
 	}
 	
-	public void addNewTask(String categoryKeyword, String taskDescription) throws IOException{
-		TodoTask task = new TodoTask(taskDescription);
+	public void addNewTask(int priority, String categoryKeyword, String taskDescription) throws IOException{
+		Date today = new Date();
+		TodoTask task = new TodoTask(priority, false, taskDescription, "location: not implemented yet", today);
 		ClientApplication.sendToServer(new ToxicDatagram("ADD_TASK_TO_LIST_ON_SERVER", "", task, categoryKeyword));
 		updateList();
 	}

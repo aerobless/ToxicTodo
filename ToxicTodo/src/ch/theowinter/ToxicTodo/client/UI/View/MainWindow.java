@@ -182,7 +182,6 @@ public class MainWindow{
 		//splitPane.setBackground(Color.black);
 
 		taskListModel = new TaskListModel(categoryListModel.getElementAt(0).getKeyword(), todoManager);
-		System.out.println(taskListModel.getSize());
 		taskList = new JList<TodoTask>(taskListModel);
 		taskList.setCellRenderer(new TaskListCellRenderer());
 		taskList.setBackground(ToxicColors.softGrey);

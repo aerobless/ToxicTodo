@@ -29,6 +29,7 @@ public class TaskPanel extends JPanel {
 
 	private JTextArea txtAreaTaskDescription;
 	private JTextField txtFieldCompletedUntil;
+	private JComboBox<String> priorityCombobox;
 	private MainWindow main;
 	private ClientTodoManager todoManager;
 
@@ -68,13 +69,13 @@ public class TaskPanel extends JPanel {
 		gbc_lblType.gridy = 0;
 		centerPanel.add(lblType, gbc_lblType);
 		
-		JComboBox<String> categoryCombobox = new JComboBox<String>(new CategoryComboBoxModel(todoManager));
+		priorityCombobox = new JComboBox<String>(new CategoryComboBoxModel(todoManager));
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 1;
 		gbc_comboBox.gridy = 0;
-		centerPanel.add(categoryCombobox, gbc_comboBox);
+		centerPanel.add(priorityCombobox, gbc_comboBox);
 		
 		JLabel lblCompletedUntil = new JLabel("Completed until:");
 		GridBagConstraints gbc_lblCompletedUntil = new GridBagConstraints();
@@ -141,7 +142,7 @@ public class TaskPanel extends JPanel {
 	}
 	
 	private void cancelTask(){
-		//TODO: reset combobox
+		priorityCombobox.setSelectedIndex(0);
 		txtAreaTaskDescription.setText("");
 		txtFieldCompletedUntil.setText("");
 		main.switchToTasks();
@@ -152,7 +153,8 @@ public class TaskPanel extends JPanel {
 		TodoCategory category = main.getSelectedCategory();
 		if(category != null){
 			try {
-				todoManager.addNewTask(category.getKeyword(), txtAreaTaskDescription.getText());
+				//TODO: make prio editable
+				todoManager.addNewTask(0,category.getKeyword(), txtAreaTaskDescription.getText());
 			} catch (IOException anEx) {
 				main.connectionWarning();
 			}

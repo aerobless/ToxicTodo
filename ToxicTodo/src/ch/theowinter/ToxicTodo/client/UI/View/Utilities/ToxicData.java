@@ -8,7 +8,6 @@ public class ToxicData {
 	final public static String allTaskTodoCategoryKey = "allTaskTodoCategoryKeyDoNotUseDirectly";
 	final public static ArrayList<TaskPriority> priorityArray = generatePriorityArray();
 	
-	
 	private static ArrayList<TaskPriority> generatePriorityArray(){
 		ArrayList<TaskPriority> priorityArray = new ArrayList<TaskPriority> ();
 		priorityArray.add(new TaskPriority(0, "not important", '\uf0da'));
