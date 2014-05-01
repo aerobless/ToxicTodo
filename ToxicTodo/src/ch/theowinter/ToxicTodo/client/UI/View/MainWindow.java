@@ -42,7 +42,7 @@ import ch.theowinter.ToxicTodo.client.UI.View.Utilities.FontIconButton;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.PanelHeaderWhite;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.TaskListCellRenderer;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicColors;
-import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicStrings;
+import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicData;
 
 import com.explodingpixels.macwidgets.BottomBar;
 import com.explodingpixels.macwidgets.BottomBarSize;
@@ -392,7 +392,7 @@ public class MainWindow{
 			public void actionPerformed(ActionEvent e) {
 				TodoCategory editCategory = getSelectedCategory();
 				//double-safety - we never want to edit all-tasks.
-				if(editCategory.getKeyword()!=ToxicStrings.allTaskTodoCategoryKey){
+				if(editCategory.getKeyword()!=ToxicData.allTaskTodoCategoryKey){
 					if(categoryPanel == null){
 						categoryPanel = new CategoryPanel(main, todoManager);
 						categoryPanel.setCategory(editCategory);
@@ -456,7 +456,7 @@ public class MainWindow{
 	    	taskListModel.changeCategory(currentCategory.getKeyword());
 	    	taskListHeader.setTitel(currentCategory.getName().toUpperCase());
 	    	taskListHeader.setSubTitel(getMotivationText());
-	    	if(currentCategory.getKeyword().equals(ToxicStrings.allTaskTodoCategoryKey)){
+	    	if(currentCategory.getKeyword().equals(ToxicData.allTaskTodoCategoryKey)){
 	    		btnNewTask.setEnabled(false);
 	    		btnCompleteTask.setEnabled(false);
 	    		btnRemoveTask.setEnabled(false);

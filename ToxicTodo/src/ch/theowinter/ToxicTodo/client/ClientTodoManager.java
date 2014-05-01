@@ -9,7 +9,7 @@ import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoCategory;
 import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoList;
 import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoTask;
 import ch.theowinter.ToxicTodo.SharedObjects.Elements.ToxicDatagram;
-import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicStrings;
+import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicData;
 
 public class ClientTodoManager extends Observable{
 	//Class variables
@@ -95,11 +95,11 @@ public class ClientTodoManager extends Observable{
 	
 	public TodoList generateAllTasksCategory(TodoList inputList){
 		try {
-			inputList.addCategory(new TodoCategory("All tasks", ToxicStrings.allTaskTodoCategoryKey, '\uf135',true));
+			inputList.addCategory(new TodoCategory("All tasks", ToxicData.allTaskTodoCategoryKey, '\uf135',true));
 			for(String categoryKey : inputList.getCategoryMap().keySet()){
 				ArrayList<TodoTask> currentCategoryTasks = inputList.getCategoryMap().get(categoryKey).getTaskInCategoryAsArrayList();
 				for(TodoTask currentTask : currentCategoryTasks){
-					inputList.addTask(ToxicStrings.allTaskTodoCategoryKey, currentTask);
+					inputList.addTask(ToxicData.allTaskTodoCategoryKey, currentTask);
 				}
 			}
 		} catch (Exception anEx) {
