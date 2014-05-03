@@ -1,6 +1,7 @@
 package ch.theowinter.ToxicTodo.client.UI.View.Utilities;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -13,6 +14,7 @@ import javax.swing.JPanel;
 public class IconTextElement extends JPanel{
 	private static final long serialVersionUID = 6926949587536088474L;
 	JLabel lblIcon;
+	JPanel iconPanel;
 	JLabel lblTaskDescription;
 
 	/**
@@ -22,8 +24,19 @@ public class IconTextElement extends JPanel{
 		FlowLayout flowLayout = (FlowLayout) getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 
+		iconPanel = new JPanel();
+		add(iconPanel);
 		lblIcon = new JLabel("loading");
-		add(lblIcon);
+		iconPanel.add(lblIcon);
+		iconPanel.setOpaque(false);
+		FlowLayout flowLayoutIcon = new FlowLayout();
+		flowLayoutIcon.setVgap(0);
+		flowLayoutIcon.setHgap(0);
+		iconPanel.setLayout(flowLayoutIcon);
+
+		iconPanel.setPreferredSize(new Dimension(20, 20));
+		iconPanel.setMaximumSize(new Dimension(20, 20));
+		iconPanel.setMinimumSize(new Dimension(20, 20));
 		
 		lblTaskDescription = new JLabel("x");
 		add(lblTaskDescription);
@@ -39,6 +52,12 @@ public class IconTextElement extends JPanel{
 	}
 	
 	public void setText(char awesomeIcon, String taskDescription, int iconSize, int textSize){
+		//TODO: ugly fix.. we should make this clean sometime.
+		if(textSize!=999){
+			iconPanel.setPreferredSize(new Dimension(iconSize+10, iconSize));
+			iconPanel.setMaximumSize(new Dimension(iconSize+10, iconSize));
+			iconPanel.setMinimumSize(new Dimension(iconSize+10, iconSize));	
+		}
 		Font ttfReal = null;
 		try {
 	        InputStream in = this.getClass().getResourceAsStream("/resources/fontawesome-webfont.ttf");
