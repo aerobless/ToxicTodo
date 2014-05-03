@@ -20,7 +20,6 @@ import javax.swing.ScrollPaneConstants;
 
 import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoCategory;
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
-import ch.theowinter.ToxicTodo.client.UI.Model.CategoryComboBoxModel;
 import ch.theowinter.ToxicTodo.client.UI.Model.TaskPriorityComboboxModel;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.PanelHeaderWhite;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicColors;
@@ -78,6 +77,8 @@ public class TaskPanel extends JPanel {
 		centerPanel.add(lblType, gbc_lblType);
 		
 		priorityCombobox = new JComboBox<String>(new TaskPriorityComboboxModel());
+		priorityCombobox.setSelectedIndex(0);
+
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -157,19 +158,18 @@ public class TaskPanel extends JPanel {
 	}
 	
 	private void saveTask(){
-		main.switchToTasks();
+		int taskPriority = priorityCombobox.getSelectedIndex();
 		TodoCategory category = main.getSelectedCategory();
-		if(category != null){
+		String taskDescripition = txtAreaTaskDescription.getText();
+		if(category != null && taskDescripition.length()>1 && taskPriority>-1){
 			try {
-				//TODO: make prio editable
-				todoManager.addNewTask(0,category.getKeyword(), txtAreaTaskDescription.getText());
+				todoManager.addNewTask(taskPriority,category.getKeyword(), taskDescripition);
+				main.switchToTasks();
 			} catch (IOException anEx) {
 				main.connectionWarning();
 			}
-			txtAreaTaskDescription.setText("");
-			txtFieldCompletedUntil.setText("");
 		}else{
-			System.out.println("No category selected.");
+			main.genericWarning("Unable to save", "Have you filled in all fields?");
 		}
 	}
 }

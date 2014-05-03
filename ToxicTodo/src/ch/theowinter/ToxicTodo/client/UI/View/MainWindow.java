@@ -448,6 +448,11 @@ public class MainWindow{
 		System.out.println("ERROR 8: lost connection to server");
 	}
 	
+	public void genericWarning(String titel, String text){
+		JOptionPane.showMessageDialog(main.frmToxictodo, text, titel, JOptionPane.ERROR_MESSAGE);
+		System.out.println("ERROR: "+titel+" : "+text);
+	}
+	
 	class CategoryListSelectionHandler implements ListSelectionListener {
 	    public void valueChanged(ListSelectionEvent e) {
 	    	ListSelectionModel lsm = (ListSelectionModel)e.getSource();
