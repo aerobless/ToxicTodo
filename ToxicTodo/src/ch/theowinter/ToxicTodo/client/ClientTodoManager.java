@@ -68,7 +68,6 @@ public class ClientTodoManager extends Observable{
 		ArrayList<TodoCategory> returnArray = new ArrayList<TodoCategory>();
 		for(String categoryKey : getTodoList().getCategoryMap().keySet()){
 			returnArray.add(getTodoList().getCategoryMap().get(categoryKey));
-			System.out.println(getTodoList().getCategoryMap().get(categoryKey).getIcon());
 		}
 		return returnArray;
 	}
