@@ -12,6 +12,7 @@ import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -35,6 +36,7 @@ public class CategoryPanel extends JPanel {
 	
 	//Buttons
 	private JButton btnSave;
+	private JButton btnDelete;
 
 	/**
 	 * Create the frame.
@@ -131,6 +133,9 @@ public class CategoryPanel extends JPanel {
 		flowLayout_1.setAlignment(FlowLayout.RIGHT);
 		add(bottomPanel, BorderLayout.SOUTH);
 		
+		btnDelete = new JButton("Delete Category");
+		bottomPanel.add(btnDelete);
+		
 		JButton btnCancel = new JButton("Cancel");
 		bottomPanel.add(btnCancel);
 		btnCancel.addActionListener(new ActionListener() {
@@ -153,6 +158,14 @@ public class CategoryPanel extends JPanel {
 		header.setIcon(todoCategory.getIcon());
 		btnSave.setToolTipText("All done? Press save.");
 		btnSave.setText("Save changes");
+		
+		btnDelete.setVisible(true);
+		btnDelete.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				deleteCategory();
+			}
+        }); 
 		//Save changes Listener
 		btnSave.addActionListener(new ActionListener() {
 			@Override
@@ -170,6 +183,7 @@ public class CategoryPanel extends JPanel {
 		btnSave.setToolTipText("All done? Press save.");
 		header.setTitel("New Category");
 		
+		btnDelete.setVisible(false);
 		btnSave.setText("Save");
 		//Save Listener
 		btnSave.addActionListener(new ActionListener() {
@@ -185,6 +199,20 @@ public class CategoryPanel extends JPanel {
 		txtFieldCategoryTitel.setText("");
 		txtFieldCategoryKeyword.setText("");
 		main.switchToTasks();
+	}
+	
+	private void deleteCategory(){
+		int yesOrNo = 0;
+		int dialogResult = JOptionPane.showConfirmDialog (main.frmToxictodo, "Are you certain you want to delete: "+oldCategory.getKeyword(),"Confirm removal of "+oldCategory.getKeyword(),yesOrNo);
+		if(dialogResult == JOptionPane.YES_OPTION){
+			try {
+				main.resetCategorySelection();
+				todoManager.removeCategory(oldCategory);
+			} catch (IOException e) {
+				main.connectionWarning();
+			}
+			cancelAndClearCategory();
+		}
 	}
 	
 	private void editCategory(){

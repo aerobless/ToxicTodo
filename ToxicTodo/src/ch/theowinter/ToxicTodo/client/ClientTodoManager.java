@@ -99,6 +99,11 @@ public class ClientTodoManager extends Observable{
 		updateList();
 	}
 	
+	public void removeCategory(TodoCategory category) throws IOException{
+		ClientApplication.sendToServer(new ToxicDatagram("REMOVE_CATEGORY_ON_SERVER",null, category));
+		updateList();
+	}
+	
 	public TodoList generateAllTasksCategory(TodoList inputList){
 		try {
 			inputList.addCategory(new TodoCategory("All tasks", ToxicData.allTaskTodoCategoryKey, '\uf135',true));

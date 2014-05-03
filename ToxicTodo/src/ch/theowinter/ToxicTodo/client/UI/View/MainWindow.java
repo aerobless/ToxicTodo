@@ -52,7 +52,7 @@ import com.explodingpixels.macwidgets.MacWidgetFactory;
 import com.explodingpixels.macwidgets.UnifiedToolBar;
 
 public class MainWindow{
-	private JFrame frmToxictodo;
+	protected JFrame frmToxictodo;
 	private JList<TodoCategory> categoryList;
 	private CategoryListModel categoryListModel;
 	private TaskListModel taskListModel;
@@ -282,11 +282,13 @@ public class MainWindow{
 			public void actionPerformed(ActionEvent e) {
 				if(newTaskPanel == null){
 					newTaskPanel = new TaskPanel(main, todoManager);
+					newTaskPanel.newTask();
 					setRightContent(newTaskPanel);
 				}else if(newTaskPanel.isVisible() == true){
 					switchToTasks();
 				} else{
 					setRightContent(newTaskPanel);
+					newTaskPanel.newTask();
 				}
 			}
         });  
@@ -451,6 +453,10 @@ public class MainWindow{
 	public void genericWarning(String titel, String text){
 		JOptionPane.showMessageDialog(main.frmToxictodo, text, titel, JOptionPane.ERROR_MESSAGE);
 		System.out.println("ERROR: "+titel+" : "+text);
+	}
+	
+	public void resetCategorySelection(){
+		categoryList.setSelectedIndex(0);
 	}
 	
 	class CategoryListSelectionHandler implements ListSelectionListener {

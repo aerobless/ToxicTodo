@@ -150,6 +150,12 @@ public class TaskPanel extends JPanel {
         }); 
 	}
 	
+	public void newTask(){
+		priorityCombobox.setSelectedIndex(0);
+		txtAreaTaskDescription.setText("");
+		txtFieldCompletedUntil.setText("");
+	}
+	
 	private void cancelTask(){
 		priorityCombobox.setSelectedIndex(0);
 		txtAreaTaskDescription.setText("");
