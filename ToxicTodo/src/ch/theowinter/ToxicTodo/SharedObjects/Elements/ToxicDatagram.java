@@ -35,7 +35,7 @@ public class ToxicDatagram implements Serializable{
 	public ToxicDatagram(String serverControlMessage, String additionalMessage,
 			TodoCategory todoCategory) {
 		super();
-		this.additionalMessage = 
+		this.additionalMessage = additionalMessage;
 		this.controlMessage = serverControlMessage;
 		this.todoCategory = todoCategory;
 	}

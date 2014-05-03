@@ -29,6 +29,7 @@ public class CategoryPanel extends JPanel {
 	private ClientTodoManager todoManager;
 	private JComboBox<FontString> iconCombobox;
 	private JTextField txtFieldCategoryTitel;
+	private TodoCategory oldCategory;
 	private JTextField txtFieldCategoryKeyword;
 	private PanelHeaderWhite header;
 	
@@ -141,23 +142,26 @@ public class CategoryPanel extends JPanel {
 		
 		btnSave = new JButton("Save");
 		bottomPanel.add(btnSave);
-		btnSave.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				saveCategory();
-			}
-        }); 
 	}
 	
 	public void setCategory(TodoCategory todoCategory){
 		iconCombobox.setSelectedIndex(0);
 		txtFieldCategoryTitel.setText(todoCategory.getName());
 		txtFieldCategoryKeyword.setText(todoCategory.getKeyword());
-		btnSave.setEnabled(false);
-		btnSave.setToolTipText("Editing categories is currently not supported by the server.");
+		oldCategory = todoCategory;
 		header.setTitel("Edit category: "+todoCategory.getName());
 		header.setIcon(todoCategory.getIcon());
+		btnSave.setToolTipText("All done? Press save.");
+		btnSave.setText("Save changes");
+		//Save changes Listener
+		btnSave.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				editCategory();
+			}
+        }); 
 	}
+	
 	public void newCategory(){
 		iconCombobox.setSelectedIndex(0);
 		txtFieldCategoryTitel.setText("");
@@ -165,6 +169,15 @@ public class CategoryPanel extends JPanel {
 		btnSave.setEnabled(true);
 		btnSave.setToolTipText("All done? Press save.");
 		header.setTitel("New Category");
+		
+		btnSave.setText("Save");
+		//Save Listener
+		btnSave.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				saveCategory();
+			}
+        }); 
 	}
 	
 	private void cancelAndClearCategory(){
@@ -174,8 +187,21 @@ public class CategoryPanel extends JPanel {
 		main.switchToTasks();
 	}
 	
+	private void editCategory(){
+		char icon = ((FontString)iconCombobox.getSelectedItem()).getIcon();
+		String categoryTitel = txtFieldCategoryTitel.getText();
+		String categoryKeyword = txtFieldCategoryKeyword.getText();
+		if(categoryTitel.length()>2&&categoryKeyword.length()>2){
+			try {
+				todoManager.editCategory(oldCategory.getKeyword(), categoryKeyword, categoryTitel, icon);
+			} catch (IOException anEx) {
+				main.connectionWarning();
+			}
+			cancelAndClearCategory();
+		}
+	}
+	
 	private void saveCategory(){
-		//TODO: better check for empty name, empty description, bad description etc. same with new task
 		char icon = ((FontString)iconCombobox.getSelectedItem()).getIcon();
 		String categoryTitel = txtFieldCategoryTitel.getText();
 		String categoryKeyword = txtFieldCategoryKeyword.getText();
