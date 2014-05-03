@@ -160,16 +160,18 @@ class ServerOpenConnectionThread implements Runnable {
 			writeLock.release();
 		}
 		
-		//TODO: working on
 		else if(serverMessage.equals("EDIT_CATEGORY_ON_SERVER")){
 			writeLock.acquire();
 			try {
-				ServerApplication.serverTodoList.removeCategory(dataFromClient.getTodoCategory().getKeyword());
-				dataToClient = new ToxicDatagram("Answering successful request to remove category", "");
+				ServerApplication.serverTodoList.editCategory(dataFromClient.getAdditionalMessage(),
+						dataFromClient.getTodoCategory().getKeyword(),
+						dataFromClient.getTodoCategory().getName(),
+						dataFromClient.getTodoCategory().getIcon());
+				dataToClient = new ToxicDatagram("Answering successful request to edit category", "");
 				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
-				ServerApplication.serverPrint("Failed to remove category.");
-				dataToClient = new ToxicDatagram("Removing a category failed.", "");
+				ServerApplication.serverPrint("Failed to edit category.");
+				dataToClient = new ToxicDatagram("Editing a category failed.", "");
 			}
 			writeLock.release();
 		}
