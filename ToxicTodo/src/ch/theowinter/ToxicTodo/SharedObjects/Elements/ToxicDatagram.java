@@ -32,9 +32,10 @@ public class ToxicDatagram implements Serializable{
 	}
 	
 	//constructor for sending a category
-	public ToxicDatagram(String serverControlMessage,
+	public ToxicDatagram(String serverControlMessage, String additionalMessage,
 			TodoCategory todoCategory) {
 		super();
+		this.additionalMessage = 
 		this.controlMessage = serverControlMessage;
 		this.todoCategory = todoCategory;
 	}

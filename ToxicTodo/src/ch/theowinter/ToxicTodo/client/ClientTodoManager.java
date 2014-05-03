@@ -89,13 +89,14 @@ public class ClientTodoManager extends Observable{
 	
 	public void addNewCategory(String description, String keyword, char icon, boolean systemCategory) throws IOException{
 		TodoCategory newCategory = new TodoCategory(description, keyword, icon, systemCategory);
-		ClientApplication.sendToServer(new ToxicDatagram("ADD_CATEGORY_TO_LIST_ON_SERVER", newCategory));
+		ClientApplication.sendToServer(new ToxicDatagram("ADD_CATEGORY_TO_LIST_ON_SERVER",null, newCategory));
 		updateList();
 	}
 	
-	public void editCategory(String oldKeyword, String newKeyword, String name, char icon){
+	public void editCategory(String oldKeyword, String newKeyword, String name, char icon) throws IOException{
 		TodoCategory newCategory = new TodoCategory(name, newKeyword, icon, false);
-	//	ClientApplication.sendToServer(new ToxicDatagram("EDIT_CATEGORY_ON_SERVER", "", ))
+		ClientApplication.sendToServer(new ToxicDatagram("EDIT_CATEGORY_ON_SERVER", oldKeyword,newCategory));
+		updateList();
 	}
 	
 	public TodoList generateAllTasksCategory(TodoList inputList){

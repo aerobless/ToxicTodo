@@ -309,7 +309,7 @@ public class CliController {
 		if(args.length>=4){
 			String[] goodArgs = logic.concatenateArgs(args, 4);
 			TodoCategory category = new TodoCategory(goodArgs[3], goodArgs[2]);
-			datagram = new ToxicDatagram("ADD_CATEGORY_TO_LIST_ON_SERVER", category);
+			datagram = new ToxicDatagram("ADD_CATEGORY_TO_LIST_ON_SERVER",null, category);
 		}
 		else{
 			print("You can add a category like this:");
@@ -322,7 +322,7 @@ public class CliController {
 		ToxicDatagram datagram = null;
 		if(args.length==3){
 			TodoCategory category = new TodoCategory(args[2], args[2]);
-			datagram = new ToxicDatagram("REMOVE_CATEGORY_ON_SERVER", category);
+			datagram = new ToxicDatagram("REMOVE_CATEGORY_ON_SERVER",null, category);
 		}
 		else{
 			print("You can remove a category like this:");
