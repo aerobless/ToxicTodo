@@ -59,7 +59,7 @@ public class CliController {
 	//TODO: add good description
 	public void voidDrawList(){
 		try {
-			todoManager.setTodoList(ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "")));
+			todoManager.setTodoList(ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT")));
 		} catch (IOException anEx) {
 			print("ERROR: Unable to establish a connection with the server.");
 			print("If you're running the server on a different IP or port, then you should change the client_config.xml!");
@@ -285,7 +285,7 @@ public class CliController {
 					if(writeToLog){
 						dataMessage = "REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER";
 					}
-					datagram = new ToxicDatagram(dataMessage, "", localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1));	
+					datagram = new ToxicDatagram(dataMessage, localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1));	
 				}
 				else{
 					print("There's no task with that ID.");
@@ -300,7 +300,7 @@ public class CliController {
 	public ToxicDatagram addTask(String[] args){
 		String[] goodArgs = logic.concatenateArgs(args, 3);
 		TodoTask task = new TodoTask(goodArgs[2]);
-		ToxicDatagram datagram = new ToxicDatagram("ADD_TASK_TO_LIST_ON_SERVER", "", task, goodArgs[1]);
+		ToxicDatagram datagram = new ToxicDatagram("ADD_TASK_TO_LIST_ON_SERVER", task, goodArgs[1]);
 		return datagram;
 	}
 	
@@ -309,7 +309,7 @@ public class CliController {
 		if(args.length>=4){
 			String[] goodArgs = logic.concatenateArgs(args, 4);
 			TodoCategory category = new TodoCategory(goodArgs[3], goodArgs[2]);
-			datagram = new ToxicDatagram("ADD_CATEGORY_TO_LIST_ON_SERVER", "",category);
+			datagram = new ToxicDatagram("ADD_CATEGORY_TO_LIST_ON_SERVER", category);
 		}
 		else{
 			print("You can add a category like this:");
@@ -322,7 +322,7 @@ public class CliController {
 		ToxicDatagram datagram = null;
 		if(args.length==3){
 			TodoCategory category = new TodoCategory(args[2], args[2]);
-			datagram = new ToxicDatagram("REMOVE_CATEGORY_ON_SERVER", "",category);
+			datagram = new ToxicDatagram("REMOVE_CATEGORY_ON_SERVER", category);
 		}
 		else{
 			print("You can remove a category like this:");

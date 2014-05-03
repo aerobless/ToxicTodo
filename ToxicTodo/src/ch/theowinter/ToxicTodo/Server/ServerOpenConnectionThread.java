@@ -48,7 +48,7 @@ class ServerOpenConnectionThread implements Runnable {
     			System.err.println("Encryption ERROR - Unable to encrypt & send data!");
     		}
 			
-			ToxicDatagram dataToClient = new ToxicDatagram("ERROR - 400 - The server has no response for you.", "");
+			ToxicDatagram dataToClient = new ToxicDatagram("ERROR - 400 - The server has no response for you.");
 		        	
 			try {
 					dataToClient = runServerAction(dataFromClient.getServerControlMessage(), dataFromClient);
@@ -86,23 +86,23 @@ class ServerOpenConnectionThread implements Runnable {
 	
 	public synchronized ToxicDatagram runServerAction(String serverMessage, ToxicDatagram dataFromClient) throws InterruptedException{
 		ServerApplication.serverPrint("Trying to handle: "+serverMessage);
-		ToxicDatagram dataToClient = new ToxicDatagram("ERROR - 500 - Bad Request to server action handler.", "");
+		ToxicDatagram dataToClient = new ToxicDatagram("ERROR - 500 - Bad Request to server action handler.");
 		if(serverMessage.equals("SEND_TODOLIST_TO_CLIENT")){
 			//We wait until noone's writing anymore 
 			while(writeLock.availablePermits()==0){
 				wait();
 			}
-			dataToClient = new ToxicDatagram("Answering successful request for TodoList", "", ServerApplication.getServerTodoList());
+			dataToClient = new ToxicDatagram("Answering successful request for TodoList", ServerApplication.getServerTodoList());
 		}
 		else if(serverMessage.equals("ADD_TASK_TO_LIST_ON_SERVER")){
 			writeLock.acquire();
 			try {
 				ServerApplication.serverTodoList.addTask(dataFromClient.getAdditionalMessage(), dataFromClient.getTodoTask());
-				dataToClient = new ToxicDatagram("Answering successful request to add new task", "");
+				dataToClient = new ToxicDatagram("Answering successful request to add new task");
 				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
 				ServerApplication.serverPrint("Failed to add new task.");
-				dataToClient = new ToxicDatagram("Adding a new task failed. Maybe it already exists?", "");
+				dataToClient = new ToxicDatagram("Adding a new task failed. Maybe it already exists?");
 			}
 			writeLock.release();
 		}
@@ -112,11 +112,11 @@ class ServerOpenConnectionThread implements Runnable {
 				ServerApplication.serverTodoList.removeTask(dataFromClient.getTodoTask(), dataFromClient.getAdditionalMessage());
 				java.util.Date date= new java.util.Date();
 				ServerApplication.writeLogToFile("CompletedTasks.txt", new Timestamp(date.getTime())+" : COMPLETED : "+dataFromClient.getTodoTask().getText());
-				dataToClient = new ToxicDatagram("Answering successful request to remove & log task", "");
+				dataToClient = new ToxicDatagram("Answering successful request to remove & log task");
 				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
 				ServerApplication.serverPrint("Failed to remove & log task.");
-				dataToClient = new ToxicDatagram("Completing a task failed.", "");
+				dataToClient = new ToxicDatagram("Completing a task failed.");
 			}
 			writeLock.release();
 		}
@@ -125,11 +125,11 @@ class ServerOpenConnectionThread implements Runnable {
 			writeLock.acquire();
 			try {
 				ServerApplication.serverTodoList.removeTask(dataFromClient.getTodoTask(), dataFromClient.getAdditionalMessage());
-				dataToClient = new ToxicDatagram("Answering successful request to remove task", "");
+				dataToClient = new ToxicDatagram("Answering successful request to remove task");
 				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
 				ServerApplication.serverPrint("Failed to remove task.");
-				dataToClient = new ToxicDatagram("Removing a task failed.", "");
+				dataToClient = new ToxicDatagram("Removing a task failed.");
 			}
 			writeLock.release();
 		}
@@ -138,11 +138,11 @@ class ServerOpenConnectionThread implements Runnable {
 			writeLock.acquire();
 			try {
 				ServerApplication.serverTodoList.addCategory(dataFromClient.getTodoCategory());
-				dataToClient = new ToxicDatagram("Answering successful request to add category", "");
+				dataToClient = new ToxicDatagram("Answering successful request to add category");
 				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
 				ServerApplication.serverPrint("Failed to add new category.");
-				dataToClient = new ToxicDatagram("Adding a category failed.", "");
+				dataToClient = new ToxicDatagram("Adding a category failed.");
 			}
 			writeLock.release();
 		}
@@ -151,11 +151,11 @@ class ServerOpenConnectionThread implements Runnable {
 			writeLock.acquire();
 			try {
 				ServerApplication.serverTodoList.removeCategory(dataFromClient.getTodoCategory().getKeyword());
-				dataToClient = new ToxicDatagram("Answering successful request to remove category", "");
+				dataToClient = new ToxicDatagram("Answering successful request to remove category");
 				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
 				ServerApplication.serverPrint("Failed to remove category.");
-				dataToClient = new ToxicDatagram("Removing a category failed.", "");
+				dataToClient = new ToxicDatagram("Removing a category failed.");
 			}
 			writeLock.release();
 		}
@@ -167,11 +167,11 @@ class ServerOpenConnectionThread implements Runnable {
 						dataFromClient.getTodoCategory().getKeyword(),
 						dataFromClient.getTodoCategory().getName(),
 						dataFromClient.getTodoCategory().getIcon());
-				dataToClient = new ToxicDatagram("Answering successful request to edit category", "");
+				dataToClient = new ToxicDatagram("Answering successful request to edit category");
 				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
 				ServerApplication.serverPrint("Failed to edit category.");
-				dataToClient = new ToxicDatagram("Editing a category failed.", "");
+				dataToClient = new ToxicDatagram("Editing a category failed.");
 			}
 			writeLock.release();
 		}

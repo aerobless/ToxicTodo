@@ -57,7 +57,7 @@ public class ClientApplication {
 		}
 		else{
 			try {
-				todoManager = new ClientTodoManager(sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", "")));
+				todoManager = new ClientTodoManager(sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT")));
 			} catch (IOException anEx) {
 				print("ERROR: Unable to establish a connection with the server.");
 				print("Are you certain that you're running a server on "+settings.getHOST()+":"+settings.getPORT()+"?");

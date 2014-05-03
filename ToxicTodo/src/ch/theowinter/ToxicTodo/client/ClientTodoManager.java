@@ -58,10 +58,9 @@ public class ClientTodoManager extends Observable{
 	public boolean getInitSuccess(){
 		return initSuccess;
 	}
-	
-	//ATM only used in GUI
+
 	public void updateList() throws IOException{
-		setTodoList(generateAllTasksCategory(ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT", ""))));
+		setTodoList(generateAllTasksCategory(ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT"))));
 	}
 	
 	public ArrayList<TodoCategory> categoriesToArray(){
@@ -75,7 +74,7 @@ public class ClientTodoManager extends Observable{
 	public void addNewTask(int priority, String categoryKeyword, String taskDescription) throws IOException{
 		Date today = new Date();
 		TodoTask task = new TodoTask(priority, false, taskDescription, "location: not implemented yet", today);
-		ClientApplication.sendToServer(new ToxicDatagram("ADD_TASK_TO_LIST_ON_SERVER", "", task, categoryKeyword));
+		ClientApplication.sendToServer(new ToxicDatagram("ADD_TASK_TO_LIST_ON_SERVER", task, categoryKeyword));
 		updateList();
 	}
 	
@@ -84,14 +83,19 @@ public class ClientTodoManager extends Observable{
 		if(writeToLog){
 			dataMessage = "REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER";
 		}
-		ClientApplication.sendToServer(new ToxicDatagram(dataMessage, "",task , categoryKeyword));
+		ClientApplication.sendToServer(new ToxicDatagram(dataMessage, task , categoryKeyword));
 		updateList();
 	}
 	
 	public void addNewCategory(String description, String keyword, char icon, boolean systemCategory) throws IOException{
 		TodoCategory newCategory = new TodoCategory(description, keyword, icon, systemCategory);
-		ClientApplication.sendToServer(new ToxicDatagram("ADD_CATEGORY_TO_LIST_ON_SERVER", "",newCategory));
+		ClientApplication.sendToServer(new ToxicDatagram("ADD_CATEGORY_TO_LIST_ON_SERVER", newCategory));
 		updateList();
+	}
+	
+	public void editCategory(String oldKeyword, String newKeyword, String name, char icon){
+		TodoCategory newCategory = new TodoCategory(name, newKeyword, icon, false);
+	//	ClientApplication.sendToServer(new ToxicDatagram("EDIT_CATEGORY_ON_SERVER", "", ))
 	}
 	
 	public TodoList generateAllTasksCategory(TodoList inputList){
