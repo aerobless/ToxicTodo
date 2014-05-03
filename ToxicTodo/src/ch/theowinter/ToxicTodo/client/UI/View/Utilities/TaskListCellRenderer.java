@@ -16,7 +16,7 @@ public class TaskListCellRenderer extends IconTextElement implements ListCellRen
 			Object value, int index, boolean isSelected, boolean cellHasFocus) {
 		TodoTask currentTask = (TodoTask)value;
 
-		this.setText('\uf15b', currentTask.getText());
+		this.setText(ToxicData.priorityArray.get(currentTask.getPriority()).getPriorityIcon(), currentTask.getText());
 
 		Color background = ToxicColors.softGrey;
             
