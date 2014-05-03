@@ -58,6 +58,29 @@ public class TodoList implements Serializable {
 	}
 	
 	/**
+	 * Edit an existing category. Throws an error if the category doesn't exist.
+	 * 
+	 * @param oldKeyword
+	 * @param newKeyword
+	 * @param newName
+	 * @param newIcon
+	 * @throws Exception
+	 */
+	public void editCategory(String oldKeyword, String newKeyword, String newName, char newIcon) throws Exception {
+		TodoCategory editCategory = categoryMap.get(oldKeyword);
+		if(editCategory!=null){
+			editCategory.setIcon(newIcon);
+			editCategory.setKeyword(newKeyword);
+			editCategory.setName(newName);
+			categoryMap.remove(oldKeyword);
+			categoryMap.put(newKeyword, editCategory);
+		}
+		else{
+			throw new Exception("Category doesn't exist.");
+		}
+	}
+	
+	/**
 	 * Add a new task to the category. Throws error when category doesn't exist.
 	 * 
 	 * @param categoryKeyword

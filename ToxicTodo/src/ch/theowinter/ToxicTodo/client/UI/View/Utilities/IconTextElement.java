@@ -95,8 +95,4 @@ public class IconTextElement extends JPanel{
 		}
 		return "<html>"+outputBuilder.toString()+"</html>";
 	}
-	
-	public void setTextAndIconSize(int size){
-		
-	}
 }

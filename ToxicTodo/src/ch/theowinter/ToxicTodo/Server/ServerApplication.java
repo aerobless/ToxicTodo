@@ -17,7 +17,7 @@ import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoList;
 
 public class ServerApplication implements Runnable{
 	//Vanity info
-	public static final double serverVersion = 1.28;
+	public static final double serverVersion = 1.29;
 	public static final String author = "Theo Winter";
 	public static final String website = "theowinter.ch";
 	public static final String serverUpdateURL = "http://w1nter.net:8080/job/ToxicTodo/lastSuccessfulBuild/artifact/ToxicTodo/dist/ToxicTodoServer.jar";	
@@ -174,9 +174,6 @@ public class ServerApplication implements Runnable{
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Runnable#run()
-	 */
 	@Override
 	public void run() {
 		main(new String[]{});		

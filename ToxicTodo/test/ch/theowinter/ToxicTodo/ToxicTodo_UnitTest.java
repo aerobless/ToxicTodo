@@ -201,4 +201,32 @@ public class ToxicTodo_UnitTest {
 		CliController test = new CliController(null);
 		System.out.println(test.formatString("this is **some** random text"));
 	}
+	
+	@Test
+	public void editCategory(){
+		boolean successfulTest = true;
+		//SETUP
+		TodoList todoList = new TodoList();
+		TodoTask testedTask = new TodoTask("Do homework");
+		try {
+			todoList.addCategory(new TodoCategory("school work", "school"));
+			todoList.addCategory(new TodoCategory("home work", "home"));
+			todoList.addTask("school", "Do VSS exercises");
+			todoList.addTask("school", testedTask);
+			todoList.addCategory(new TodoCategory("todo TEST", "todo"));
+			todoList.addTask("todo", "Do VSS exercises");
+		} catch (Exception e) {
+			successfulTest=false;
+		}
+		try{
+			todoList.editCategory("school", "newSchool", "New School Work", 'i');
+		} catch (Exception e){
+			successfulTest=false;
+		}
+		TodoCategory editedCat = todoList.getCategoryMap().get("newSchool");
+		TodoCategory doesntExist = todoList.getCategoryMap().get("school");
+		assertEquals("New School Work", editedCat.getName());
+		assertEquals(null, doesntExist);
+		assertTrue(successfulTest);	
+	}
 }
