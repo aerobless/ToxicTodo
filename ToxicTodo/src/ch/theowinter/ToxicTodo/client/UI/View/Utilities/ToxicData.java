@@ -11,9 +11,9 @@ public class ToxicData {
 	private static ArrayList<TaskPriority> generatePriorityArray(){
 		ArrayList<TaskPriority> priorityArray = new ArrayList<TaskPriority> ();
 		priorityArray.add(new TaskPriority(0, "not important", '\uf0da'));
-		priorityArray.add(new TaskPriority(0, "Keep in mind (half-star)", '\uf123'));
-		priorityArray.add(new TaskPriority(0, "Important! (star)", '\uf005'));
-		priorityArray.add(new TaskPriority(0, "Deadly important! (Lightning strike)", '\uf0e7'));
+		priorityArray.add(new TaskPriority(0, "Keep in mind", '\uf123'));
+		priorityArray.add(new TaskPriority(0, "Important!", '\uf005'));
+		priorityArray.add(new TaskPriority(0, "Deadly important!", '\uf0e7'));
 		return priorityArray;
 	}
 }

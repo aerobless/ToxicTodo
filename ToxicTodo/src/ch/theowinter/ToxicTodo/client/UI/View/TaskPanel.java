@@ -21,6 +21,7 @@ import javax.swing.ScrollPaneConstants;
 import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoCategory;
 import ch.theowinter.ToxicTodo.client.ClientTodoManager;
 import ch.theowinter.ToxicTodo.client.UI.Model.CategoryComboBoxModel;
+import ch.theowinter.ToxicTodo.client.UI.Model.TaskPriorityComboboxModel;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.PanelHeaderWhite;
 import ch.theowinter.ToxicTodo.client.UI.View.Utilities.ToxicColors;
 
@@ -56,25 +57,32 @@ public class TaskPanel extends JPanel {
 		add(centerPanel, BorderLayout.CENTER);
 		GridBagLayout gbl_centerPanel = new GridBagLayout();
 		gbl_centerPanel.columnWidths = new int[]{124, 0, 0, 0};
-		gbl_centerPanel.rowHeights = new int[]{0, 0, 0, 0, 0};
+		gbl_centerPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
 		gbl_centerPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_centerPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_centerPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		centerPanel.setLayout(gbl_centerPanel);
+		
+		JLabel spacer = new JLabel(" ");
+		GridBagConstraints gbc_spacer = new GridBagConstraints();
+		gbc_spacer.insets = new Insets(0, 0, 5, 5);
+		gbc_spacer.gridx = 0;
+		gbc_spacer.gridy = 0;
+		centerPanel.add(spacer, gbc_spacer);
 		
 		JLabel lblType = new JLabel("Priority:");
 		GridBagConstraints gbc_lblType = new GridBagConstraints();
 		gbc_lblType.anchor = GridBagConstraints.EAST;
 		gbc_lblType.insets = new Insets(0, 0, 5, 5);
 		gbc_lblType.gridx = 0;
-		gbc_lblType.gridy = 0;
+		gbc_lblType.gridy = 1;
 		centerPanel.add(lblType, gbc_lblType);
 		
-		priorityCombobox = new JComboBox<String>(new CategoryComboBoxModel(todoManager));
+		priorityCombobox = new JComboBox<String>(new TaskPriorityComboboxModel());
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 1;
-		gbc_comboBox.gridy = 0;
+		gbc_comboBox.gridy = 1;
 		centerPanel.add(priorityCombobox, gbc_comboBox);
 		
 		JLabel lblCompletedUntil = new JLabel("Completed until:");
@@ -82,7 +90,7 @@ public class TaskPanel extends JPanel {
 		gbc_lblCompletedUntil.anchor = GridBagConstraints.EAST;
 		gbc_lblCompletedUntil.insets = new Insets(0, 0, 5, 5);
 		gbc_lblCompletedUntil.gridx = 0;
-		gbc_lblCompletedUntil.gridy = 1;
+		gbc_lblCompletedUntil.gridy = 2;
 		centerPanel.add(lblCompletedUntil, gbc_lblCompletedUntil);
 		
 		txtFieldCompletedUntil = new JTextField();
@@ -90,7 +98,7 @@ public class TaskPanel extends JPanel {
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 1;
+		gbc_textField.gridy = 2;
 		centerPanel.add(txtFieldCompletedUntil, gbc_textField);
 		txtFieldCompletedUntil.setColumns(10);
 		
@@ -99,7 +107,7 @@ public class TaskPanel extends JPanel {
 		gbc_lblDescription.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDescription.anchor = GridBagConstraints.NORTHEAST;
 		gbc_lblDescription.gridx = 0;
-		gbc_lblDescription.gridy = 2;
+		gbc_lblDescription.gridy = 3;
 		centerPanel.add(lblDescription, gbc_lblDescription);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -108,7 +116,7 @@ public class TaskPanel extends JPanel {
 		gbc_scrollPane.insets = new Insets(0, 3, 8, 8);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridx = 1;
-		gbc_scrollPane.gridy = 2;
+		gbc_scrollPane.gridy = 3;
 		centerPanel.add(scrollPane, gbc_scrollPane);
 		
 		txtAreaTaskDescription = new JTextArea();
