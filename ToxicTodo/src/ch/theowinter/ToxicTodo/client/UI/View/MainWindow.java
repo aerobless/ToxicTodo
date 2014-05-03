@@ -466,7 +466,7 @@ public class MainWindow{
 	    	taskListModel.changeCategory(currentCategory.getKeyword());
 	    	taskListHeader.setTitel(currentCategory.getName().toUpperCase());
 	    	taskListHeader.setSubTitel(getMotivationText());
-	    	if(currentCategory.getKeyword().equals(ToxicData.allTaskTodoCategoryKey)){
+	    	if(currentCategory.isSystemCategory()){
 	    		btnNewTask.setEnabled(false);
 	    		btnCompleteTask.setEnabled(false);
 	    		btnRemoveTask.setEnabled(false);

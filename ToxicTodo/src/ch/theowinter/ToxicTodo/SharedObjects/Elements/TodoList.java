@@ -15,7 +15,7 @@ public class TodoList implements Serializable {
 
 	public TodoList() {
 		super();
-		categoryMap.put("orphan", new TodoCategory("Tasks without category", "orphan"));
+		categoryMap.put("orphan", new TodoCategory("Tasks without category", "orphan", '\uf018', true));
 	}
 
 	/**
