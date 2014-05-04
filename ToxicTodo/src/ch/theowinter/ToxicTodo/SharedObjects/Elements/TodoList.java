@@ -22,7 +22,7 @@ public class TodoList implements Serializable {
 	 * Add a new category to the todoList. 
 	 * 
 	 * @param todoCategory
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public void addCategory(TodoCategory todoCategory) throws Exception{
 		if(categoryMap.get(todoCategory.getKeyword())==null){
