@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
@@ -22,7 +23,6 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -82,6 +82,15 @@ public class MainWindow{
 	
 	//Construction Finals
 	final Dimension uniBarButtonSize = new Dimension(50, 27);
+	
+	/**
+	 * Create the application.
+	 */
+	public MainWindow(ClientTodoManager aTodoManager, ClientSettings someSettings) {
+		todoManager = aTodoManager;
+		settings = someSettings;
+		initialize();
+	}
 
 	/**
 	 * Launch the GUI application.
@@ -93,19 +102,10 @@ public class MainWindow{
 					MainWindow window = new MainWindow(todoManager, settings);
 					window.frmToxictodo.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					Logger.log("Fatal UI Exception", e);
 				}
 			}
 		});
-	}
-
-	/**
-	 * Create the application.
-	 */
-	public MainWindow(ClientTodoManager aTodoManager, ClientSettings someSettings) {
-		todoManager = aTodoManager;
-		settings = someSettings;
-		initialize();
 	}
 
 	/**
@@ -136,7 +136,6 @@ public class MainWindow{
 	        public BasicSplitPaneDivider createDefaultDivider() {
 	        return new BasicSplitPaneDivider(this) {
 				private static final long serialVersionUID = -3373489858114729264L;
-				public void setBorder(Border b) {}
 	            @Override
 	                public void paint(Graphics g) {
 	                g.setColor(ToxicColors.textGreySoft);
@@ -145,7 +144,8 @@ public class MainWindow{
 	                }
 	        };
 	        }
-	    });
+	    }
+		);
 		splitPane.setDividerSize(1);
 		
 		//INIT CATEGORY PANEL
@@ -153,12 +153,12 @@ public class MainWindow{
 		categoryListscrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		categoryListscrollPane.setBorder(new LineBorder(Color.black,0));
 		
-		JPanel categoryPanel = new JPanel();
-		categoryListscrollPane.setViewportView(categoryPanel);
-		categoryPanel.setLayout(new BorderLayout(0, 0));
+		JPanel categoryJPanel = new JPanel();
+		categoryListscrollPane.setViewportView(categoryJPanel);
+		categoryJPanel.setLayout(new BorderLayout(0, 0));
 		
 		categoryList = new JList<TodoCategory>(categoryListModel);
-		categoryPanel.add(categoryList, BorderLayout.CENTER);
+		categoryJPanel.add(categoryList, BorderLayout.CENTER);
 		categoryList.setBackground(ToxicColors.softBlue);
 
 		categoryList.setCellRenderer(new CategoryListCellRenderer());
@@ -180,7 +180,6 @@ public class MainWindow{
 	    totalTaskPanel.add(taskScrollPane, BorderLayout.CENTER);
 	    
 		splitPane.setRightComponent(totalTaskPanel);
-		//splitPane.setBackground(Color.black);
 
 		taskListModel = new TaskListModel(categoryListModel.getElementAt(0).getKeyword(), todoManager);
 		taskList = new JList<TodoTask>(taskListModel);
@@ -490,7 +489,7 @@ public class MainWindow{
 	     * Source: http://www.forbes.com/sites/kevinkruse/2013/05/28/inspirational-quotes/
 	     */
 	    public String getMotivationText(){
-	    	ArrayList<String> motivationArray = new ArrayList<String>();
+	    	List<String> motivationArray = new ArrayList<String>();
 	    	motivationArray.add("Strive not to be a success, but rather to be of value. – Albert Einstein");
 	    	motivationArray.add("You miss 100% of the shots you don’t take. – Wayne Gretzky");
 	    	//motivationArray.add("The most common way people give up their power is by thinking they don’t have any. – Alice Walker");
