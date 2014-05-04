@@ -11,9 +11,9 @@ import java.net.Socket;
 import javax.crypto.SealedObject;
 
 import ch.theowinter.toxictodo.client.cli.CliController;
+import ch.theowinter.toxictodo.client.cli.JansiFormats;
 import ch.theowinter.toxictodo.client.ui.controller.ClientController;
 import ch.theowinter.toxictodo.sharedobjects.EncryptionEngine;
-import ch.theowinter.toxictodo.sharedobjects.JansiFormats;
 import ch.theowinter.toxictodo.sharedobjects.LogicEngine;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoList;
 import ch.theowinter.toxictodo.sharedobjects.elements.ToxicDatagram;

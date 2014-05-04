@@ -10,7 +10,6 @@ import org.fusesource.jansi.AnsiConsole;
 
 import ch.theowinter.toxictodo.client.ClientApplication;
 import ch.theowinter.toxictodo.client.ClientTodoManager;
-import ch.theowinter.toxictodo.sharedobjects.JansiFormats;
 import ch.theowinter.toxictodo.sharedobjects.LogicEngine;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoTask;
@@ -21,7 +20,6 @@ public class CliController {
 	
 	//Integrated Systems
 	private LogicEngine logic = new LogicEngine();
-	private JansiFormats jansi = new JansiFormats();
 	
 	//Local Bindings
 	ArrayList<String> localCategoryBinding;
@@ -188,17 +186,17 @@ public class CliController {
 		ArrayList<TodoTask> internalTaskBinding = new ArrayList<TodoTask>();
 		
 		//Clear ANSI console
-		print(jansi.ANSI_CLS);
+		print(JansiFormats.ANSI_CLS);
 		
 		int taskID = 0;
 		for(String categoryKey : todoManager.getTodoList().getCategoryMap().keySet()){
 			//Only list category if it contains tasks or we want to display empty categories too.
 			if(todoManager.getTodoList().getCategoryMap().get(categoryKey).containsTasks() || displayEmptyCategories==true){
-				print(jansi.ANSI_BOLD+jansi.CYAN+"###-"+todoManager.getTodoList().getCategoryMap().get(categoryKey).getName().toUpperCase()+"-###");
+				print(JansiFormats.ANSI_BOLD+JansiFormats.CYAN+"###-"+todoManager.getTodoList().getCategoryMap().get(categoryKey).getName().toUpperCase()+"-###");
 				//todoList.getCategoryMap().get(categoryKey).getTasksHashMap();
 				for(String taskKey : todoManager.getTodoList().getCategoryMap().get(categoryKey).getTasksHashMap().keySet()){
 					++taskID;
-					print(jansi.GREEN+"["+taskID+"] "+formatString(todoManager.getTodoList().getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey).getText()), 2);
+					print(JansiFormats.GREEN+"["+taskID+"] "+formatString(todoManager.getTodoList().getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey).getText()), 2);
 					//adding task to local bindings map
 					internalCategoryBinding.add(categoryKey);
 					internalTaskBinding.add(todoManager.getTodoList().getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey));
@@ -219,7 +217,7 @@ public class CliController {
 		String[] markers = input.split("\\*\\*");
 		for(int i = 0; i<markers.length; i++){
 			if(!(i%2==0)){
-				markers[i] = jansi.RED+markers[i]+jansi.GREEN;
+				markers[i] = JansiFormats.RED+markers[i]+JansiFormats.GREEN;
 			}
 		}
 		StringBuilder outputBuilder = new StringBuilder();
@@ -236,13 +234,13 @@ public class CliController {
 	 */
 	public ToxicDatagram drawCategories(){
 		//Clear ANSI console
-		print(jansi.ANSI_CLS);
+		print(JansiFormats.ANSI_CLS);
 		for(String categoryKey : todoManager.getTodoList().getCategoryMap().keySet()){
 			String category = todoManager.getTodoList().getCategoryMap().get(categoryKey).getName();
 			int nofTasks = todoManager.getTodoList().getCategoryMap().get(categoryKey).getTasksHashMap().keySet().size();
-			print(jansi.ANSI_BOLD+jansi.CYAN+"[<-"+category+"->]");
-			print(jansi.GREEN+"Category Key: "+categoryKey, 2);
-			print(jansi.GREEN+"Number of active tasks: "+nofTasks, 2);
+			print(JansiFormats.ANSI_BOLD+JansiFormats.CYAN+"[<-"+category+"->]");
+			print(JansiFormats.GREEN+"Category Key: "+categoryKey, 2);
+			print(JansiFormats.GREEN+"Number of active tasks: "+nofTasks, 2);
 		}
 		return commandHandler();
 	}
@@ -252,23 +250,23 @@ public class CliController {
 	 */
 	public void drawAbout(){
 		//Clear ANSI console
-		print(jansi.ANSI_CLS);
-		print(jansi.ANSI_BOLD+jansi.CYAN+"### - ABOUT TOXIC TODO - ###");
-		print(jansi.GREEN+"Version: "+ClientApplication.clientVersion, 2);
-		print(jansi.GREEN+"Author:  "+ClientApplication.author, 2);
-		print(jansi.GREEN+"Website: "+ClientApplication.website, 2);
+		print(JansiFormats.ANSI_CLS);
+		print(JansiFormats.ANSI_BOLD+JansiFormats.CYAN+"### - ABOUT TOXIC TODO - ###");
+		print(JansiFormats.GREEN+"Version: "+ClientApplication.clientVersion, 2);
+		print(JansiFormats.GREEN+"Author:  "+ClientApplication.author, 2);
+		print(JansiFormats.GREEN+"Website: "+ClientApplication.website, 2);
 	}
 	
 	//TODO: global update handler in todo manger or somewhere
 	@Deprecated
 	public void updateTheClient(){
 		//Clear ANSI console
-		print(jansi.ANSI_CLS);
-		print(jansi.ANSI_BOLD+jansi.CYAN+"### - TOXIC TODO UPDATER - ###");
-		print(jansi.GREEN+"Downloading latest release from CI-server...");
+		print(JansiFormats.ANSI_CLS);
+		print(JansiFormats.ANSI_BOLD+JansiFormats.CYAN+"### - TOXIC TODO UPDATER - ###");
+		print(JansiFormats.GREEN+"Downloading latest release from CI-server...");
 		if(logic.updateSoftware(ClientApplication.clientUpdateURL)){
-			print(jansi.GREEN+"The update has been successfully downloaded.");
-			print(jansi.GREEN+"Please let a few seconds pass before issuing a command to ToxicTodo");
+			print(JansiFormats.GREEN+"The update has been successfully downloaded.");
+			print(JansiFormats.GREEN+"Please let a few seconds pass before issuing a command to ToxicTodo");
 		}
 	}
 	
