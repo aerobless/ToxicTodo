@@ -1,4 +1,4 @@
-package ch.theowinter.ToxicTodo;
+package ch.theowinter.toxictodo;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -8,11 +8,11 @@ import javax.crypto.SealedObject;
 
 import org.junit.Test;
 
-import ch.theowinter.ToxicTodo.SharedObjects.EncryptionEngine;
-import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoCategory;
-import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoList;
-import ch.theowinter.ToxicTodo.SharedObjects.Elements.TodoTask;
-import ch.theowinter.ToxicTodo.client.CLI.CliController;
+import ch.theowinter.toxictodo.client.cli.CliController;
+import ch.theowinter.toxictodo.sharedobjects.EncryptionEngine;
+import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
+import ch.theowinter.toxictodo.sharedobjects.elements.TodoList;
+import ch.theowinter.toxictodo.sharedobjects.elements.TodoTask;
 
 public class ToxicTodo_UnitTest {
 	
