@@ -14,6 +14,7 @@ import ch.theowinter.toxictodo.client.cli.CliController;
 import ch.theowinter.toxictodo.client.cli.JansiFormats;
 import ch.theowinter.toxictodo.client.ui.controller.ClientController;
 import ch.theowinter.toxictodo.sharedobjects.EncryptionEngine;
+import ch.theowinter.toxictodo.sharedobjects.Logger;
 import ch.theowinter.toxictodo.sharedobjects.LogicEngine;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoList;
 import ch.theowinter.toxictodo.sharedobjects.elements.ToxicDatagram;
@@ -44,8 +45,8 @@ public class ClientApplication {
 		loadSettings();
 		try {
 			crypto = new EncryptionEngine(settings.getPassword());
-		} catch (Exception anEx) {
-			System.err.println("Crypto Error: Unable to load the Encryption Engine");
+		} catch (Exception e) {
+			Logger.log("Crypto Error: Unable to load the Encryption Engine", e);
 		}
 		
 		//2. Create either GUI or CLI controller
@@ -59,9 +60,9 @@ public class ClientApplication {
 			try {
 				todoManager = new ClientTodoManager(sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT")));
 			} catch (IOException anEx) {
-				print("ERROR: Unable to establish a connection with the server.");
-				print("Are you certain that you're running a server on "+settings.getHOST()+":"+settings.getPORT()+"?");
-				print("If you're running the server on a different IP or port, then you should change the client_config.xml!");
+				Logger.log("ERROR: Unable to establish a connection with the server.");
+				Logger.log("Are you certain that you're running a server on "+settings.getHOST()+":"+settings.getPORT()+"?");
+				Logger.log("If you're running the server on a different IP or port, then you should change the client_config.xml!");
 				System.exit(0);
 			}
 			CliController cli = new CliController(todoManager);
@@ -74,8 +75,8 @@ public class ClientApplication {
 		Object encryptedData = null;
 		try {
 			encryptedData = crypto.enc(datagram);
-		} catch (Exception anEx1) {
-			System.err.println("Encryption ERROR - Unable to encrypt & send data!");
+		} catch (Exception e) {
+			Logger.log("Encryption ERROR - Unable to encrypt & send data!", e);
 			System.exit(0);
 		}
 		TodoList todoList = null;
@@ -95,8 +96,8 @@ public class ClientApplication {
 	        	ToxicDatagram dataFromServer = null;
 	    		try {
 	    			dataFromServer = (ToxicDatagram) crypto.dec(encryptedDataFromServer);
-	    		} catch (Exception anEx1) {
-	    			System.err.println("Encryption ERROR - Unable to encrypt & send data!");
+	    		} catch (Exception e) {
+	    			Logger.log("Encryption ERROR - Unable to encrypt & send data!", e);
 	    			System.exit(0);
 	    		}
 	        	todoList = dataFromServer.getTodoList();
@@ -122,9 +123,9 @@ public class ClientApplication {
 		File f = new File(settingsFile);
 		if(!f.exists()){
 			//TODO: maybe add a better warning since this gets clear almost immediately in CLI version and not displayed at all in GUI.
-			print("INFORMATION:");
-			print("client_settings.xml has been created because you run ToxicTodo for the first time.");
-			print("Please edit the settings to chose your own server & port. - Localhost can be used for testing only.");
+			Logger.log("INFORMATION:");
+			Logger.log("client_settings.xml has been created because you run ToxicTodo for the first time.");
+			Logger.log("Please edit the settings to chose your own server & port. - Localhost can be used for testing only.");
 			firstTime = true;
 			settings = new ClientSettings();
 			logic.saveToXMLFile(settings, settingsFile);
@@ -134,9 +135,5 @@ public class ClientApplication {
 	
 	public static void saveSettingsToDisk(){
 		logic.saveToXMLFile(settings, settingsFile);
-	}
-	
-	public static void print(String input){
-		System.out.println(input);
 	}
 }

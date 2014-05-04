@@ -7,6 +7,7 @@ import java.util.Observable;
 import java.util.concurrent.Semaphore;
 
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicData;
+import ch.theowinter.toxictodo.sharedobjects.Logger;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoList;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoTask;
@@ -50,8 +51,8 @@ public class ClientTodoManager extends Observable{
 			writeLock.release();
 			setChanged();
 			notifyObservers();
-		} catch (InterruptedException anEx) {
-			System.out.println("Interruped while trying to setTodoList()");
+		} catch (InterruptedException e) {
+			Logger.log("Interruped while trying to setTodoList()", e);
 		}
 	}
 	
@@ -113,9 +114,8 @@ public class ClientTodoManager extends Observable{
 					inputList.addTask(ToxicData.allTaskTodoCategoryKey, currentTask);
 				}
 			}
-		} catch (Exception anEx) {
-			//TODO: global error handler
-			System.out.println("error generating all-tasks category..");
+		} catch (Exception e) {
+			Logger.log("error generating all-tasks category..", e);
 		}
 		return inputList;
 	}

@@ -20,6 +20,7 @@ import javax.swing.JButton;
 
 import ch.theowinter.toxictodo.client.ClientSettings;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
+import ch.theowinter.toxictodo.sharedobjects.Logger;
 
 public class SettingsPanel extends JPanel{
 	private static final long serialVersionUID = 5091902326508795291L;
@@ -183,7 +184,7 @@ public class SettingsPanel extends JPanel{
 			setVisible(false);
 			main.switchToTasks();
 		} catch (IllegalArgumentException e){
-			System.out.println("bad input");
+			Logger.log("bad input");
 			//TODO: warn user or something with a window or red colored input box
 		}
 	}

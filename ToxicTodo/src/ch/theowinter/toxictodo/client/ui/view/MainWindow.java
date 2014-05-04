@@ -41,6 +41,7 @@ import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeaderWhite;
 import ch.theowinter.toxictodo.client.ui.view.utilities.TaskListCellRenderer;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicData;
+import ch.theowinter.toxictodo.sharedobjects.Logger;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoTask;
 
@@ -315,7 +316,7 @@ public class MainWindow{
 					}
 					taskListModel.filter(searchField.getText());
 				}else{
-					System.out.println("category or task is null");
+					Logger.log("category or task is null");
 				}
 			}
         }); 
@@ -342,7 +343,7 @@ public class MainWindow{
 					}
 					taskListModel.filter(searchField.getText());
 				}else{
-					System.out.println("category or task is null");
+					Logger.log("category or task is null");
 				}
 			}
         });
@@ -447,12 +448,12 @@ public class MainWindow{
 			    "You've lost the connection to the server and we're unable to complete your request.",
 			    "Connection lost",
 			    JOptionPane.ERROR_MESSAGE);
-		System.out.println("ERROR 8: lost connection to server");
+		Logger.log("ERROR 8: lost connection to server");
 	}
 	
 	public void genericWarning(String titel, String text){
 		JOptionPane.showMessageDialog(main.frmToxictodo, text, titel, JOptionPane.ERROR_MESSAGE);
-		System.out.println("ERROR: "+titel+" : "+text);
+		Logger.log("ERROR: "+titel+" : "+text);
 	}
 	
 	public void resetCategorySelection(){
@@ -479,7 +480,7 @@ public class MainWindow{
 	    	}
 	    	if (lsm.isSelectionEmpty()) {
 	        	//should be impossible to achieve
-	        	System.out.println("empty selection, o'really?");
+	    		Logger.log("empty selection, o'really?");
 	        }
 	    	taskListModel.filter(searchField.getText());
 	    }

@@ -10,6 +10,7 @@ import org.fusesource.jansi.AnsiConsole;
 
 import ch.theowinter.toxictodo.client.ClientApplication;
 import ch.theowinter.toxictodo.client.ClientTodoManager;
+import ch.theowinter.toxictodo.sharedobjects.Logger;
 import ch.theowinter.toxictodo.sharedobjects.LogicEngine;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoTask;
@@ -170,7 +171,7 @@ public class CliController {
 		try {
 			input = buffer.readLine();
 		} catch (IOException e) {
-			System.err.println("Toxic Todo: INPUT IO Exception");
+			Logger.log("Toxic Todo: INPUT IO Exception", e);
 		}
 		return input;
 	}
