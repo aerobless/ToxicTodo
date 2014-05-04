@@ -11,6 +11,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.Semaphore;
 
+import ch.theowinter.toxictodo.sharedobjects.Logger;
 import ch.theowinter.toxictodo.sharedobjects.LogicEngine;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoList;
@@ -56,19 +57,19 @@ public class ServerApplication implements Runnable{
 					stopServer.acquire();
 				}
 				else if(input.equals("update")){
-					serverPrint("Updating... Please wait a few seconds before starting the server again!");
+					Logger.log("Updating... Please wait a few seconds before starting the server again!");
 					logic.updateSoftware(serverUpdateURL);
 					stopServer.acquire();
 				}
 				else if(input.equals("about")||input.equals("identify")){
-					serverPrint("### - ABOUT TOXIC TODO - ###");
+					Logger.log("### - ABOUT TOXIC TODO - ###");
 					String space = "  ";
-					serverPrint(space+"Version: "+serverVersion);
-					serverPrint(space+"Author:  "+author);
-					serverPrint(space+"Website: "+website);
+					Logger.log(space+"Version: "+serverVersion);
+					Logger.log(space+"Author:  "+author);
+					Logger.log(space+"Website: "+website);
 				}
 				else{
-					serverPrint("Command *"+input+"* not recognized.");
+					Logger.log("Command *"+input+"* not recognized.");
 				}
 			} catch (IOException e) {
 				System.err.println("Toxic Todo: Server Control Thread - IO Exception");
@@ -76,11 +77,6 @@ public class ServerApplication implements Runnable{
 				System.err.println("InterruptedException");
 			}
 		}
-	}
-	
-	public static void serverPrint(String input){
-		//TODO: add better logging and logging to file
-		System.out.println("Server: "+input);
 	}
 	
 	public static TodoList getServerTodoList() {
@@ -95,7 +91,7 @@ public class ServerApplication implements Runnable{
 		try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(logFilename, true)))) {
 		    out.println(logMessage);
 		}catch (IOException e) {
-			serverPrint("ERROR: IO-Exception when trying to write log to file. ID: 777");
+			Logger.log("ERROR: IO-Exception when trying to write log to file. ID: 777", e);
 		}
 	}
 	
@@ -118,9 +114,9 @@ public class ServerApplication implements Runnable{
 		boolean firstTime = false;
 		File settingsOnDisk = new File(settingsFile);
 		if(!settingsOnDisk.exists()){
-			serverPrint("INFORMATION:");
-			serverPrint("Server_config.xml has been created because you run ToxicTodo for the first time.");
-			serverPrint("You can edit the settings to chose your prefered port and encryption password.");
+			Logger.log("INFORMATION:");
+			Logger.log("Server_config.xml has been created because you run ToxicTodo for the first time.");
+			Logger.log("You can edit the settings to chose your prefered port and encryption password.");
 			firstTime = true;
 			settings = new ServerSettings();
 			logic.saveToXMLFile(settings, settingsFile);
@@ -154,7 +150,7 @@ public class ServerApplication implements Runnable{
 				client.setSoTimeout(100);
 				ServerSocket server;
 				server = new ServerSocket(settings.getPort());
-				serverPrint("server> Waiting for client...");
+				Logger.log("server> Waiting for client...");
 				
 				client = server.accept();
 				
@@ -164,12 +160,12 @@ public class ServerApplication implements Runnable{
 				serverConnection.start();
 
 				//Report active Threads
-				serverPrint("Active Threads: "+Thread.activeCount());
+				Logger.log("Active Threads: "+Thread.activeCount());
 
 				server.close();
 				}
 				} catch (IOException e) {
-					e.printStackTrace();
+					Logger.log("IO-Exception in ConnectionBuilderThread", e);
 			}
 		}
 	}

@@ -12,6 +12,7 @@ import java.util.concurrent.Semaphore;
 import javax.crypto.SealedObject;
 
 import ch.theowinter.toxictodo.sharedobjects.EncryptionEngine;
+import ch.theowinter.toxictodo.sharedobjects.Logger;
 import ch.theowinter.toxictodo.sharedobjects.elements.ToxicDatagram;
 
 class ServerOpenConnectionThread implements Runnable {
@@ -27,7 +28,7 @@ class ServerOpenConnectionThread implements Runnable {
 		try {
 			crypto = new EncryptionEngine(this.password);
 		} catch (Exception anEx) {
-			System.err.println("Crypto Error - Unable to load the Encryption Engine");
+			Logger.log("Crypto Error - Unable to load the Encryption Engine", anEx);
 		}
 	}
 	
@@ -38,14 +39,15 @@ class ServerOpenConnectionThread implements Runnable {
 			is = inputSocket.getInputStream();
 			ObjectInputStream ois = new ObjectInputStream(is);
 		        	
-			ServerApplication.serverPrint("got a message from a client");
+			Logger.log("got a message from a client");
 			SealedObject encryptedDataFromClient = (SealedObject)ois.readObject(); 
+			
 			//Decrypt data from client
         	ToxicDatagram dataFromClient = null;
     		try {
     			dataFromClient = (ToxicDatagram) crypto.dec(encryptedDataFromClient);
-    		} catch (Exception anEx1) {
-    			System.err.println("Encryption ERROR - Unable to encrypt & send data!");
+    		} catch (Exception e) {
+    			Logger.log("Encryption ERROR - Unable to encrypt & send data!", e);
     		}
 			
 			ToxicDatagram dataToClient = new ToxicDatagram("ERROR - 400 - The server has no response for you.");
@@ -53,8 +55,7 @@ class ServerOpenConnectionThread implements Runnable {
 			try {
 					dataToClient = runServerAction(dataFromClient.getServerControlMessage(), dataFromClient);
 				} catch (Exception e) {
-					System.err.println("Client tried to send a packet with a bad cipher - cannot decrypt");
-					//TODO: make log or something to track such attempts.
+					Logger.log("Client tried to send a packet with a bad cipher - cannot decrypt", e);
 				}
 		        	
 			OutputStream os = inputSocket.getOutputStream();  
@@ -64,9 +65,8 @@ class ServerOpenConnectionThread implements Runnable {
 			Object encryptedData = null;
 			try {
 				encryptedData = crypto.enc(dataToClient);
-			} catch (Exception anEx1) {
-				System.err.println("Encryption ERROR - Unable to encrypt & send data!");
-				anEx1.printStackTrace();
+			} catch (Exception e) {
+				Logger.log("Encryption ERROR - Unable to encrypt & send data!", e);
 			}
 			if(encryptedData!=null){
 			oos.writeObject(encryptedData);
@@ -77,15 +77,15 @@ class ServerOpenConnectionThread implements Runnable {
 			inputSocket.close();
 			} 
 		catch (IOException e) {
-				e.printStackTrace();
+				Logger.log("IOException in ServerOpenConnectionThread", e);
 				} 
 		catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			Logger.log("ClassNotFoundException in ServerOpenConnectionThread", e);
 			}  
 		}
 	
 	public synchronized ToxicDatagram runServerAction(String serverMessage, ToxicDatagram dataFromClient) throws InterruptedException{
-		ServerApplication.serverPrint("Trying to handle: "+serverMessage);
+		Logger.log("Trying to handle: "+serverMessage);
 		ToxicDatagram dataToClient = new ToxicDatagram("ERROR - 500 - Bad Request to server action handler.");
 		if(serverMessage.equals("SEND_TODOLIST_TO_CLIENT")){
 			//We wait until noone's writing anymore 
@@ -101,7 +101,7 @@ class ServerOpenConnectionThread implements Runnable {
 				dataToClient = new ToxicDatagram("Answering successful request to add new task");
 				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
-				ServerApplication.serverPrint("Failed to add new task.");
+				Logger.log("Failed to add new task.");
 				dataToClient = new ToxicDatagram("Adding a new task failed. Maybe it already exists?");
 			}
 			writeLock.release();
@@ -115,7 +115,7 @@ class ServerOpenConnectionThread implements Runnable {
 				dataToClient = new ToxicDatagram("Answering successful request to remove & log task");
 				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
-				ServerApplication.serverPrint("Failed to remove & log task.");
+				Logger.log("Failed to remove & log task.");
 				dataToClient = new ToxicDatagram("Completing a task failed.");
 			}
 			writeLock.release();
@@ -128,7 +128,7 @@ class ServerOpenConnectionThread implements Runnable {
 				dataToClient = new ToxicDatagram("Answering successful request to remove task");
 				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
-				ServerApplication.serverPrint("Failed to remove task.");
+				Logger.log("Failed to remove task.");
 				dataToClient = new ToxicDatagram("Removing a task failed.");
 			}
 			writeLock.release();
@@ -141,7 +141,7 @@ class ServerOpenConnectionThread implements Runnable {
 				dataToClient = new ToxicDatagram("Answering successful request to add category");
 				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
-				ServerApplication.serverPrint("Failed to add new category.");
+				Logger.log("Failed to add new category.");
 				dataToClient = new ToxicDatagram("Adding a category failed.");
 			}
 			writeLock.release();
@@ -154,7 +154,7 @@ class ServerOpenConnectionThread implements Runnable {
 				dataToClient = new ToxicDatagram("Answering successful request to remove category");
 				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
-				ServerApplication.serverPrint("Failed to remove category.");
+				Logger.log("Failed to remove category.");
 				dataToClient = new ToxicDatagram("Removing a category failed.");
 			}
 			writeLock.release();
@@ -170,14 +170,14 @@ class ServerOpenConnectionThread implements Runnable {
 				dataToClient = new ToxicDatagram("Answering successful request to edit category");
 				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
-				ServerApplication.serverPrint("Failed to edit category.");
+				Logger.log("Failed to edit category.");
 				dataToClient = new ToxicDatagram("Editing a category failed.");
 			}
 			writeLock.release();
 		}
 		
 		else{
-			ServerApplication.serverPrint("Command from Client not recognized..");
+			Logger.log("Command from Client not recognized..");
 		}
 		return dataToClient;
 	}
