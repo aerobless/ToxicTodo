@@ -64,13 +64,13 @@ public class LogicEngine {
 		    fos.write(bytes);
 
 		} catch(Exception e) {
-			System.err.println("Error: Can't save the file.");
+			Logger.log("Error: Can't save the file.", e);
 		} finally {
 		    if(fos!=null) {
 		        try{ 
 		            fos.close();
 		        } catch (IOException e) {
-		        	System.err.println("Error: Can't close File Output Stream");
+		        	Logger.log("Error: Can't close File Output Stream", e);
 		        }
 		    }
 		}
@@ -107,8 +107,7 @@ public class LogicEngine {
 		try {
 			dataXML = new URL(jarLocation, filename);
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.log("Malformed URL in LogicEngine. JarLoc: "+jarLocation+" Filename: "+filename, e);
 		}
 		return dataXML.getPath();
 	}
@@ -121,8 +120,7 @@ public class LogicEngine {
 		try {
 			Runtime.getRuntime().exec("java -jar "+downloadPath+" 2 "+updateURL);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Logger.log("IOException trying to updateSoftware in LogicEngine", e);
 		}
 		return true;
 	}

@@ -45,12 +45,12 @@ public class CliController {
 		if(datagramForServer != null){
 			try {
 				ClientApplication.sendToServer(datagramForServer);
+				voidDrawList();
 			} catch (IOException anEx) {
 				print("ERROR: Unable to establish a connection with the server.");
 				print("If you're running the server on a different IP or port, then you should change the client_config.xml!");
 				System.exit(0);
 			}
-			voidDrawList();
 		}
 	}
 	
@@ -87,7 +87,7 @@ public class CliController {
 	}
 
 	public void print(String input){
-		AnsiConsole.out.println(input+ClientApplication.jansi.ANSI_NORMAL);
+		AnsiConsole.out.println(input+JansiFormats.ANSI_NORMAL);
 	}
 
 	/* 
