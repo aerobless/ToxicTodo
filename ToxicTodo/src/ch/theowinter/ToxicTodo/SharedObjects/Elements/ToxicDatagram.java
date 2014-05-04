@@ -40,7 +40,7 @@ public class ToxicDatagram implements Serializable{
 		this.todoCategory = todoCategory;
 	}
 	
-	//constructor for only sending a control-message 
+	//constructor for only sending a control-message
 	public ToxicDatagram(String serverControlMessage) {
 		super();
 		this.controlMessage = serverControlMessage;
