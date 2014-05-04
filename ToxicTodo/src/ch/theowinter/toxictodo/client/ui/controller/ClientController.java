@@ -6,6 +6,7 @@ import ch.theowinter.toxictodo.client.ClientSettings;
 import ch.theowinter.toxictodo.client.ClientTodoManager;
 import ch.theowinter.toxictodo.client.ui.view.MainWindow;
 import ch.theowinter.toxictodo.server.ServerApplication;
+import ch.theowinter.toxictodo.sharedobjects.Logger;
 
 public class ClientController {
 	ClientSettings settings;
@@ -45,7 +46,7 @@ public class ClientController {
 			if(todoManager.getInitSuccess()){
 				createGUI(todoManager, settings);
 			}else{
-				System.out.println("ERROR 7: Unable to connect");
+				Logger.log("ERROR 7: Unable to connect");
 				System.exit(0);
 			}
 		} else{

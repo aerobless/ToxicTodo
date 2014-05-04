@@ -139,9 +139,9 @@ public class LogicEngine {
 			fos.write(fileData); 
 			fos.close();
 		} catch (MalformedURLException m) {
-			System.out.println(m);
+			Logger.log("Malformed URL in LogicEngine.",m);
 		} catch (IOException io) {
-			System.out.println(io);
+			Logger.log("IOException URL in LogicEngine.",io);
 		}
 	}
 }

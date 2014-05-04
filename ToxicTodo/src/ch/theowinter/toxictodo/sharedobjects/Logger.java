@@ -1,16 +1,13 @@
 package ch.theowinter.toxictodo.sharedobjects;
 
 public class Logger {
-	final static boolean logEnabled = true;
+	private final static boolean logEnabled = true;
 	
-	final static void log(String error){
-		if(logEnabled){
-			System.out.println(error);
-		}
-		
+	public final static void log(String error){
+		Logger.log(error, null);
 	}
 	
-	final static void log(String error, Exception e){
+	public final static void log(String error, Exception e){
 		if(logEnabled){
 			System.out.println(error);
 		}
