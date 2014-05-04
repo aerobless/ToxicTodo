@@ -19,7 +19,7 @@ public class TodoList implements Serializable {
 	}
 
 	/**
-	 * Add a new category to the todoList. 
+	 * Add a new category to the todoList.
 	 * 
 	 * @param todoCategory
 	 * @throws Exception
