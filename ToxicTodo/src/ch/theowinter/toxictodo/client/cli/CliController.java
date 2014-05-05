@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.fusesource.jansi.AnsiConsole;
 
@@ -23,8 +24,8 @@ public class CliController {
 	private LogicEngine logic = new LogicEngine();
 	
 	//Local Bindings
-	ArrayList<String> localCategoryBinding;
-	ArrayList<TodoTask> localTaskBinding;
+	List<String> localCategoryBinding;
+	List<TodoTask> localTaskBinding;
 		
 	/**
 	 * Creates a new instance of this class.
@@ -47,33 +48,24 @@ public class CliController {
 			try {
 				ClientApplication.sendToServer(datagramForServer);
 				voidDrawList();
-			} catch (IOException anEx) {
-				print("ERROR: Unable to establish a connection with the server.");
-				print("If you're running the server on a different IP or port, then you should change the client_config.xml!");
-				System.exit(0);
+			} catch (IOException e) {
+				Logger.log("Unable to establish a connection with the server.", e);
+				NoConnectionError();
 			}
 		}
 	}
 	
 	//TODO: add good description
+	//TODO: doesn't break anymore at all.
 	public void voidDrawList(){
 		try {
 			todoManager.setTodoList(ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT")));
-		} catch (IOException anEx) {
-			print("ERROR: Unable to establish a connection with the server.");
-			print("If you're running the server on a different IP or port, then you should change the client_config.xml!");
-			System.exit(0);
-		}
-		ToxicDatagram datagramForServer = commandHandler(new String[]{"list"});
-		if(datagramForServer != null){
-			try {
-				ClientApplication.sendToServer(datagramForServer);
-			} catch (IOException anEx) {
-				print("ERROR: Unable to establish a connection with the server.");
-				print("If you're running the server on a different IP or port, then you should change the client_config.xml!");
-				System.exit(0);
-			}
+			ClientApplication.sendToServer(commandHandler(new String[]{"list"}));
+			System.out.println("here");
 			voidDrawList();
+		} catch (IOException e) {
+			Logger.log("Unable to establish a connection with the server.", e);
+			NoConnectionError();
 		}
 	}
 
@@ -126,6 +118,8 @@ public class CliController {
 			updateTheClient();
 		} else if (userInputArray.length>=1 && !userInputArray[0].equals("")){
 			print("Your command: "+Arrays.toString(userInputArray) +" was not recognized.");
+		} else {
+			System.exit(0);
 		}
 		return datagram;
 	}
@@ -171,8 +165,8 @@ public class CliController {
 	 */
 	public ToxicDatagram drawTodoList(boolean displayEmptyCategories){
 		//Used for local bindings when we want to delete a task by entering 1
-		ArrayList<String> internalCategoryBinding = new ArrayList<String>();
-		ArrayList<TodoTask> internalTaskBinding = new ArrayList<TodoTask>();
+		List<String> internalCategoryBinding = new ArrayList<String>();
+		List<TodoTask> internalTaskBinding = new ArrayList<TodoTask>();
 		
 		//Clear ANSI console
 		print(JansiFormats.ANSI_CLS);
@@ -312,5 +306,10 @@ public class CliController {
 			print("remove category keyword");
 		}
 		return datagram;	
-	}	
+	}
+	
+	private void NoConnectionError(){
+		print("ERROR: Unable to establish a connection with the server.");
+		print("If you're running the server on a different IP or port, then you should change the client_config.xml!");
+	}
 }

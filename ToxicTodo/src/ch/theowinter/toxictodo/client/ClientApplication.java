@@ -38,7 +38,9 @@ public class ClientApplication {
 	}
 
 	public static void main(String[] args) {
+		args = new String[]{"list"};
 		//0. Load config & init stuff
+		logic.saveToXMLFile(SETTINGS, SETTINGS_FILE);
 		try {
 			crypto = new EncryptionEngine(SETTINGS.getPassword());
 		} catch (Exception e) {
@@ -115,7 +117,6 @@ public class ClientApplication {
 			loadingSettings = (ClientSettings) logic.loadXMLFile(SETTINGS_FILE);
 		}else{
 			loadingSettings = new ClientSettings();
-			logic.saveToXMLFile(SETTINGS, SETTINGS_FILE);
 		}
 		return loadingSettings;
 	}
