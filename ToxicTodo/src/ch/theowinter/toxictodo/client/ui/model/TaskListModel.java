@@ -1,6 +1,7 @@
 package ch.theowinter.toxictodo.client.ui.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -13,9 +14,9 @@ import ch.theowinter.toxictodo.sharedobjects.elements.TodoTask;
 public class TaskListModel extends AbstractListModel<TodoTask> implements Observer{
 	private static final long serialVersionUID = 5378790622340613400L;
 	
-	ArrayList<TodoTask> filteredTaskList;
-	ArrayList<TodoTask> originalTaskList;
-	ArrayList<ListDataListener> listners = new ArrayList<ListDataListener>();
+	List<TodoTask> filteredTaskList;
+	List<TodoTask> originalTaskList;
+	List<ListDataListener> listners = new ArrayList<ListDataListener>();
 	ClientTodoManager todoManager;
 	String currentCategory;
 	
@@ -59,7 +60,7 @@ public class TaskListModel extends AbstractListModel<TodoTask> implements Observ
 		return task;
 	}
 	
-	private ArrayList<TodoTask> getTaskArray(String catKey){
+	private List<TodoTask> getTaskArray(String catKey){
 		currentCategory = catKey;
 		return todoManager.getTodoList().getCategoryMap().get(catKey).getTaskInCategoryAsArrayList();
 	}

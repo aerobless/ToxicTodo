@@ -262,8 +262,7 @@ public class CliController {
 		ToxicDatagram datagram = null;
 		if(localCategoryBinding==null||localTaskBinding==null){
 			print("You can't blindly remove or complete tasks.");
-		}
-		else{
+		} else{
 			try{
 				int userChoice = Integer.parseInt(task);
 				if(userChoice<=localCategoryBinding.size()){

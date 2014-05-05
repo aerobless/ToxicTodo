@@ -23,6 +23,7 @@ import ch.theowinter.toxictodo.client.ui.view.MainWindow;
 import ch.theowinter.toxictodo.client.ui.view.utilities.IconComboBoxRenderer;
 import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeaderWhite;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
+import ch.theowinter.toxictodo.sharedobjects.Logger;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
 
 public class CategoryPanel extends JPanel {
@@ -58,37 +59,37 @@ public class CategoryPanel extends JPanel {
 		JPanel centerPanel = new JPanel();
 		centerPanel.setBackground(ToxicColors.softGrey);
 		add(centerPanel, BorderLayout.CENTER);
-		GridBagLayout gbl_centerPanel = new GridBagLayout();
-		gbl_centerPanel.columnWidths = new int[]{124, 0, 0, 0};
-		gbl_centerPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
-		gbl_centerPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_centerPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		centerPanel.setLayout(gbl_centerPanel);
+		GridBagLayout gblCenterPanel = new GridBagLayout();
+		gblCenterPanel.columnWidths = new int[]{124, 0, 0, 0};
+		gblCenterPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
+		gblCenterPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gblCenterPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		centerPanel.setLayout(gblCenterPanel);
 		
-		JLabel label = new JLabel("  ");
-		GridBagConstraints gbc_label = new GridBagConstraints();
-		gbc_label.insets = new Insets(0, 0, 5, 5);
-		gbc_label.gridx = 1;
-		gbc_label.gridy = 0;
-		centerPanel.add(label, gbc_label);
+		JLabel spaceLabel = new JLabel("  ");
+		GridBagConstraints gbcSpaceLabel = new GridBagConstraints();
+		gbcSpaceLabel.insets = new Insets(0, 0, 5, 5);
+		gbcSpaceLabel.gridx = 1;
+		gbcSpaceLabel.gridy = 0;
+		centerPanel.add(spaceLabel, gbcSpaceLabel);
 		
 		JLabel lblIcon = new JLabel("Icon:");
-		GridBagConstraints gbc_lblIcon = new GridBagConstraints();
-		gbc_lblIcon.anchor = GridBagConstraints.EAST;
-		gbc_lblIcon.insets = new Insets(0, 0, 5, 5);
-		gbc_lblIcon.gridx = 0;
-		gbc_lblIcon.gridy = 1;
-		centerPanel.add(lblIcon, gbc_lblIcon);
+		GridBagConstraints gbcLblIcon = new GridBagConstraints();
+		gbcLblIcon.anchor = GridBagConstraints.EAST;
+		gbcLblIcon.insets = new Insets(0, 0, 5, 5);
+		gbcLblIcon.gridx = 0;
+		gbcLblIcon.gridy = 1;
+		centerPanel.add(lblIcon, gbcLblIcon);
 		
 		iconCombobox = new JComboBox<FontString>(new IconComboBoxModel());
 		iconCombobox.setRenderer(new IconComboBoxRenderer());
 
-		GridBagConstraints gbc_iconCombobox = new GridBagConstraints();
-		gbc_iconCombobox.insets = new Insets(0, 0, 5, 5);
-		gbc_iconCombobox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_iconCombobox.gridx = 1;
-		gbc_iconCombobox.gridy = 1;
-		centerPanel.add(iconCombobox, gbc_iconCombobox);
+		GridBagConstraints gbcIconCombobox = new GridBagConstraints();
+		gbcIconCombobox.insets = new Insets(0, 0, 5, 5);
+		gbcIconCombobox.fill = GridBagConstraints.HORIZONTAL;
+		gbcIconCombobox.gridx = 1;
+		gbcIconCombobox.gridy = 1;
+		centerPanel.add(iconCombobox, gbcIconCombobox);
 		
 		JLabel lblCompletedUntil = new JLabel("Category Titel:");
 		GridBagConstraints gbc_lblCompletedUntil = new GridBagConstraints();
@@ -210,6 +211,7 @@ public class CategoryPanel extends JPanel {
 				main.resetCategorySelection();
 				todoManager.removeCategory(oldCategory);
 			} catch (IOException e) {
+				Logger.log("No connection to server", e);
 				main.connectionWarning();
 			}
 			cancelAndClearCategory();
@@ -223,7 +225,8 @@ public class CategoryPanel extends JPanel {
 		if(categoryTitel.length()>2&&categoryKeyword.length()>2){
 			try {
 				todoManager.editCategory(oldCategory.getKeyword(), categoryKeyword, categoryTitel, icon);
-			} catch (IOException anEx) {
+			} catch (IOException e) {
+				Logger.log("No connection to server", e);
 				main.connectionWarning();
 			}
 			cancelAndClearCategory();
@@ -237,7 +240,8 @@ public class CategoryPanel extends JPanel {
 		if(categoryTitel.length()>2&&categoryKeyword.length()>2){
 			try {
 				todoManager.addNewCategory(categoryTitel, categoryKeyword, icon, false);
-			} catch (IOException anEx) {
+			} catch (IOException e) {
+				Logger.log("No connection to server", e);
 				main.connectionWarning();
 			}
 			cancelAndClearCategory();

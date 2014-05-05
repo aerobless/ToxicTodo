@@ -15,7 +15,7 @@ public class ClientController {
 		settings = someSettings;
 		if(!aTodoManager.getInitSuccess()){
 			createLocalServerDialog();
-		}else{
+		} else{
 			createGUI(aTodoManager, someSettings);
 		}
 	}
@@ -33,14 +33,14 @@ public class ClientController {
 			    "Unable to detect server", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
 		if(result == 0){
 			//YES - We start a local server for the user.
-			System.out.println("Running integrated server!");
+			Logger.log("Running integrated server!");
 			new Thread(new ServerApplication()).start();
 			ClientTodoManager todoManager;
 			do{
 				try {
 					Thread.sleep(5);
-				} catch (InterruptedException anEx) {
-					System.out.println("Interrupted Sleep");
+				} catch (InterruptedException e) {
+					Logger.log("Interrupted Sleep", e);
 				}
 				todoManager = new ClientTodoManager();
 			}while(!todoManager.getInitSuccess());

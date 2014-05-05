@@ -1,13 +1,14 @@
 package ch.theowinter.toxictodo.client.ui.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
 public class IconComboBoxModel extends AbstractListModel<FontString> implements ComboBoxModel<FontString>{
 	private static final long serialVersionUID = 1689150508606190545L;
-	private ArrayList<FontString> iconArray;
+	private List<FontString> iconArray;
 	private Object selectedItem;
 	
 	/**
@@ -40,8 +41,8 @@ public class IconComboBoxModel extends AbstractListModel<FontString> implements 
 		return selectedItem;
 	}
 	
-	public ArrayList<FontString> generateList(){
-		ArrayList<FontString> newIcons = new ArrayList<FontString>();
+	public List<FontString> generateList(){
+		List<FontString> newIcons = new ArrayList<FontString>();
 		newIcons.add(new FontString("Wine Glass",'\uf000'));
 		newIcons.add(new FontString("Heart",'\uf004'));
 		newIcons.add(new FontString("Film",'\uf008'));

@@ -210,7 +210,8 @@ public class MainWindow{
 			public void actionPerformed(ActionEvent e) {
 				try {
 					todoManager.updateList();
-				} catch (IOException anEx) {
+				} catch (IOException e1) {
+					Logger.log("No connection to server", e1);
 					main.connectionWarning();
 				}
 			}
