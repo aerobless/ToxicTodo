@@ -46,7 +46,7 @@ public class CategoryPanel extends JPanel {
 	public CategoryPanel(MainWindow main, ClientTodoManager todoManager) {
 		this.main = main;
 		this.todoManager = todoManager;
-		setBackground(ToxicColors.softGrey);
+		setBackground(ToxicColors.SOFT_GREY);
 		setBounds(100, 100, 450, 300);
 		setBorder(null);
 		setLayout(new BorderLayout(0, 0));
@@ -57,7 +57,7 @@ public class CategoryPanel extends JPanel {
 		header.setIcon('\uf07b');
 		
 		JPanel centerPanel = new JPanel();
-		centerPanel.setBackground(ToxicColors.softGrey);
+		centerPanel.setBackground(ToxicColors.SOFT_GREY);
 		add(centerPanel, BorderLayout.CENTER);
 		GridBagLayout gblCenterPanel = new GridBagLayout();
 		gblCenterPanel.columnWidths = new int[]{124, 0, 0, 0};
@@ -130,7 +130,7 @@ public class CategoryPanel extends JPanel {
 		txtFieldCategoryKeyword.setColumns(10);
 		
 		JPanel bottomPanel = new JPanel();
-		bottomPanel.setBackground(ToxicColors.softGrey);
+		bottomPanel.setBackground(ToxicColors.SOFT_GREY);
 		FlowLayout flowLayout_1 = (FlowLayout) bottomPanel.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.RIGHT);
 		add(bottomPanel, BorderLayout.SOUTH);

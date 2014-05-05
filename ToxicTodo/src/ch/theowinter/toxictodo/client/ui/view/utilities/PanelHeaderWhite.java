@@ -20,7 +20,7 @@ public class PanelHeaderWhite extends JPanel {
 	private JPanel subtitelPanel;
 	private JPanel topSpace;
 	private JPanel bottomSpace;
-	private Color background = ToxicColors.dirtyWhite;
+	private Color background = ToxicColors.DIRTY_WHITE;
 	private JPanel westSpace;
 	private JPanel eastSpace;
 
@@ -51,7 +51,7 @@ public class PanelHeaderWhite extends JPanel {
 		lblTitel = new JLabel("titel");
 		titelPanel.add(lblTitel);
 		lblTitel.setFont(new Font("Lucida Grande", Font.BOLD, 20));
-		lblTitel.setForeground(ToxicColors.textGrey);
+		lblTitel.setForeground(ToxicColors.TEXT_GREY);
 		
 		subtitelPanel = new JPanel();
 		FlowLayout fl_subtitelPanel = (FlowLayout) subtitelPanel.getLayout();
@@ -62,13 +62,13 @@ public class PanelHeaderWhite extends JPanel {
 		
 		lblSubtitel = new JLabel("subtitel");
 		subtitelPanel.add(lblSubtitel);
-		lblSubtitel.setForeground(ToxicColors.textGreySoft);
+		lblSubtitel.setForeground(ToxicColors.SOFT_TEXT_GREY);
 		
 		bottomSpace = new JPanel();
 		FlowLayout fl_bottomSpace = (FlowLayout) bottomSpace.getLayout();
 		fl_bottomSpace.setVgap(7);
 		textPanel.add(bottomSpace);
-		setBorder(new MatteBorder(0,0,1,0,ToxicColors.textGreySoft));
+		setBorder(new MatteBorder(0,0,1,0,ToxicColors.SOFT_TEXT_GREY));
 		bottomSpace.setBackground(background);
 		
 		iconPanel = new JPanel();

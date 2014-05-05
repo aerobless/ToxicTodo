@@ -138,7 +138,7 @@ public class MainWindow{
 				private static final long serialVersionUID = -3373489858114729264L;
 	            @Override
 	                public void paint(Graphics g) {
-	                g.setColor(ToxicColors.textGreySoft);
+	                g.setColor(ToxicColors.SOFT_TEXT_GREY);
 	                g.fillRect(0, 0, 1, getSize().height);
 	                    super.paint(g);
 	                }
@@ -159,7 +159,7 @@ public class MainWindow{
 		
 		categoryList = new JList<TodoCategory>(categoryListModel);
 		categoryJPanel.add(categoryList, BorderLayout.CENTER);
-		categoryList.setBackground(ToxicColors.softBlue);
+		categoryList.setBackground(ToxicColors.SOFT_BLUE);
 
 		categoryList.setCellRenderer(new CategoryListCellRenderer());
 		ListSelectionModel listSelectionModel = categoryList.getSelectionModel();
@@ -184,10 +184,10 @@ public class MainWindow{
 		taskListModel = new TaskListModel(categoryListModel.getElementAt(0).getKeyword(), todoManager);
 		taskList = new JList<TodoTask>(taskListModel);
 		taskList.setCellRenderer(new TaskListCellRenderer());
-		taskList.setBackground(ToxicColors.softGrey);
+		taskList.setBackground(ToxicColors.SOFT_GREY);
 		
 		taskScrollPane.setViewportView(taskList);
-		taskScrollPane.setBackground(ToxicColors.softGrey);
+		taskScrollPane.setBackground(ToxicColors.SOFT_GREY);
 		taskScrollPane.setBorder(new LineBorder(Color.black,0));
 
 		initToolbar();

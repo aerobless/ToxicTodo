@@ -39,7 +39,7 @@ public class TaskPanel extends JPanel {
 	public TaskPanel(MainWindow main, ClientTodoManager todoManager) {
 		this.main = main;
 		this.todoManager = todoManager;
-		setBackground(ToxicColors.softGrey);
+		setBackground(ToxicColors.SOFT_GREY);
 		setBounds(100, 100, 450, 300);
 		setBorder(null);
 		setLayout(new BorderLayout(0, 0));
@@ -52,73 +52,73 @@ public class TaskPanel extends JPanel {
 		add(header, BorderLayout.NORTH);
 		
 		JPanel centerPanel = new JPanel();
-		centerPanel.setBackground(ToxicColors.softGrey);
+		centerPanel.setBackground(ToxicColors.SOFT_GREY);
 		add(centerPanel, BorderLayout.CENTER);
-		GridBagLayout gbl_centerPanel = new GridBagLayout();
-		gbl_centerPanel.columnWidths = new int[]{124, 0, 0, 0};
-		gbl_centerPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
-		gbl_centerPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_centerPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		centerPanel.setLayout(gbl_centerPanel);
+		GridBagLayout gblCenterPanel = new GridBagLayout();
+		gblCenterPanel.columnWidths = new int[]{124, 0, 0, 0};
+		gblCenterPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
+		gblCenterPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gblCenterPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		centerPanel.setLayout(gblCenterPanel);
 		
 		JLabel spacer = new JLabel(" ");
-		GridBagConstraints gbc_spacer = new GridBagConstraints();
-		gbc_spacer.insets = new Insets(0, 0, 5, 5);
-		gbc_spacer.gridx = 0;
-		gbc_spacer.gridy = 0;
-		centerPanel.add(spacer, gbc_spacer);
+		GridBagConstraints gbcSpacer = new GridBagConstraints();
+		gbcSpacer.insets = new Insets(0, 0, 5, 5);
+		gbcSpacer.gridx = 0;
+		gbcSpacer.gridy = 0;
+		centerPanel.add(spacer, gbcSpacer);
 		
 		JLabel lblType = new JLabel("Priority:");
-		GridBagConstraints gbc_lblType = new GridBagConstraints();
-		gbc_lblType.anchor = GridBagConstraints.EAST;
-		gbc_lblType.insets = new Insets(0, 0, 5, 5);
-		gbc_lblType.gridx = 0;
-		gbc_lblType.gridy = 1;
-		centerPanel.add(lblType, gbc_lblType);
+		GridBagConstraints gbcLblType = new GridBagConstraints();
+		gbcLblType.anchor = GridBagConstraints.EAST;
+		gbcLblType.insets = new Insets(0, 0, 5, 5);
+		gbcLblType.gridx = 0;
+		gbcLblType.gridy = 1;
+		centerPanel.add(lblType, gbcLblType);
 		
 		priorityCombobox = new JComboBox<String>(new TaskPriorityComboboxModel());
 		priorityCombobox.setSelectedIndex(0);
 
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.gridx = 1;
-		gbc_comboBox.gridy = 1;
-		centerPanel.add(priorityCombobox, gbc_comboBox);
+		GridBagConstraints gbcComboBox = new GridBagConstraints();
+		gbcComboBox.insets = new Insets(0, 0, 5, 5);
+		gbcComboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbcComboBox.gridx = 1;
+		gbcComboBox.gridy = 1;
+		centerPanel.add(priorityCombobox, gbcComboBox);
 		
 		JLabel lblCompletedUntil = new JLabel("Completed until:");
-		GridBagConstraints gbc_lblCompletedUntil = new GridBagConstraints();
-		gbc_lblCompletedUntil.anchor = GridBagConstraints.EAST;
-		gbc_lblCompletedUntil.insets = new Insets(0, 0, 5, 5);
-		gbc_lblCompletedUntil.gridx = 0;
-		gbc_lblCompletedUntil.gridy = 2;
-		centerPanel.add(lblCompletedUntil, gbc_lblCompletedUntil);
+		GridBagConstraints gbcLblCompletedUntil = new GridBagConstraints();
+		gbcLblCompletedUntil.anchor = GridBagConstraints.EAST;
+		gbcLblCompletedUntil.insets = new Insets(0, 0, 5, 5);
+		gbcLblCompletedUntil.gridx = 0;
+		gbcLblCompletedUntil.gridy = 2;
+		centerPanel.add(lblCompletedUntil, gbcLblCompletedUntil);
 		
 		txtFieldCompletedUntil = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 2;
-		centerPanel.add(txtFieldCompletedUntil, gbc_textField);
+		GridBagConstraints gbcTextField = new GridBagConstraints();
+		gbcTextField.insets = new Insets(0, 0, 5, 5);
+		gbcTextField.fill = GridBagConstraints.HORIZONTAL;
+		gbcTextField.gridx = 1;
+		gbcTextField.gridy = 2;
+		centerPanel.add(txtFieldCompletedUntil, gbcTextField);
 		txtFieldCompletedUntil.setColumns(10);
 		
 		JLabel lblDescription = new JLabel("Description:");
-		GridBagConstraints gbc_lblDescription = new GridBagConstraints();
-		gbc_lblDescription.insets = new Insets(0, 0, 5, 5);
-		gbc_lblDescription.anchor = GridBagConstraints.NORTHEAST;
-		gbc_lblDescription.gridx = 0;
-		gbc_lblDescription.gridy = 3;
-		centerPanel.add(lblDescription, gbc_lblDescription);
+		GridBagConstraints gbcLblDescription = new GridBagConstraints();
+		gbcLblDescription.insets = new Insets(0, 0, 5, 5);
+		gbcLblDescription.anchor = GridBagConstraints.NORTHEAST;
+		gbcLblDescription.gridx = 0;
+		gbcLblDescription.gridy = 3;
+		centerPanel.add(lblDescription, gbcLblDescription);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.insets = new Insets(0, 3, 8, 8);
-		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridx = 1;
-		gbc_scrollPane.gridy = 3;
-		centerPanel.add(scrollPane, gbc_scrollPane);
+		GridBagConstraints gbcScrollPane = new GridBagConstraints();
+		gbcScrollPane.insets = new Insets(0, 3, 8, 8);
+		gbcScrollPane.fill = GridBagConstraints.BOTH;
+		gbcScrollPane.gridx = 1;
+		gbcScrollPane.gridy = 3;
+		centerPanel.add(scrollPane, gbcScrollPane);
 		
 		txtAreaTaskDescription = new JTextArea();
 		txtAreaTaskDescription.setLineWrap(true);
@@ -126,9 +126,9 @@ public class TaskPanel extends JPanel {
 		scrollPane.setBorder(txtFieldCompletedUntil.getBorder());
 		
 		JPanel bottomPanel = new JPanel();
-		bottomPanel.setBackground(ToxicColors.softGrey);
-		FlowLayout flowLayout_1 = (FlowLayout) bottomPanel.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.RIGHT);
+		bottomPanel.setBackground(ToxicColors.SOFT_GREY);
+		FlowLayout flowLayoutBottomPanel = (FlowLayout) bottomPanel.getLayout();
+		flowLayoutBottomPanel.setAlignment(FlowLayout.RIGHT);
 		add(bottomPanel, BorderLayout.SOUTH);
 		
 		JButton btnCancel = new JButton("Cancel");

@@ -19,7 +19,7 @@ public class FontIconButton extends JButton{
     Font ttfReal = ToxicData.AWESOME_FONT.deriveFont(Font.BOLD, 14);
     setFont(ttfReal);
     setText(String.valueOf(awesomeIcon));
-    setForeground(ToxicColors.iconGrey);
+    setForeground(ToxicColors.ICON_GREY);
 	setToolTipText(tooltip);
 	setFocusPainted(false);
 	setContentAreaFilled(false);
