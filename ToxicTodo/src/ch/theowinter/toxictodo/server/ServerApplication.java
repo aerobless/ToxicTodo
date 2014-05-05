@@ -52,16 +52,16 @@ public class ServerApplication implements Runnable{
 			BufferedReader buffer=new BufferedReader(new InputStreamReader(System.in));
 			try {
 				String input = buffer.readLine();
-				if(input.equals("stop") || input.equals("exit") || input.equals("q")){
+				if("stop".equals(input) || "exit".equals(input) || "q".equals(input)){
 					logic.saveToXMLFile(serverTodoList, todoDataFile);
 					stopServer.acquire();
 				}
-				else if(input.equals("update")){
+				else if("update".equals(input)){
 					Logger.log("Updating... Please wait a few seconds before starting the server again!");
 					logic.updateSoftware(serverUpdateURL);
 					stopServer.acquire();
 				}
-				else if(input.equals("about")||input.equals("identify")){
+				else if("about".equals(input)||"identify".equals(input)){
 					Logger.log("### - ABOUT TOXIC TODO - ###");
 					String space = "  ";
 					Logger.log(space+"Version: "+serverVersion);

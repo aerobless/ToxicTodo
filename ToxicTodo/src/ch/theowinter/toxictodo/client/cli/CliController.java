@@ -145,7 +145,7 @@ public class CliController {
 		boolean success = true;
 		if(commands.length <= userArgs.length){
 			for(int i = 0; i<commands.length; i++){
-				if(!(commands[i].equals(userArgs[i]) || commands[i].equals("args")|| commands[i].equals("arg"))){
+				if(!(commands[i].equals(userArgs[i]) || "args".equals(commands[i])|| "arg".equals(commands[i]))){
 					success = false;
 				}
 			}
@@ -253,9 +253,9 @@ public class CliController {
 		//Clear ANSI console
 		print(JansiFormats.ANSI_CLS);
 		print(JansiFormats.ANSI_BOLD+JansiFormats.CYAN+"### - ABOUT TOXIC TODO - ###");
-		print(JansiFormats.GREEN+"Version: "+ClientApplication.clientVersion, 2);
-		print(JansiFormats.GREEN+"Author:  "+ClientApplication.author, 2);
-		print(JansiFormats.GREEN+"Website: "+ClientApplication.website, 2);
+		print(JansiFormats.GREEN+"Version: "+ClientApplication.CLIENT_VERSION, 2);
+		print(JansiFormats.GREEN+"Author:  "+ClientApplication.AUTHOR, 2);
+		print(JansiFormats.GREEN+"Website: "+ClientApplication.WEBSITE, 2);
 	}
 	
 	//TODO: global update handler in todo manger or somewhere
@@ -265,7 +265,7 @@ public class CliController {
 		print(JansiFormats.ANSI_CLS);
 		print(JansiFormats.ANSI_BOLD+JansiFormats.CYAN+"### - TOXIC TODO UPDATER - ###");
 		print(JansiFormats.GREEN+"Downloading latest release from CI-server...");
-		if(logic.updateSoftware(ClientApplication.clientUpdateURL)){
+		if(logic.updateSoftware(ClientApplication.CLIENT_UPDATE_URL)){
 			print(JansiFormats.GREEN+"The update has been successfully downloaded.");
 			print(JansiFormats.GREEN+"Please let a few seconds pass before issuing a command to ToxicTodo");
 		}

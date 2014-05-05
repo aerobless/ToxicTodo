@@ -11,7 +11,6 @@ import java.net.Socket;
 import javax.crypto.SealedObject;
 
 import ch.theowinter.toxictodo.client.cli.CliController;
-import ch.theowinter.toxictodo.client.cli.JansiFormats;
 import ch.theowinter.toxictodo.client.ui.controller.ClientController;
 import ch.theowinter.toxictodo.sharedobjects.EncryptionEngine;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
@@ -21,16 +20,15 @@ import ch.theowinter.toxictodo.sharedobjects.elements.ToxicDatagram;
 
 public class ClientApplication {
 	//Vanity info
-	public static final double clientVersion = 1.35;
-	public static final String author = "Theo Winter";
-	public static final String website = "http://theowinter.ch";
-	public static final String clientUpdateURL = "http://w1nter.net:8080/job/ToxicTodo/lastSuccessfulBuild/artifact/ToxicTodo/dist/ToxicTodoClient.jar";
+	public static final double CLIENT_VERSION = 1.35;
+	public static final String AUTHOR = "Theo Winter";
+	public static final String WEBSITE = "http://theowinter.ch";
+	public static final String CLIENT_UPDATE_URL = "http://w1nter.net:8080/job/ToxicTodo/lastSuccessfulBuild/artifact/ToxicTodo/dist/ToxicTodoClient.jar";
 	
 	//Local storage
 	private static LogicEngine logic = new LogicEngine();
 	public static ClientTodoManager todoManager;
 	private static EncryptionEngine crypto;
-	public static JansiFormats jansi = new JansiFormats();
 	
 	//Settings
 	private final static String settingsFile = logic.getJarDirectory("client_config.xml");
@@ -105,8 +103,8 @@ public class ClientApplication {
 		    	oos.close();  
 		    	os.close();  
 		    	s.close();
-			} catch (ClassNotFoundException anEx) {
-				anEx.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				Logger.log("Class not found in Client Application.", e);
 			} 
 		}
 		return todoList;

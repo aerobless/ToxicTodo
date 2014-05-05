@@ -1,6 +1,11 @@
 package ch.theowinter.toxictodo.client.cli;
 
 public class JansiFormats {
+	
+	private JansiFormats() {
+		super();
+	}
+	
 	//Colors
     public static final String BLACK = "\u001B[0;30m";
     public static final String RED = "\u001B[0;31m";
