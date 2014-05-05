@@ -30,16 +30,11 @@ public class ClientApplication {
 	private static EncryptionEngine crypto;
 	
 	//Settings
-	private final static String settingsFile = logic.getJarDirectory("client_config.xml");
-	public static ClientSettings settings;
-	
-	//Runtime settings
-	public static boolean isGUI = false;
-	public static boolean isCLI = !isGUI;
+	private final static String SETTINGS_FILE = logic.getJarDirectory("client_config.xml");
+	public final static ClientSettings settings = loadSettings();
 
 	public static void main(String[] args) {
 		//0. Load config & init stuff
-		loadSettings();
 		try {
 			crypto = new EncryptionEngine(settings.getPassword());
 		} catch (Exception e) {
@@ -48,7 +43,6 @@ public class ClientApplication {
 		
 		//2. Create either GUI or CLI controller
 		if(args.length<1){
-			isGUI = true;
 			ClientTodoManager todoManager = new ClientTodoManager();
 			ClientController guiClient = new ClientController();
 			guiClient.start(todoManager, settings);
@@ -113,28 +107,31 @@ public class ClientApplication {
 		return dataFromServer;
 	}
 	
-	public static void loadSettings(){
+	public static ClientSettings loadSettings(){
+		ClientSettings loadingSettings;
 		if(!firstTimeRun()){
-			settings = (ClientSettings) logic.loadXMLFile(settingsFile);
+			loadingSettings = (ClientSettings) logic.loadXMLFile(SETTINGS_FILE);
+		}else{
+			loadingSettings = new ClientSettings();
+			logic.saveToXMLFile(settings, SETTINGS_FILE);
 		}
+		return loadingSettings;
 	}
 	
 	public static boolean firstTimeRun(){
 		boolean firstTime = false;
-		File f = new File(settingsFile);
+		File f = new File(SETTINGS_FILE);
 		if(!f.exists()){
 			//TODO: maybe add a better warning since this gets clear almost immediately in CLI version and not displayed at all in GUI.
 			Logger.log("INFORMATION:");
 			Logger.log("client_settings.xml has been created because you run ToxicTodo for the first time.");
 			Logger.log("Please edit the settings to chose your own server & port. - Localhost can be used for testing only.");
 			firstTime = true;
-			settings = new ClientSettings();
-			logic.saveToXMLFile(settings, settingsFile);
 		}
 		return firstTime;
 	}
 	
 	public static void saveSettingsToDisk(){
-		logic.saveToXMLFile(settings, settingsFile);
+		logic.saveToXMLFile(settings, SETTINGS_FILE);
 	}
 }
