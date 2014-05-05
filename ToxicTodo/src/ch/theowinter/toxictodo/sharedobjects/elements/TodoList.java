@@ -1,8 +1,9 @@
 package ch.theowinter.toxictodo.sharedobjects.elements;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides high-level access to todoTasks and todoCategories
@@ -10,7 +11,7 @@ import java.util.HashMap;
  */
 public class TodoList implements Serializable {
 	private static final long serialVersionUID = -5867425003353980895L;
-	HashMap<String, TodoCategory> categoryMap = new HashMap<String, TodoCategory>();
+	Map<String, TodoCategory> categoryMap = new HashMap<String, TodoCategory>();
 	
 
 	public TodoList() {
@@ -27,8 +28,7 @@ public class TodoList implements Serializable {
 	public void addCategory(TodoCategory todoCategory) throws Exception{
 		if(categoryMap.get(todoCategory.getKeyword())==null){
 			categoryMap.put(todoCategory.getKeyword(), todoCategory);
-		}
-		else{
+		} else{
 			throw new Exception("A category with this keyword already exists. Keywords have to be unique.");
 		}
 	}
@@ -45,14 +45,13 @@ public class TodoList implements Serializable {
 		if(categoryMap.get(keyword)!=null){
 			if(categoryMap.get(keyword).containsTasks()){
 				//Exporting orphaned tasks to orphan category before deleting old category.
-				ArrayList<TodoTask> orphanTasks = categoryMap.get(keyword).getTaskInCategoryAsArrayList();
+				List<TodoTask> orphanTasks = categoryMap.get(keyword).getTaskInCategoryAsArrayList();
 				for(TodoTask orphan : orphanTasks){
 					categoryMap.get("orphan").add(orphan);
 				}
 			}
 			categoryMap.remove(keyword);
-		}
-		else{
+		} else{
 			throw new Exception("Category doesn't exist.");
 		}
 	}
@@ -74,8 +73,7 @@ public class TodoList implements Serializable {
 			editCategory.setName(newName);
 			categoryMap.remove(oldKeyword);
 			categoryMap.put(newKeyword, editCategory);
-		}
-		else{
+		} else{
 			throw new Exception("Category doesn't exist.");
 		}
 	}
@@ -94,8 +92,7 @@ public class TodoList implements Serializable {
 	public void addTask(String categoryKeyword, TodoTask todoTask) throws Exception{
 		if(categoryMap.get(categoryKeyword)!=null){
 			categoryMap.get(categoryKeyword).add(todoTask);
-		}
-		else{
+		} else{
 			throw new Exception("Category doesn't exist.");
 		}
 	}
@@ -109,13 +106,12 @@ public class TodoList implements Serializable {
 	public void removeTask(TodoTask todoTask, String category) throws Exception{
 		if(categoryMap.get(category).get(todoTask.getText())!=null){
 			categoryMap.get(category).removeTask(todoTask.getText());	
-		}
-		else{
+		} else{
 			throw new Exception("Task doesn't exist.");
 		}
 	}
 
-	public HashMap<String, TodoCategory> getCategoryMap() {
+	public Map<String, TodoCategory> getCategoryMap() {
 		return categoryMap;
 	}
 }

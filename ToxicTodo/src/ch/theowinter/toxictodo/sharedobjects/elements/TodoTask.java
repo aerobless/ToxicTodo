@@ -1,8 +1,8 @@
 package ch.theowinter.toxictodo.sharedobjects.elements;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class TodoTask implements Serializable{
 	private static final long serialVersionUID = 8551171003242753417L;
@@ -22,14 +22,30 @@ public class TodoTask implements Serializable{
 	private String completionLocatioN;
 	private Date creationDate;
 	private Date completionDate;
-	private ArrayList<Date> repeatableHistory;
+	private List<Date> repeatableHistory;
 
-	//Constructor:
+	/**
+	 * Create a TodoTask with the simplified
+	 * constructor. Requires only a text.
+	 *
+	 * @param aTaskText
+	 */
 	public TodoTask(String aTaskText) {
 		super();
 		text = aTaskText;
 	}
 	
+	/**
+	 * Create a a TodoTask with the full
+	 * constructor. (If you only have a todo-text
+	 * then use the simplified constructor.
+	 *
+	 * @param priority
+	 * @param repeatable
+	 * @param text
+	 * @param creationLocation
+	 * @param creationDate
+	 */
 	public TodoTask(int priority, boolean repeatable, String text,
 			String creationLocation, Date creationDate) {
 		super();
@@ -40,10 +56,24 @@ public class TodoTask implements Serializable{
 		this.creationDate = creationDate;
 	}
 
+	/**
+	 * Priority is interpreted on the client-side
+	 * only. The server doesn't care about the int.
+	 * 
+	 * See ToxicData for a translation from int to string.
+	 *
+	 * @return priority
+	 */
 	public int getPriority() {
 		return priority;
 	}
 
+	/**
+	 * Priority is interpreted on the client-side
+	 * only. The server doesn't care about the int.
+	 *
+	 * @param priority
+	 */
 	public void setPriority(int priority) {
 		this.priority = priority;
 	}
@@ -108,13 +138,8 @@ public class TodoTask implements Serializable{
 		return creationDate;
 	}
 
-	public ArrayList<Date> getRepeatableHistory() {
+	public List<Date> getRepeatableHistory() {
 		return repeatableHistory;
-	}
-
-	@Deprecated
-	public String getTaskText() {
-		return text;
 	}
 
 	public Date getCompletionDate() {
@@ -124,5 +149,4 @@ public class TodoTask implements Serializable{
 	public void setCompletionDate(Date completedOn) {
 		this.completionDate = completedOn;
 	}
-	
 }

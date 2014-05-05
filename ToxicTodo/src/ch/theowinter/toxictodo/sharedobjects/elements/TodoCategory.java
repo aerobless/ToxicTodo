@@ -45,19 +45,15 @@ public class TodoCategory implements Serializable, Comparable<TodoCategory> {
 	public TodoTask get(String key){
 		return todoTaskList.get(key);
 	}
+	
 	/**
 	 * Check whether a category contains tasks
 	 * or whether it can be safely deleted.
 	 * @return boolean
 	 */
 	public boolean containsTasks(){
-		boolean containsTasks = false;
-		if(todoTaskList.size()>0){
-			containsTasks = true;
-		}
-		return containsTasks;
+		return todoTaskList.isEmpty();
 	}
-	
 	
 	//Contain-Setters:
 	public void add(TodoTask todo){
@@ -67,7 +63,6 @@ public class TodoCategory implements Serializable, Comparable<TodoCategory> {
 		return todoTaskList.remove(key);
 	}
 
-	
 	//Property-Getters:
 	public String getName(){
 		return name;
