@@ -1,6 +1,6 @@
 package ch.theowinter.toxictodo.client.ui.model;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -14,7 +14,7 @@ public class CategoryComboBoxModel extends AbstractListModel<String> implements 
 	private static final long serialVersionUID = -2267676861577121046L;
 	private Object selectedItem;
 	ClientTodoManager todoManager;
-	ArrayList<TodoCategory> categoryList;
+	List<TodoCategory> categoryList;
 	
 	public CategoryComboBoxModel(ClientTodoManager todoManager) {
 		this.todoManager = todoManager;

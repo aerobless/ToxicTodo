@@ -3,6 +3,7 @@ package ch.theowinter.toxictodo.client;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Observable;
 import java.util.concurrent.Semaphore;
 
@@ -28,7 +29,8 @@ public class ClientTodoManager extends Observable{
 		try {
 			updateList();
 			initSuccess = true;
-		} catch (IOException anEx) {
+		} catch (IOException e) {
+			Logger.log("Error updating TodoList in ClientTodoManager.", e);
 			initSuccess = false;
 		}
 	}
@@ -64,8 +66,8 @@ public class ClientTodoManager extends Observable{
 		setTodoList(generateAllTasksCategory(ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT"))));
 	}
 	
-	public ArrayList<TodoCategory> categoriesToArray(){
-		ArrayList<TodoCategory> returnArray = new ArrayList<TodoCategory>();
+	public List<TodoCategory> categoriesToArray(){
+		List<TodoCategory> returnArray = new ArrayList<TodoCategory>();
 		for(String categoryKey : getTodoList().getCategoryMap().keySet()){
 			returnArray.add(getTodoList().getCategoryMap().get(categoryKey));
 		}
@@ -109,7 +111,7 @@ public class ClientTodoManager extends Observable{
 		try {
 			inputList.addCategory(new TodoCategory("All tasks", ToxicData.allTaskTodoCategoryKey, '\uf135',true));
 			for(String categoryKey : inputList.getCategoryMap().keySet()){
-				ArrayList<TodoTask> currentCategoryTasks = inputList.getCategoryMap().get(categoryKey).getTaskInCategoryAsArrayList();
+				List<TodoTask> currentCategoryTasks = inputList.getCategoryMap().get(categoryKey).getTaskInCategoryAsArrayList();
 				for(TodoTask currentTask : currentCategoryTasks){
 					inputList.addTask(ToxicData.allTaskTodoCategoryKey, currentTask);
 				}

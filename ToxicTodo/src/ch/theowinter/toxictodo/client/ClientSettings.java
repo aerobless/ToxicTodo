@@ -1,8 +1,8 @@
 package ch.theowinter.toxictodo.client;
 
 public class ClientSettings {
-	private String HOST = "localhost";
-	private int PORT = 5222;
+	private String host = "localhost";
+	private int port = 5222;
 	private String password = "secretPassword";
 	private boolean debug = false;
 	private int consoleSize = 80;
@@ -13,10 +13,10 @@ public class ClientSettings {
 		super();
 	}
 	public String getHOST() {
-		return HOST;
+		return host;
 	}
 	public int getPORT() {
-		return PORT;
+		return port;
 	}
 	public String getPassword() {
 		return password;
@@ -34,10 +34,10 @@ public class ClientSettings {
 	
 	//Setters (only supported in GUI)
 	public void setHOST(String hOST) {
-		HOST = hOST;
+		host = hOST;
 	}
 	public void setPORT(int pORT) {
-		PORT = pORT;
+		port = pORT;
 	}
 	public void setPassword(String password) {
 		this.password = password;

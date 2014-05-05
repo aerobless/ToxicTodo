@@ -31,12 +31,16 @@ public class ClientApplication {
 	
 	//Settings
 	private final static String SETTINGS_FILE = logic.getJarDirectory("client_config.xml");
-	public final static ClientSettings settings = loadSettings();
+	public final static ClientSettings SETTINGS = loadSettings();
+	
+	private ClientApplication() {
+		super();
+	}
 
 	public static void main(String[] args) {
 		//0. Load config & init stuff
 		try {
-			crypto = new EncryptionEngine(settings.getPassword());
+			crypto = new EncryptionEngine(SETTINGS.getPassword());
 		} catch (Exception e) {
 			Logger.log("Crypto Error: Unable to load the Encryption Engine", e);
 		}
@@ -45,18 +49,16 @@ public class ClientApplication {
 		if(args.length<1){
 			ClientTodoManager todoManager = new ClientTodoManager();
 			ClientController guiClient = new ClientController();
-			guiClient.start(todoManager, settings);
-		}
-		else{
+			guiClient.start(todoManager, SETTINGS);
+		} else{
 			try {
 				ClientTodoManager todoManager = new ClientTodoManager(sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT")));
 				CliController cli = new CliController(todoManager);
 				cli.start(args);
-			} catch (IOException anEx) {
-				Logger.log("ERROR: Unable to establish a connection with the server.");
-				Logger.log("Are you certain that you're running a server on "+settings.getHOST()+":"+settings.getPORT()+"?");
+			} catch (IOException e) {
+				Logger.log("ERROR: Unable to establish a connection with the server.", e);
+				Logger.log("Are you certain that you're running a server on "+SETTINGS.getHOST()+":"+SETTINGS.getPORT()+"?");
 				Logger.log("If you're running the server on a different IP or port, then you should change the client_config.xml!");
-				System.exit(0);
 			}
 		}
 	}
@@ -68,12 +70,12 @@ public class ClientApplication {
 			encryptedData = crypto.enc(datagram);
 		} catch (Exception e) {
 			Logger.log("Encryption ERROR - Unable to encrypt & send data!", e);
-			System.exit(0);
+			throw new IOException();
 		}
 		TodoList todoList = null;
 		if(encryptedData!=null){
 			try {
-		    	Socket s = new Socket(settings.getHOST(), settings.getPORT());  
+		    	Socket s = new Socket(SETTINGS.getHOST(), SETTINGS.getPORT());  
 		    	OutputStream os = s.getOutputStream();  
 		    	ObjectOutputStream oos = new ObjectOutputStream(os);  
 		
@@ -113,7 +115,7 @@ public class ClientApplication {
 			loadingSettings = (ClientSettings) logic.loadXMLFile(SETTINGS_FILE);
 		}else{
 			loadingSettings = new ClientSettings();
-			logic.saveToXMLFile(settings, SETTINGS_FILE);
+			logic.saveToXMLFile(SETTINGS, SETTINGS_FILE);
 		}
 		return loadingSettings;
 	}
@@ -132,6 +134,6 @@ public class ClientApplication {
 	}
 	
 	public static void saveSettingsToDisk(){
-		logic.saveToXMLFile(settings, SETTINGS_FILE);
+		logic.saveToXMLFile(SETTINGS, SETTINGS_FILE);
 	}
 }

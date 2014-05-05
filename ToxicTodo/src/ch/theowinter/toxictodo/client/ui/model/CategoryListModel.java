@@ -1,7 +1,7 @@
 package ch.theowinter.toxictodo.client.ui.model;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -13,7 +13,7 @@ import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
 public class CategoryListModel extends AbstractListModel<TodoCategory> implements Observer{
 	private static final long serialVersionUID = -8918372750130357388L;
 	
-	ArrayList<TodoCategory> categoryList;
+	List<TodoCategory> categoryList;
 	ClientTodoManager todoManager; 
 	
 	public CategoryListModel(ClientTodoManager todoManager) {

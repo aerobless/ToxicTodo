@@ -78,7 +78,7 @@ public class CliController {
 	}
 
 	public void print(String input, int indentation){
-		int charactersPerLine = ClientApplication.settings.getConsoleSize();
+		int charactersPerLine = ClientApplication.SETTINGS.getConsoleSize();
 		for(int i=charactersPerLine; i < input.length(); i+=charactersPerLine){
 			input = new StringBuilder(input).insert(i, "\n").toString();
 		}
@@ -104,38 +104,27 @@ public class CliController {
 		ToxicDatagram datagram = null;
 		if(argCheck(new String[]{"add","category","arg", "args"}, userInputArray)){
 			datagram = addCategory(userInputArray);
-		}
-		else if(argCheck(new String[]{"list"}, userInputArray)){
+		} else if (argCheck(new String[]{"list"}, userInputArray)){
 			datagram = drawTodoList(false);
-		}
-		else if(argCheck(new String[]{"add","arg", "args"}, userInputArray)){
+		} else if (argCheck(new String[]{"add","arg", "args"}, userInputArray)){
 			datagram = addTask(userInputArray);
-		}
-		else if(argCheck(new String[]{"remove","category", "arg"}, userInputArray)){
+		} else if (argCheck(new String[]{"remove","category", "arg"}, userInputArray)){
 			datagram = removeCategory(userInputArray);	
-		}
-		else if(argCheck(new String[]{"complete","task", "arg"}, userInputArray)){
+		} else if (argCheck(new String[]{"complete","task", "arg"}, userInputArray)){
 			datagram = removeTask(userInputArray[2], true);
-		}
-		else if(argCheck(new String[]{"complete", "arg"}, userInputArray)){
+		} else if (argCheck(new String[]{"complete", "arg"}, userInputArray)){
 			datagram = removeTask(userInputArray[1], true);
-		}
-		else if(argCheck(new String[]{"remove","task", "arg"}, userInputArray)){
+		} else if (argCheck(new String[]{"remove","task", "arg"}, userInputArray)){
 			datagram = removeTask(userInputArray[2], false);
-		}
-		else if(argCheck(new String[]{"remove", "arg"}, userInputArray)){
+		} else if (argCheck(new String[]{"remove", "arg"}, userInputArray)){
 			datagram = removeTask(userInputArray[1], false);
-		}
-		else if(argCheck(new String[]{"categories"}, userInputArray)||argCheck(new String[]{"list", "categories"}, userInputArray)){
+		} else if (argCheck(new String[]{"categories"}, userInputArray)||argCheck(new String[]{"list", "categories"}, userInputArray)){
 			drawCategories();
-		}
-		else if(argCheck(new String[]{"about"}, userInputArray)||argCheck(new String[]{"info"}, userInputArray)||argCheck(new String[]{"identify"}, userInputArray)){
+		} else if (argCheck(new String[]{"about"}, userInputArray)||argCheck(new String[]{"info"}, userInputArray)||argCheck(new String[]{"identify"}, userInputArray)){
 			drawAbout();
-		}
-		else if(argCheck(new String[]{"update"}, userInputArray)){
+		} else if (argCheck(new String[]{"update"}, userInputArray)){
 			updateTheClient();
-		}
-		else if(userInputArray.length>=1 && !userInputArray[0].equals("")){
+		} else if (userInputArray.length>=1 && !userInputArray[0].equals("")){
 			print("Your command: "+Arrays.toString(userInputArray) +" was not recognized.");
 		}
 		return datagram;
@@ -149,8 +138,7 @@ public class CliController {
 					success = false;
 				}
 			}
-		}
-		else{
+		} else{
 			success = false;
 		}
 		return success;
@@ -259,7 +247,6 @@ public class CliController {
 	}
 	
 	//TODO: global update handler in todo manger or somewhere
-	@Deprecated
 	public void updateTheClient(){
 		//Clear ANSI console
 		print(JansiFormats.ANSI_CLS);
@@ -285,8 +272,7 @@ public class CliController {
 						dataMessage = "REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER";
 					}
 					datagram = new ToxicDatagram(dataMessage, localTaskBinding.get(userChoice-1), localCategoryBinding.get(userChoice-1));	
-				}
-				else{
+				} else{
 					print("There's no task with that ID.");
 				}
 			} catch(NumberFormatException e){
@@ -309,8 +295,7 @@ public class CliController {
 			String[] goodArgs = logic.concatenateArgs(args, 4);
 			TodoCategory category = new TodoCategory(goodArgs[3], goodArgs[2]);
 			datagram = new ToxicDatagram("ADD_CATEGORY_TO_LIST_ON_SERVER",null, category);
-		}
-		else{
+		} else{
 			print("You can add a category like this:");
 			print("add category keyword long category name");
 		}
@@ -322,8 +307,7 @@ public class CliController {
 		if(args.length==3){
 			TodoCategory category = new TodoCategory(args[2], args[2]);
 			datagram = new ToxicDatagram("REMOVE_CATEGORY_ON_SERVER",null, category);
-		}
-		else{
+		} else{
 			print("You can remove a category like this:");
 			print("remove category keyword");
 		}
