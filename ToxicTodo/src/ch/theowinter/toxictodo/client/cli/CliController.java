@@ -50,7 +50,7 @@ public class CliController {
 				voidDrawList();
 			} catch (IOException e) {
 				Logger.log("Unable to establish a connection with the server.", e);
-				NoConnectionError();
+				noConnectionError();
 			}
 		}
 	}
@@ -61,11 +61,10 @@ public class CliController {
 		try {
 			todoManager.setTodoList(ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT")));
 			ClientApplication.sendToServer(commandHandler(new String[]{"list"}));
-			System.out.println("here");
 			voidDrawList();
 		} catch (IOException e) {
 			Logger.log("Unable to establish a connection with the server.", e);
-			NoConnectionError();
+			noConnectionError();
 		}
 	}
 
@@ -116,7 +115,7 @@ public class CliController {
 			drawAbout();
 		} else if (argCheck(new String[]{"update"}, userInputArray)){
 			updateTheClient();
-		} else if (userInputArray.length>=1 && !userInputArray[0].equals("")){
+		} else if (userInputArray.length>=1 && userInputArray[0].length()>0){
 			print("Your command: "+Arrays.toString(userInputArray) +" was not recognized.");
 		} else {
 			/*
@@ -184,7 +183,6 @@ public class CliController {
 			//Only list category if it contains tasks or we want to display empty categories too.
 			if(todoManager.getTodoList().getCategoryMap().get(categoryKey).containsTasks() || displayEmptyCategories==true){
 				print(JansiFormats.ANSI_BOLD+JansiFormats.CYAN+"###-"+todoManager.getTodoList().getCategoryMap().get(categoryKey).getName().toUpperCase()+"-###");
-				//todoList.getCategoryMap().get(categoryKey).getTasksHashMap();
 				for(String taskKey : todoManager.getTodoList().getCategoryMap().get(categoryKey).getTasksHashMap().keySet()){
 					++taskID;
 					print(JansiFormats.GREEN+"["+taskID+"] "+formatString(todoManager.getTodoList().getCategoryMap().get(categoryKey).getTasksHashMap().get(taskKey).getText()), 2);
@@ -316,7 +314,7 @@ public class CliController {
 		return datagram;	
 	}
 	
-	private void NoConnectionError(){
+	private void noConnectionError(){
 		print("ERROR: Unable to establish a connection with the server.");
 		print("If you're running the server on a different IP or port, then you should change the client_config.xml!");
 	}

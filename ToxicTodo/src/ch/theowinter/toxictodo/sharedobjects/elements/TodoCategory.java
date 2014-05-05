@@ -105,18 +105,23 @@ public class TodoCategory implements Serializable, Comparable<TodoCategory> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj){
 			return true;
-		if (obj == null)
+		}
+		if (obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()){
 			return false;
+		}
 		TodoCategory other = (TodoCategory) obj;
 		if (keyword == null) {
-			if (other.keyword != null)
+			if (other.keyword != null){
 				return false;
-		} else if (!keyword.equals(other.keyword))
+			}
+		} else if (!keyword.equals(other.keyword)){
 			return false;
+		}
 		return true;
 	}
 
