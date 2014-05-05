@@ -94,8 +94,17 @@ public class TodoCategory implements Serializable, Comparable<TodoCategory> {
 		this.icon = icon;
 	}
 	
+	@Override
+	public boolean equals(Object obj){
+		boolean isEqual = false;
+		if (obj instanceof TodoCategory) {
+			if(((TodoCategory) obj).compareTo(this)==0){
+				isEqual = true;
+			}
+		}
+		return isEqual;	
+	}
 
-	//Comparator:
 	@Override
 	public int compareTo(TodoCategory inputCategory) {
 		int returnValue;
