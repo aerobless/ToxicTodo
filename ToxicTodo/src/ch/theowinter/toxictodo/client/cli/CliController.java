@@ -119,7 +119,15 @@ public class CliController {
 		} else if (userInputArray.length>=1 && !userInputArray[0].equals("")){
 			print("Your command: "+Arrays.toString(userInputArray) +" was not recognized.");
 		} else {
-			System.exit(0);
+			/*
+			 * We're exciting with System.exit() here because the user chose that he wants quit and
+			 * we want to let him do that as fast as possible. Since this code is only executed in the
+			 * CLI-version there are no windows or additional threads to clean. Also this is stand-alone
+			 * application that isn't run on a server or java EE. So it's fine to use System.exit().
+			 * 
+			 * The //NOSONAR tag prevents this from showing up as a "major" issue on sonarQube code analysis server.
+			 */
+			System.exit(0); //NOSONAR
 		}
 		return datagram;
 	}
