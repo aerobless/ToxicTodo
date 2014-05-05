@@ -26,6 +26,7 @@ public class ClientController {
 	}
 	
 	private void createLocalServerDialog(){
+		Logger.log("Trying to see if user wants to run a local server");
 		int result = JOptionPane.showConfirmDialog(
 			    null, "We were unable to detect a server.\n"
 			    + "Would you like to start the program locally?\n",
@@ -43,15 +44,9 @@ public class ClientController {
 				}
 				todoManager = new ClientTodoManager();
 			}while(!todoManager.getInitSuccess());
-			if(todoManager.getInitSuccess()){
-				createGUI(todoManager, settings);
-			}else{
-				Logger.log("ERROR 7: Unable to connect");
-				System.exit(0);
-			}
+			createGUI(todoManager, settings);
 		} else{
-			//NO - We exit here because the user doesn't want to run a local server.
-			System.exit(0);	
+			Logger.log("User chose to not use a local server and we can't connect to a dedicated server.");
 		}
 	}
 }
