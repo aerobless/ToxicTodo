@@ -27,7 +27,6 @@ public class ClientApplication {
 	
 	//Local storage
 	private static LogicEngine logic = new LogicEngine();
-	public static ClientTodoManager todoManager;
 	private static EncryptionEngine crypto;
 	
 	//Settings
@@ -50,21 +49,21 @@ public class ClientApplication {
 		//2. Create either GUI or CLI controller
 		if(args.length<1){
 			isGUI = true;
-			todoManager = new ClientTodoManager();
+			ClientTodoManager todoManager = new ClientTodoManager();
 			ClientController guiClient = new ClientController();
 			guiClient.start(todoManager, settings);
 		}
 		else{
 			try {
-				todoManager = new ClientTodoManager(sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT")));
+				ClientTodoManager todoManager = new ClientTodoManager(sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT")));
+				CliController cli = new CliController(todoManager);
+				cli.start(args);
 			} catch (IOException anEx) {
 				Logger.log("ERROR: Unable to establish a connection with the server.");
 				Logger.log("Are you certain that you're running a server on "+settings.getHOST()+":"+settings.getPORT()+"?");
 				Logger.log("If you're running the server on a different IP or port, then you should change the client_config.xml!");
 				System.exit(0);
 			}
-			CliController cli = new CliController(todoManager);
-			cli.start(args);
 		}
 	}
 	
@@ -90,14 +89,7 @@ public class ClientApplication {
 	        	ObjectInputStream ois = new ObjectInputStream(is);
 	        	SealedObject encryptedDataFromServer = (SealedObject)ois.readObject();
 	        	
-	        	//Decrypt data from server
-	        	ToxicDatagram dataFromServer = null;
-	    		try {
-	    			dataFromServer = (ToxicDatagram) crypto.dec(encryptedDataFromServer);
-	    		} catch (Exception e) {
-	    			Logger.log("Encryption ERROR - Unable to encrypt & send data!", e);
-	    			System.exit(0);
-	    		}
+	        	ToxicDatagram dataFromServer = decrypt(encryptedDataFromServer);
 	        	todoList = dataFromServer.getTodoList();
 		
 		    	oos.close();  
@@ -108,6 +100,17 @@ public class ClientApplication {
 			} 
 		}
 		return todoList;
+	}
+	
+	private static ToxicDatagram decrypt(SealedObject encryptedDataFromServer) throws IOException{
+    	ToxicDatagram dataFromServer = null;
+		try {
+			dataFromServer = (ToxicDatagram) crypto.dec(encryptedDataFromServer);
+		} catch (Exception e) {
+			Logger.log("Encryption ERROR - Unable to encrypt & send data!", e);
+			throw new IOException();
+		}
+		return dataFromServer;
 	}
 	
 	public static void loadSettings(){
