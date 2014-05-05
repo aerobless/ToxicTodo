@@ -134,7 +134,7 @@ public class ServerApplication implements Runnable{
 				serverTodoList.addTask("buy", "new pens");
 				writeChangesToDisk();
 			} catch (Exception e) {
-				e.printStackTrace();
+				Logger.log("Unable to add default categories on server.", e);
 			}
 		}
 		return firstTime;

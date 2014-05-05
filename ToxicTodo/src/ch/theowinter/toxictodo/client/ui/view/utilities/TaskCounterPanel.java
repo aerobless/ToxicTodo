@@ -2,12 +2,9 @@ package ch.theowinter.toxictodo.client.ui.view.utilities;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontFormatException;
-import java.io.IOException;
-import java.io.InputStream;
 
-import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class TaskCounterPanel extends JPanel {
 	private static final long serialVersionUID = -728870559027172774L;
@@ -27,18 +24,12 @@ public class TaskCounterPanel extends JPanel {
 		lblTWO = new JLabel("IC");
 		lblTWO.setBounds(0, 13, 29, 27);
 		add(lblTWO);
-		try{
-			InputStream in = this.getClass().getResourceAsStream("/resources/fontawesome-webfont.ttf");
-		    Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, in);
-		    Font ttfReal = ttfBase.deriveFont(Font.BOLD, 30);
-		    lblTWO.setFont(ttfReal);
-		    lblTWO.setForeground(Color.WHITE);
-		    lblTWO.setText(String.valueOf('\uf0c8'));
-	    } catch (FontFormatException e) {
-	        e.printStackTrace();
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
+
+	    Font ttfReal = ToxicData.AWESOME_FONT.deriveFont(Font.BOLD, 30);
+	    lblTWO.setFont(ttfReal);
+	    lblTWO.setForeground(Color.WHITE);
+	    lblTWO.setText(String.valueOf('\uf0c8'));
+
 		setBackground(new Color(83, 145, 206));
 	}
 	

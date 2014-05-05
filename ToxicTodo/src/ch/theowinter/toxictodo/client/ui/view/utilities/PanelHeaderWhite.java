@@ -4,9 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.FontFormatException;
-import java.io.IOException;
-import java.io.InputStream;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -80,14 +77,8 @@ public class PanelHeaderWhite extends JPanel {
 		
 		lblIcon = new JLabel(String.valueOf('\uf15b'));
 		Font ttfReal = null;
-		try {
-	        InputStream in = this.getClass().getResourceAsStream("/resources/fontawesome-webfont.ttf");
-			Font ttfBase = Font.createFont(Font.TRUETYPE_FONT, in);
-		    ttfReal = ttfBase.deriveFont(Font.BOLD, 40);
-		} catch (FontFormatException | IOException e) {
-			System.out.println("font IO exception");
-			e.printStackTrace();
-		}
+	    ttfReal = ToxicData.AWESOME_FONT.deriveFont(Font.BOLD, 40);
+	    
 		iconPanel.setLayout(new BorderLayout(0, 0));
 		lblIcon.setFont(ttfReal);
 		iconPanel.add(lblIcon);
