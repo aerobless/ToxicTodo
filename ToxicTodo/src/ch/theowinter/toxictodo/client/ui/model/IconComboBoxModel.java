@@ -51,6 +51,19 @@ public class IconComboBoxModel extends AbstractListModel<FontString> implements 
 		newIcons.add(new FontString("Leaf",'\uf06c'));
 		newIcons.add(new FontString("Eye",'\uf06e'));
 		newIcons.add(new FontString("Globe",'\uf0ac'));
+		newIcons.add(new FontString("Book",'\uf02d'));
+		newIcons.add(new FontString("Calendar",'\uf073'));
+		newIcons.add(new FontString("Chart",'\uf080'));
+		newIcons.add(new FontString("Telephone",'\uf095'));
+		newIcons.add(new FontString("Creditcard",'\uf09d'));
+		newIcons.add(new FontString("Cloud",'\uf0c2'));
+		newIcons.add(new FontString("Creditcard",'\uf09d'));
+		newIcons.add(new FontString("Envelope",'\uf0e0'));
+		newIcons.add(new FontString("Box",'\uf187'));
+		newIcons.add(new FontString("Camera",'\uf030'));
+		newIcons.add(new FontString("Gift",'\uf06b'));
+		newIcons.add(new FontString("Shopping Cart",'\uf07a'));
+		newIcons.add(new FontString("Suitcase",'\uf0f4'));
 		return newIcons;
 	}	
 }
