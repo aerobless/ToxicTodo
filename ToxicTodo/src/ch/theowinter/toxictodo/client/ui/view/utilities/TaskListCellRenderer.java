@@ -18,16 +18,16 @@ public class TaskListCellRenderer extends IconTextElement implements ListCellRen
 
 		this.setText(ToxicData.priorityArray.get(currentTask.getPriority()).getPriorityIcon(), currentTask.getText());
 
-		Color background = ToxicColors.softGrey;
+		Color background = ToxicColors.SOFT_GREY;
             
         // check if this cell is selected
         if (isSelected) {
-            background = ToxicColors.hardBlue;
+            background = ToxicColors.HARD_BLUE;
             this.setFontColor(Color.WHITE);
 
         // unselected, and not the DnD drop location
         } else {
-            background = ToxicColors.softGrey;
+            background = ToxicColors.SOFT_GREY;
             this.setFontColor(Color.BLACK);
         };
         setBackground(background);

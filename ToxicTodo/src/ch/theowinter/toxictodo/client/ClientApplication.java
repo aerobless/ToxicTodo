@@ -38,7 +38,7 @@ public class ClientApplication {
 	}
 
 	public static void main(String[] args) {
-		args = new String[]{"list"};
+
 		//0. Load config & init stuff
 		logic.saveToXMLFile(SETTINGS, SETTINGS_FILE);
 		try {
