@@ -148,7 +148,7 @@ public class MainWindow{
 		);
 		splitPane.setDividerSize(1);
 		
-		//INIT CATEGORY PANEL
+		//INIT CATEGORY PANEL 
 		JScrollPane categoryListscrollPane = new JScrollPane();
 		categoryListscrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		categoryListscrollPane.setBorder(new LineBorder(Color.black,0));
