@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import ch.theowinter.toxictodo.client.ClientSettings;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
+import javax.swing.JCheckBox;
 
 public class SettingsPanel extends JPanel{
 	private static final long serialVersionUID = 5091902326508795291L;
@@ -30,6 +31,7 @@ public class SettingsPanel extends JPanel{
 	private JPasswordField passwordField;
 	private JTextField txtFieldConsoleSize;
 	private ClientSettings settings;
+	private JCheckBox checkboxInternalServerEnabled;
 	private MainWindow main;
 	
 	/**
@@ -57,21 +59,56 @@ public class SettingsPanel extends JPanel{
 		add(centerPanel, BorderLayout.CENTER);
 		centerPanel.setBackground(ToxicColors.SOFT_GREY);
 		GridBagLayout settingsGridBag = new GridBagLayout();
-		settingsGridBag.columnWidths = new int[]{111, 0, 0, 0};
-		settingsGridBag.rowHeights = new int[]{10, 0, 0, 0, 0, 0, 0};
+		settingsGridBag.columnWidths = new int[]{156, 0, 0, 0};
+		settingsGridBag.rowHeights = new int[]{10, 0, 0, 0, 0, 0, 0, 0};
 		settingsGridBag.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		settingsGridBag.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		settingsGridBag.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		centerPanel.setLayout(settingsGridBag);
+		
+		//Internal Server Checkbox:
+		JLabel lblUseInternalServer = new JLabel("Use internal server:");
+		String useInternalServerTooltip = "A local todo-server is started when ToxicTodo is launched and shutdown when ToxicTodo is closed.";
+		lblUseInternalServer.setToolTipText(useInternalServerTooltip);
+		GridBagConstraints gbc_lblUseInternalServer = new GridBagConstraints();
+		gbc_lblUseInternalServer.anchor = GridBagConstraints.EAST;
+		gbc_lblUseInternalServer.insets = new Insets(0, 0, 5, 5);
+		gbc_lblUseInternalServer.gridx = 0;
+		gbc_lblUseInternalServer.gridy = 1;
+		centerPanel.add(lblUseInternalServer, gbc_lblUseInternalServer);
+		
+		checkboxInternalServerEnabled = new JCheckBox("");
+		checkboxInternalServerEnabled.setToolTipText(useInternalServerTooltip);
+		GridBagConstraints gbc_checkboxInternalServerEnabled = new GridBagConstraints();
+		gbc_checkboxInternalServerEnabled.anchor = GridBagConstraints.WEST;
+		gbc_checkboxInternalServerEnabled.insets = new Insets(0, 0, 5, 5);
+		gbc_checkboxInternalServerEnabled.gridx = 1;
+		gbc_checkboxInternalServerEnabled.gridy = 1;
+		centerPanel.add(checkboxInternalServerEnabled, gbc_checkboxInternalServerEnabled);
+		checkboxInternalServerEnabled.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(checkboxInternalServerEnabled.isSelected()){
+					textFieldHostIP.setEnabled(false);
+					textFieldHostPort.setEnabled(false);
+					passwordField.setEnabled(false);
+				}else{
+					textFieldHostIP.setEnabled(true);
+					textFieldHostPort.setEnabled(true);
+					passwordField.setEnabled(true);
+				}
+			}
+        });
 		
 		//HOST IP:
 		JLabel lblHostIP = new JLabel("Host-IP:");
 		String hostTooltip = "The IP address of the computer where ToxicTodoServer is running. This can be localhost if you're running a local server.";
+		
 		lblHostIP.setToolTipText(hostTooltip);
 		GridBagConstraints gbcLblHostIP = new GridBagConstraints();
 		gbcLblHostIP.insets = new Insets(0, 0, 5, 5);
 		gbcLblHostIP.anchor = GridBagConstraints.EAST;
 		gbcLblHostIP.gridx = 0;
-		gbcLblHostIP.gridy = 1;
+		gbcLblHostIP.gridy = 2;
 		centerPanel.add(lblHostIP, gbcLblHostIP);
 		textFieldHostIP = new JTextField();
 		textFieldHostIP.setToolTipText(hostTooltip);
@@ -79,7 +116,7 @@ public class SettingsPanel extends JPanel{
 		gbcTextFieldHostIP.insets = new Insets(0, 0, 5, 5);
 		gbcTextFieldHostIP.fill = GridBagConstraints.HORIZONTAL;
 		gbcTextFieldHostIP.gridx = 1;
-		gbcTextFieldHostIP.gridy = 1;
+		gbcTextFieldHostIP.gridy = 2;
 		centerPanel.add(textFieldHostIP, gbcTextFieldHostIP);
 		textFieldHostIP.setColumns(10);
 		textFieldHostIP.setText(settings.getHOST());
@@ -92,7 +129,7 @@ public class SettingsPanel extends JPanel{
 		gbcLblHostport.insets = new Insets(0, 0, 5, 5);
 		gbcLblHostport.anchor = GridBagConstraints.EAST;
 		gbcLblHostport.gridx = 0;
-		gbcLblHostport.gridy = 2;
+		gbcLblHostport.gridy = 3;
 		centerPanel.add(lblHostport, gbcLblHostport);
 		textFieldHostPort = new JTextField();
 		textFieldHostPort.setToolTipText(hostPortTooltip);
@@ -100,7 +137,7 @@ public class SettingsPanel extends JPanel{
 		gbcTextFieldHostPort.insets = new Insets(0, 0, 5, 5);
 		gbcTextFieldHostPort.fill = GridBagConstraints.HORIZONTAL;
 		gbcTextFieldHostPort.gridx = 1;
-		gbcTextFieldHostPort.gridy = 2;
+		gbcTextFieldHostPort.gridy = 3;
 		centerPanel.add(textFieldHostPort, gbcTextFieldHostPort);
 		textFieldHostPort.setColumns(10);
 		textFieldHostPort.setText(settings.getPORT()+"");
@@ -113,7 +150,7 @@ public class SettingsPanel extends JPanel{
 		gbcLblPassword.insets = new Insets(0, 0, 5, 5);
 		gbcLblPassword.anchor = GridBagConstraints.EAST;
 		gbcLblPassword.gridx = 0;
-		gbcLblPassword.gridy = 3;
+		gbcLblPassword.gridy = 4;
 		centerPanel.add(lblPassword, gbcLblPassword);
 		passwordField = new JPasswordField();
 		passwordField.setToolTipText(passwordTooltop);
@@ -121,7 +158,7 @@ public class SettingsPanel extends JPanel{
 		gbcPasswordField.insets = new Insets(0, 0, 5, 5);
 		gbcPasswordField.fill = GridBagConstraints.HORIZONTAL;
 		gbcPasswordField.gridx = 1;
-		gbcPasswordField.gridy = 3;
+		gbcPasswordField.gridy = 4;
 		centerPanel.add(passwordField, gbcPasswordField);
 		passwordField.setText(settings.getPassword());
 		
@@ -133,7 +170,7 @@ public class SettingsPanel extends JPanel{
 		gbcLblConsolesize.insets = new Insets(0, 0, 0, 5);
 		gbcLblConsolesize.anchor = GridBagConstraints.EAST;
 		gbcLblConsolesize.gridx = 0;
-		gbcLblConsolesize.gridy = 5;
+		gbcLblConsolesize.gridy = 6;
 		centerPanel.add(lblConsoleSize, gbcLblConsolesize);
 		txtFieldConsoleSize = new JTextField();
 		txtFieldConsoleSize.setToolTipText(consoleSizeTooltip);
@@ -141,7 +178,7 @@ public class SettingsPanel extends JPanel{
 		gbcTxtFieldConsoleSize.insets = new Insets(0, 0, 0, 5);
 		gbcTxtFieldConsoleSize.fill = GridBagConstraints.HORIZONTAL;
 		gbcTxtFieldConsoleSize.gridx = 1;
-		gbcTxtFieldConsoleSize.gridy = 5;
+		gbcTxtFieldConsoleSize.gridy = 6;
 		centerPanel.add(txtFieldConsoleSize, gbcTxtFieldConsoleSize);
 		txtFieldConsoleSize.setColumns(10);
 		txtFieldConsoleSize.setText(settings.getConsoleSize()+"");
