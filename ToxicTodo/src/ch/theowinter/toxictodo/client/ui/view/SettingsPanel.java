@@ -19,8 +19,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
 import ch.theowinter.toxictodo.client.ClientSettings;
+import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeaderWhite;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
+
 import javax.swing.JCheckBox;
 
 public class SettingsPanel extends JPanel{
@@ -41,19 +43,16 @@ public class SettingsPanel extends JPanel{
 		this.main = main;
 		this.settings = settings;
 		setBackground(ToxicColors.SOFT_GREY);
-		setBorder(new EmptyBorder(5, 5, 5, 5));
+		setBorder(new EmptyBorder(0, 0, 0, 0));
 
 		setLayout(new BorderLayout(0, 0));
 		
-		JPanel headerPanel = new JPanel();
-		headerPanel.setBackground(ToxicColors.SOFT_GREY);
-		FlowLayout flowLayout = (FlowLayout) headerPanel.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
-		add(headerPanel, BorderLayout.NORTH);
-		
-		JLabel lblSettings = new JLabel("Settings");
-		lblSettings.setFont(new Font("Lucida Grande", Font.PLAIN, 23));
-		headerPanel.add(lblSettings);
+		//Header:
+		PanelHeaderWhite header = new PanelHeaderWhite();
+		add(header, BorderLayout.NORTH);
+		header.setTitel("Settings");
+		header.setSubTitel("Personalize ToxicTodo to your liking!");
+		header.setIcon('\uf085');
 		
 		JPanel centerPanel = new JPanel();
 		add(centerPanel, BorderLayout.CENTER);
