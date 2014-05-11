@@ -223,6 +223,9 @@ public class MainWindow{
 		
 		//Needs to be called last or we get a nullpointer in the category-listener.
 		categoryList.setSelectedIndex(0);
+		
+		//Fix divider:
+		splitPane.setDividerLocation(250);
 	}
 	
 	/**
