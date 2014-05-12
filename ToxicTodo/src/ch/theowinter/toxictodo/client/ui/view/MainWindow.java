@@ -468,6 +468,7 @@ public class MainWindow{
 	    	ListSelectionModel lsm = (ListSelectionModel)e.getSource();
 	    	TodoCategory currentCategory = categoryListModel.getElementAt(categoryList.getSelectedIndex());
 	    	taskListModel.changeCategory(currentCategory.getKeyword());
+	    	taskListHeader.setIcon(currentCategory.getIcon());
 	    	taskListHeader.setTitel(currentCategory.getName().toUpperCase());
 	    	taskListHeader.setSubTitel(getMotivationText());
 	    	if(currentCategory.isSystemCategory()){
