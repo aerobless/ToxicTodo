@@ -16,7 +16,7 @@ public class FontIconButton extends JButton{
 	 * @param tooltip
 	 */
 	public FontIconButton(char awesomeIcon, String tooltip) {
-    Font ttfReal = ToxicData.AWESOME_FONT.deriveFont(Font.BOLD, 14);
+    Font ttfReal = ToxicUIData.AWESOME_FONT.deriveFont(Font.BOLD, 14);
     setFont(ttfReal);
     setText(String.valueOf(awesomeIcon));
     setForeground(ToxicColors.ICON_GREY);

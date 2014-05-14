@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.concurrent.Semaphore;
 
-import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicData;
+import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicUIData;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoList;
@@ -109,11 +109,11 @@ public class ClientTodoManager extends Observable{
 	
 	public TodoList generateAllTasksCategory(TodoList inputList){
 		try {
-			inputList.addCategory(new TodoCategory("All tasks", ToxicData.allTaskTodoCategoryKey, '\uf135',true));
+			inputList.addCategory(new TodoCategory("All tasks", ToxicUIData.allTaskTodoCategoryKey, '\uf135',true));
 			for(String categoryKey : inputList.getCategoryMap().keySet()){
 				List<TodoTask> currentCategoryTasks = inputList.getCategoryMap().get(categoryKey).getTaskInCategoryAsArrayList();
 				for(TodoTask currentTask : currentCategoryTasks){
-					inputList.addTask(ToxicData.allTaskTodoCategoryKey, currentTask);
+					inputList.addTask(ToxicUIData.allTaskTodoCategoryKey, currentTask);
 				}
 			}
 		} catch (Exception e) {

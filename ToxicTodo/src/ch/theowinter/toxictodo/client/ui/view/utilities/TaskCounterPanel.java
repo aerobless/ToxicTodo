@@ -25,7 +25,7 @@ public class TaskCounterPanel extends JPanel {
 		lblTWO.setBounds(0, 13, 29, 27);
 		add(lblTWO);
 
-	    Font ttfReal = ToxicData.AWESOME_FONT.deriveFont(Font.BOLD, 30);
+	    Font ttfReal = ToxicUIData.AWESOME_FONT.deriveFont(Font.BOLD, 30);
 	    lblTWO.setFont(ttfReal);
 	    lblTWO.setForeground(Color.WHITE);
 	    lblTWO.setText(String.valueOf('\uf0c8'));

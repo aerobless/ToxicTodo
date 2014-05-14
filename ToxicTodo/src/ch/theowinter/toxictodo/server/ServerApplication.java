@@ -13,22 +13,21 @@ import java.util.concurrent.Semaphore;
 
 import ch.theowinter.toxictodo.sharedobjects.Logger;
 import ch.theowinter.toxictodo.sharedobjects.LogicEngine;
+import ch.theowinter.toxictodo.sharedobjects.SharedInformation;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoList;
 
 public class ServerApplication implements Runnable{
 	//Vanity info
-	public static final double serverVersion = 1.29;
-	public static final String author = "Theo Winter";
-	public static final String website = "theowinter.ch";
 	public static final String serverUpdateURL = "http://w1nter.net:8080/job/ToxicTodo/lastSuccessfulBuild/artifact/ToxicTodo/dist/ToxicTodoServer.jar";	
 	
 	//Class variables
 	static TodoList todoListActiveTasks = new TodoList();
-	static TodoList todoListHistory = new TodoList();
+	static TodoList todoListHistoricTasks = new TodoList();
 	static LogicEngine logic = new LogicEngine();
 	static String settingsFile = logic.getJarDirectory("server_config.xml");
-	private static final String todoDataFile = logic.getJarDirectory("ToxicTodo.xml");
+	private static final String activeTodoDataFile = logic.getJarDirectory("ToxicTodo.xml");
+	private static final String historicTodoDataFile = logic.getJarDirectory("ToxicTodoHistory.xml");
 	static ServerSettings settings;
 	
 	//Locks
@@ -54,7 +53,7 @@ public class ServerApplication implements Runnable{
 			try {
 				String input = buffer.readLine();
 				if("stop".equals(input) || "exit".equals(input) || "q".equals(input)){
-					logic.saveToXMLFile(todoListActiveTasks, todoDataFile);
+					logic.saveToXMLFile(todoListActiveTasks, activeTodoDataFile);
 					stopServer.acquire();
 				}
 				else if("update".equals(input)){
@@ -65,9 +64,9 @@ public class ServerApplication implements Runnable{
 				else if("about".equals(input)||"identify".equals(input)){
 					Logger.log("### - ABOUT TOXIC TODO - ###");
 					String space = "  ";
-					Logger.log(space+"Version: "+serverVersion);
-					Logger.log(space+"Author:  "+author);
-					Logger.log(space+"Website: "+website);
+					Logger.log(space+"Version: "+SharedInformation.VERSION);
+					Logger.log(space+"Author:  "+SharedInformation.AUTHOR);
+					Logger.log(space+"Website: "+SharedInformation.WEBSITE);
 				}
 				else{
 					Logger.log("Command *"+input+"* not recognized.");
@@ -97,14 +96,15 @@ public class ServerApplication implements Runnable{
 	}
 	
 	public static void writeChangesToDisk(){
-		logic.saveToXMLFile(todoListActiveTasks, todoDataFile);
+		logic.saveToXMLFile(todoListActiveTasks, activeTodoDataFile);
+		logic.saveToXMLFile(todoListHistoricTasks, historicTodoDataFile);
 	}
 	
 	public static void loadSettings(){
 		if(!firstTimeRun()){
 			settings = (ServerSettings) logic.loadXMLFile(settingsFile);
 		}
-		todoListActiveTasks = (TodoList)logic.loadXMLFile(todoDataFile);
+		todoListActiveTasks = (TodoList)logic.loadXMLFile(activeTodoDataFile);
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class ServerApplication implements Runnable{
 			settings = new ServerSettings();
 			logic.saveToXMLFile(settings, settingsFile);
 		}
-		File todoDataOnDisk = new File(todoDataFile);
+		File todoDataOnDisk = new File(activeTodoDataFile);
 		if(!todoDataOnDisk.exists()){
 			try {
 				todoListActiveTasks.addCategory(new TodoCategory("School work", "school"));
@@ -136,6 +136,15 @@ public class ServerApplication implements Runnable{
 				writeChangesToDisk();
 			} catch (Exception e) {
 				Logger.log("Unable to add default categories on server.", e);
+			}
+		}
+		File todoHistoryOnDisk = new File(historicTodoDataFile);
+		if(!todoHistoryOnDisk.exists()){
+			try {
+				todoListHistoricTasks.addCategory(new TodoCategory("System", "system"));
+				todoListHistoricTasks.addTask("system", "ToxicTodo History System initalized");
+			} catch (Exception e) {
+				Logger.log("Unable to init history on server.", e);
 			}
 		}
 		return firstTime;

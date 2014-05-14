@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import ch.theowinter.toxictodo.client.ui.model.TaskPriority;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
 
-public class ToxicData {
+public class ToxicUIData {
 	final public static String allTaskTodoCategoryKey = "allTaskTodoCategoryKeyDoNotUseDirectly";
 	final public static ArrayList<TaskPriority> priorityArray = generatePriorityArray();
 	final public static Font AWESOME_FONT = getAwesomeFont();
@@ -26,7 +26,7 @@ public class ToxicData {
 	private static Font getAwesomeFont(){
 		Font ttfBase = null;
 	    try {
-			InputStream in = ToxicData.class.getResourceAsStream("/resources/fontawesome-webfont.ttf");
+			InputStream in = ToxicUIData.class.getResourceAsStream("/resources/fontawesome-webfont.ttf");
 			ttfBase = Font.createFont(Font.TRUETYPE_FONT, in);
 		} catch (FontFormatException e) {
 			Logger.log("FontFormatException when trying to load the AWESOME font.", e);

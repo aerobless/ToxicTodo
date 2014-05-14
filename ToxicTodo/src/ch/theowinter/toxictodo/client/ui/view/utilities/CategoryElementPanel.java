@@ -36,7 +36,7 @@ public class CategoryElementPanel extends JPanel {
 	}
 	
 	public void setText(char awesomeIcon, String category){
-		Font ttfReal = ToxicData.AWESOME_FONT.deriveFont(Font.BOLD, 40);
+		Font ttfReal = ToxicUIData.AWESOME_FONT.deriveFont(Font.BOLD, 40);
 		lblIcon.setFont(ttfReal);
 		lblIcon.setText(String.valueOf(awesomeIcon));
 		lblCategory.setText(category);
