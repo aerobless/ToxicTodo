@@ -112,8 +112,13 @@ public class ClientTodoManager extends Observable{
 		if(writeToLog){
 			dataMessage = "REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER";
 		}
-		ClientApplication.sendToServer(new ToxicDatagram(dataMessage, finalizedTask , categoryKeyword));
-		updateList();
+		if(categoryKeyword.equals(ToxicUIData.allTaskTodoCategoryKey)){
+			categoryKeyword = todoList.getCategoryKeywordForTask(finalizedTask);
+		}
+		if(categoryKeyword != null){
+			ClientApplication.sendToServer(new ToxicDatagram(dataMessage, finalizedTask , categoryKeyword));
+			updateList();
+		}
 	}
 	
 	public void addAndCompleteTask(int priority, String categoryKeyword, String taskDescription) throws IOException{

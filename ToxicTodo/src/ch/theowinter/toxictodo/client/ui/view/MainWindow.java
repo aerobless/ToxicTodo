@@ -537,13 +537,9 @@ public class MainWindow{
 	    	taskListHeader.setSubTitel(getMotivationText());
 	    	if(currentCategory.isSystemCategory()){
 	    		btnNewTask.setEnabled(false);
-	    		btnCompleteTask.setEnabled(false);
-	    		btnRemoveTask.setEnabled(false);
 	    		btnEditCategory.setEnabled(false);
 	    	} else{
 	    		btnNewTask.setEnabled(true);
-	    		btnCompleteTask.setEnabled(true);
-	    		btnRemoveTask.setEnabled(true);
 	    		btnEditCategory.setEnabled(true);
 	    	}
 	    	if (lsm.isSelectionEmpty()) {
