@@ -18,6 +18,7 @@ import ch.theowinter.toxictodo.sharedobjects.elements.ToxicDatagram;
 
 class ServerOpenConnectionThread implements Runnable {
 	private Semaphore writeLock = new Semaphore(1);
+	
 	private EncryptionEngine crypto;
 	private String password;
 	private Socket inputSocket;
@@ -130,7 +131,27 @@ class ServerOpenConnectionThread implements Runnable {
 			}
 			writeLock.release();
 		}
-		
+		else if(serverMessage.equals("LOG_TASK_AS_COMPLETED_ON_SERVER")){
+			writeLock.acquire();
+			try {	
+				//We create the category if it doesn't exist in the history taskList.
+				if(ServerApplication.todoListHistoricTasks.getCategoryMap().get(dataFromClient.getAdditionalMessage())==null){
+					String categoryName = ServerApplication.todoListActiveTasks.getCategoryMap().get(dataFromClient.getAdditionalMessage()).getName();
+					String categoryKeyword = dataFromClient.getAdditionalMessage();
+					ServerApplication.todoListHistoricTasks.addCategory(new TodoCategory(categoryName, categoryKeyword));
+				}			
+				ServerApplication.todoListHistoricTasks.addTask(dataFromClient.getAdditionalMessage(), dataFromClient.getTodoTask());
+				
+				java.util.Date date= new java.util.Date();
+				ServerApplication.writeLogToFile("CompletedTasks.txt", new Timestamp(date.getTime())+" : COMPLETED : "+dataFromClient.getTodoTask().getText());
+				dataToClient = new ToxicDatagram("Answering successful request to remove & log task");
+				ServerApplication.writeChangesToDisk();
+			} catch (Exception e) {
+				Logger.log("Failed to remove & log task.");
+				dataToClient = new ToxicDatagram("Completing a task failed.");
+			}
+			writeLock.release();
+		}
 		else if(serverMessage.equals("REMOVE_TASK_ON_SERVER")){
 			writeLock.acquire();
 			try {
