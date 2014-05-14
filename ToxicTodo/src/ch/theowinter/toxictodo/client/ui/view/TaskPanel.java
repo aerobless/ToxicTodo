@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,10 +29,11 @@ public class TaskPanel extends JPanel {
 	private static final long serialVersionUID = -2022909795010691054L;
 
 	private JTextArea txtAreaTaskDescription;
-	private JTextField txtFieldCompletedUntil;
+	private JTextField txtFieldSummary;
 	private JComboBox<String> priorityCombobox;
 	private MainWindow main;
 	private ClientTodoManager todoManager;
+	private JTextField txtFieldHyperlink;
 
 	/**
 	 * Create the frame.
@@ -40,7 +42,7 @@ public class TaskPanel extends JPanel {
 		this.main = main;
 		this.todoManager = todoManager;
 		setBackground(ToxicColors.SOFT_GREY);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 515, 381);
 		setBorder(null);
 		setLayout(new BorderLayout(0, 0));
 		
@@ -56,9 +58,9 @@ public class TaskPanel extends JPanel {
 		add(centerPanel, BorderLayout.CENTER);
 		GridBagLayout gblCenterPanel = new GridBagLayout();
 		gblCenterPanel.columnWidths = new int[]{124, 0, 0, 0};
-		gblCenterPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
+		gblCenterPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
 		gblCenterPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gblCenterPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gblCenterPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		centerPanel.setLayout(gblCenterPanel);
 		
 		JLabel spacer = new JLabel(" ");
@@ -86,29 +88,62 @@ public class TaskPanel extends JPanel {
 		gbcComboBox.gridy = 1;
 		centerPanel.add(priorityCombobox, gbcComboBox);
 		
-		JLabel lblCompletedUntil = new JLabel("Completed until:");
-		GridBagConstraints gbcLblCompletedUntil = new GridBagConstraints();
-		gbcLblCompletedUntil.anchor = GridBagConstraints.EAST;
-		gbcLblCompletedUntil.insets = new Insets(0, 0, 5, 5);
-		gbcLblCompletedUntil.gridx = 0;
-		gbcLblCompletedUntil.gridy = 2;
-		centerPanel.add(lblCompletedUntil, gbcLblCompletedUntil);
+		JLabel lblSummary = new JLabel("Summary:");
+		GridBagConstraints gbc_lblSummary = new GridBagConstraints();
+		gbc_lblSummary.anchor = GridBagConstraints.EAST;
+		gbc_lblSummary.insets = new Insets(0, 0, 5, 5);
+		gbc_lblSummary.gridx = 0;
+		gbc_lblSummary.gridy = 2;
+		centerPanel.add(lblSummary, gbc_lblSummary);
 		
-		txtFieldCompletedUntil = new JTextField();
-		GridBagConstraints gbcTextField = new GridBagConstraints();
-		gbcTextField.insets = new Insets(0, 0, 5, 5);
-		gbcTextField.fill = GridBagConstraints.HORIZONTAL;
-		gbcTextField.gridx = 1;
-		gbcTextField.gridy = 2;
-		centerPanel.add(txtFieldCompletedUntil, gbcTextField);
-		txtFieldCompletedUntil.setColumns(10);
+		txtFieldSummary = new JTextField();
+		GridBagConstraints gbc_txtFieldSummary = new GridBagConstraints();
+		gbc_txtFieldSummary.insets = new Insets(0, 0, 5, 5);
+		gbc_txtFieldSummary.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtFieldSummary.gridx = 1;
+		gbc_txtFieldSummary.gridy = 2;
+		centerPanel.add(txtFieldSummary, gbc_txtFieldSummary);
+		txtFieldSummary.setColumns(10);
+		
+		JLabel lblHyperlink = new JLabel("Hyperlink:");
+		GridBagConstraints gbc_lblHyperlink = new GridBagConstraints();
+		gbc_lblHyperlink.anchor = GridBagConstraints.EAST;
+		gbc_lblHyperlink.insets = new Insets(0, 0, 5, 5);
+		gbc_lblHyperlink.gridx = 0;
+		gbc_lblHyperlink.gridy = 3;
+		centerPanel.add(lblHyperlink, gbc_lblHyperlink);
+		
+		txtFieldHyperlink = new JTextField();
+		GridBagConstraints gbc_txtFieldHyperlink = new GridBagConstraints();
+		gbc_txtFieldHyperlink.insets = new Insets(0, 0, 5, 5);
+		gbc_txtFieldHyperlink.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtFieldHyperlink.gridx = 1;
+		gbc_txtFieldHyperlink.gridy = 3;
+		centerPanel.add(txtFieldHyperlink, gbc_txtFieldHyperlink);
+		txtFieldHyperlink.setColumns(10);
+		
+		JLabel lblRepeatable = new JLabel("Repeatable:");
+		GridBagConstraints gbc_lblRepeatable = new GridBagConstraints();
+		gbc_lblRepeatable.anchor = GridBagConstraints.EAST;
+		gbc_lblRepeatable.insets = new Insets(0, 0, 5, 5);
+		gbc_lblRepeatable.gridx = 0;
+		gbc_lblRepeatable.gridy = 4;
+		centerPanel.add(lblRepeatable, gbc_lblRepeatable);
+		
+		JCheckBox checkBoxRepeatable = new JCheckBox("");
+		GridBagConstraints gbc_checkBoxRepeatable = new GridBagConstraints();
+		gbc_checkBoxRepeatable.anchor = GridBagConstraints.WEST;
+		gbc_checkBoxRepeatable.insets = new Insets(0, 0, 5, 5);
+		gbc_checkBoxRepeatable.gridx = 1;
+		gbc_checkBoxRepeatable.gridy = 4;
+		centerPanel.add(checkBoxRepeatable, gbc_checkBoxRepeatable);
 		
 		JLabel lblDescription = new JLabel("Description:");
 		GridBagConstraints gbcLblDescription = new GridBagConstraints();
 		gbcLblDescription.insets = new Insets(0, 0, 5, 5);
 		gbcLblDescription.anchor = GridBagConstraints.NORTHEAST;
 		gbcLblDescription.gridx = 0;
-		gbcLblDescription.gridy = 3;
+		gbcLblDescription.gridy = 5;
 		centerPanel.add(lblDescription, gbcLblDescription);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -117,13 +152,13 @@ public class TaskPanel extends JPanel {
 		gbcScrollPane.insets = new Insets(0, 3, 8, 8);
 		gbcScrollPane.fill = GridBagConstraints.BOTH;
 		gbcScrollPane.gridx = 1;
-		gbcScrollPane.gridy = 3;
+		gbcScrollPane.gridy = 5;
 		centerPanel.add(scrollPane, gbcScrollPane);
 		
 		txtAreaTaskDescription = new JTextArea();
 		txtAreaTaskDescription.setLineWrap(true);
 		scrollPane.setViewportView(txtAreaTaskDescription);
-		scrollPane.setBorder(txtFieldCompletedUntil.getBorder());
+		scrollPane.setBorder(txtFieldSummary.getBorder());
 		
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setBackground(ToxicColors.SOFT_GREY);
@@ -140,6 +175,15 @@ public class TaskPanel extends JPanel {
 			}
         }); 
 		
+		JButton btnSaveLog = new JButton("Complete");
+		bottomPanel.add(btnSaveLog);
+		btnSaveLog.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				saveAndCompleteTask();
+			}
+        }); 
+		
 		JButton btnSave = new JButton("Save");
 		bottomPanel.add(btnSave);
 		btnSave.addActionListener(new ActionListener() {
@@ -153,14 +197,30 @@ public class TaskPanel extends JPanel {
 	public void newTask(){
 		priorityCombobox.setSelectedIndex(0);
 		txtAreaTaskDescription.setText("");
-		txtFieldCompletedUntil.setText("");
+		txtFieldSummary.setText("");
 	}
 	
 	private void cancelTask(){
 		priorityCombobox.setSelectedIndex(0);
 		txtAreaTaskDescription.setText("");
-		txtFieldCompletedUntil.setText("");
+		txtFieldSummary.setText("");
 		main.switchToTasks();
+	}
+	
+	private void saveAndCompleteTask(){
+		int taskPriority = priorityCombobox.getSelectedIndex();
+		TodoCategory category = main.getSelectedCategory();
+		String taskDescripition = txtAreaTaskDescription.getText();
+		if(category != null && taskDescripition.length()>1 && taskPriority>-1){
+			try {
+				todoManager.addAndCompleteTask(taskPriority,category.getKeyword(), taskDescripition);
+				main.switchToTasks();
+			} catch (IOException anEx) {
+				main.connectionWarning();
+			}
+		}else{
+			main.genericWarning("Unable to save", "Have you filled in all fields?");
+		}
 	}
 	
 	private void saveTask(){

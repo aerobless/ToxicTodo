@@ -105,13 +105,28 @@ public class ClientTodoManager extends Observable{
 			location = "No Location";
 		}
 		finalizedTask.setCompletionLocatioN(location);
-		
 		String dataMessage = "REMOVE_TASK_ON_SERVER";
 		if(writeToLog){
 			dataMessage = "REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER";
 		}
 		ClientApplication.sendToServer(new ToxicDatagram(dataMessage, finalizedTask , categoryKeyword));
 		updateList();
+	}
+	
+	public void addAndCompleteTask(int priority, String categoryKeyword, String taskDescription) throws IOException{
+		String location;
+		try {
+			location = locationEngine.getCity();
+		} catch (ParserConfigurationException | SAXException e) {
+			Logger.log("Unable to get location.", e);
+			location = "No Location";
+		}
+		TodoTask task = new TodoTask(priority, false, taskDescription, location, new Date());
+		task.setCompletionDate(new Date());
+		task.setCompletionLocatioN(location);
+		
+		ClientApplication.sendToServer(new ToxicDatagram("LOG_TASK_AS_COMPLETED_ON_SERVER", task, categoryKeyword));
+		//TODO: update historicTodoList(?)
 	}
 	
 	public void addNewCategory(String description, String keyword, char icon, boolean systemCategory) throws IOException{

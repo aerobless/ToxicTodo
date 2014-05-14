@@ -73,6 +73,8 @@ public class MainWindow{
 	FontIconButton btnRemoveTask;
 	FontIconButton btnEditCategory;
 	FontIconButton btnNewCategory;
+	FontIconButton btnCompletedTaskList;
+	FontIconButton btnStatistics;
 	
 	//Panels
 	private JPanel totalTaskPanel;
@@ -414,8 +416,70 @@ public class MainWindow{
         ButtonGroup categoryGroup = new ButtonGroup();
         categoryGroup.add(btnNewCategory);
         categoryGroup.add(btnEditCategory);
-        
         unifiedToolbar.addComponentToLeft(new LabeledComponentGroup("Categories", categoryGroup).getComponent());
+        
+        //Add Log-Entry:
+		btnCompletedTaskList = new FontIconButton('\uf022', "See a list of all completed tasks");
+		btnCompletedTaskList.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnCompletedTaskList.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnCompletedTaskList.putClientProperty("JButton.buttonType", "segmentedTextured");
+		btnCompletedTaskList.putClientProperty( "JButton.segmentPosition", "first" );
+		btnCompletedTaskList.setPreferredSize(uniBarButtonSize);
+		btnCompletedTaskList.setMinimumSize(uniBarButtonSize);
+		btnCompletedTaskList.setMaximumSize(uniBarButtonSize);
+		btnCompletedTaskList.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TodoCategory editCategory = getSelectedCategory();
+				//double-safety - we never want to edit all-tasks.
+				if(editCategory.getKeyword()!=ToxicUIData.allTaskTodoCategoryKey){
+					if(categoryPanel == null){
+						categoryPanel = new CategoryPanel(main, todoManager);
+						categoryPanel.setCategory(editCategory);
+						setRightContent(categoryPanel);
+					}else if(categoryPanel.isVisible() == true){
+						switchToTasks();
+					} else{
+						categoryPanel.setCategory(getSelectedCategory());
+						setRightContent(categoryPanel);
+					}
+				}
+			}
+        });	
+		
+        //Statistics:
+		btnStatistics = new FontIconButton('\uf080', "See statistics about your progress.");
+		btnStatistics.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnStatistics.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnStatistics.putClientProperty("JButton.buttonType", "segmentedTextured");
+		btnStatistics.putClientProperty( "JButton.segmentPosition", "last" );
+		btnStatistics.setPreferredSize(uniBarButtonSize);
+		btnStatistics.setMinimumSize(uniBarButtonSize);
+		btnStatistics.setMaximumSize(uniBarButtonSize);
+		btnStatistics.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TodoCategory editCategory = getSelectedCategory();
+				//double-safety - we never want to edit all-tasks.
+				if(editCategory.getKeyword()!=ToxicUIData.allTaskTodoCategoryKey){
+					if(categoryPanel == null){
+						categoryPanel = new CategoryPanel(main, todoManager);
+						categoryPanel.setCategory(editCategory);
+						setRightContent(categoryPanel);
+					}else if(categoryPanel.isVisible() == true){
+						switchToTasks();
+					} else{
+						categoryPanel.setCategory(getSelectedCategory());
+						setRightContent(categoryPanel);
+					}
+				}
+			}
+        });	
+		
+		ButtonGroup statsGroup = new ButtonGroup();
+		statsGroup.add(btnCompletedTaskList);
+		statsGroup.add(btnStatistics);
+        unifiedToolbar.addComponentToLeft(new LabeledComponentGroup("Statistics", statsGroup).getComponent());
 		
 		//Search:
 		searchField = new JTextField(10);
@@ -497,7 +561,6 @@ public class MainWindow{
 	    	List<String> motivationArray = new ArrayList<String>();
 	    	motivationArray.add("Strive not to be a success, but rather to be of value. – Albert Einstein");
 	    	motivationArray.add("You miss 100% of the shots you don’t take. – Wayne Gretzky");
-	    	//motivationArray.add("The most common way people give up their power is by thinking they don’t have any. – Alice Walker");
 	    	motivationArray.add("Your time is limited, so don’t waste it living someone else’s life. – Steve Jobs");
 	    	motivationArray.add("Start where you are. Use what you have.  Do what you can. – Arthur Ashe");
 	    	
