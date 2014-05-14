@@ -97,7 +97,7 @@ class ServerOpenConnectionThread implements Runnable {
 		else if(serverMessage.equals("ADD_TASK_TO_LIST_ON_SERVER")){
 			writeLock.acquire();
 			try {
-				ServerApplication.serverTodoList.addTask(dataFromClient.getAdditionalMessage(), dataFromClient.getTodoTask());
+				ServerApplication.todoListActiveTasks.addTask(dataFromClient.getAdditionalMessage(), dataFromClient.getTodoTask());
 				dataToClient = new ToxicDatagram("Answering successful request to add new task");
 				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
@@ -109,7 +109,7 @@ class ServerOpenConnectionThread implements Runnable {
 		else if(serverMessage.equals("REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER")){
 			writeLock.acquire();
 			try {
-				ServerApplication.serverTodoList.removeTask(dataFromClient.getTodoTask(), dataFromClient.getAdditionalMessage());
+				ServerApplication.todoListActiveTasks.removeTask(dataFromClient.getTodoTask(), dataFromClient.getAdditionalMessage());
 				java.util.Date date= new java.util.Date();
 				ServerApplication.writeLogToFile("CompletedTasks.txt", new Timestamp(date.getTime())+" : COMPLETED : "+dataFromClient.getTodoTask().getText());
 				dataToClient = new ToxicDatagram("Answering successful request to remove & log task");
@@ -124,7 +124,7 @@ class ServerOpenConnectionThread implements Runnable {
 		else if(serverMessage.equals("REMOVE_TASK_ON_SERVER")){
 			writeLock.acquire();
 			try {
-				ServerApplication.serverTodoList.removeTask(dataFromClient.getTodoTask(), dataFromClient.getAdditionalMessage());
+				ServerApplication.todoListActiveTasks.removeTask(dataFromClient.getTodoTask(), dataFromClient.getAdditionalMessage());
 				dataToClient = new ToxicDatagram("Answering successful request to remove task");
 				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
@@ -137,7 +137,7 @@ class ServerOpenConnectionThread implements Runnable {
 		else if(serverMessage.equals("ADD_CATEGORY_TO_LIST_ON_SERVER")){
 			writeLock.acquire();
 			try {
-				ServerApplication.serverTodoList.addCategory(dataFromClient.getTodoCategory());
+				ServerApplication.todoListActiveTasks.addCategory(dataFromClient.getTodoCategory());
 				dataToClient = new ToxicDatagram("Answering successful request to add category");
 				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
@@ -150,7 +150,7 @@ class ServerOpenConnectionThread implements Runnable {
 		else if(serverMessage.equals("REMOVE_CATEGORY_ON_SERVER")){
 			writeLock.acquire();
 			try {
-				ServerApplication.serverTodoList.removeCategory(dataFromClient.getTodoCategory().getKeyword());
+				ServerApplication.todoListActiveTasks.removeCategory(dataFromClient.getTodoCategory().getKeyword());
 				dataToClient = new ToxicDatagram("Answering successful request to remove category");
 				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
@@ -163,7 +163,7 @@ class ServerOpenConnectionThread implements Runnable {
 		else if(serverMessage.equals("EDIT_CATEGORY_ON_SERVER")){
 			writeLock.acquire();
 			try {
-				ServerApplication.serverTodoList.editCategory(dataFromClient.getAdditionalMessage(),
+				ServerApplication.todoListActiveTasks.editCategory(dataFromClient.getAdditionalMessage(),
 						dataFromClient.getTodoCategory().getKeyword(),
 						dataFromClient.getTodoCategory().getName(),
 						dataFromClient.getTodoCategory().getIcon());

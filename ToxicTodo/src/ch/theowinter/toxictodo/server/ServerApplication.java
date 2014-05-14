@@ -24,7 +24,8 @@ public class ServerApplication implements Runnable{
 	public static final String serverUpdateURL = "http://w1nter.net:8080/job/ToxicTodo/lastSuccessfulBuild/artifact/ToxicTodo/dist/ToxicTodoServer.jar";	
 	
 	//Class variables
-	static TodoList serverTodoList = new TodoList();
+	static TodoList todoListActiveTasks = new TodoList();
+	static TodoList todoListHistory = new TodoList();
 	static LogicEngine logic = new LogicEngine();
 	static String settingsFile = logic.getJarDirectory("server_config.xml");
 	private static final String todoDataFile = logic.getJarDirectory("ToxicTodo.xml");
@@ -53,7 +54,7 @@ public class ServerApplication implements Runnable{
 			try {
 				String input = buffer.readLine();
 				if("stop".equals(input) || "exit".equals(input) || "q".equals(input)){
-					logic.saveToXMLFile(serverTodoList, todoDataFile);
+					logic.saveToXMLFile(todoListActiveTasks, todoDataFile);
 					stopServer.acquire();
 				}
 				else if("update".equals(input)){
@@ -80,11 +81,11 @@ public class ServerApplication implements Runnable{
 	}
 	
 	public static TodoList getServerTodoList() {
-		return serverTodoList;
+		return todoListActiveTasks;
 	}
 
 	public static void setServerTodoList(TodoList serverTodoList) {
-		ServerApplication.serverTodoList = serverTodoList;
+		ServerApplication.todoListActiveTasks = serverTodoList;
 	}
 	
 	public static void writeLogToFile(String logFilename, String logMessage){
@@ -96,14 +97,14 @@ public class ServerApplication implements Runnable{
 	}
 	
 	public static void writeChangesToDisk(){
-		logic.saveToXMLFile(serverTodoList, todoDataFile);
+		logic.saveToXMLFile(todoListActiveTasks, todoDataFile);
 	}
 	
 	public static void loadSettings(){
 		if(!firstTimeRun()){
 			settings = (ServerSettings) logic.loadXMLFile(settingsFile);
 		}
-		serverTodoList = (TodoList)logic.loadXMLFile(todoDataFile);
+		todoListActiveTasks = (TodoList)logic.loadXMLFile(todoDataFile);
 	}
 
 	/**
@@ -124,14 +125,14 @@ public class ServerApplication implements Runnable{
 		File todoDataOnDisk = new File(todoDataFile);
 		if(!todoDataOnDisk.exists()){
 			try {
-				serverTodoList.addCategory(new TodoCategory("School work", "school"));
-				serverTodoList.addCategory(new TodoCategory("Programming projects", "programming"));
-				serverTodoList.addCategory(new TodoCategory("Shopping list", "buy"));
-				serverTodoList.addTask("school", "Complete exercise 1 for vssprog");
-				serverTodoList.addTask("school", "Complete exercise 1 for parprog");
-				serverTodoList.addTask("programming", "Build better todolist");
-				serverTodoList.addTask("programming", "fix all the bugs");
-				serverTodoList.addTask("buy", "new pens");
+				todoListActiveTasks.addCategory(new TodoCategory("School work", "school"));
+				todoListActiveTasks.addCategory(new TodoCategory("Programming projects", "programming"));
+				todoListActiveTasks.addCategory(new TodoCategory("Shopping list", "buy"));
+				todoListActiveTasks.addTask("school", "Complete exercise 1 for vssprog");
+				todoListActiveTasks.addTask("school", "Complete exercise 1 for parprog");
+				todoListActiveTasks.addTask("programming", "Build better todolist");
+				todoListActiveTasks.addTask("programming", "fix all the bugs");
+				todoListActiveTasks.addTask("buy", "new pens");
 				writeChangesToDisk();
 			} catch (Exception e) {
 				Logger.log("Unable to add default categories on server.", e);
