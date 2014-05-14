@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -73,7 +75,6 @@ public class SettingsPanel extends JPanel{
 		
 		checkboxInternalServerEnabled = new JCheckBox("");
 		checkboxInternalServerEnabled.setToolTipText(useInternalServerTooltip);
-		checkboxInternalServerEnabled.setSelected(settings.getIntegratedServerEnabled());
 		
 		GridBagConstraints gbc_checkboxInternalServerEnabled = new GridBagConstraints();
 		gbc_checkboxInternalServerEnabled.anchor = GridBagConstraints.WEST;
@@ -81,9 +82,9 @@ public class SettingsPanel extends JPanel{
 		gbc_checkboxInternalServerEnabled.gridx = 1;
 		gbc_checkboxInternalServerEnabled.gridy = 1;
 		centerPanel.add(checkboxInternalServerEnabled, gbc_checkboxInternalServerEnabled);
-		checkboxInternalServerEnabled.addActionListener(new ActionListener() {
+		checkboxInternalServerEnabled.addItemListener(new ItemListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void itemStateChanged(ItemEvent aE) {
 				if(checkboxInternalServerEnabled.isSelected()){
 					textFieldHostIP.setEnabled(false);
 					textFieldHostPort.setEnabled(false);
@@ -204,6 +205,9 @@ public class SettingsPanel extends JPanel{
 				saveChanges();
 			}
         }); 
+		
+		//Has to be set after everything is built up.
+		checkboxInternalServerEnabled.setSelected(settings.getIntegratedServerEnabled());
 	}
 	
 	private void saveChanges(){
