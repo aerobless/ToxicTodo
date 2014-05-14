@@ -13,12 +13,13 @@ public class ClientController {
 	
 	public void start(ClientTodoManager aTodoManager, ClientSettings someSettings){
 		settings = someSettings;
-		if(settings.getIntegratedServerEnabled()){
-			launchAndConnectToInternalServer();
-		} else if (!aTodoManager.getInitSuccess()){
-			createLocalServerDialog();
-		} else{
+		
+		if(aTodoManager.getInitSuccess()){
 			createGUI(aTodoManager, someSettings);
+		}else if(settings.getIntegratedServerEnabled()){
+			launchAndConnectToInternalServer();
+		}else{
+			createLocalServerDialog();
 		}
 	}
 	
