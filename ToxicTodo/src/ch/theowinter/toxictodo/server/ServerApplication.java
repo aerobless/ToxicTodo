@@ -134,6 +134,7 @@ public class ServerApplication implements Runnable{
 				todoListActiveTasks.addTask("programming", "fix all the bugs");
 				todoListActiveTasks.addTask("buy", "new pens");
 				writeChangesToDisk();
+				Logger.log("Successfully created default categories and tasks.");
 			} catch (Exception e) {
 				Logger.log("Unable to add default categories on server.", e);
 			}
@@ -143,6 +144,7 @@ public class ServerApplication implements Runnable{
 			try {
 				todoListHistoricTasks.addCategory(new TodoCategory("System", "system"));
 				todoListHistoricTasks.addTask("system", "ToxicTodo History System initalized");
+				Logger.log("Sucessfully initalized History-System.");
 			} catch (Exception e) {
 				Logger.log("Unable to init history on server.", e);
 			}

@@ -13,6 +13,7 @@ import javax.crypto.SealedObject;
 
 import ch.theowinter.toxictodo.sharedobjects.EncryptionEngine;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
+import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
 import ch.theowinter.toxictodo.sharedobjects.elements.ToxicDatagram;
 
 class ServerOpenConnectionThread implements Runnable {
@@ -110,6 +111,15 @@ class ServerOpenConnectionThread implements Runnable {
 			writeLock.acquire();
 			try {
 				ServerApplication.todoListActiveTasks.removeTask(dataFromClient.getTodoTask(), dataFromClient.getAdditionalMessage());
+				
+				//We create the category if it doesn't exist in the history taskList.
+				if(ServerApplication.todoListHistoricTasks.getCategoryMap().get(dataFromClient.getAdditionalMessage())==null){
+					String categoryName = ServerApplication.todoListActiveTasks.getCategoryMap().get(dataFromClient.getAdditionalMessage()).getName();
+					String categoryKeyword = dataFromClient.getAdditionalMessage();
+					ServerApplication.todoListHistoricTasks.addCategory(new TodoCategory(categoryName, categoryKeyword));
+				}			
+				ServerApplication.todoListHistoricTasks.addTask(dataFromClient.getAdditionalMessage(), dataFromClient.getTodoTask());
+				
 				java.util.Date date= new java.util.Date();
 				ServerApplication.writeLogToFile("CompletedTasks.txt", new Timestamp(date.getTime())+" : COMPLETED : "+dataFromClient.getTodoTask().getText());
 				dataToClient = new ToxicDatagram("Answering successful request to remove & log task");
