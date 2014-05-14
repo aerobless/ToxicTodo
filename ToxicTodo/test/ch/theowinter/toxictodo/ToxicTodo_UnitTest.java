@@ -4,12 +4,16 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+
 import javax.crypto.SealedObject;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.junit.Test;
+import org.xml.sax.SAXException;
 
-import ch.theowinter.toxictodo.client.cli.CliController;
 import ch.theowinter.toxictodo.sharedobjects.EncryptionEngine;
+import ch.theowinter.toxictodo.sharedobjects.LocationEngine;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoList;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoTask;
@@ -189,18 +193,12 @@ public class ToxicTodo_UnitTest {
 			String topSecretData = "This message is secret";
 			Object encryptedData = crypto.enc(topSecretData);
 			String decryptedData = (String)enemyCrypto.dec((SealedObject)encryptedData);
-			System.out.println("ddd"+decryptedData);
 		} catch (Exception anEx) {
 			testFailedCorrectly = true;
 		}
 		assertTrue(testFailedCorrectly);
 	}
 	
-	@Test
-	public void redFormatterTest(){
-		CliController test = new CliController(null);
-		System.out.println(test.formatString("this is **some** random text"));
-	}
 	
 	@Test
 	public void editCategory(){
@@ -228,5 +226,24 @@ public class ToxicTodo_UnitTest {
 		assertEquals("New School Work", editedCat.getName());
 		assertEquals(null, doesntExist);
 		assertTrue(successfulTest);	
+	}
+	
+	@Test
+	public void locationEngineTest(){
+		boolean success = true;
+		LocationEngine locationEngine = new LocationEngine();
+		try {
+			assertTrue(locationEngine.getCity().length()>1);
+		} catch (ParserConfigurationException anEx) {
+			success = false;
+			anEx.printStackTrace();
+		} catch (SAXException anEx) {
+			success = false;
+			anEx.printStackTrace();
+		} catch (IOException anEx) {
+			success = false;
+			anEx.printStackTrace();
+		}
+		assertTrue(success);
 	}
 }

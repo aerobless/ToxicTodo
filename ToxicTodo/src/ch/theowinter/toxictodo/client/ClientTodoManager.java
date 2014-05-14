@@ -82,11 +82,14 @@ public class ClientTodoManager extends Observable{
 	}
 	
 	public void removeTask(boolean writeToLog, TodoTask task, String categoryKeyword) throws IOException{
+		TodoTask finalizedTask = task;
+		finalizedTask.setCompletionDate(new Date());
+		
 		String dataMessage = "REMOVE_TASK_ON_SERVER";
 		if(writeToLog){
 			dataMessage = "REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER";
 		}
-		ClientApplication.sendToServer(new ToxicDatagram(dataMessage, task , categoryKeyword));
+		ClientApplication.sendToServer(new ToxicDatagram(dataMessage, finalizedTask , categoryKeyword));
 		updateList();
 	}
 	
