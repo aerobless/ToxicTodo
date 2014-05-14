@@ -13,7 +13,9 @@ public class ClientController {
 	
 	public void start(ClientTodoManager aTodoManager, ClientSettings someSettings){
 		settings = someSettings;
-		if(!aTodoManager.getInitSuccess()){
+		if(settings.getIntegratedServerEnabled()){
+			launchAndConnectToInternalServer();
+		} else if (!aTodoManager.getInitSuccess()){
 			createLocalServerDialog();
 		} else{
 			createGUI(aTodoManager, someSettings);
@@ -28,25 +30,28 @@ public class ClientController {
 	private void createLocalServerDialog(){
 		Logger.log("Trying to see if user wants to run a local server");
 		int result = JOptionPane.showConfirmDialog(
-			    null, "We were unable to detect a server.\n"
+			    null, "We are unable to detect a server at "+settings.getHOST()+":"+settings.getPORT()+".\n"
 			    + "Would you like to start the program locally?\n",
 			    "Unable to detect server", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
 		if(result == 0){
-			//YES - We start a local server for the user.
-			Logger.log("Running integrated server!");
-			new Thread(new ServerApplication()).start();
-			ClientTodoManager todoManager;
-			do{
-				try {
-					Thread.sleep(5);
-				} catch (InterruptedException e) {
-					Logger.log("Interrupted Sleep", e);
-				}
-				todoManager = new ClientTodoManager();
-			}while(!todoManager.getInitSuccess());
-			createGUI(todoManager, settings);
+			launchAndConnectToInternalServer();
 		} else{
 			Logger.log("User chose to not use a local server and we can't connect to a dedicated server.");
 		}
+	}
+	
+	private void launchAndConnectToInternalServer(){
+		Logger.log("Launching internal server..");
+		new Thread(new ServerApplication()).start();
+		ClientTodoManager todoManager;
+		do{
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException e) {
+				Logger.log("Interrupted Sleep while waiting for internal server to start.", e);
+			}
+			todoManager = new ClientTodoManager();
+		}while(!todoManager.getInitSuccess());
+		createGUI(todoManager, settings);
 	}
 }
