@@ -7,7 +7,12 @@ import java.util.List;
 import java.util.Observable;
 import java.util.concurrent.Semaphore;
 
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicUIData;
+import ch.theowinter.toxictodo.sharedobjects.LocationEngine;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoList;
@@ -17,6 +22,7 @@ import ch.theowinter.toxictodo.sharedobjects.elements.ToxicDatagram;
 public class ClientTodoManager extends Observable{
 	//Class variables
 	private TodoList todoList;
+	private LocationEngine locationEngine;
 	
 	//Locks
 	private Semaphore writeLock = new Semaphore(1);
@@ -26,6 +32,7 @@ public class ClientTodoManager extends Observable{
 
 	public ClientTodoManager() {
 		super();
+		locationEngine = new LocationEngine();
 		try {
 			updateList();
 			initSuccess = true;
@@ -75,8 +82,14 @@ public class ClientTodoManager extends Observable{
 	}
 	
 	public void addNewTask(int priority, String categoryKeyword, String taskDescription) throws IOException{
-		Date today = new Date();
-		TodoTask task = new TodoTask(priority, false, taskDescription, "location: not implemented yet", today);
+		String location;
+		try {
+			location = locationEngine.getCity();
+		} catch (ParserConfigurationException | SAXException e) {
+			Logger.log("Unable to get location.", e);
+			location = "No Location";
+		}
+		TodoTask task = new TodoTask(priority, false, taskDescription, location, new Date());
 		ClientApplication.sendToServer(new ToxicDatagram("ADD_TASK_TO_LIST_ON_SERVER", task, categoryKeyword));
 		updateList();
 	}
@@ -84,6 +97,14 @@ public class ClientTodoManager extends Observable{
 	public void removeTask(boolean writeToLog, TodoTask task, String categoryKeyword) throws IOException{
 		TodoTask finalizedTask = task;
 		finalizedTask.setCompletionDate(new Date());
+		String location;
+		try {
+			location = locationEngine.getCity();
+		} catch (ParserConfigurationException | SAXException e) {
+			Logger.log("Unable to get location.", e);
+			location = "No Location";
+		}
+		finalizedTask.setCompletionLocatioN(location);
 		
 		String dataMessage = "REMOVE_TASK_ON_SERVER";
 		if(writeToLog){
