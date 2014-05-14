@@ -90,6 +90,9 @@ public class ClientTodoManager extends Observable{
 			location = "No Location";
 		}
 		TodoTask task = new TodoTask(priority, false, taskDescription, location, new Date());
+		if(categoryKeyword.equals(ToxicUIData.allTaskTodoCategoryKey)){
+			categoryKeyword = "orphan";
+		}
 		ClientApplication.sendToServer(new ToxicDatagram("ADD_TASK_TO_LIST_ON_SERVER", task, categoryKeyword));
 		updateList();
 	}
