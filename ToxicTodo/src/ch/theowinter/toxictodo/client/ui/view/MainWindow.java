@@ -430,7 +430,8 @@ public class MainWindow{
 		btnCompletedTaskList.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TodoCategory editCategory = getSelectedCategory();
+				Logger.log("NOT IMPLEMENTED YET");
+				/*TodoCategory editCategory = getSelectedCategory();
 				//double-safety - we never want to edit all-tasks.
 				if(editCategory.getKeyword()!=ToxicUIData.allTaskTodoCategoryKey){
 					if(categoryPanel == null){
@@ -443,7 +444,7 @@ public class MainWindow{
 						categoryPanel.setCategory(getSelectedCategory());
 						setRightContent(categoryPanel);
 					}
-				}
+				}*/
 			}
         });	
 		
@@ -459,7 +460,8 @@ public class MainWindow{
 		btnStatistics.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				TodoCategory editCategory = getSelectedCategory();
+				Logger.log("NOT IMPLEMENTED YET");
+				/*TodoCategory editCategory = getSelectedCategory();
 				//double-safety - we never want to edit all-tasks.
 				if(editCategory.getKeyword()!=ToxicUIData.allTaskTodoCategoryKey){
 					if(categoryPanel == null){
@@ -472,7 +474,7 @@ public class MainWindow{
 						categoryPanel.setCategory(getSelectedCategory());
 						setRightContent(categoryPanel);
 					}
-				}
+				}*/
 			}
         });	
 		
