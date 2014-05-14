@@ -73,6 +73,8 @@ public class SettingsPanel extends JPanel{
 		
 		checkboxInternalServerEnabled = new JCheckBox("");
 		checkboxInternalServerEnabled.setToolTipText(useInternalServerTooltip);
+		checkboxInternalServerEnabled.setSelected(settings.getIntegratedServerEnabled());
+		
 		GridBagConstraints gbc_checkboxInternalServerEnabled = new GridBagConstraints();
 		gbc_checkboxInternalServerEnabled.anchor = GridBagConstraints.WEST;
 		gbc_checkboxInternalServerEnabled.insets = new Insets(0, 0, 5, 5);
@@ -212,6 +214,7 @@ public class SettingsPanel extends JPanel{
 			int consoleSize = Integer.parseInt(txtFieldConsoleSize.getText());
 			settings.setConsoleSize(consoleSize);
 			settings.setPassword(new String(passwordField.getPassword()));
+			settings.setIntegratedServerEnabled(checkboxInternalServerEnabled.isSelected());
 			settings.saveSettingsToDisk();
 			setVisible(false);
 			main.switchToTasks();
@@ -226,6 +229,7 @@ public class SettingsPanel extends JPanel{
 		textFieldHostPort.setText(settings.getPORT()+"");
 		passwordField.setText(settings.getPassword());
 		txtFieldConsoleSize.setText(settings.getConsoleSize()+"");
+		checkboxInternalServerEnabled.setSelected(settings.getIntegratedServerEnabled());
 		setVisible(false);
 		main.switchToTasks();
 	}
