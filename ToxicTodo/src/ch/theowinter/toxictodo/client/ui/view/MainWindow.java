@@ -81,6 +81,7 @@ public class MainWindow{
 	private TaskPanel newTaskPanel;
 	private CategoryPanel categoryPanel;
 	private SettingsPanel settingsPanel;
+	//Temporarily: we create a new one every time for now.
 	private StatisticsPanel statisticsPanel;
 	
 	//Construction Finals
@@ -461,13 +462,11 @@ public class MainWindow{
 		btnStatistics.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Get historic TodoManager ?!
-				if(statisticsPanel == null){
-					statisticsPanel = new StatisticsPanel(main, todoManager);
-					setRightContent(statisticsPanel);
-				} else if(statisticsPanel.isVisible()){
+				if(statisticsPanel != null){
+					statisticsPanel = null;
 					switchToTasks();
 				} else{
+					statisticsPanel = new StatisticsPanel(main, todoManager);
 					setRightContent(statisticsPanel);
 				}
 			}
