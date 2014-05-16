@@ -7,28 +7,36 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 
 import ch.theowinter.toxictodo.client.ClientTodoManager;
 import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeaderWhite;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
+import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicUIData;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
+import ch.theowinter.toxictodo.sharedobjects.elements.TodoList;
 
 public class StatisticsPanel extends JPanel {
 	private static final long serialVersionUID = -2022909795010691054L;
 	private MainWindow main;
-	private ClientTodoManager todoManager;
+	private TodoList historicTodoList;
 
 	/**
 	 * Create the frame.
 	 */
-	public StatisticsPanel(MainWindow main, ClientTodoManager todoManager) {
-		this.main = main;
-		this.todoManager = todoManager;
+	public StatisticsPanel(MainWindow mainWindow, ClientTodoManager todoManager) {
+		this.main = mainWindow;
+		try {
+			this.historicTodoList = todoManager.updateHistoricList();
+		} catch (IOException e) {
+			Logger.log("IOException while trying to get the historic todo list.", e);
+			//todo internet warning.
+		}
+		
 		setBackground(ToxicColors.SOFT_GREY);
 		setBounds(100, 100, 515, 381);
 		setBorder(null);
@@ -41,17 +49,14 @@ public class StatisticsPanel extends JPanel {
 
 		add(header, BorderLayout.NORTH);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		add(tabbedPane, BorderLayout.CENTER);
-		
 		JPanel generalStatisticsPane = new JPanel();
-		tabbedPane.addTab("General Statistics", null, generalStatisticsPane, null);
+		add(generalStatisticsPane, BorderLayout.CENTER);
 		generalStatisticsPane.setBackground(ToxicColors.SOFT_GREY);
 		GridBagLayout gbl_generalStatisticsPane = new GridBagLayout();
 		gbl_generalStatisticsPane.columnWidths = new int[]{182, 0, 0, 0};
-		gbl_generalStatisticsPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_generalStatisticsPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_generalStatisticsPane.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_generalStatisticsPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_generalStatisticsPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		generalStatisticsPane.setLayout(gbl_generalStatisticsPane);
 		
 		JLabel spacer = new JLabel(" ");
@@ -69,6 +74,15 @@ public class StatisticsPanel extends JPanel {
 		gbc_lblTotalCompletedTasks.gridy = 1;
 		generalStatisticsPane.add(lblTotalCompletedTasks, gbc_lblTotalCompletedTasks);
 		
+		JLabel lblCompletedTaskAmount = new JLabel("x");
+		GridBagConstraints gbc_lblCompletedTaskAmount = new GridBagConstraints();
+		gbc_lblCompletedTaskAmount.anchor = GridBagConstraints.WEST;
+		gbc_lblCompletedTaskAmount.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCompletedTaskAmount.gridx = 1;
+		gbc_lblCompletedTaskAmount.gridy = 1;
+		generalStatisticsPane.add(lblCompletedTaskAmount, gbc_lblCompletedTaskAmount);
+		lblCompletedTaskAmount.setText(""+historicTodoList.getCategoryMap().get(ToxicUIData.allTaskTodoCategoryKey).getTasksHashMap().size());
+		
 		JLabel lblTasksCompletedThisMonth = new JLabel("Completed this month:");
 		GridBagConstraints gbc_lblTasksCompletedThisMonth = new GridBagConstraints();
 		gbc_lblTasksCompletedThisMonth.anchor = GridBagConstraints.EAST;
@@ -77,8 +91,13 @@ public class StatisticsPanel extends JPanel {
 		gbc_lblTasksCompletedThisMonth.gridy = 2;
 		generalStatisticsPane.add(lblTasksCompletedThisMonth, gbc_lblTasksCompletedThisMonth);
 		
-		JPanel additionalStats = new JPanel();
-		tabbedPane.addTab("Detailed Stats", null, additionalStats, null);
+		JLabel lblCompletedTasksThisMonthAmount = new JLabel("y");
+		GridBagConstraints gbc_lblCompletedTasksThisMonthAmount = new GridBagConstraints();
+		gbc_lblCompletedTasksThisMonthAmount.anchor = GridBagConstraints.WEST;
+		gbc_lblCompletedTasksThisMonthAmount.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCompletedTasksThisMonthAmount.gridx = 1;
+		gbc_lblCompletedTasksThisMonthAmount.gridy = 2;
+		generalStatisticsPane.add(lblCompletedTasksThisMonthAmount, gbc_lblCompletedTasksThisMonthAmount);
 		
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setBackground(ToxicColors.SOFT_GREY);
@@ -91,9 +110,13 @@ public class StatisticsPanel extends JPanel {
 		btnCancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO: cancel logic.
-				Logger.log("Functionality not implemented yet.");
+				setVisible(false);
+				main.switchToTasks();
 			}
         });
+	}
+	
+	public void updateHistoricTodoManager(){
+		
 	}
 }

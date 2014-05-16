@@ -94,9 +94,13 @@ class ServerOpenConnectionThread implements Runnable {
 			while(writeLock.availablePermits()==0){
 				wait();
 			}
-			dataToClient = new ToxicDatagram("Answering successful request for TodoList", ServerApplication.getServerTodoList());
-		}
-		else if(serverMessage.equals("ADD_TASK_TO_LIST_ON_SERVER")){
+			dataToClient = new ToxicDatagram("Answering successful request for TodoList", ServerApplication.getServerActiveTodoList());
+		} else if (serverMessage.equals("SEND_HISTORIC_TODOLIST_TO_CLIENT")){
+			while(writeLock.availablePermits()==0){
+				wait();
+			}
+			dataToClient = new ToxicDatagram("Answering successful request for Historic TodoList", ServerApplication.getServerHistoricTodoList());
+		} else if (serverMessage.equals("ADD_TASK_TO_LIST_ON_SERVER")){
 			writeLock.acquire();
 			try {
 				ServerApplication.todoListActiveTasks.addTask(dataFromClient.getAdditionalMessage(), dataFromClient.getTodoTask());
@@ -107,8 +111,7 @@ class ServerOpenConnectionThread implements Runnable {
 				dataToClient = new ToxicDatagram("Adding a new task failed. Maybe it already exists?");
 			}
 			writeLock.release();
-		}
-		else if(serverMessage.equals("REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER")){
+		} else if (serverMessage.equals("REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER")){
 			writeLock.acquire();
 			try {
 				ServerApplication.todoListActiveTasks.removeTask(dataFromClient.getTodoTask(), dataFromClient.getAdditionalMessage());
@@ -130,8 +133,7 @@ class ServerOpenConnectionThread implements Runnable {
 				dataToClient = new ToxicDatagram("Completing a task failed.");
 			}
 			writeLock.release();
-		}
-		else if(serverMessage.equals("LOG_TASK_AS_COMPLETED_ON_SERVER")){
+		} else if (serverMessage.equals("LOG_TASK_AS_COMPLETED_ON_SERVER")){
 			writeLock.acquire();
 			try {	
 				//We create the category if it doesn't exist in the history taskList.
@@ -151,8 +153,7 @@ class ServerOpenConnectionThread implements Runnable {
 				dataToClient = new ToxicDatagram("Completing a task failed.");
 			}
 			writeLock.release();
-		}
-		else if(serverMessage.equals("REMOVE_TASK_ON_SERVER")){
+		} else if (serverMessage.equals("REMOVE_TASK_ON_SERVER")){
 			writeLock.acquire();
 			try {
 				ServerApplication.todoListActiveTasks.removeTask(dataFromClient.getTodoTask(), dataFromClient.getAdditionalMessage());
@@ -163,9 +164,7 @@ class ServerOpenConnectionThread implements Runnable {
 				dataToClient = new ToxicDatagram("Removing a task failed.");
 			}
 			writeLock.release();
-		}
-		
-		else if(serverMessage.equals("ADD_CATEGORY_TO_LIST_ON_SERVER")){
+		} else if (serverMessage.equals("ADD_CATEGORY_TO_LIST_ON_SERVER")){
 			writeLock.acquire();
 			try {
 				ServerApplication.todoListActiveTasks.addCategory(dataFromClient.getTodoCategory());
@@ -176,9 +175,7 @@ class ServerOpenConnectionThread implements Runnable {
 				dataToClient = new ToxicDatagram("Adding a category failed.");
 			}
 			writeLock.release();
-		}
-		
-		else if(serverMessage.equals("REMOVE_CATEGORY_ON_SERVER")){
+		} else if (serverMessage.equals("REMOVE_CATEGORY_ON_SERVER")){
 			writeLock.acquire();
 			try {
 				ServerApplication.todoListActiveTasks.removeCategory(dataFromClient.getTodoCategory().getKeyword());
@@ -189,9 +186,7 @@ class ServerOpenConnectionThread implements Runnable {
 				dataToClient = new ToxicDatagram("Removing a category failed.");
 			}
 			writeLock.release();
-		}
-		
-		else if(serverMessage.equals("EDIT_CATEGORY_ON_SERVER")){
+		} else if (serverMessage.equals("EDIT_CATEGORY_ON_SERVER")){
 			writeLock.acquire();
 			try {
 				ServerApplication.todoListActiveTasks.editCategory(dataFromClient.getAdditionalMessage(),
@@ -205,9 +200,7 @@ class ServerOpenConnectionThread implements Runnable {
 				dataToClient = new ToxicDatagram("Editing a category failed.");
 			}
 			writeLock.release();
-		}
-		
-		else{
+		} else{
 			Logger.log("Command from Client not recognized..");
 		}
 		return dataToClient;

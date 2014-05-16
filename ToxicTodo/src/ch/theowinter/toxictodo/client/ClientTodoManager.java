@@ -73,6 +73,10 @@ public class ClientTodoManager extends Observable{
 		setTodoList(generateAllTasksCategory(ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT"))));
 	}
 	
+	public TodoList updateHistoricList() throws IOException {
+		return generateAllTasksCategory(ClientApplication.sendToServer(new ToxicDatagram("SEND_HISTORIC_TODOLIST_TO_CLIENT")));
+	}
+	
 	public List<TodoCategory> categoriesToArray(){
 		List<TodoCategory> returnArray = new ArrayList<TodoCategory>();
 		for(String categoryKey : getTodoList().getCategoryMap().keySet()){

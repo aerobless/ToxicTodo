@@ -79,8 +79,12 @@ public class ServerApplication implements Runnable{
 		}
 	}
 	
-	public static TodoList getServerTodoList() {
+	public static TodoList getServerActiveTodoList() {
 		return todoListActiveTasks;
+	}
+	
+	public static TodoList getServerHistoricTodoList() {
+		return todoListHistoricTasks;
 	}
 
 	public static void setServerTodoList(TodoList serverTodoList) {

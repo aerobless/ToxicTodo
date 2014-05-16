@@ -461,6 +461,7 @@ public class MainWindow{
 		btnStatistics.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				//Get historic TodoManager ?!
 				if(statisticsPanel == null){
 					statisticsPanel = new StatisticsPanel(main, todoManager);
 					setRightContent(statisticsPanel);
