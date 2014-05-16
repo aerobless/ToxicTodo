@@ -81,6 +81,7 @@ public class MainWindow{
 	private TaskPanel newTaskPanel;
 	private CategoryPanel categoryPanel;
 	private SettingsPanel settingsPanel;
+	private StatisticsPanel statisticsPanel;
 	
 	//Construction Finals
 	final Dimension uniBarButtonSize = new Dimension(50, 27);
@@ -369,7 +370,7 @@ public class MainWindow{
 					categoryPanel = new CategoryPanel(main, todoManager);
 					categoryPanel.newCategory();
 					setRightContent(categoryPanel);
-				}else if(categoryPanel.isVisible() == true){
+				}else if(categoryPanel.isVisible()){
 					switchToTasks();
 				} else{
 					categoryPanel.newCategory();
@@ -404,7 +405,7 @@ public class MainWindow{
 						categoryPanel = new CategoryPanel(main, todoManager);
 						categoryPanel.setCategory(editCategory);
 						setRightContent(categoryPanel);
-					}else if(categoryPanel.isVisible() == true){
+					}else if(categoryPanel.isVisible()){
 						switchToTasks();
 					} else{
 						categoryPanel.setCategory(getSelectedCategory());
@@ -460,21 +461,14 @@ public class MainWindow{
 		btnStatistics.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Logger.log("NOT IMPLEMENTED YET");
-				/*TodoCategory editCategory = getSelectedCategory();
-				//double-safety - we never want to edit all-tasks.
-				if(editCategory.getKeyword()!=ToxicUIData.allTaskTodoCategoryKey){
-					if(categoryPanel == null){
-						categoryPanel = new CategoryPanel(main, todoManager);
-						categoryPanel.setCategory(editCategory);
-						setRightContent(categoryPanel);
-					}else if(categoryPanel.isVisible() == true){
-						switchToTasks();
-					} else{
-						categoryPanel.setCategory(getSelectedCategory());
-						setRightContent(categoryPanel);
-					}
-				}*/
+				if(statisticsPanel == null){
+					statisticsPanel = new StatisticsPanel(main, todoManager);
+					setRightContent(statisticsPanel);
+				} else if(statisticsPanel.isVisible()){
+					switchToTasks();
+				} else{
+					setRightContent(statisticsPanel);
+				}
 			}
         });	
 		
