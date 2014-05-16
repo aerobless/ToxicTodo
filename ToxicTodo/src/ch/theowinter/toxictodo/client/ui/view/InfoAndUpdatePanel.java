@@ -137,6 +137,12 @@ public class InfoAndUpdatePanel extends JPanel {
 		gbc_website.gridx = 1;
 		gbc_website.gridy = 5;
 		
+		//Ugly hack to get the URL button position right
+		JPanel webLinkPanel = new JPanel();
+		webLinkPanel.setPreferredSize(new Dimension(136, 20));
+		webLinkPanel.setBackground(this.getBackground());
+		webLinkPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		webLinkPanel.add(btnWebsiteLink);
 		btnWebsiteLink.setPreferredSize(new Dimension(150, 15));
 		btnWebsiteLink.setForeground(ToxicColors.LINK_BLUE);
 		btnWebsiteLink.setBorderPainted(false);
@@ -146,7 +152,7 @@ public class InfoAndUpdatePanel extends JPanel {
 		btnWebsiteLink.setOpaque(false);
 		btnWebsiteLink.setHorizontalAlignment(SwingConstants.LEFT);
 		btnWebsiteLink.setHorizontalTextPosition(SwingConstants.LEFT);
-		leftPanel.add(btnWebsiteLink, gbc_website);
+		leftPanel.add(webLinkPanel, gbc_website);
 		btnWebsiteLink.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -174,9 +180,17 @@ public class InfoAndUpdatePanel extends JPanel {
 		gbc_lblGithublink.insets = new Insets(0, 0, 5, 0);
 		gbc_lblGithublink.gridx = 1;
 		gbc_lblGithublink.gridy = 6;
+		
+		//Ugly hack to get the URL button position right
+		JPanel gitHubLinkPanel = new JPanel();
+		gitHubLinkPanel.setPreferredSize(new Dimension(273, 20));
+		gitHubLinkPanel.setBackground(this.getBackground());
+		gitHubLinkPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		gitHubLinkPanel.add(btnGitHubLink);
+		btnGitHubLink.setPreferredSize(new Dimension(320, 15));
 		btnGitHubLink.setForeground(ToxicColors.LINK_BLUE);
 		btnGitHubLink.setBorderPainted(false);
-		leftPanel.add(btnGitHubLink, gbc_lblGithublink);
+		leftPanel.add(gitHubLinkPanel, gbc_lblGithublink);
 		btnGitHubLink.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

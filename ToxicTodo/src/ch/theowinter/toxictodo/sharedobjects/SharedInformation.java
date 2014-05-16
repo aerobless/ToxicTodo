@@ -5,5 +5,5 @@ public class SharedInformation {
 	public static final String LAST_UPDATE = "16.05.2014";
 	public static final String AUTHOR = "Theo Winter";
 	public static final String WEBSITE = "theowinter.ch";
-	public static final String GITHUB = "https://github.com/aerobless/ToxicTodo";
+	public static final String GITHUB = "github.com/aerobless/ToxicTodo";
 }
