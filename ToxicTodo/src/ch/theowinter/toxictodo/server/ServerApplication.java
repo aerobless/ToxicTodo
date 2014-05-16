@@ -109,6 +109,7 @@ public class ServerApplication implements Runnable{
 			settings = (ServerSettings) logic.loadXMLFile(settingsFile);
 		}
 		todoListActiveTasks = (TodoList)logic.loadXMLFile(activeTodoDataFile);
+		todoListHistoricTasks = (TodoList)logic.loadXMLFile(historicTodoDataFile);
 	}
 
 	/**
