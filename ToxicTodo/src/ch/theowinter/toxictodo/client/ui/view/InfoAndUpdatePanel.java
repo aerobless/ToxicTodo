@@ -190,7 +190,6 @@ public class InfoAndUpdatePanel extends JPanel {
 				}
 			}
 			});
-		
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setBackground(ToxicColors.SOFT_GREY);
 		FlowLayout flowLayoutBottomPanel = (FlowLayout) bottomPanel.getLayout();
@@ -207,6 +206,16 @@ public class InfoAndUpdatePanel extends JPanel {
         });
 		
 		JButton btnCheckForUpdate = new JButton("Check for update");
+		btnCheckForUpdate.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent aE) {
+				updateClientFromJenkins();
+			}
+		});
 		bottomPanel.add(btnCheckForUpdate);
+	}
+	
+	private void updateClientFromJenkins(){
+		Logger.log("not implemented yet");
 	}
 }
