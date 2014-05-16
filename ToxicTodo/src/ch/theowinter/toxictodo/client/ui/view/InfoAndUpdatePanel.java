@@ -15,12 +15,15 @@ import java.net.URISyntaxException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import ch.theowinter.toxictodo.client.ClientApplication;
 import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeaderWhite;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
+import ch.theowinter.toxictodo.sharedobjects.LogicEngine;
 import ch.theowinter.toxictodo.sharedobjects.SharedInformation;
 
 public class InfoAndUpdatePanel extends JPanel {
@@ -49,6 +52,7 @@ public class InfoAndUpdatePanel extends JPanel {
 		
 		JLabel lblNewLabel = new JLabel("LOGO");
 		rigthPanel.add(lblNewLabel);
+		rigthPanel.setBackground(this.getBackground());
 		
 		JPanel leftPanel = new JPanel();
 		leftPanel.setBackground(ToxicColors.SOFT_GREY);
@@ -230,6 +234,24 @@ public class InfoAndUpdatePanel extends JPanel {
 	}
 	
 	private void updateClientFromJenkins(){
-		Logger.log("not implemented yet");
+		int result = JOptionPane.showConfirmDialog(
+			    null, "You're attempting to update ToxicTodo from it's development server.\n"
+			    + "BEWARE: Development updates are NOT STABLE and may break functionality.\n"
+			    + "\n"
+			    + "If are certain that you want to continue press 'YES'",
+			    "Update Process", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE);
+		if(result == 0){
+			Logger.log("User chose to attempt to update ToxicTodo from it's development branch.");
+			LogicEngine logic = new LogicEngine();
+			logic.updateSoftware(ClientApplication.CLIENT_UPDATE_URL);
+			/*
+			 * We're using System.exit() because before we can update the client we need to exit out of the main application
+			 * as quickly as possible. The user has been warned that the system will update and he wouldn't need to save
+			 * anything anyway.
+			 */
+			System.exit(0); //NOSONAR
+		} else{
+			Logger.log("User chose NOT TO try and update ToxicTodo.");
+		}
 	}
 }
