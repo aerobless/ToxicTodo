@@ -202,7 +202,7 @@ public class MainWindow{
 		frmToxictodo.getContentPane().add(bottomBar.getComponent(), BorderLayout.SOUTH);  
 
 		//Refresh:
-		FontIconButton btnRefresh = new FontIconButton('\uf021', "Change the program settings.");
+		FontIconButton btnRefresh = new FontIconButton('\uf021', "Synchronize this client to the server.");
 		btnRefresh.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnRefresh.setHorizontalTextPosition(SwingConstants.CENTER);	
 		btnRefresh.putClientProperty("JButton.buttonType", "textured");
