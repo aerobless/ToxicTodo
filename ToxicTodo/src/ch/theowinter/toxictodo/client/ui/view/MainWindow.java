@@ -81,8 +81,9 @@ public class MainWindow{
 	private TaskPanel newTaskPanel;
 	private CategoryPanel categoryPanel;
 	private SettingsPanel settingsPanel;
-	//Temporarily: we create a new one every time for now.
+	//Short-Lived Panels (recreated on every use):
 	private StatisticsPanel statisticsPanel;
+	private InfoAndUpdatePanel infoPanel;
 	
 	//Construction Finals
 	final Dimension uniBarButtonSize = new Dimension(50, 27);
@@ -213,7 +214,13 @@ public class MainWindow{
 		btnInfo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Logger.log("not implemented yet");
+				if(infoPanel==null){
+					infoPanel = new InfoAndUpdatePanel(main);
+					setRightContent(infoPanel);
+				}else{
+					infoPanel = null;
+					switchToTasks();
+				}
 			}
         });      
 		bottomBar.addComponentToRight(btnInfo);
