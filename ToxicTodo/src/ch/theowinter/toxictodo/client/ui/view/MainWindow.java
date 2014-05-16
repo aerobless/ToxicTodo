@@ -86,6 +86,7 @@ public class MainWindow{
 	
 	//Construction Finals
 	final Dimension uniBarButtonSize = new Dimension(50, 27);
+	final Dimension bottomBarButtonSize = new Dimension(50, 27);
 	
 	/**
 	 * Create the application.
@@ -201,28 +202,21 @@ public class MainWindow{
 	    bottomBar.addComponentToLeft(MacWidgetFactory.createEmphasizedLabel("Status"));  
 		frmToxictodo.getContentPane().add(bottomBar.getComponent(), BorderLayout.SOUTH);  
 
-		//Refresh:
-		FontIconButton btnRefresh = new FontIconButton('\uf021', "Synchronize this client to the server.");
-		btnRefresh.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnRefresh.setHorizontalTextPosition(SwingConstants.CENTER);	
-		btnRefresh.putClientProperty("JButton.buttonType", "textured");
-		btnRefresh.setPreferredSize(uniBarButtonSize);
-		btnRefresh.setMinimumSize(uniBarButtonSize);
-		btnRefresh.setMaximumSize(uniBarButtonSize);
-		btnRefresh.addActionListener(new ActionListener() {
+		//Info:
+		FontIconButton btnInfo = new FontIconButton('\uf129', "Information about the Program");
+		btnInfo.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnInfo.setHorizontalTextPosition(SwingConstants.CENTER);	
+		btnInfo.putClientProperty("JButton.buttonType", "textured");
+		btnInfo.setPreferredSize(bottomBarButtonSize);
+		btnInfo.setMinimumSize(bottomBarButtonSize);
+		btnInfo.setMaximumSize(bottomBarButtonSize);
+		btnInfo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					todoManager.updateList();
-				} catch (IOException e1) {
-					Logger.log("No connection to server", e1);
-					main.connectionWarning();
-				}
+				Logger.log("not implemented yet");
 			}
         });      
-		bottomBar.addComponentToRight(btnRefresh);
-		
-		//Settings:
+		bottomBar.addComponentToRight(btnInfo);
 		bottomBar.addComponentToRight(settingsButtonFactory());
 		
 		//Needs to be called last or we get a nullpointer in the category-listener.
@@ -241,9 +235,9 @@ public class MainWindow{
 		btnSettings.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnSettings.setHorizontalTextPosition(SwingConstants.CENTER);	
 		btnSettings.putClientProperty("JButton.buttonType", "textured");
-		btnSettings.setPreferredSize(uniBarButtonSize);
-		btnSettings.setMinimumSize(uniBarButtonSize);
-		btnSettings.setMaximumSize(uniBarButtonSize);
+		btnSettings.setPreferredSize(bottomBarButtonSize);
+		btnSettings.setMinimumSize(bottomBarButtonSize);
+		btnSettings.setMaximumSize(bottomBarButtonSize);
 		btnSettings.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -433,20 +427,6 @@ public class MainWindow{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Logger.log("NOT IMPLEMENTED YET");
-				/*TodoCategory editCategory = getSelectedCategory();
-				//double-safety - we never want to edit all-tasks.
-				if(editCategory.getKeyword()!=ToxicUIData.allTaskTodoCategoryKey){
-					if(categoryPanel == null){
-						categoryPanel = new CategoryPanel(main, todoManager);
-						categoryPanel.setCategory(editCategory);
-						setRightContent(categoryPanel);
-					}else if(categoryPanel.isVisible() == true){
-						switchToTasks();
-					} else{
-						categoryPanel.setCategory(getSelectedCategory());
-						setRightContent(categoryPanel);
-					}
-				}*/
 			}
         });	
 		
@@ -476,6 +456,27 @@ public class MainWindow{
 		statsGroup.add(btnCompletedTaskList);
 		statsGroup.add(btnStatistics);
         unifiedToolbar.addComponentToLeft(new LabeledComponentGroup("Statistics", statsGroup).getComponent());
+        
+		FontIconButton btnRefresh = new FontIconButton('\uf021', "Synchronize this client to the server.");
+		btnRefresh.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnRefresh.setHorizontalTextPosition(SwingConstants.CENTER);	
+		btnRefresh.putClientProperty("JButton.buttonType", "textured");
+		btnRefresh.setPreferredSize(uniBarButtonSize);
+		btnRefresh.setMinimumSize(uniBarButtonSize);
+		btnRefresh.setMaximumSize(uniBarButtonSize);
+		btnRefresh.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					todoManager.updateList();
+				} catch (IOException e1) {
+					Logger.log("No connection to server", e1);
+					main.connectionWarning();
+				}
+			}
+        });      
+		unifiedToolbar.addComponentToLeft(new LabeledComponentGroup("Synchronize", btnRefresh).getComponent());
+		
 		
 		//Search:
 		searchField = new JTextField(10);
