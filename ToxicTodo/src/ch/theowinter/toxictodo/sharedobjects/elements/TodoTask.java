@@ -19,7 +19,7 @@ public class TodoTask implements Serializable{
 	
 	//Task History:
 	private String creationLocation;
-	private String completionLocatioN;
+	private String completionLocation;
 	private Date creationDate;
 	private Date completionDate;
 	private List<Date> repeatableHistory;
@@ -127,11 +127,11 @@ public class TodoTask implements Serializable{
 	}
 
 	public String getCompletionLocatioN() {
-		return completionLocatioN;
+		return completionLocation;
 	}
 
 	public void setCompletionLocatioN(String completionLocatioN) {
-		this.completionLocatioN = completionLocatioN;
+		this.completionLocation = completionLocatioN;
 	}
 
 	public Date getCreationDate() {

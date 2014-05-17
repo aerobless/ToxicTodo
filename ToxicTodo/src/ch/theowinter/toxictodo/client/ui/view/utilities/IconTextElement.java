@@ -55,7 +55,7 @@ public class IconTextElement extends JPanel{
 			iconPanel.setMaximumSize(new Dimension(iconSize+10, iconSize));
 			iconPanel.setMinimumSize(new Dimension(iconSize+10, iconSize));	
 		}
-		Font ttfReal = ToxicData.AWESOME_FONT.deriveFont(Font.BOLD, iconSize);
+		Font ttfReal = ToxicUIData.AWESOME_FONT.deriveFont(Font.BOLD, iconSize);
 		lblIcon.setFont(ttfReal);
 		lblIcon.setText(String.valueOf(awesomeIcon));
 		lblTaskDescription.setText(formatText(taskDescription));

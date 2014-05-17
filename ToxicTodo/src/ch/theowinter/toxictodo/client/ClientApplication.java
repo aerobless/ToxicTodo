@@ -19,10 +19,6 @@ import ch.theowinter.toxictodo.sharedobjects.elements.TodoList;
 import ch.theowinter.toxictodo.sharedobjects.elements.ToxicDatagram;
 
 public class ClientApplication {
-	//Vanity info
-	public static final double CLIENT_VERSION = 1.35;
-	public static final String AUTHOR = "Theo Winter";
-	public static final String WEBSITE = "http://theowinter.ch";
 	public static final String CLIENT_UPDATE_URL = "http://w1nter.net:8080/job/ToxicTodo/lastSuccessfulBuild/artifact/ToxicTodo/dist/ToxicTodoClient.jar";
 	
 	//Local storage
@@ -31,7 +27,7 @@ public class ClientApplication {
 	
 	//Settings
 	private final static String SETTINGS_FILE = logic.getJarDirectory("client_config.xml");
-	public final static ClientSettings SETTINGS = loadSettings();
+	public final static ClientSettings INITAL_SETTINGS = loadSettings();
 	
 	private ClientApplication() {
 		super();
@@ -40,9 +36,9 @@ public class ClientApplication {
 	public static void main(String[] args) {
 
 		//0. Load config & init stuff
-		logic.saveToXMLFile(SETTINGS, SETTINGS_FILE);
+		logic.saveToXMLFile(INITAL_SETTINGS, SETTINGS_FILE);
 		try {
-			crypto = new EncryptionEngine(SETTINGS.getPassword());
+			crypto = new EncryptionEngine(INITAL_SETTINGS.getPassword());
 		} catch (Exception e) {
 			Logger.log("Crypto Error: Unable to load the Encryption Engine", e);
 		}
@@ -51,7 +47,7 @@ public class ClientApplication {
 		if(args.length<1){
 			ClientTodoManager todoManager = new ClientTodoManager();
 			ClientController guiClient = new ClientController();
-			guiClient.start(todoManager, SETTINGS);
+			guiClient.start(todoManager, INITAL_SETTINGS);
 		} else{
 			try {
 				ClientTodoManager todoManager = new ClientTodoManager(sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT")));
@@ -59,7 +55,7 @@ public class ClientApplication {
 				cli.start(args);
 			} catch (IOException e) {
 				Logger.log("ERROR: Unable to establish a connection with the server.", e);
-				Logger.log("Are you certain that you're running a server on "+SETTINGS.getHOST()+":"+SETTINGS.getPORT()+"?");
+				Logger.log("Are you certain that you're running a server on "+INITAL_SETTINGS.getHOST()+":"+INITAL_SETTINGS.getPORT()+"?");
 				Logger.log("If you're running the server on a different IP or port, then you should change the client_config.xml!");
 			}
 		}
@@ -77,7 +73,7 @@ public class ClientApplication {
 		TodoList todoList = null;
 		if(encryptedData!=null){
 			try {
-		    	Socket s = new Socket(SETTINGS.getHOST(), SETTINGS.getPORT());  
+		    	Socket s = new Socket(INITAL_SETTINGS.getHOST(), INITAL_SETTINGS.getPORT());  
 		    	OutputStream os = s.getOutputStream();  
 		    	ObjectOutputStream oos = new ObjectOutputStream(os);  
 		
@@ -135,6 +131,6 @@ public class ClientApplication {
 	}
 	
 	public static void saveSettingsToDisk(){
-		logic.saveToXMLFile(SETTINGS, SETTINGS_FILE);
+		logic.saveToXMLFile(INITAL_SETTINGS, SETTINGS_FILE);
 	}
 }

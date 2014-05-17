@@ -13,6 +13,7 @@ import ch.theowinter.toxictodo.client.ClientApplication;
 import ch.theowinter.toxictodo.client.ClientTodoManager;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
 import ch.theowinter.toxictodo.sharedobjects.LogicEngine;
+import ch.theowinter.toxictodo.sharedobjects.SharedInformation;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoTask;
 import ch.theowinter.toxictodo.sharedobjects.elements.ToxicDatagram;
@@ -69,7 +70,7 @@ public class CliController {
 	}
 
 	public void print(String input, int indentation){
-		int charactersPerLine = ClientApplication.SETTINGS.getConsoleSize();
+		int charactersPerLine = ClientApplication.INITAL_SETTINGS.getConsoleSize();
 		for(int i=charactersPerLine; i < input.length(); i+=charactersPerLine){
 			input = new StringBuilder(input).insert(i, "\n").toString();
 		}
@@ -241,9 +242,9 @@ public class CliController {
 		//Clear ANSI console
 		print(JansiFormats.ANSI_CLS);
 		print(JansiFormats.ANSI_BOLD+JansiFormats.CYAN+"### - ABOUT TOXIC TODO - ###");
-		print(JansiFormats.GREEN+"Version: "+ClientApplication.CLIENT_VERSION, 2);
-		print(JansiFormats.GREEN+"Author:  "+ClientApplication.AUTHOR, 2);
-		print(JansiFormats.GREEN+"Website: "+ClientApplication.WEBSITE, 2);
+		print(JansiFormats.GREEN+"Version: "+SharedInformation.VERSION, 2);
+		print(JansiFormats.GREEN+"Author:  "+SharedInformation.AUTHOR, 2);
+		print(JansiFormats.GREEN+"Website: "+SharedInformation.WEBSITE, 2);
 	}
 	
 	//TODO: global update handler in todo manger or somewhere

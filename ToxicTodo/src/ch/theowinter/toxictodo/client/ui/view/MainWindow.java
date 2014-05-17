@@ -40,7 +40,7 @@ import ch.theowinter.toxictodo.client.ui.view.utilities.FontIconButton;
 import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeaderWhite;
 import ch.theowinter.toxictodo.client.ui.view.utilities.TaskListCellRenderer;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
-import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicData;
+import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicUIData;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoTask;
@@ -73,15 +73,21 @@ public class MainWindow{
 	FontIconButton btnRemoveTask;
 	FontIconButton btnEditCategory;
 	FontIconButton btnNewCategory;
+	FontIconButton btnCompletedTaskList;
+	FontIconButton btnStatistics;
 	
 	//Panels
 	private JPanel totalTaskPanel;
 	private TaskPanel newTaskPanel;
 	private CategoryPanel categoryPanel;
 	private SettingsPanel settingsPanel;
+	//Short-Lived Panels (recreated on every use):
+	private StatisticsPanel statisticsPanel;
+	private InfoAndUpdatePanel infoPanel;
 	
 	//Construction Finals
 	final Dimension uniBarButtonSize = new Dimension(50, 27);
+	final Dimension bottomBarButtonSize = new Dimension(50, 27);
 	
 	/**
 	 * Create the application.
@@ -197,28 +203,27 @@ public class MainWindow{
 	    bottomBar.addComponentToLeft(MacWidgetFactory.createEmphasizedLabel("Status"));  
 		frmToxictodo.getContentPane().add(bottomBar.getComponent(), BorderLayout.SOUTH);  
 
-		//Refresh:
-		FontIconButton btnRefresh = new FontIconButton('\uf021', "Change the program settings.");
-		btnRefresh.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnRefresh.setHorizontalTextPosition(SwingConstants.CENTER);	
-		btnRefresh.putClientProperty("JButton.buttonType", "textured");
-		btnRefresh.setPreferredSize(uniBarButtonSize);
-		btnRefresh.setMinimumSize(uniBarButtonSize);
-		btnRefresh.setMaximumSize(uniBarButtonSize);
-		btnRefresh.addActionListener(new ActionListener() {
+		//Info:
+		FontIconButton btnInfo = new FontIconButton('\uf129', "Information about the Program");
+		btnInfo.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnInfo.setHorizontalTextPosition(SwingConstants.CENTER);	
+		btnInfo.putClientProperty("JButton.buttonType", "textured");
+		btnInfo.setPreferredSize(bottomBarButtonSize);
+		btnInfo.setMinimumSize(bottomBarButtonSize);
+		btnInfo.setMaximumSize(bottomBarButtonSize);
+		btnInfo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					todoManager.updateList();
-				} catch (IOException e1) {
-					Logger.log("No connection to server", e1);
-					main.connectionWarning();
+				if(infoPanel==null){
+					infoPanel = new InfoAndUpdatePanel(main);
+					setRightContent(infoPanel);
+				}else{
+					infoPanel = null;
+					switchToTasks();
 				}
 			}
         });      
-		bottomBar.addComponentToRight(btnRefresh);
-		
-		//Settings:
+		bottomBar.addComponentToRight(btnInfo);
 		bottomBar.addComponentToRight(settingsButtonFactory());
 		
 		//Needs to be called last or we get a nullpointer in the category-listener.
@@ -237,9 +242,9 @@ public class MainWindow{
 		btnSettings.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnSettings.setHorizontalTextPosition(SwingConstants.CENTER);	
 		btnSettings.putClientProperty("JButton.buttonType", "textured");
-		btnSettings.setPreferredSize(uniBarButtonSize);
-		btnSettings.setMinimumSize(uniBarButtonSize);
-		btnSettings.setMaximumSize(uniBarButtonSize);
+		btnSettings.setPreferredSize(bottomBarButtonSize);
+		btnSettings.setMinimumSize(bottomBarButtonSize);
+		btnSettings.setMaximumSize(bottomBarButtonSize);
 		btnSettings.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -367,7 +372,7 @@ public class MainWindow{
 					categoryPanel = new CategoryPanel(main, todoManager);
 					categoryPanel.newCategory();
 					setRightContent(categoryPanel);
-				}else if(categoryPanel.isVisible() == true){
+				}else if(categoryPanel.isVisible()){
 					switchToTasks();
 				} else{
 					categoryPanel.newCategory();
@@ -397,12 +402,12 @@ public class MainWindow{
 			public void actionPerformed(ActionEvent e) {
 				TodoCategory editCategory = getSelectedCategory();
 				//double-safety - we never want to edit all-tasks.
-				if(editCategory.getKeyword()!=ToxicData.allTaskTodoCategoryKey){
+				if(editCategory.getKeyword()!=ToxicUIData.allTaskTodoCategoryKey){
 					if(categoryPanel == null){
 						categoryPanel = new CategoryPanel(main, todoManager);
 						categoryPanel.setCategory(editCategory);
 						setRightContent(categoryPanel);
-					}else if(categoryPanel.isVisible() == true){
+					}else if(categoryPanel.isVisible()){
 						switchToTasks();
 					} else{
 						categoryPanel.setCategory(getSelectedCategory());
@@ -414,8 +419,71 @@ public class MainWindow{
         ButtonGroup categoryGroup = new ButtonGroup();
         categoryGroup.add(btnNewCategory);
         categoryGroup.add(btnEditCategory);
-        
         unifiedToolbar.addComponentToLeft(new LabeledComponentGroup("Categories", categoryGroup).getComponent());
+        
+        //Add Log-Entry:
+		btnCompletedTaskList = new FontIconButton('\uf022', "See a list of all completed tasks");
+		btnCompletedTaskList.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnCompletedTaskList.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnCompletedTaskList.putClientProperty("JButton.buttonType", "segmentedTextured");
+		btnCompletedTaskList.putClientProperty( "JButton.segmentPosition", "first" );
+		btnCompletedTaskList.setPreferredSize(uniBarButtonSize);
+		btnCompletedTaskList.setMinimumSize(uniBarButtonSize);
+		btnCompletedTaskList.setMaximumSize(uniBarButtonSize);
+		btnCompletedTaskList.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Logger.log("NOT IMPLEMENTED YET");
+			}
+        });	
+		
+        //Statistics:
+		btnStatistics = new FontIconButton('\uf080', "See statistics about your progress.");
+		btnStatistics.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnStatistics.setHorizontalTextPosition(SwingConstants.CENTER);
+		btnStatistics.putClientProperty("JButton.buttonType", "segmentedTextured");
+		btnStatistics.putClientProperty( "JButton.segmentPosition", "last" );
+		btnStatistics.setPreferredSize(uniBarButtonSize);
+		btnStatistics.setMinimumSize(uniBarButtonSize);
+		btnStatistics.setMaximumSize(uniBarButtonSize);
+		btnStatistics.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(statisticsPanel != null){
+					statisticsPanel = null;
+					switchToTasks();
+				} else{
+					statisticsPanel = new StatisticsPanel(main, todoManager);
+					setRightContent(statisticsPanel);
+				}
+			}
+        });	
+		
+		ButtonGroup statsGroup = new ButtonGroup();
+		statsGroup.add(btnCompletedTaskList);
+		statsGroup.add(btnStatistics);
+        unifiedToolbar.addComponentToLeft(new LabeledComponentGroup("Statistics", statsGroup).getComponent());
+        
+		FontIconButton btnRefresh = new FontIconButton('\uf021', "Synchronize this client to the server.");
+		btnRefresh.setVerticalTextPosition(SwingConstants.BOTTOM);
+		btnRefresh.setHorizontalTextPosition(SwingConstants.CENTER);	
+		btnRefresh.putClientProperty("JButton.buttonType", "textured");
+		btnRefresh.setPreferredSize(uniBarButtonSize);
+		btnRefresh.setMinimumSize(uniBarButtonSize);
+		btnRefresh.setMaximumSize(uniBarButtonSize);
+		btnRefresh.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					todoManager.updateList();
+				} catch (IOException e1) {
+					Logger.log("No connection to server", e1);
+					main.connectionWarning();
+				}
+			}
+        });      
+		unifiedToolbar.addComponentToLeft(new LabeledComponentGroup("Synchronize", btnRefresh).getComponent());
+		
 		
 		//Search:
 		searchField = new JTextField(10);
@@ -468,17 +536,14 @@ public class MainWindow{
 	    	ListSelectionModel lsm = (ListSelectionModel)e.getSource();
 	    	TodoCategory currentCategory = categoryListModel.getElementAt(categoryList.getSelectedIndex());
 	    	taskListModel.changeCategory(currentCategory.getKeyword());
+	    	taskListHeader.setIcon(currentCategory.getIcon());
 	    	taskListHeader.setTitel(currentCategory.getName().toUpperCase());
 	    	taskListHeader.setSubTitel(getMotivationText());
 	    	if(currentCategory.isSystemCategory()){
 	    		btnNewTask.setEnabled(false);
-	    		btnCompleteTask.setEnabled(false);
-	    		btnRemoveTask.setEnabled(false);
 	    		btnEditCategory.setEnabled(false);
 	    	} else{
 	    		btnNewTask.setEnabled(true);
-	    		btnCompleteTask.setEnabled(true);
-	    		btnRemoveTask.setEnabled(true);
 	    		btnEditCategory.setEnabled(true);
 	    	}
 	    	if (lsm.isSelectionEmpty()) {
@@ -496,7 +561,6 @@ public class MainWindow{
 	    	List<String> motivationArray = new ArrayList<String>();
 	    	motivationArray.add("Strive not to be a success, but rather to be of value. – Albert Einstein");
 	    	motivationArray.add("You miss 100% of the shots you don’t take. – Wayne Gretzky");
-	    	//motivationArray.add("The most common way people give up their power is by thinking they don’t have any. – Alice Walker");
 	    	motivationArray.add("Your time is limited, so don’t waste it living someone else’s life. – Steve Jobs");
 	    	motivationArray.add("Start where you are. Use what you have.  Do what you can. – Arthur Ashe");
 	    	

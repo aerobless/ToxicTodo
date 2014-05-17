@@ -77,7 +77,7 @@ public class PanelHeaderWhite extends JPanel {
 		
 		lblIcon = new JLabel(String.valueOf('\uf15b'));
 		Font ttfReal = null;
-	    ttfReal = ToxicData.AWESOME_FONT.deriveFont(Font.BOLD, 40);
+	    ttfReal = ToxicUIData.AWESOME_FONT.deriveFont(Font.BOLD, 40);
 	    
 		iconPanel.setLayout(new BorderLayout(0, 0));
 		lblIcon.setFont(ttfReal);

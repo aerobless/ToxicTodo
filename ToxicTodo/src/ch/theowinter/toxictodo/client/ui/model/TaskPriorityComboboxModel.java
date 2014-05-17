@@ -3,7 +3,7 @@ package ch.theowinter.toxictodo.client.ui.model;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
-import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicData;
+import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicUIData;
 
 public class TaskPriorityComboboxModel  extends AbstractListModel<String> implements ComboBoxModel<String>{
 	private static final long serialVersionUID = -6554370407871608236L;
@@ -11,12 +11,12 @@ public class TaskPriorityComboboxModel  extends AbstractListModel<String> implem
 
 	@Override
 	public int getSize() {
-		return ToxicData.priorityArray.size();
+		return ToxicUIData.priorityArray.size();
 	}
 
 	@Override
 	public String getElementAt(int index) {
-		return ToxicData.priorityArray.get(index).getPriorityText();
+		return ToxicUIData.priorityArray.get(index).getPriorityText();
 	}
 
 	@Override

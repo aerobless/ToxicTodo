@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicUIData;
+
 /**
  * Provides high-level access to todoTasks and todoCategories
  * @author theowinter
@@ -113,5 +115,24 @@ public class TodoList implements Serializable {
 
 	public Map<String, TodoCategory> getCategoryMap() {
 		return categoryMap;
+	}
+	
+	/**
+	 * Get the category keyword for a specific task by searching through all categories.
+	 * If no category is found it will return null.
+	 * 
+	 * @param TodoTask
+	 * @return String categoryKeyword
+	 */
+	public String getCategoryKeywordForTask(TodoTask task){
+		Map<String, TodoCategory> localCategoryMap = getCategoryMap();
+		//We remove the allTask category if it exists to prevent duplicate findings of tasks.
+		localCategoryMap.remove(ToxicUIData.allTaskTodoCategoryKey);
+		for (TodoCategory category : localCategoryMap.values()) {
+			if((category.get(task.getText()))!=null){
+				return category.getKeyword();
+			}
+		}
+		return null;
 	}
 }

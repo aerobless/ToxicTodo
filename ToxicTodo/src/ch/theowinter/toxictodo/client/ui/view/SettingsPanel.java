@@ -7,22 +7,23 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 
 import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 import ch.theowinter.toxictodo.client.ClientSettings;
 import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeaderWhite;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
-
-import javax.swing.JCheckBox;
 
 public class SettingsPanel extends JPanel{
 	private static final long serialVersionUID = 5091902326508795291L;
@@ -76,16 +77,15 @@ public class SettingsPanel extends JPanel{
 		
 		checkboxInternalServerEnabled = new JCheckBox("");
 		checkboxInternalServerEnabled.setToolTipText(useInternalServerTooltip);
+		
 		GridBagConstraints gbc_checkboxInternalServerEnabled = new GridBagConstraints();
 		gbc_checkboxInternalServerEnabled.anchor = GridBagConstraints.WEST;
 		gbc_checkboxInternalServerEnabled.insets = new Insets(0, 0, 5, 5);
 		gbc_checkboxInternalServerEnabled.gridx = 1;
 		gbc_checkboxInternalServerEnabled.gridy = 1;
 		centerPanel.add(checkboxInternalServerEnabled, gbc_checkboxInternalServerEnabled);
-		checkboxInternalServerEnabled.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//TODO: add actual effect of internal server starting/shuting down. & changing of settings in use.
+		checkboxInternalServerEnabled.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent aE) {
 				if(checkboxInternalServerEnabled.isSelected()){
 					textFieldHostIP.setEnabled(false);
 					textFieldHostPort.setEnabled(false);
@@ -206,6 +206,9 @@ public class SettingsPanel extends JPanel{
 				saveChanges();
 			}
         }); 
+		
+		//Has to be set after everything is built up.
+		checkboxInternalServerEnabled.setSelected(settings.getIntegratedServerEnabled());
 	}
 	
 	private void saveChanges(){
@@ -216,6 +219,7 @@ public class SettingsPanel extends JPanel{
 			int consoleSize = Integer.parseInt(txtFieldConsoleSize.getText());
 			settings.setConsoleSize(consoleSize);
 			settings.setPassword(new String(passwordField.getPassword()));
+			settings.setIntegratedServerEnabled(checkboxInternalServerEnabled.isSelected());
 			settings.saveSettingsToDisk();
 			setVisible(false);
 			main.switchToTasks();
@@ -230,6 +234,7 @@ public class SettingsPanel extends JPanel{
 		textFieldHostPort.setText(settings.getPORT()+"");
 		passwordField.setText(settings.getPassword());
 		txtFieldConsoleSize.setText(settings.getConsoleSize()+"");
+		checkboxInternalServerEnabled.setSelected(settings.getIntegratedServerEnabled());
 		setVisible(false);
 		main.switchToTasks();
 	}
