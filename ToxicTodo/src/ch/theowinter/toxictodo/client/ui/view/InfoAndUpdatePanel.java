@@ -243,7 +243,7 @@ public class InfoAndUpdatePanel extends JPanel {
 		if(result == 0){
 			Logger.log("User chose to attempt to update ToxicTodo from it's development branch.");
 			LogicEngine logic = new LogicEngine();
-			logic.updateSoftware(ClientApplication.CLIENT_UPDATE_URL);
+			logic.updateSoftware(ClientApplication.CLIENT_UPDATE_URL, true);
 			/*
 			 * We're using System.exit() because before we can update the client we need to exit out of the main application
 			 * as quickly as possible. The user has been warned that the system will update and he wouldn't need to save

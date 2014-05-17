@@ -253,7 +253,7 @@ public class CliController {
 		print(JansiFormats.ANSI_CLS);
 		print(JansiFormats.ANSI_BOLD+JansiFormats.CYAN+"### - TOXIC TODO UPDATER - ###");
 		print(JansiFormats.GREEN+"Downloading latest release from CI-server...");
-		if(logic.updateSoftware(ClientApplication.CLIENT_UPDATE_URL)){
+		if(logic.updateSoftware(ClientApplication.CLIENT_UPDATE_URL, false)){
 			print(JansiFormats.GREEN+"The update has been successfully downloaded.");
 			print(JansiFormats.GREEN+"Please let a few seconds pass before issuing a command to ToxicTodo");
 		}

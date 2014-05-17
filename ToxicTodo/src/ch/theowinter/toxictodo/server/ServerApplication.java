@@ -58,7 +58,7 @@ public class ServerApplication implements Runnable{
 				}
 				else if("update".equals(input)){
 					Logger.log("Updating... Please wait a few seconds before starting the server again!");
-					logic.updateSoftware(serverUpdateURL);
+					logic.updateSoftware(serverUpdateURL, false);
 					stopServer.acquire();
 				}
 				else if("about".equals(input)||"identify".equals(input)){
