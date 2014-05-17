@@ -6,7 +6,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 
-import java.awt.Font;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -86,6 +85,7 @@ public class SettingsPanel extends JPanel{
 		checkboxInternalServerEnabled.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				//TODO: add actual effect of internal server starting/shuting down. & changing of settings in use.
 				if(checkboxInternalServerEnabled.isSelected()){
 					textFieldHostIP.setEnabled(false);
 					textFieldHostPort.setEnabled(false);
