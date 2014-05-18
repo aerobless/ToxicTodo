@@ -96,12 +96,12 @@ public class InfoAndUpdatePanel extends JPanel {
 		leftPanel.add(lblLastUpdated, gbcLblLastUpdated);
 		
 		JLabel lblUpdatedate = new JLabel(SharedInformation.LAST_UPDATE);
-		GridBagConstraints gbc_lblUpdatedate = new GridBagConstraints();
-		gbc_lblUpdatedate.anchor = GridBagConstraints.WEST;
-		gbc_lblUpdatedate.insets = new Insets(0, 0, 5, 0);
-		gbc_lblUpdatedate.gridx = 1;
-		gbc_lblUpdatedate.gridy = 2;
-		leftPanel.add(lblUpdatedate, gbc_lblUpdatedate);
+		GridBagConstraints gbcLblUpdatedate = new GridBagConstraints();
+		gbcLblUpdatedate.anchor = GridBagConstraints.WEST;
+		gbcLblUpdatedate.insets = new Insets(0, 0, 5, 0);
+		gbcLblUpdatedate.gridx = 1;
+		gbcLblUpdatedate.gridy = 2;
+		leftPanel.add(lblUpdatedate, gbcLblUpdatedate);
 		
 		JLabel label = new JLabel(" ");
 		GridBagConstraints gbcLabel = new GridBagConstraints();
