@@ -33,18 +33,18 @@ Show about info | about **OR** identify | about **OR** identify
 Update to the latest version from the CI server | update | update
 
 ##Server
-
 ![Toxic Todo Diagram](http://w1nter.com/downloads/toxicTodoDiag.png)
 
 **Server-Commands:**
 *stop / exit* - to shutdown the server application.
 
 
-**Download:**
-To get the latested, binary version please visit my [Jenkins](http://w1nter.net:8080/job/ToxicTodo/).
+##Download:
+**ToxicTodo CI-Server:** [http://w1nter.net:8080/job/TinyUpdater/](http://w1nter.net:8080/job/ToxicTodo/)  
+**ToxicTodo Sonar-Server:** [http://sonar.w1nter.net/dashboard/index/103](http://sonar.w1nter.net/dashboard/index/1)
+
 
 ##License
-
 > Copyright (c) 2014 Theo Winter
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
