@@ -159,7 +159,8 @@ public class ServerApplication implements Runnable{
 		public void run() {
 			try {
 			while(stopServer.availablePermits()>0){
-				@SuppressWarnings("resource") //socket gets closed in the OpenConnectionThread
+				//Socket gets closed in the OpenConnectionThread
+				@SuppressWarnings("resource")
 				Socket client = new Socket();
 				client.setSoTimeout(100);
 				ServerSocket server;

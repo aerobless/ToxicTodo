@@ -1,7 +1,7 @@
 package ch.theowinter.toxictodo.sharedobjects;
 
 public final class Logger {
-	private final static boolean LOG_ENABLED = true;
+	public static final boolean LOG_ENABLED = true;
 
 	private Logger() {
 		super();

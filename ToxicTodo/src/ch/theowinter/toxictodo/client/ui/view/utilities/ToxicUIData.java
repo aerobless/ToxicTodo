@@ -11,9 +11,9 @@ import ch.theowinter.toxictodo.client.ui.model.TaskPriority;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
 
 public class ToxicUIData {
-	final public static String ALL_TASKS_TODOCATEGORY_KEY = "allTaskTodoCategoryKeyDoNotUseDirectly";
-	final public static List<TaskPriority> PRIORITY_ARRAY = generatePriorityArray();
-	final public static Font AWESOME_FONT = getAwesomeFont();
+	public static final String ALL_TASKS_TODOCATEGORY_KEY = "allTaskTodoCategoryKeyDoNotUseDirectly";
+	public static final List<TaskPriority> PRIORITY_ARRAY = generatePriorityArray();
+	public static final Font AWESOME_FONT = getAwesomeFont();
 	
 	private ToxicUIData() {
 		super();

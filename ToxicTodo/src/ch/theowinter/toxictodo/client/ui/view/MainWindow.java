@@ -61,6 +61,13 @@ public class MainWindow{
 	private ClientTodoManager todoManager;
 	private ClientSettings settings;
 	
+	//Constants
+	private static final String TEXTURED = "textured";
+	private static final String SEGMENTED_TEXTURED = "segmentedTextured";
+	private static final String POS_FIRST = "first";
+	private static final String POS_MIDDLE = "middle";
+	private static final String POS_LAST = "last";
+	
 	//This window
 	JSplitPane splitPane;
 	MainWindow main = this;
@@ -81,6 +88,7 @@ public class MainWindow{
 	private TaskPanel newTaskPanel;
 	private CategoryPanel categoryPanel;
 	private SettingsPanel settingsPanel;
+	
 	//Short-Lived Panels (recreated on every use):
 	private StatisticsPanel statisticsPanel;
 	private InfoAndUpdatePanel infoPanel;
@@ -207,7 +215,7 @@ public class MainWindow{
 		FontIconButton btnInfo = new FontIconButton('\uf129', "Information about the Program");
 		btnInfo.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnInfo.setHorizontalTextPosition(SwingConstants.CENTER);	
-		btnInfo.putClientProperty("JButton.buttonType", "textured");
+		btnInfo.putClientProperty("JButton.buttonType", TEXTURED);
 		btnInfo.setPreferredSize(bottomBarButtonSize);
 		btnInfo.setMinimumSize(bottomBarButtonSize);
 		btnInfo.setMaximumSize(bottomBarButtonSize);
@@ -241,7 +249,7 @@ public class MainWindow{
 		FontIconButton btnSettings = new FontIconButton('\uf013', "Change the program settings.");
 		btnSettings.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnSettings.setHorizontalTextPosition(SwingConstants.CENTER);	
-		btnSettings.putClientProperty("JButton.buttonType", "textured");
+		btnSettings.putClientProperty("JButton.buttonType", TEXTURED);
 		btnSettings.setPreferredSize(bottomBarButtonSize);
 		btnSettings.setMinimumSize(bottomBarButtonSize);
 		btnSettings.setMaximumSize(bottomBarButtonSize);
@@ -251,7 +259,7 @@ public class MainWindow{
 				if(settingsPanel == null){
 					settingsPanel = new SettingsPanel(settings, main);
 					setRightContent(settingsPanel);
-				}else if(settingsPanel.isVisible() == true){
+				}else if(settingsPanel.isVisible()){
 					switchToTasks();
 				}else{
 					setRightContent(settingsPanel);
@@ -304,7 +312,7 @@ public class MainWindow{
 		//Toolbar buttons:
 		
 		//New Task:
-		btnNewTask = fontIconButtonFactory('\uf15b', "Create a new task.","segmentedTextured","first", uniBarButtonSize);
+		btnNewTask = fontIconButtonFactory('\uf15b', "Create a new task.",SEGMENTED_TEXTURED,POS_FIRST, uniBarButtonSize);
 		btnNewTask.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -312,7 +320,7 @@ public class MainWindow{
 					newTaskPanel = new TaskPanel(main, todoManager);
 					newTaskPanel.newTask();
 					setRightContent(newTaskPanel);
-				}else if(newTaskPanel.isVisible() == true){
+				}else if(newTaskPanel.isVisible()){
 					switchToTasks();
 				} else{
 					setRightContent(newTaskPanel);
@@ -323,7 +331,7 @@ public class MainWindow{
 		 
 		//Complete Task:
 		btnCompleteTask = fontIconButtonFactory('\uf00c',
-				"Complete the selcted task.", "segmentedTextured", "middle",
+				"Complete the selcted task.", SEGMENTED_TEXTURED, POS_MIDDLE,
 				uniBarButtonSize);
 		btnCompleteTask.addActionListener(new ActionListener() {
 			@Override
@@ -347,7 +355,7 @@ public class MainWindow{
 		//Remove Task:
 		btnRemoveTask = fontIconButtonFactory('\uf014',
 				"Remove the selected task without logging success.",
-				"segmentedTextured", "last", uniBarButtonSize);
+				SEGMENTED_TEXTURED, POS_LAST, uniBarButtonSize);
 		btnRemoveTask.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -370,7 +378,7 @@ public class MainWindow{
 		//New Category:
 		btnNewCategory = fontIconButtonFactory('\uf07b',
 				"Create a new category.",
-				"segmentedTextured", "first", uniBarButtonSize);
+				SEGMENTED_TEXTURED, POS_FIRST, uniBarButtonSize);
 		btnNewCategory.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -397,7 +405,7 @@ public class MainWindow{
 		//Edit category:
 		btnEditCategory =   fontIconButtonFactory('\uf040',
 				"Edit an existing category.",
-				"segmentedTextured", "last", uniBarButtonSize);
+				SEGMENTED_TEXTURED, POS_LAST, uniBarButtonSize);
 		btnEditCategory.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -425,7 +433,7 @@ public class MainWindow{
         //Add Log-Entry:
 		btnCompletedTaskList = fontIconButtonFactory('\uf022',
 				"See a list of all completed tasks",
-				"segmentedTextured", "first", uniBarButtonSize);
+				SEGMENTED_TEXTURED, POS_FIRST, uniBarButtonSize);
 		btnCompletedTaskList.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -436,7 +444,7 @@ public class MainWindow{
         //Statistics:
 		btnStatistics = fontIconButtonFactory('\uf080',
 				"See statistics about your progress.",
-				"segmentedTextured", "last", uniBarButtonSize);
+				SEGMENTED_TEXTURED, POS_LAST, uniBarButtonSize);
 		btnStatistics.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -457,7 +465,7 @@ public class MainWindow{
         
 		FontIconButton btnRefresh = fontIconButtonFactory('\uf021',
 				"Synchronize this client to the server.",
-				"textured", null, uniBarButtonSize);
+				TEXTURED, null, uniBarButtonSize);
 		btnRefresh.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

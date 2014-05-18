@@ -13,7 +13,7 @@ public class TodoCategory implements Serializable, Comparable<TodoCategory> {
 	private String name;
 	private String keyword;
 	private char icon;
-	private boolean isSystemCategory; //<-- intended for internal use only
+	private boolean isSystemCategory;
 	
 	//Container:
 	private Map<String, TodoTask> todoTaskList = new HashMap<String, TodoTask>();

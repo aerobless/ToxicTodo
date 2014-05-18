@@ -14,7 +14,6 @@ import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicUIData;
 public class TodoList implements Serializable {
 	private static final long serialVersionUID = -5867425003353980895L;
 	Map<String, TodoCategory> categoryMap = new HashMap<String, TodoCategory>();
-	
 
 	public TodoList() {
 		super();
