@@ -23,6 +23,7 @@ import ch.theowinter.toxictodo.client.ClientTodoManager;
 import ch.theowinter.toxictodo.client.ui.model.TaskPriorityComboboxModel;
 import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeaderWhite;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
+import ch.theowinter.toxictodo.sharedobjects.Logger;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
 
 public class TaskPanel extends JPanel {
@@ -216,6 +217,7 @@ public class TaskPanel extends JPanel {
 				todoManager.addAndCompleteTask(taskPriority,category.getKeyword(), taskDescripition);
 				main.switchToTasks();
 			} catch (IOException anEx) {
+				Logger.log("Connection lost while trying to saveAndComplete a task.", anEx);
 				main.connectionWarning();
 			}
 		}else{
@@ -232,6 +234,7 @@ public class TaskPanel extends JPanel {
 				todoManager.addNewTask(taskPriority,category.getKeyword(), taskDescripition);
 				main.switchToTasks();
 			} catch (IOException anEx) {
+				Logger.log("Connection lost while trying to save task.", anEx);
 				main.connectionWarning();
 			}
 		}else{

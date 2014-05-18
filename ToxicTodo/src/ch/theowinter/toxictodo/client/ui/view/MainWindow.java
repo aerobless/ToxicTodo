@@ -320,6 +320,7 @@ public class MainWindow{
 					try {
 						todoManager.removeTask(true, task, categoryKey.getKeyword());
 					} catch (IOException anEx) {
+						Logger.log("Connection lost while trying to complete a task", anEx);
 						main.connectionWarning();
 					}
 					taskListModel.filter(searchField.getText());
@@ -347,6 +348,7 @@ public class MainWindow{
 					try {
 						todoManager.removeTask(false, task, categoryKey.getKeyword());
 					} catch (IOException anEx) {
+						Logger.log("Connection lost while trying to remove a task", anEx);
 						main.connectionWarning();
 					}
 					taskListModel.filter(searchField.getText());

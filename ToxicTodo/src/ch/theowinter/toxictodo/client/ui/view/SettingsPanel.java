@@ -224,7 +224,7 @@ public class SettingsPanel extends JPanel{
 			setVisible(false);
 			main.switchToTasks();
 		} catch (IllegalArgumentException e){
-			Logger.log("bad input");
+			Logger.log("bad input", e);
 			//TODO: warn user or something with a window or red colored input box
 		}
 	}

@@ -72,9 +72,9 @@ public class ServerApplication implements Runnable{
 					Logger.log("Command *"+input+"* not recognized.");
 				}
 			} catch (IOException e) {
-				System.err.println("Toxic Todo: Server Control Thread - IO Exception");
+				Logger.log("Toxic Todo: Server Control Thread - IO Exception", e);
 			} catch (InterruptedException e) {
-				System.err.println("InterruptedException");
+				Logger.log("InterruptedException", e);
 			}
 		}
 	}
