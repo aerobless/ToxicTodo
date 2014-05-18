@@ -7,6 +7,16 @@ The server application is intended to be run on a dedicated server (e.g. some ch
 ##Graphical mode
 ![Toxic Todo GUI](https://raw.githubusercontent.com/aerobless/ToxicTodo/master/ToxicTodo_GUI.png)
 
+###Features:
+ * Create a task containing a description and meta data such as task priority and your location (based on IP).
+ * Remove a task without logging.
+ * Complete a task, logging the complition data, location and other meta data.
+ * View Statistics (currently only amount of completed tasks, work in progress).
+ * Add a category with a description, keyword and one of many awesomeFont icons.
+ * Edit or delete categories.
+ * Search a task in a specific category or in all categories.
+ * Change the settings (internal or external server, password, port etc.)
+ * Update ToxicTodo to the latest build on Jenkins (BEWARE: builds on Jenkins may not be stable, use at your own risk)
 
 ##Commandline mode
 ![Toxic Todo Client](https://raw.githubusercontent.com/aerobless/ToxicTodo/master/ToxicTodo_CLI.png)
