@@ -11,8 +11,6 @@ The server application is intended to be run on a dedicated server (e.g. some ch
 ##Commandline mode
 ![Toxic Todo Client](https://raw.githubusercontent.com/aerobless/ToxicTodo/master/ToxicTodo_CLI.png)
 
-
-|             |          Spanning Header (Two Cells)           ||
 What | Command | Example use
 ------------- | ------------- | ------------- 
 Add a new task to an existing category | add [categoryKeyword] [task description] | add school do more work
@@ -24,14 +22,13 @@ Remove a category | remove category [categoryKeyword] | remove category school
 Show about info | about **OR** identify | about **OR** identify
 Update to the latest version from the CI server | update | update
 
+##Server
+
+![Toxic Todo Diagram](http://w1nter.com/downloads/toxicTodoDiag.png)
+
 **Server-Commands:**
 *stop / exit* - to shutdown the server application.
 
-
-**Overview:**
-
-
-![Toxic Todo Diagram](http://w1nter.com/downloads/toxicTodoDiag.png)
 
 **Download:**
 To get the latested, binary version please visit my [jenkins](http://w1nter.net:8080/job/ToxicTodo/).
