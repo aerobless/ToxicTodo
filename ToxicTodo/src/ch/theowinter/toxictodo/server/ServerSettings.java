@@ -1,7 +1,7 @@
 package ch.theowinter.toxictodo.server;
 
 public class ServerSettings {
-	private int PORT = 5222;
+	private int port = 5222;
 	private String password = "secretPassword";
 	private boolean debug = false;
 	
@@ -13,7 +13,7 @@ public class ServerSettings {
 		super();
 	}
 	public int getPort() {
-		return PORT;
+		return port;
 	}
 	public String getPassword() {
 		return password;

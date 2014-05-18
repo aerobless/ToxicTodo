@@ -94,10 +94,12 @@ public class ClientTodoManager extends Observable{
 			location = "No Location";
 		}
 		TodoTask task = new TodoTask(priority, false, taskDescription, location, new Date());
-		if(categoryKeyword.equals(ToxicUIData.allTaskTodoCategoryKey)){
-			categoryKeyword = "orphan";
+		
+		String outputCategoryKeyword = categoryKeyword;
+		if(categoryKeyword.equals(ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY)){
+			outputCategoryKeyword = "orphan";
 		}
-		ClientApplication.sendToServer(new ToxicDatagram("ADD_TASK_TO_LIST_ON_SERVER", task, categoryKeyword));
+		ClientApplication.sendToServer(new ToxicDatagram("ADD_TASK_TO_LIST_ON_SERVER", task, outputCategoryKeyword));
 		updateList();
 	}
 	
@@ -116,11 +118,12 @@ public class ClientTodoManager extends Observable{
 		if(writeToLog){
 			dataMessage = "REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER";
 		}
-		if(categoryKeyword.equals(ToxicUIData.allTaskTodoCategoryKey)){
-			categoryKeyword = todoList.getCategoryKeywordForTask(finalizedTask);
+		String outputCategoryKeyword = categoryKeyword;
+		if(categoryKeyword.equals(ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY)){
+			outputCategoryKeyword = todoList.getCategoryKeywordForTask(finalizedTask);
 		}
 		if(categoryKeyword != null){
-			ClientApplication.sendToServer(new ToxicDatagram(dataMessage, finalizedTask , categoryKeyword));
+			ClientApplication.sendToServer(new ToxicDatagram(dataMessage, finalizedTask , outputCategoryKeyword));
 			updateList();
 		}
 	}
@@ -160,11 +163,11 @@ public class ClientTodoManager extends Observable{
 	
 	public TodoList generateAllTasksCategory(TodoList inputList){
 		try {
-			inputList.addCategory(new TodoCategory("All tasks", ToxicUIData.allTaskTodoCategoryKey, '\uf135',true));
+			inputList.addCategory(new TodoCategory("All tasks", ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY, '\uf135',true));
 			for(String categoryKey : inputList.getCategoryMap().keySet()){
 				List<TodoTask> currentCategoryTasks = inputList.getCategoryMap().get(categoryKey).getTaskInCategoryAsArrayList();
 				for(TodoTask currentTask : currentCategoryTasks){
-					inputList.addTask(ToxicUIData.allTaskTodoCategoryKey, currentTask);
+					inputList.addTask(ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY, currentTask);
 				}
 			}
 		} catch (Exception e) {

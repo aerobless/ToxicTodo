@@ -11,12 +11,12 @@ public class TaskPriorityComboboxModel  extends AbstractListModel<String> implem
 
 	@Override
 	public int getSize() {
-		return ToxicUIData.priorityArray.size();
+		return ToxicUIData.PRIORITY_ARRAY.size();
 	}
 
 	@Override
 	public String getElementAt(int index) {
-		return ToxicUIData.priorityArray.get(index).getPriorityText();
+		return ToxicUIData.PRIORITY_ARRAY.get(index).getPriorityText();
 	}
 
 	@Override

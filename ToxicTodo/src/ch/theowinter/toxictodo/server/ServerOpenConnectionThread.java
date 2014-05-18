@@ -45,48 +45,63 @@ class ServerOpenConnectionThread implements Runnable {
 			SealedObject encryptedDataFromClient = (SealedObject)ois.readObject(); 
 			
 			//Decrypt data from client
-        	ToxicDatagram dataFromClient = null;
-    		try {
-    			dataFromClient = (ToxicDatagram) crypto.dec(encryptedDataFromClient);
-    		} catch (Exception e) {
-    			Logger.log("Encryption ERROR - Unable to encrypt & send data!", e);
-    		}
-			
-			ToxicDatagram dataToClient = new ToxicDatagram("ERROR - 400 - The server has no response for you.");
-		        	
-			try {
-					dataToClient = runServerAction(dataFromClient.getServerControlMessage(), dataFromClient);
-				} catch (Exception e) {
-					Logger.log("Client tried to send a packet with a bad cipher - cannot decrypt", e);
-				}
+        	ToxicDatagram dataFromClient = decryptData(encryptedDataFromClient);
+			ToxicDatagram dataToClient = prepareResponseForClient(dataFromClient);
 		        	
 			OutputStream os = inputSocket.getOutputStream();  
 			ObjectOutputStream oos = new ObjectOutputStream(os); 
 			
 			//Encrypt before sending off
-			Object encryptedData = null;
-			try {
-				encryptedData = crypto.enc(dataToClient);
-			} catch (Exception e) {
-				Logger.log("Encryption ERROR - Unable to encrypt & send data!", e);
-			}
+			Object encryptedData = encryptData(dataToClient);
+			
 			if(encryptedData!=null){
-			oos.writeObject(encryptedData);
+				oos.writeObject(encryptedData);
 			}
+			
 			oos.close();  
 			os.close();  	
 			is.close();  
 			inputSocket.close();
 			} 
 		catch (IOException e) {
-				Logger.log("IOException in ServerOpenConnectionThread", e);
-				} 
+			Logger.log("IOException in ServerOpenConnectionThread", e);
+			} 
 		catch (ClassNotFoundException e) {
 			Logger.log("ClassNotFoundException in ServerOpenConnectionThread", e);
 			}  
 		}
 	
-	public synchronized ToxicDatagram runServerAction(String serverMessage, ToxicDatagram dataFromClient) throws InterruptedException{
+	private ToxicDatagram decryptData(SealedObject encryptedDataFromClient){
+		ToxicDatagram dataFromClient = null;
+		try {
+			dataFromClient = (ToxicDatagram) crypto.dec(encryptedDataFromClient);
+		} catch (Exception e) {
+			Logger.log("Encryption ERROR - Unable to encrypt & send data!", e);
+		}
+		return dataFromClient;
+	}
+	
+	private SealedObject encryptData(ToxicDatagram dataToClient){
+		SealedObject encryptedData = null;
+		try {
+			encryptedData = crypto.enc(dataToClient);
+		} catch (Exception e) {
+			Logger.log("Encryption ERROR - Unable to encrypt & send data!", e);
+		}
+		return encryptedData;
+	}
+	
+	private ToxicDatagram prepareResponseForClient(ToxicDatagram dataFromClient){
+		ToxicDatagram dataToClient = new ToxicDatagram("ERROR - 400 - The server has no response for you.");
+		try {
+			dataToClient = runServerAction(dataFromClient.getServerControlMessage(), dataFromClient);
+			} catch (Exception e) {
+				Logger.log("Client tried to send a packet with a bad cipher - cannot decrypt", e);
+			}
+		return dataToClient;
+	}
+	
+	private synchronized ToxicDatagram runServerAction(String serverMessage, ToxicDatagram dataFromClient) throws InterruptedException{
 		Logger.log("Trying to handle: "+serverMessage);
 		ToxicDatagram dataToClient = new ToxicDatagram("ERROR - 500 - Bad Request to server action handler.");
 		if("SEND_TODOLIST_TO_CLIENT".equals(serverMessage)){
@@ -204,11 +219,5 @@ class ServerOpenConnectionThread implements Runnable {
 			Logger.log("Command from Client not recognized..");
 		}
 		return dataToClient;
-	}
-	
-	public synchronized void getUniqueID() throws InterruptedException{
-		while(writeLock.availablePermits()==0){
-			wait();
-		}
 	}
 }

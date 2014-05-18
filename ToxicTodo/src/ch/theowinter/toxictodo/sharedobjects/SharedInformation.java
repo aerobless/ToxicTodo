@@ -6,4 +6,8 @@ public class SharedInformation {
 	public static final String AUTHOR = "Theo Winter";
 	public static final String WEBSITE = "theowinter.ch";
 	public static final String GITHUB = "github.com/aerobless/ToxicTodo";
+	
+	private SharedInformation() {
+		super();
+	}
 }

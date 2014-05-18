@@ -13,4 +13,8 @@ public class ToxicColors {
 	final public static Color ICON_GREY = new Color(84, 84, 84);
 	final public static Color SOFT_TEXT_GREY = new Color(128, 128, 128);
 	final public static Color DIRTY_WHITE = new Color(250, 250, 250);
+	
+	private ToxicColors() {
+		super();
+	}
 }

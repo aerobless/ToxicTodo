@@ -43,8 +43,7 @@ public class LogicEngine {
 	    	}
 	    	//Replace last arg with our newly built string, -1 because Array starts at 0
 	    	concatenatedArray[startPosition]=builder.toString();
-    	}
-    	else{
+    	} else{
     		concatenatedArray = args;
     	}
 		return concatenatedArray;

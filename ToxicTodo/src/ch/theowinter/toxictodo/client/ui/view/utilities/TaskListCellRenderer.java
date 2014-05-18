@@ -16,7 +16,7 @@ public class TaskListCellRenderer extends IconTextElement implements ListCellRen
 			Object value, int index, boolean isSelected, boolean cellHasFocus) {
 		TodoTask currentTask = (TodoTask)value;
 
-		this.setText(ToxicUIData.priorityArray.get(currentTask.getPriority()).getPriorityIcon(), currentTask.getText());
+		this.setText(ToxicUIData.PRIORITY_ARRAY.get(currentTask.getPriority()).getPriorityIcon(), currentTask.getText());
 
 		Color background = ToxicColors.SOFT_GREY;
             
@@ -29,9 +29,8 @@ public class TaskListCellRenderer extends IconTextElement implements ListCellRen
         } else {
             background = ToxicColors.SOFT_GREY;
             this.setFontColor(Color.BLACK);
-        };
+        }
         setBackground(background);
-
 		return this;
 	}
 }

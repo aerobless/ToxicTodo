@@ -403,7 +403,7 @@ public class MainWindow{
 			public void actionPerformed(ActionEvent e) {
 				TodoCategory editCategory = getSelectedCategory();
 				//double-safety - we never want to edit all-tasks.
-				if(editCategory.getKeyword()!=ToxicUIData.allTaskTodoCategoryKey){
+				if(editCategory.getKeyword()!=ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY){
 					if(categoryPanel == null){
 						categoryPanel = new CategoryPanel(main, todoManager);
 						categoryPanel.setCategory(editCategory);

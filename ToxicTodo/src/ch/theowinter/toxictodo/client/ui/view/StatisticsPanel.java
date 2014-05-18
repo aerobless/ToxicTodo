@@ -81,7 +81,7 @@ public class StatisticsPanel extends JPanel {
 		gbcLblCompletedTaskAmount.gridx = 1;
 		gbcLblCompletedTaskAmount.gridy = 1;
 		generalStatisticsPane.add(lblCompletedTaskAmount, gbcLblCompletedTaskAmount);
-		lblCompletedTaskAmount.setText(""+historicTodoList.getCategoryMap().get(ToxicUIData.allTaskTodoCategoryKey).getTasksHashMap().size());
+		lblCompletedTaskAmount.setText(""+historicTodoList.getCategoryMap().get(ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY).getTasksHashMap().size());
 		
 		JLabel lblTasksCompletedThisMonth = new JLabel("Completed this month:");
 		GridBagConstraints gbcLblTasksCompletedThisMonth = new GridBagConstraints();
@@ -114,9 +114,5 @@ public class StatisticsPanel extends JPanel {
 				main.switchToTasks();
 			}
         });
-	}
-	
-	public void updateHistoricTodoManager(){
-		
 	}
 }

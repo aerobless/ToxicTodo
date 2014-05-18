@@ -13,7 +13,7 @@ public final class Logger {
 	
 	public final static void log(String error, Exception e){
 		if(LOG_ENABLED){
-			System.out.println(error);
+			System.out.println(error); //NOSONAR
 		}
 	}
 }
