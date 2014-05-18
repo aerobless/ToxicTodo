@@ -31,9 +31,9 @@ Update to the latest version from the CI server | update | update
 
 
 **Download:**
-To get the latested, binary version please visit my [jenkins](http://w1nter.net:8080/job/ToxicTodo/).
+To get the latested, binary version please visit my [Jenkins](http://w1nter.net:8080/job/ToxicTodo/).
 
-##Licence
+##License
 
 > Copyright (c) 2014 Theo Winter
 
