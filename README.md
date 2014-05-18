@@ -11,8 +11,8 @@ The server application is intended to be run on a dedicated server (e.g. some ch
 ##Commandline mode
 ![Toxic Todo Client](https://raw.githubusercontent.com/aerobless/ToxicTodo/master/ToxicTodo_CLI.png)
 
-**Client-Commands:**
 
+|             |          Spanning Header (Two Cells)           ||
 What | Command | Example use
 ------------- | ------------- | ------------- 
 Add a new task to an existing category | add [categoryKeyword] [task description] | add school do more work
