@@ -14,7 +14,6 @@ import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicUIData;
 public class TodoList implements Serializable {
 	private static final long serialVersionUID = -5867425003353980895L;
 	Map<String, TodoCategory> categoryMap = new HashMap<String, TodoCategory>();
-	
 
 	public TodoList() {
 		super();
@@ -127,7 +126,7 @@ public class TodoList implements Serializable {
 	public String getCategoryKeywordForTask(TodoTask task){
 		Map<String, TodoCategory> localCategoryMap = getCategoryMap();
 		//We remove the allTask category if it exists to prevent duplicate findings of tasks.
-		localCategoryMap.remove(ToxicUIData.allTaskTodoCategoryKey);
+		localCategoryMap.remove(ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY);
 		for (TodoCategory category : localCategoryMap.values()) {
 			if((category.get(task.getText()))!=null){
 				return category.getKeyword();

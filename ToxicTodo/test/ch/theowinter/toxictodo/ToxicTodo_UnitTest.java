@@ -192,6 +192,7 @@ public class ToxicTodo_UnitTest {
 			EncryptionEngine enemyCrypto = new EncryptionEngine("IdontHaveThePassword");
 			String topSecretData = "This message is secret";
 			Object encryptedData = crypto.enc(topSecretData);
+			@SuppressWarnings("unused")
 			String decryptedData = (String)enemyCrypto.dec((SealedObject)encryptedData);
 		} catch (Exception anEx) {
 			testFailedCorrectly = true;

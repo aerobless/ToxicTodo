@@ -1,7 +1,7 @@
 package ch.theowinter.toxictodo.sharedobjects;
 
 public final class Logger {
-	private final static boolean LOG_ENABLED = true;
+	public static final boolean LOG_ENABLED = true;
 
 	private Logger() {
 		super();
@@ -13,7 +13,7 @@ public final class Logger {
 	
 	public final static void log(String error, Exception e){
 		if(LOG_ENABLED){
-			System.out.println(error);
+			System.out.println(error); //NOSONAR
 		}
 	}
 }

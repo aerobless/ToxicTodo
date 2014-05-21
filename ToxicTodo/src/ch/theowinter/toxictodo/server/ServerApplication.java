@@ -19,15 +19,15 @@ import ch.theowinter.toxictodo.sharedobjects.elements.TodoList;
 
 public class ServerApplication implements Runnable{
 	//Vanity info
-	public static final String serverUpdateURL = "http://w1nter.net:8080/job/ToxicTodo/lastSuccessfulBuild/artifact/ToxicTodo/dist/ToxicTodoServer.jar";	
+	public static final String SERVER_UPDATE_URL = "http://w1nter.net:8080/job/ToxicTodo/lastSuccessfulBuild/artifact/ToxicTodo/dist/ToxicTodoServer.jar";	
 	
 	//Class variables
 	static TodoList todoListActiveTasks = new TodoList();
 	static TodoList todoListHistoricTasks = new TodoList();
 	static LogicEngine logic = new LogicEngine();
 	static String settingsFile = logic.getJarDirectory("server_config.xml");
-	private static final String activeTodoDataFile = logic.getJarDirectory("ToxicTodo.xml");
-	private static final String historicTodoDataFile = logic.getJarDirectory("ToxicTodoHistory.xml");
+	private static final String ACTIVE_TODODATA_FILE = logic.getJarDirectory("ToxicTodo.xml");
+	private static final String HISTORIC_TODODATA_FILE = logic.getJarDirectory("ToxicTodoHistory.xml");
 	static ServerSettings settings;
 	
 	//Locks
@@ -47,34 +47,31 @@ public class ServerApplication implements Runnable{
 	}
 	
 	private static void serverController() {
-		System.out.println("Toxic Todo: Server Controller started");
+		Logger.log("Toxic Todo: Server Controller started");
 		while(stopServer.availablePermits()>0){
 			BufferedReader buffer=new BufferedReader(new InputStreamReader(System.in));
 			try {
 				String input = buffer.readLine();
 				if("stop".equals(input) || "exit".equals(input) || "q".equals(input)){
-					logic.saveToXMLFile(todoListActiveTasks, activeTodoDataFile);
+					logic.saveToXMLFile(todoListActiveTasks, ACTIVE_TODODATA_FILE);
 					stopServer.acquire();
-				}
-				else if("update".equals(input)){
+				} else if ("update".equals(input)){
 					Logger.log("Updating... Please wait a few seconds before starting the server again!");
-					logic.updateSoftware(serverUpdateURL);
+					logic.updateSoftware(SERVER_UPDATE_URL, false);
 					stopServer.acquire();
-				}
-				else if("about".equals(input)||"identify".equals(input)){
+				} else if ("about".equals(input)||"identify".equals(input)){
 					Logger.log("### - ABOUT TOXIC TODO - ###");
 					String space = "  ";
 					Logger.log(space+"Version: "+SharedInformation.VERSION);
 					Logger.log(space+"Author:  "+SharedInformation.AUTHOR);
 					Logger.log(space+"Website: "+SharedInformation.WEBSITE);
-				}
-				else{
+				} else {
 					Logger.log("Command *"+input+"* not recognized.");
 				}
 			} catch (IOException e) {
-				System.err.println("Toxic Todo: Server Control Thread - IO Exception");
+				Logger.log("Toxic Todo: Server Control Thread - IO Exception", e);
 			} catch (InterruptedException e) {
-				System.err.println("InterruptedException");
+				Logger.log("InterruptedException", e);
 			}
 		}
 	}
@@ -100,16 +97,16 @@ public class ServerApplication implements Runnable{
 	}
 	
 	public static void writeChangesToDisk(){
-		logic.saveToXMLFile(todoListActiveTasks, activeTodoDataFile);
-		logic.saveToXMLFile(todoListHistoricTasks, historicTodoDataFile);
+		logic.saveToXMLFile(todoListActiveTasks, ACTIVE_TODODATA_FILE);
+		logic.saveToXMLFile(todoListHistoricTasks, HISTORIC_TODODATA_FILE);
 	}
 	
 	public static void loadSettings(){
 		if(!firstTimeRun()){
 			settings = (ServerSettings) logic.loadXMLFile(settingsFile);
 		}
-		todoListActiveTasks = (TodoList)logic.loadXMLFile(activeTodoDataFile);
-		todoListHistoricTasks = (TodoList)logic.loadXMLFile(historicTodoDataFile);
+		todoListActiveTasks = (TodoList)logic.loadXMLFile(ACTIVE_TODODATA_FILE);
+		todoListHistoricTasks = (TodoList)logic.loadXMLFile(HISTORIC_TODODATA_FILE);
 	}
 
 	/**
@@ -127,7 +124,7 @@ public class ServerApplication implements Runnable{
 			settings = new ServerSettings();
 			logic.saveToXMLFile(settings, settingsFile);
 		}
-		File todoDataOnDisk = new File(activeTodoDataFile);
+		File todoDataOnDisk = new File(ACTIVE_TODODATA_FILE);
 		if(!todoDataOnDisk.exists()){
 			try {
 				todoListActiveTasks.addCategory(new TodoCategory("School work", "school"));
@@ -144,7 +141,7 @@ public class ServerApplication implements Runnable{
 				Logger.log("Unable to add default categories on server.", e);
 			}
 		}
-		File todoHistoryOnDisk = new File(historicTodoDataFile);
+		File todoHistoryOnDisk = new File(HISTORIC_TODODATA_FILE);
 		if(!todoHistoryOnDisk.exists()){
 			try {
 				todoListHistoricTasks.addCategory(new TodoCategory("System", "system"));
@@ -162,7 +159,8 @@ public class ServerApplication implements Runnable{
 		public void run() {
 			try {
 			while(stopServer.availablePermits()>0){
-				@SuppressWarnings("resource") //socket gets closed in the OpenConnectionThread
+				//Socket gets closed in the OpenConnectionThread
+				@SuppressWarnings("resource")
 				Socket client = new Socket();
 				client.setSoTimeout(100);
 				ServerSocket server;

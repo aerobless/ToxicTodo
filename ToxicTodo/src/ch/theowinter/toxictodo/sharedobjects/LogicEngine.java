@@ -43,8 +43,7 @@ public class LogicEngine {
 	    	}
 	    	//Replace last arg with our newly built string, -1 because Array starts at 0
 	    	concatenatedArray[startPosition]=builder.toString();
-    	}
-    	else{
+    	} else{
     		concatenatedArray = args;
     	}
 		return concatenatedArray;
@@ -112,13 +111,17 @@ public class LogicEngine {
 		return dataXML.getPath();
 	}
 	
-	public boolean updateSoftware(String updateURL){
+	public boolean updateSoftware(String updateURL, boolean updateWithGUI){
 		String tinyUpdater = "http://w1nter.net:8080/job/TinyUpdater/lastSuccessfulBuild/artifact/TinyUpdater/dist/TinyUpdater.jar";
 		String[] updateArray  = tinyUpdater.split("/");
 		String downloadPath = getJarDirectory(updateArray[updateArray.length-1]);
 		downloadFile(tinyUpdater, downloadPath);
+		String isGUI = "";
+		if(updateWithGUI){
+			isGUI=" ToxicTodo";
+		}
 		try {
-			Runtime.getRuntime().exec("java -jar "+downloadPath+" 2 "+updateURL);
+			Runtime.getRuntime().exec("java -jar "+downloadPath+" 10 "+updateURL+isGUI);
 		} catch (IOException e) {
 			Logger.log("IOException trying to updateSoftware in LogicEngine", e);
 		}

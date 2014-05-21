@@ -1,12 +1,25 @@
 ToxicTodo
 =========
 
-ToxicTodo is a server based commandline/terminal todo list. The client application can be easily called through use of unix aliases. For example to add a task you'd simply open up a new terminal window and type "todo add school do my homework", this adds a task "do my homework" to the category "school". The client sends the command to add a new task to the remote server where the task is added to the list. The server saves all changes to the todolist in an easily readable xml-file so that you could easily extend the functionality of this application. All write requests on the server are guarded by semaphores, so that it's perfectly save to use two clients at the same time.
-The server itself is multi-threaded and can handle connections from multiple clients. All data that is sent between client and server is encrypted with AES-128, so that you don't have to worry about people messing with your todolist.
+ToxicTodo is a server based todo list. It has a nice, mac-optimized GUI as well as a fully-featured command line mode. ToxicTodo uses a custom category-tasks model that allows you to make special categories for certain kinds of task.  
+The server application is intended to be run on a dedicated server (e.g. some cheap VPS), so that you have a synchronised todo list across all your computers. However if you just want to quickly test ToxicTodo or if you’re only using one computer it also comes with a integrated server. So you can just double-click the ToxicTodo.jar and you’re ready to go :).
 
-![Toxic Todo Client](http://w1nter.com/downloads/toxicTodoClient.png)
+##Graphical mode
+![Toxic Todo GUI](https://raw.githubusercontent.com/aerobless/ToxicTodo/master/ToxicTodo_GUI.png)
 
-**Client-Commands:**
+###Features:
+ * Create a task containing a description and meta data such as task priority and your location (based on IP).
+ * Remove a task without logging.
+ * Complete a task, logging the complition data, location and other meta data.
+ * View Statistics (currently only amount of completed tasks, work in progress).
+ * Add a category with a description, keyword and one of many awesomeFont icons.
+ * Edit or delete categories.
+ * Search a task in a specific category or in all categories.
+ * Change the settings (internal or external server, password, port etc.)
+ * Update ToxicTodo to the latest build on Jenkins (BEWARE: builds on Jenkins may not be stable, use at your own risk)
+
+##Commandline mode
+![Toxic Todo Client](https://raw.githubusercontent.com/aerobless/ToxicTodo/master/ToxicTodo_CLI.png)
 
 What | Command | Example use
 ------------- | ------------- | ------------- 
@@ -19,14 +32,35 @@ Remove a category | remove category [categoryKeyword] | remove category school
 Show about info | about **OR** identify | about **OR** identify
 Update to the latest version from the CI server | update | update
 
+##Server
+![Toxic Todo Diagram](http://w1nter.com/downloads/toxicTodoDiag.png)
+
 **Server-Commands:**
 *stop / exit* - to shutdown the server application.
 
 
-**Overview:**
+##Download
+**ToxicTodo CI-Server:** [http://w1nter.net:8080/job/TinyUpdater/](http://w1nter.net:8080/job/ToxicTodo/)  
+**ToxicTodo Sonar-Server:** [http://sonar.w1nter.net/dashboard/index/103](http://sonar.w1nter.net/dashboard/index/1)
 
 
-![Toxic Todo Diagram](http://w1nter.com/downloads/toxicTodoDiag.png)
+##License
+> Copyright (c) 2014 Theo Winter
 
-**Download:**
-To get the latested, binary version please visit my [jenkins](http://w1nter.net:8080/job/ToxicTodo/).
+> Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+> The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.

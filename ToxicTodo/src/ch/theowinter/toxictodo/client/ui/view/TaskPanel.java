@@ -23,6 +23,7 @@ import ch.theowinter.toxictodo.client.ClientTodoManager;
 import ch.theowinter.toxictodo.client.ui.model.TaskPriorityComboboxModel;
 import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeaderWhite;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
+import ch.theowinter.toxictodo.sharedobjects.Logger;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
 
 public class TaskPanel extends JPanel {
@@ -89,54 +90,54 @@ public class TaskPanel extends JPanel {
 		centerPanel.add(priorityCombobox, gbcComboBox);
 		
 		JLabel lblSummary = new JLabel("Summary:");
-		GridBagConstraints gbc_lblSummary = new GridBagConstraints();
-		gbc_lblSummary.anchor = GridBagConstraints.EAST;
-		gbc_lblSummary.insets = new Insets(0, 0, 5, 5);
-		gbc_lblSummary.gridx = 0;
-		gbc_lblSummary.gridy = 2;
-		centerPanel.add(lblSummary, gbc_lblSummary);
+		GridBagConstraints gbcLblSummary = new GridBagConstraints();
+		gbcLblSummary.anchor = GridBagConstraints.EAST;
+		gbcLblSummary.insets = new Insets(0, 0, 5, 5);
+		gbcLblSummary.gridx = 0;
+		gbcLblSummary.gridy = 2;
+		centerPanel.add(lblSummary, gbcLblSummary);
 		
 		txtFieldSummary = new JTextField();
-		GridBagConstraints gbc_txtFieldSummary = new GridBagConstraints();
-		gbc_txtFieldSummary.insets = new Insets(0, 0, 5, 5);
-		gbc_txtFieldSummary.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtFieldSummary.gridx = 1;
-		gbc_txtFieldSummary.gridy = 2;
-		centerPanel.add(txtFieldSummary, gbc_txtFieldSummary);
+		GridBagConstraints gbcTxtFieldSummary = new GridBagConstraints();
+		gbcTxtFieldSummary.insets = new Insets(0, 0, 5, 5);
+		gbcTxtFieldSummary.fill = GridBagConstraints.HORIZONTAL;
+		gbcTxtFieldSummary.gridx = 1;
+		gbcTxtFieldSummary.gridy = 2;
+		centerPanel.add(txtFieldSummary, gbcTxtFieldSummary);
 		txtFieldSummary.setColumns(10);
 		
 		JLabel lblHyperlink = new JLabel("Hyperlink:");
-		GridBagConstraints gbc_lblHyperlink = new GridBagConstraints();
-		gbc_lblHyperlink.anchor = GridBagConstraints.EAST;
-		gbc_lblHyperlink.insets = new Insets(0, 0, 5, 5);
-		gbc_lblHyperlink.gridx = 0;
-		gbc_lblHyperlink.gridy = 3;
-		centerPanel.add(lblHyperlink, gbc_lblHyperlink);
+		GridBagConstraints gbcLblHyperlink = new GridBagConstraints();
+		gbcLblHyperlink.anchor = GridBagConstraints.EAST;
+		gbcLblHyperlink.insets = new Insets(0, 0, 5, 5);
+		gbcLblHyperlink.gridx = 0;
+		gbcLblHyperlink.gridy = 3;
+		centerPanel.add(lblHyperlink, gbcLblHyperlink);
 		
 		txtFieldHyperlink = new JTextField();
-		GridBagConstraints gbc_txtFieldHyperlink = new GridBagConstraints();
-		gbc_txtFieldHyperlink.insets = new Insets(0, 0, 5, 5);
-		gbc_txtFieldHyperlink.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtFieldHyperlink.gridx = 1;
-		gbc_txtFieldHyperlink.gridy = 3;
-		centerPanel.add(txtFieldHyperlink, gbc_txtFieldHyperlink);
+		GridBagConstraints gbcTxtFieldHyperlink = new GridBagConstraints();
+		gbcTxtFieldHyperlink.insets = new Insets(0, 0, 5, 5);
+		gbcTxtFieldHyperlink.fill = GridBagConstraints.HORIZONTAL;
+		gbcTxtFieldHyperlink.gridx = 1;
+		gbcTxtFieldHyperlink.gridy = 3;
+		centerPanel.add(txtFieldHyperlink, gbcTxtFieldHyperlink);
 		txtFieldHyperlink.setColumns(10);
 		
 		JLabel lblRepeatable = new JLabel("Repeatable:");
-		GridBagConstraints gbc_lblRepeatable = new GridBagConstraints();
-		gbc_lblRepeatable.anchor = GridBagConstraints.EAST;
-		gbc_lblRepeatable.insets = new Insets(0, 0, 5, 5);
-		gbc_lblRepeatable.gridx = 0;
-		gbc_lblRepeatable.gridy = 4;
-		centerPanel.add(lblRepeatable, gbc_lblRepeatable);
+		GridBagConstraints gbcLblRepeatable = new GridBagConstraints();
+		gbcLblRepeatable.anchor = GridBagConstraints.EAST;
+		gbcLblRepeatable.insets = new Insets(0, 0, 5, 5);
+		gbcLblRepeatable.gridx = 0;
+		gbcLblRepeatable.gridy = 4;
+		centerPanel.add(lblRepeatable, gbcLblRepeatable);
 		
 		JCheckBox checkBoxRepeatable = new JCheckBox("");
-		GridBagConstraints gbc_checkBoxRepeatable = new GridBagConstraints();
-		gbc_checkBoxRepeatable.anchor = GridBagConstraints.WEST;
-		gbc_checkBoxRepeatable.insets = new Insets(0, 0, 5, 5);
-		gbc_checkBoxRepeatable.gridx = 1;
-		gbc_checkBoxRepeatable.gridy = 4;
-		centerPanel.add(checkBoxRepeatable, gbc_checkBoxRepeatable);
+		GridBagConstraints gbcCheckBoxRepeatable = new GridBagConstraints();
+		gbcCheckBoxRepeatable.anchor = GridBagConstraints.WEST;
+		gbcCheckBoxRepeatable.insets = new Insets(0, 0, 5, 5);
+		gbcCheckBoxRepeatable.gridx = 1;
+		gbcCheckBoxRepeatable.gridy = 4;
+		centerPanel.add(checkBoxRepeatable, gbcCheckBoxRepeatable);
 		
 		JLabel lblDescription = new JLabel("Description:");
 		GridBagConstraints gbcLblDescription = new GridBagConstraints();
@@ -216,6 +217,7 @@ public class TaskPanel extends JPanel {
 				todoManager.addAndCompleteTask(taskPriority,category.getKeyword(), taskDescripition);
 				main.switchToTasks();
 			} catch (IOException anEx) {
+				Logger.log("Connection lost while trying to saveAndComplete a task.", anEx);
 				main.connectionWarning();
 			}
 		}else{
@@ -232,6 +234,7 @@ public class TaskPanel extends JPanel {
 				todoManager.addNewTask(taskPriority,category.getKeyword(), taskDescripition);
 				main.switchToTasks();
 			} catch (IOException anEx) {
+				Logger.log("Connection lost while trying to save task.", anEx);
 				main.connectionWarning();
 			}
 		}else{

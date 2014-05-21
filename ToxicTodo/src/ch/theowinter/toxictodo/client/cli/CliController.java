@@ -182,7 +182,7 @@ public class CliController {
 		int taskID = 0;
 		for(String categoryKey : todoManager.getTodoList().getCategoryMap().keySet()){
 			//Only list category if it contains tasks or we want to display empty categories too.
-			if(todoManager.getTodoList().getCategoryMap().get(categoryKey).containsTasks() || displayEmptyCategories==true){
+			if(todoManager.getTodoList().getCategoryMap().get(categoryKey).containsTasks() || displayEmptyCategories){
 				print(JansiFormats.ANSI_BOLD+JansiFormats.CYAN+"###-"+todoManager.getTodoList().getCategoryMap().get(categoryKey).getName().toUpperCase()+"-###");
 				for(String taskKey : todoManager.getTodoList().getCategoryMap().get(categoryKey).getTasksHashMap().keySet()){
 					++taskID;
@@ -253,7 +253,7 @@ public class CliController {
 		print(JansiFormats.ANSI_CLS);
 		print(JansiFormats.ANSI_BOLD+JansiFormats.CYAN+"### - TOXIC TODO UPDATER - ###");
 		print(JansiFormats.GREEN+"Downloading latest release from CI-server...");
-		if(logic.updateSoftware(ClientApplication.CLIENT_UPDATE_URL)){
+		if(logic.updateSoftware(ClientApplication.CLIENT_UPDATE_URL, false)){
 			print(JansiFormats.GREEN+"The update has been successfully downloaded.");
 			print(JansiFormats.GREEN+"Please let a few seconds pass before issuing a command to ToxicTodo");
 		}
@@ -285,8 +285,7 @@ public class CliController {
 	public ToxicDatagram addTask(String[] args){
 		String[] goodArgs = logic.concatenateArgs(args, 3);
 		TodoTask task = new TodoTask(goodArgs[2]);
-		ToxicDatagram datagram = new ToxicDatagram("ADD_TASK_TO_LIST_ON_SERVER", task, goodArgs[1]);
-		return datagram;
+		return new ToxicDatagram("ADD_TASK_TO_LIST_ON_SERVER", task, goodArgs[1]);
 	}
 	
 	public ToxicDatagram addCategory(String[] args){

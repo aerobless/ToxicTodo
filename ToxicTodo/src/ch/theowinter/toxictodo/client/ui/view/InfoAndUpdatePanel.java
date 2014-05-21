@@ -57,12 +57,12 @@ public class InfoAndUpdatePanel extends JPanel {
 		JPanel leftPanel = new JPanel();
 		leftPanel.setBackground(ToxicColors.SOFT_GREY);
 		add(leftPanel, BorderLayout.WEST);
-		GridBagLayout gbl_leftPanel = new GridBagLayout();
-		gbl_leftPanel.columnWidths = new int[]{128, 131, 0};
-		gbl_leftPanel.rowHeights = new int[]{0, 0, 0, 21, 0, 0, 0, 0, 0, 0};
-		gbl_leftPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gbl_leftPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		leftPanel.setLayout(gbl_leftPanel);
+		GridBagLayout gblLeftPanel = new GridBagLayout();
+		gblLeftPanel.columnWidths = new int[]{128, 131, 0};
+		gblLeftPanel.rowHeights = new int[]{0, 0, 0, 21, 0, 0, 0, 0, 0, 0};
+		gblLeftPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gblLeftPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		leftPanel.setLayout(gblLeftPanel);
 		
 		JLabel spacer = new JLabel(" ");
 		GridBagConstraints gbcSpacer = new GridBagConstraints();
@@ -72,76 +72,76 @@ public class InfoAndUpdatePanel extends JPanel {
 		leftPanel.add(spacer, gbcSpacer);
 		
 		JLabel lblProgramVersion = new JLabel("Program Version:");
-		GridBagConstraints gbc_lblProgramVersion = new GridBagConstraints();
-		gbc_lblProgramVersion.anchor = GridBagConstraints.EAST;
-		gbc_lblProgramVersion.insets = new Insets(0, 0, 5, 5);
-		gbc_lblProgramVersion.gridx = 0;
-		gbc_lblProgramVersion.gridy = 1;
-		leftPanel.add(lblProgramVersion, gbc_lblProgramVersion);
+		GridBagConstraints gbcLblProgramVersion = new GridBagConstraints();
+		gbcLblProgramVersion.anchor = GridBagConstraints.EAST;
+		gbcLblProgramVersion.insets = new Insets(0, 0, 5, 5);
+		gbcLblProgramVersion.gridx = 0;
+		gbcLblProgramVersion.gridy = 1;
+		leftPanel.add(lblProgramVersion, gbcLblProgramVersion);
 		
 		JLabel lblVersion = new JLabel(""+SharedInformation.VERSION);
-		GridBagConstraints gbc_lblVersion = new GridBagConstraints();
-		gbc_lblVersion.anchor = GridBagConstraints.WEST;
-		gbc_lblVersion.insets = new Insets(0, 0, 5, 0);
-		gbc_lblVersion.gridx = 1;
-		gbc_lblVersion.gridy = 1;
-		leftPanel.add(lblVersion, gbc_lblVersion);
+		GridBagConstraints gbcLblVersion = new GridBagConstraints();
+		gbcLblVersion.anchor = GridBagConstraints.WEST;
+		gbcLblVersion.insets = new Insets(0, 0, 5, 0);
+		gbcLblVersion.gridx = 1;
+		gbcLblVersion.gridy = 1;
+		leftPanel.add(lblVersion, gbcLblVersion);
 		
 		JLabel lblLastUpdated = new JLabel("Last updated:");
-		GridBagConstraints gbc_lblLastUpdated = new GridBagConstraints();
-		gbc_lblLastUpdated.anchor = GridBagConstraints.EAST;
-		gbc_lblLastUpdated.insets = new Insets(0, 0, 5, 5);
-		gbc_lblLastUpdated.gridx = 0;
-		gbc_lblLastUpdated.gridy = 2;
-		leftPanel.add(lblLastUpdated, gbc_lblLastUpdated);
+		GridBagConstraints gbcLblLastUpdated = new GridBagConstraints();
+		gbcLblLastUpdated.anchor = GridBagConstraints.EAST;
+		gbcLblLastUpdated.insets = new Insets(0, 0, 5, 5);
+		gbcLblLastUpdated.gridx = 0;
+		gbcLblLastUpdated.gridy = 2;
+		leftPanel.add(lblLastUpdated, gbcLblLastUpdated);
 		
 		JLabel lblUpdatedate = new JLabel(SharedInformation.LAST_UPDATE);
-		GridBagConstraints gbc_lblUpdatedate = new GridBagConstraints();
-		gbc_lblUpdatedate.anchor = GridBagConstraints.WEST;
-		gbc_lblUpdatedate.insets = new Insets(0, 0, 5, 0);
-		gbc_lblUpdatedate.gridx = 1;
-		gbc_lblUpdatedate.gridy = 2;
-		leftPanel.add(lblUpdatedate, gbc_lblUpdatedate);
+		GridBagConstraints gbcLblUpdatedate = new GridBagConstraints();
+		gbcLblUpdatedate.anchor = GridBagConstraints.WEST;
+		gbcLblUpdatedate.insets = new Insets(0, 0, 5, 0);
+		gbcLblUpdatedate.gridx = 1;
+		gbcLblUpdatedate.gridy = 2;
+		leftPanel.add(lblUpdatedate, gbcLblUpdatedate);
 		
 		JLabel label = new JLabel(" ");
-		GridBagConstraints gbc_label = new GridBagConstraints();
-		gbc_label.insets = new Insets(0, 0, 5, 5);
-		gbc_label.gridx = 0;
-		gbc_label.gridy = 3;
-		leftPanel.add(label, gbc_label);
+		GridBagConstraints gbcLabel = new GridBagConstraints();
+		gbcLabel.insets = new Insets(0, 0, 5, 5);
+		gbcLabel.gridx = 0;
+		gbcLabel.gridy = 3;
+		leftPanel.add(label, gbcLabel);
 		
 		//AUTHOR:
 		JLabel lblAuthor = new JLabel("Author:");
-		GridBagConstraints gbc_lblAuthor = new GridBagConstraints();
-		gbc_lblAuthor.anchor = GridBagConstraints.EAST;
-		gbc_lblAuthor.insets = new Insets(0, 0, 5, 5);
-		gbc_lblAuthor.gridx = 0;
-		gbc_lblAuthor.gridy = 4;
-		leftPanel.add(lblAuthor, gbc_lblAuthor);
+		GridBagConstraints gbcLblAuthor = new GridBagConstraints();
+		gbcLblAuthor.anchor = GridBagConstraints.EAST;
+		gbcLblAuthor.insets = new Insets(0, 0, 5, 5);
+		gbcLblAuthor.gridx = 0;
+		gbcLblAuthor.gridy = 4;
+		leftPanel.add(lblAuthor, gbcLblAuthor);
 		
 		JLabel lblAuthorname = new JLabel(SharedInformation.AUTHOR);
-		GridBagConstraints gbc_lblAuthorname = new GridBagConstraints();
-		gbc_lblAuthorname.anchor = GridBagConstraints.WEST;
-		gbc_lblAuthorname.insets = new Insets(0, 0, 5, 0);
-		gbc_lblAuthorname.gridx = 1;
-		gbc_lblAuthorname.gridy = 4;
-		leftPanel.add(lblAuthorname, gbc_lblAuthorname);
+		GridBagConstraints gbcLblAuthorname = new GridBagConstraints();
+		gbcLblAuthorname.anchor = GridBagConstraints.WEST;
+		gbcLblAuthorname.insets = new Insets(0, 0, 5, 0);
+		gbcLblAuthorname.gridx = 1;
+		gbcLblAuthorname.gridy = 4;
+		leftPanel.add(lblAuthorname, gbcLblAuthorname);
 		
 		//WEBSITE:
 		JLabel lblWebsite = new JLabel("Website:");
-		GridBagConstraints gbc_lblWebsite = new GridBagConstraints();
-		gbc_lblWebsite.anchor = GridBagConstraints.EAST;
-		gbc_lblWebsite.insets = new Insets(0, 0, 5, 5);
-		gbc_lblWebsite.gridx = 0;
-		gbc_lblWebsite.gridy = 5;
-		leftPanel.add(lblWebsite, gbc_lblWebsite);
+		GridBagConstraints gbcLblWebsite = new GridBagConstraints();
+		gbcLblWebsite.anchor = GridBagConstraints.EAST;
+		gbcLblWebsite.insets = new Insets(0, 0, 5, 5);
+		gbcLblWebsite.gridx = 0;
+		gbcLblWebsite.gridy = 5;
+		leftPanel.add(lblWebsite, gbcLblWebsite);
 		
 		JButton btnWebsiteLink = new JButton(SharedInformation.WEBSITE);
-		GridBagConstraints gbc_website = new GridBagConstraints();
-		gbc_website.anchor = GridBagConstraints.WEST;
-		gbc_website.insets = new Insets(0, 0, 5, 0);
-		gbc_website.gridx = 1;
-		gbc_website.gridy = 5;
+		GridBagConstraints gbcWebsite = new GridBagConstraints();
+		gbcWebsite.anchor = GridBagConstraints.WEST;
+		gbcWebsite.insets = new Insets(0, 0, 5, 0);
+		gbcWebsite.gridx = 1;
+		gbcWebsite.gridy = 5;
 		
 		//Ugly hack to get the URL button position right
 		JPanel webLinkPanel = new JPanel();
@@ -158,7 +158,7 @@ public class InfoAndUpdatePanel extends JPanel {
 		btnWebsiteLink.setOpaque(false);
 		btnWebsiteLink.setHorizontalAlignment(SwingConstants.LEFT);
 		btnWebsiteLink.setHorizontalTextPosition(SwingConstants.LEFT);
-		leftPanel.add(webLinkPanel, gbc_website);
+		leftPanel.add(webLinkPanel, gbcWebsite);
 		btnWebsiteLink.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -175,19 +175,19 @@ public class InfoAndUpdatePanel extends JPanel {
 		
 		//GITHUB
 		JLabel lblGithub = new JLabel("GitHub:");
-		GridBagConstraints gbc_lblGithub = new GridBagConstraints();
-		gbc_lblGithub.anchor = GridBagConstraints.EAST;
-		gbc_lblGithub.insets = new Insets(0, 0, 5, 5);
-		gbc_lblGithub.gridx = 0;
-		gbc_lblGithub.gridy = 6;
-		leftPanel.add(lblGithub, gbc_lblGithub);
+		GridBagConstraints gbcLblGithub = new GridBagConstraints();
+		gbcLblGithub.anchor = GridBagConstraints.EAST;
+		gbcLblGithub.insets = new Insets(0, 0, 5, 5);
+		gbcLblGithub.gridx = 0;
+		gbcLblGithub.gridy = 6;
+		leftPanel.add(lblGithub, gbcLblGithub);
 		
 		JButton btnGitHubLink = new JButton(SharedInformation.GITHUB);
-		GridBagConstraints gbc_lblGithublink = new GridBagConstraints();
-		gbc_lblGithublink.anchor = GridBagConstraints.WEST;
-		gbc_lblGithublink.insets = new Insets(0, 0, 5, 0);
-		gbc_lblGithublink.gridx = 1;
-		gbc_lblGithublink.gridy = 6;
+		GridBagConstraints gbcLblGithublink = new GridBagConstraints();
+		gbcLblGithublink.anchor = GridBagConstraints.WEST;
+		gbcLblGithublink.insets = new Insets(0, 0, 5, 0);
+		gbcLblGithublink.gridx = 1;
+		gbcLblGithublink.gridy = 6;
 		
 		//Ugly hack to get the URL button position right
 		JPanel gitHubLinkPanel = new JPanel();
@@ -198,7 +198,7 @@ public class InfoAndUpdatePanel extends JPanel {
 		btnGitHubLink.setPreferredSize(new Dimension(320, 15));
 		btnGitHubLink.setForeground(ToxicColors.LINK_BLUE);
 		btnGitHubLink.setBorderPainted(false);
-		leftPanel.add(gitHubLinkPanel, gbc_lblGithublink);
+		leftPanel.add(gitHubLinkPanel, gbcLblGithublink);
 		btnGitHubLink.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -247,7 +247,7 @@ public class InfoAndUpdatePanel extends JPanel {
 		if(result == 0){
 			Logger.log("User chose to attempt to update ToxicTodo from it's development branch.");
 			LogicEngine logic = new LogicEngine();
-			logic.updateSoftware(ClientApplication.CLIENT_UPDATE_URL);
+			logic.updateSoftware(ClientApplication.CLIENT_UPDATE_URL, true);
 			/*
 			 * We're using System.exit() because before we can update the client we need to exit out of the main application
 			 * as quickly as possible. The user has been warned that the system will update and he wouldn't need to save

@@ -5,16 +5,21 @@ import java.awt.FontFormatException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import ch.theowinter.toxictodo.client.ui.model.TaskPriority;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
 
 public class ToxicUIData {
-	final public static String allTaskTodoCategoryKey = "allTaskTodoCategoryKeyDoNotUseDirectly";
-	final public static ArrayList<TaskPriority> priorityArray = generatePriorityArray();
-	final public static Font AWESOME_FONT = getAwesomeFont();
+	public static final String ALL_TASKS_TODOCATEGORY_KEY = "allTaskTodoCategoryKeyDoNotUseDirectly";
+	public static final List<TaskPriority> PRIORITY_ARRAY = generatePriorityArray();
+	public static final Font AWESOME_FONT = getAwesomeFont();
 	
-	private static ArrayList<TaskPriority> generatePriorityArray(){
+	private ToxicUIData() {
+		super();
+	}
+
+	private static List<TaskPriority> generatePriorityArray(){
 		ArrayList<TaskPriority> priorityArray = new ArrayList<TaskPriority> ();
 		priorityArray.add(new TaskPriority(0, "not important", '\uf0da'));
 		priorityArray.add(new TaskPriority(0, "Keep in mind", '\uf123'));

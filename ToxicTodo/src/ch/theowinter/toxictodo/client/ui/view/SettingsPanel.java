@@ -1,6 +1,11 @@
 package ch.theowinter.toxictodo.client.ui.view;
 
 import java.awt.BorderLayout;
+
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -12,11 +17,8 @@ import java.awt.event.ItemListener;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 
 import ch.theowinter.toxictodo.client.ClientSettings;
 import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeaderWhite;
@@ -66,24 +68,23 @@ public class SettingsPanel extends JPanel{
 		JLabel lblUseInternalServer = new JLabel("Use internal server:");
 		String useInternalServerTooltip = "A local todo-server is started when ToxicTodo is launched and shutdown when ToxicTodo is closed.";
 		lblUseInternalServer.setToolTipText(useInternalServerTooltip);
-		GridBagConstraints gbc_lblUseInternalServer = new GridBagConstraints();
-		gbc_lblUseInternalServer.anchor = GridBagConstraints.EAST;
-		gbc_lblUseInternalServer.insets = new Insets(0, 0, 5, 5);
-		gbc_lblUseInternalServer.gridx = 0;
-		gbc_lblUseInternalServer.gridy = 1;
-		centerPanel.add(lblUseInternalServer, gbc_lblUseInternalServer);
+		GridBagConstraints gbcLblUseInternalServer = new GridBagConstraints();
+		gbcLblUseInternalServer.anchor = GridBagConstraints.EAST;
+		gbcLblUseInternalServer.insets = new Insets(0, 0, 5, 5);
+		gbcLblUseInternalServer.gridx = 0;
+		gbcLblUseInternalServer.gridy = 1;
+		centerPanel.add(lblUseInternalServer, gbcLblUseInternalServer);
 		
 		checkboxInternalServerEnabled = new JCheckBox("");
 		checkboxInternalServerEnabled.setToolTipText(useInternalServerTooltip);
 		
-		GridBagConstraints gbc_checkboxInternalServerEnabled = new GridBagConstraints();
-		gbc_checkboxInternalServerEnabled.anchor = GridBagConstraints.WEST;
-		gbc_checkboxInternalServerEnabled.insets = new Insets(0, 0, 5, 5);
-		gbc_checkboxInternalServerEnabled.gridx = 1;
-		gbc_checkboxInternalServerEnabled.gridy = 1;
-		centerPanel.add(checkboxInternalServerEnabled, gbc_checkboxInternalServerEnabled);
+		GridBagConstraints gbcCheckboxInternalServerEnabled = new GridBagConstraints();
+		gbcCheckboxInternalServerEnabled.anchor = GridBagConstraints.WEST;
+		gbcCheckboxInternalServerEnabled.insets = new Insets(0, 0, 5, 5);
+		gbcCheckboxInternalServerEnabled.gridx = 1;
+		gbcCheckboxInternalServerEnabled.gridy = 1;
+		centerPanel.add(checkboxInternalServerEnabled, gbcCheckboxInternalServerEnabled);
 		checkboxInternalServerEnabled.addItemListener(new ItemListener() {
-			@Override
 			public void itemStateChanged(ItemEvent aE) {
 				if(checkboxInternalServerEnabled.isSelected()){
 					textFieldHostIP.setEnabled(false);
@@ -223,7 +224,7 @@ public class SettingsPanel extends JPanel{
 			setVisible(false);
 			main.switchToTasks();
 		} catch (IllegalArgumentException e){
-			Logger.log("bad input");
+			Logger.log("bad input", e);
 			//TODO: warn user or something with a window or red colored input box
 		}
 	}

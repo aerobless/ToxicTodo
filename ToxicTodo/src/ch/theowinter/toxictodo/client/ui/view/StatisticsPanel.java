@@ -52,12 +52,12 @@ public class StatisticsPanel extends JPanel {
 		JPanel generalStatisticsPane = new JPanel();
 		add(generalStatisticsPane, BorderLayout.CENTER);
 		generalStatisticsPane.setBackground(ToxicColors.SOFT_GREY);
-		GridBagLayout gbl_generalStatisticsPane = new GridBagLayout();
-		gbl_generalStatisticsPane.columnWidths = new int[]{182, 0, 0, 0};
-		gbl_generalStatisticsPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_generalStatisticsPane.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gbl_generalStatisticsPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
-		generalStatisticsPane.setLayout(gbl_generalStatisticsPane);
+		GridBagLayout gblGeneralStatisticsPane = new GridBagLayout();
+		gblGeneralStatisticsPane.columnWidths = new int[]{182, 0, 0, 0};
+		gblGeneralStatisticsPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gblGeneralStatisticsPane.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gblGeneralStatisticsPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		generalStatisticsPane.setLayout(gblGeneralStatisticsPane);
 		
 		JLabel spacer = new JLabel(" ");
 		GridBagConstraints gbcSpacer = new GridBagConstraints();
@@ -67,37 +67,37 @@ public class StatisticsPanel extends JPanel {
 		generalStatisticsPane.add(spacer, gbcSpacer);
 		
 		JLabel lblTotalCompletedTasks = new JLabel("Total completed tasks:");
-		GridBagConstraints gbc_lblTotalCompletedTasks = new GridBagConstraints();
-		gbc_lblTotalCompletedTasks.anchor = GridBagConstraints.EAST;
-		gbc_lblTotalCompletedTasks.insets = new Insets(0, 0, 5, 5);
-		gbc_lblTotalCompletedTasks.gridx = 0;
-		gbc_lblTotalCompletedTasks.gridy = 1;
-		generalStatisticsPane.add(lblTotalCompletedTasks, gbc_lblTotalCompletedTasks);
+		GridBagConstraints gbcLblTotalCompletedTasks = new GridBagConstraints();
+		gbcLblTotalCompletedTasks.anchor = GridBagConstraints.EAST;
+		gbcLblTotalCompletedTasks.insets = new Insets(0, 0, 5, 5);
+		gbcLblTotalCompletedTasks.gridx = 0;
+		gbcLblTotalCompletedTasks.gridy = 1;
+		generalStatisticsPane.add(lblTotalCompletedTasks, gbcLblTotalCompletedTasks);
 		
 		JLabel lblCompletedTaskAmount = new JLabel("x");
-		GridBagConstraints gbc_lblCompletedTaskAmount = new GridBagConstraints();
-		gbc_lblCompletedTaskAmount.anchor = GridBagConstraints.WEST;
-		gbc_lblCompletedTaskAmount.insets = new Insets(0, 0, 5, 5);
-		gbc_lblCompletedTaskAmount.gridx = 1;
-		gbc_lblCompletedTaskAmount.gridy = 1;
-		generalStatisticsPane.add(lblCompletedTaskAmount, gbc_lblCompletedTaskAmount);
-		lblCompletedTaskAmount.setText(""+historicTodoList.getCategoryMap().get(ToxicUIData.allTaskTodoCategoryKey).getTasksHashMap().size());
+		GridBagConstraints gbcLblCompletedTaskAmount = new GridBagConstraints();
+		gbcLblCompletedTaskAmount.anchor = GridBagConstraints.WEST;
+		gbcLblCompletedTaskAmount.insets = new Insets(0, 0, 5, 5);
+		gbcLblCompletedTaskAmount.gridx = 1;
+		gbcLblCompletedTaskAmount.gridy = 1;
+		generalStatisticsPane.add(lblCompletedTaskAmount, gbcLblCompletedTaskAmount);
+		lblCompletedTaskAmount.setText(""+historicTodoList.getCategoryMap().get(ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY).getTasksHashMap().size());
 		
 		JLabel lblTasksCompletedThisMonth = new JLabel("Completed this month:");
-		GridBagConstraints gbc_lblTasksCompletedThisMonth = new GridBagConstraints();
-		gbc_lblTasksCompletedThisMonth.anchor = GridBagConstraints.EAST;
-		gbc_lblTasksCompletedThisMonth.insets = new Insets(0, 0, 5, 5);
-		gbc_lblTasksCompletedThisMonth.gridx = 0;
-		gbc_lblTasksCompletedThisMonth.gridy = 2;
-		generalStatisticsPane.add(lblTasksCompletedThisMonth, gbc_lblTasksCompletedThisMonth);
+		GridBagConstraints gbcLblTasksCompletedThisMonth = new GridBagConstraints();
+		gbcLblTasksCompletedThisMonth.anchor = GridBagConstraints.EAST;
+		gbcLblTasksCompletedThisMonth.insets = new Insets(0, 0, 5, 5);
+		gbcLblTasksCompletedThisMonth.gridx = 0;
+		gbcLblTasksCompletedThisMonth.gridy = 2;
+		generalStatisticsPane.add(lblTasksCompletedThisMonth, gbcLblTasksCompletedThisMonth);
 		
 		JLabel lblCompletedTasksThisMonthAmount = new JLabel("y");
-		GridBagConstraints gbc_lblCompletedTasksThisMonthAmount = new GridBagConstraints();
-		gbc_lblCompletedTasksThisMonthAmount.anchor = GridBagConstraints.WEST;
-		gbc_lblCompletedTasksThisMonthAmount.insets = new Insets(0, 0, 5, 5);
-		gbc_lblCompletedTasksThisMonthAmount.gridx = 1;
-		gbc_lblCompletedTasksThisMonthAmount.gridy = 2;
-		generalStatisticsPane.add(lblCompletedTasksThisMonthAmount, gbc_lblCompletedTasksThisMonthAmount);
+		GridBagConstraints gbcLblCompletedTasksThisMonthAmount = new GridBagConstraints();
+		gbcLblCompletedTasksThisMonthAmount.anchor = GridBagConstraints.WEST;
+		gbcLblCompletedTasksThisMonthAmount.insets = new Insets(0, 0, 5, 5);
+		gbcLblCompletedTasksThisMonthAmount.gridx = 1;
+		gbcLblCompletedTasksThisMonthAmount.gridy = 2;
+		generalStatisticsPane.add(lblCompletedTasksThisMonthAmount, gbcLblCompletedTasksThisMonthAmount);
 		
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setBackground(ToxicColors.SOFT_GREY);
@@ -114,9 +114,5 @@ public class StatisticsPanel extends JPanel {
 				main.switchToTasks();
 			}
         });
-	}
-	
-	public void updateHistoricTodoManager(){
-		
 	}
 }

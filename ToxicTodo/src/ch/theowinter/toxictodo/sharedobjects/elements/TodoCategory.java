@@ -3,6 +3,8 @@ package ch.theowinter.toxictodo.sharedobjects.elements;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TodoCategory implements Serializable, Comparable<TodoCategory> {
 	private static final long serialVersionUID = 2851662981886514578L;
@@ -11,10 +13,10 @@ public class TodoCategory implements Serializable, Comparable<TodoCategory> {
 	private String name;
 	private String keyword;
 	private char icon;
-	private boolean isSystemCategory; //<-- intended for internal use only
+	private boolean isSystemCategory;
 	
 	//Container:
-	private HashMap<String, TodoTask> todoTaskList = new HashMap<String, TodoTask>();
+	private Map<String, TodoTask> todoTaskList = new HashMap<String, TodoTask>();
 	
 	public TodoCategory(String categoryName, String keyword) {
 		super();
@@ -33,10 +35,10 @@ public class TodoCategory implements Serializable, Comparable<TodoCategory> {
 	}
 
 	//Contain-Getters:
-	public HashMap<String, TodoTask> getTasksHashMap(){
+	public Map<String, TodoTask> getTasksHashMap(){
 		return todoTaskList;
 	}
-	public ArrayList<TodoTask> getTaskInCategoryAsArrayList(){
+	public List<TodoTask> getTaskInCategoryAsArrayList(){
 		return new ArrayList<TodoTask>(todoTaskList.values());
 	}
 	public int size(){

@@ -31,9 +31,8 @@ public class CategoryListCellRenderer extends CategoryElementPanel implements Li
             background = ToxicColors.SOFT_BLUE;
             this.setBackgroundColor(background);
             this.setFontColor(ToxicColors.TEXT_BLACK);
-        };
+        }
         setBackground(background);
-
         return this;
 	}
 }
