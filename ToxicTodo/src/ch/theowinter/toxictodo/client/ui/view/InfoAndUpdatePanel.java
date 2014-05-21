@@ -110,6 +110,7 @@ public class InfoAndUpdatePanel extends JPanel {
 		gbc_label.gridy = 3;
 		leftPanel.add(label, gbc_label);
 		
+		//AUTHOR:
 		JLabel lblAuthor = new JLabel("Author:");
 		GridBagConstraints gbc_lblAuthor = new GridBagConstraints();
 		gbc_lblAuthor.anchor = GridBagConstraints.EAST;
@@ -126,6 +127,7 @@ public class InfoAndUpdatePanel extends JPanel {
 		gbc_lblAuthorname.gridy = 4;
 		leftPanel.add(lblAuthorname, gbc_lblAuthorname);
 		
+		//WEBSITE:
 		JLabel lblWebsite = new JLabel("Website:");
 		GridBagConstraints gbc_lblWebsite = new GridBagConstraints();
 		gbc_lblWebsite.anchor = GridBagConstraints.EAST;
@@ -170,6 +172,8 @@ public class InfoAndUpdatePanel extends JPanel {
 				}
 			}
 			});
+		
+		//GITHUB
 		JLabel lblGithub = new JLabel("GitHub:");
 		GridBagConstraints gbc_lblGithub = new GridBagConstraints();
 		gbc_lblGithub.anchor = GridBagConstraints.EAST;

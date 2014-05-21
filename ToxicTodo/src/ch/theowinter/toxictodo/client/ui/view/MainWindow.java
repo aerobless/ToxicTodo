@@ -474,6 +474,7 @@ public class MainWindow{
 		btnRefresh.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				try {
 					todoManager.updateList();
 				} catch (IOException e1) {
