@@ -54,7 +54,7 @@ public class TodoCategory implements Serializable, Comparable<TodoCategory> {
 	 * @return boolean
 	 */
 	public boolean containsTasks(){
-		return todoTaskList.isEmpty();
+		return !todoTaskList.isEmpty();
 	}
 	
 	//Contain-Setters:

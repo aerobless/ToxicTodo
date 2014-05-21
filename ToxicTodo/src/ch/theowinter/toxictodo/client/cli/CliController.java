@@ -57,7 +57,6 @@ public class CliController {
 	}
 	
 	//TODO: add good description
-	//TODO: doesn't break anymore at all.
 	public void voidDrawList(){
 		try {
 			todoManager.setTodoList(ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT")));
