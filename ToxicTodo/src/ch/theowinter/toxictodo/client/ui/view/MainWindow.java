@@ -130,7 +130,7 @@ public class MainWindow{
 		
 		frmToxictodo = new JFrame();
 		frmToxictodo.setTitle("ToxicTodo");
-		frmToxictodo.setBounds(100, 100, 844, 495);
+		frmToxictodo.setBounds(100, 100, 890, 495);
 		frmToxictodo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmToxictodo.getContentPane().setLayout(new BorderLayout(0, 0));
 		

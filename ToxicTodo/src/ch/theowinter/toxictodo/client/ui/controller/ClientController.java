@@ -25,9 +25,7 @@ public class ClientController {
 		}else{
 			createLocalServerDialog();
 		}
-		System.out.println("here");
 		launcherActive = false;
-
 	}
 	
 	private void createGUI(ClientTodoManager aTodoManager, ClientSettings someSettings){

@@ -23,6 +23,7 @@ public class ConnectionLauncher extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 311, 120);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -44,7 +45,6 @@ public class ConnectionLauncher extends JFrame {
 		JLabel lblTryingToConnect = new JLabel("Connecting to remove server:");
 		lblTryingToConnect.setBounds(22, 59, 258, 16);
 		contentPane.add(lblTryingToConnect);
-
 	}
 	
 	public void animate(){
