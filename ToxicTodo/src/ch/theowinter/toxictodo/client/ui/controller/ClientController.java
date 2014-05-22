@@ -4,16 +4,20 @@ import javax.swing.JOptionPane;
 
 import ch.theowinter.toxictodo.client.ClientSettings;
 import ch.theowinter.toxictodo.client.ClientTodoManager;
+import ch.theowinter.toxictodo.client.ui.view.ConnectionLauncher;
 import ch.theowinter.toxictodo.client.ui.view.MainWindow;
 import ch.theowinter.toxictodo.server.ServerApplication;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
 
 public class ClientController {
 	ClientSettings settings;
+	boolean launcherActive;
 	
 	public void start(ClientTodoManager aTodoManager, ClientSettings someSettings){
-		settings = someSettings;
+		settings = someSettings;	
+		launcherActive = true;
 		
+		showLauncher();
 		if(aTodoManager.getInitSuccess()){
 			createGUI(aTodoManager, someSettings);
 		}else if(settings.getIntegratedServerEnabled()){
@@ -21,6 +25,9 @@ public class ClientController {
 		}else{
 			createLocalServerDialog();
 		}
+		System.out.println("here");
+		launcherActive = false;
+
 	}
 	
 	private void createGUI(ClientTodoManager aTodoManager, ClientSettings someSettings){
@@ -54,5 +61,25 @@ public class ClientController {
 			todoManager = new ClientTodoManager();
 		}while(!todoManager.getInitSuccess());
 		createGUI(todoManager, settings);
+	}
+	
+	private void showLauncher(){
+		Thread launcherThread = new Thread(new Runnable() {
+			private ConnectionLauncher launcher;
+			
+			public void run() {
+				try {
+					launcher = new ConnectionLauncher();
+					launcher.setVisible(true);
+					while(launcherActive){
+						launcher.animate();
+					}
+					launcher.dispose();
+				} catch (Exception e) {
+					Logger.log("Fatal UI Exception", e);
+				}
+			}
+		});
+		launcherThread.start();
 	}
 }
