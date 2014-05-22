@@ -64,6 +64,8 @@ public class IconComboBoxModel extends AbstractListModel<FontString> implements 
 		newIcons.add(new FontString("Gift",'\uf06b'));
 		newIcons.add(new FontString("Shopping Cart",'\uf07a'));
 		newIcons.add(new FontString("Suitcase",'\uf0f4'));
+		newIcons.add(new FontString("Folder Black",'\uf07b'));
+		newIcons.add(new FontString("Folder White",'\uf114'));
 		return newIcons;
 	}	
 }

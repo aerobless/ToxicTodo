@@ -47,7 +47,6 @@ public class StatisticsPanel extends JPanel {
 		header.setTitel("Statistics");
 		header.setSubTitel("Track your progress when completing tasks.");
 		header.setIcon('\uf080');
-
 		add(header, BorderLayout.NORTH);
 		
 		JPanel generalStatisticsPane = new JPanel();
@@ -86,7 +85,7 @@ public class StatisticsPanel extends JPanel {
 		gbcLblTotalOpenTasks.gridy = 2;
 		generalStatisticsPane.add(lblTotalOpenTasks, gbcLblTotalOpenTasks);
 		
-		JLabel lblOpenTasksNumber = new JLabel("0");
+		JLabel lblOpenTasksNumber = new JLabel(""+todoManager.getTodoList().getCategoryMap().get(ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY).getTasksHashMap().size());
 		GridBagConstraints gbcLblOpenTasksNumber = new GridBagConstraints();
 		gbcLblOpenTasksNumber.anchor = GridBagConstraints.WEST;
 		gbcLblOpenTasksNumber.insets = new Insets(0, 0, 5, 5);
@@ -118,14 +117,13 @@ public class StatisticsPanel extends JPanel {
 		gbcLblCompletedTasks.gridy = 3;
 		generalStatisticsPane.add(lblCompletedTasks, gbcLblCompletedTasks);
 		
-		JLabel lblCompletedTaskNumber = new JLabel("x");
+		JLabel lblCompletedTaskNumber = new JLabel(""+historicTodoList.getCategoryMap().get(ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY).getTasksHashMap().size());
 		GridBagConstraints gbcLblCompletedTaskNumber = new GridBagConstraints();
 		gbcLblCompletedTaskNumber.anchor = GridBagConstraints.WEST;
 		gbcLblCompletedTaskNumber.insets = new Insets(0, 0, 5, 5);
 		gbcLblCompletedTaskNumber.gridx = 2;
 		gbcLblCompletedTaskNumber.gridy = 3;
 		generalStatisticsPane.add(lblCompletedTaskNumber, gbcLblCompletedTaskNumber);
-		lblCompletedTaskNumber.setText(""+historicTodoList.getCategoryMap().get(ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY).getTasksHashMap().size());
 		
 		JLabel lblLeastUsedCategory = new JLabel("Least used category:");
 		GridBagConstraints gbcLblLeastUsedCategory = new GridBagConstraints();
