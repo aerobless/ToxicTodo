@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import ch.theowinter.toxictodo.client.ui.view.utilities.RotationLabel;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicUIData;
+import ch.theowinter.toxictodo.sharedobjects.Logger;
 
 public class ConnectionLauncher extends JFrame {
 	private static final long serialVersionUID = 7067426305994555043L;
@@ -58,8 +59,7 @@ public class ConnectionLauncher extends JFrame {
 			}
 			Thread.sleep(10);
 		} catch (InterruptedException anEx) {
-			// TODO Auto-generated catch block
-			anEx.printStackTrace();
+			Logger.log("InterruptedException while trying to animate sync incon in ConnectionLauncher.", anEx);
 		}
 	}
 }
