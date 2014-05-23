@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -38,6 +39,7 @@ import ch.theowinter.toxictodo.client.ClientSettings;
 import ch.theowinter.toxictodo.client.ClientTodoManager;
 import ch.theowinter.toxictodo.client.ui.model.CategoryListModel;
 import ch.theowinter.toxictodo.client.ui.model.TaskListModel;
+import ch.theowinter.toxictodo.client.ui.view.utilities.ButtonTextGroup;
 import ch.theowinter.toxictodo.client.ui.view.utilities.CategoryListCellRenderer;
 import ch.theowinter.toxictodo.client.ui.view.utilities.FontIconButton;
 import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeaderWhite;
@@ -373,21 +375,30 @@ public class MainWindow{
 	        		searchField).getComponent());
 		} else {
 			JPanel toolbarTop = new JPanel();
+			toolbarTop.setLayout(new BorderLayout());
+			
+			JPanel buttonsLeft = new JPanel();
+			toolbarTop.add(buttonsLeft, BorderLayout.WEST);
+			toolbarTop.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ToxicColors.SOFT_TEXT_GREY));
+			toolbarTop.setBackground(ToxicColors.TEXT_WHITE);
 			frmToxictodo.getContentPane().add(toolbarTop, BorderLayout.NORTH);
+			buttonsLeft.setBackground(ToxicColors.TEXT_WHITE);
+			buttonsLeft.add(new ButtonTextGroup(btnNewTask,"New Task"));
+			buttonsLeft.add(new ButtonTextGroup(btnCompleteTask,"Complete"));
+			buttonsLeft.add(new ButtonTextGroup(btnRemoveTask,"Remove"));
 			
-			toolbarTop.add(btnNewTask);
-			toolbarTop.add(btnCompleteTask);
-			toolbarTop.add(btnRemoveTask);
+			buttonsLeft.add(new ButtonTextGroup(btnNewCategory,"New category"));
+			buttonsLeft.add(new ButtonTextGroup(btnEditCategory,"Edit category"));
 			
-			toolbarTop.add(btnNewCategory);
-			toolbarTop.add(btnEditCategory);
+			buttonsLeft.add(new ButtonTextGroup(btnCompletedTaskList,"Completed Tasks"));
+			buttonsLeft.add(new ButtonTextGroup(btnStatistics,"Statistics"));
 			
-			toolbarTop.add(btnCompletedTaskList);
-			toolbarTop.add(btnStatistics);
+			buttonsLeft.add(new ButtonTextGroup(btnRefresh,"Refresh"));
 			
-			toolbarTop.add(btnRefresh);
-			
-			toolbarTop.add(searchField);
+			JPanel searchLeft = new JPanel();
+			searchLeft.setBackground(ToxicColors.TEXT_WHITE);
+			toolbarTop.add(searchLeft, BorderLayout.EAST);
+			searchLeft.add(searchField);
 		}
 	}
 
