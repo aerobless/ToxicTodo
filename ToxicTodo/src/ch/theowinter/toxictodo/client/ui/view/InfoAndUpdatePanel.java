@@ -22,11 +22,14 @@ import javax.swing.SwingConstants;
 import ch.theowinter.toxictodo.client.ClientApplication;
 import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeaderWhite;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
+import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicUIData;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
 import ch.theowinter.toxictodo.sharedobjects.LogicEngine;
 import ch.theowinter.toxictodo.sharedobjects.SharedInformation;
+
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
+
 import java.awt.Font;
 
 public class InfoAndUpdatePanel extends JPanel {
@@ -206,9 +209,10 @@ public class InfoAndUpdatePanel extends JPanel {
 		gbc_scrollPane.gridy = 9;
 		leftPanel.add(scrollPane, gbc_scrollPane);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setEditable(false);
-		scrollPane.setViewportView(textArea);
+		JTextArea licenseTextArea = new JTextArea();
+		licenseTextArea.setEditable(false);
+		licenseTextArea.setText(ToxicUIData.LICENSE);
+		scrollPane.setViewportView(licenseTextArea);
 		btnGitHubLink.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

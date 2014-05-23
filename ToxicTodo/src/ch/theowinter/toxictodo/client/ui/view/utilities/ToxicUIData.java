@@ -2,8 +2,10 @@ package ch.theowinter.toxictodo.client.ui.view.utilities;
 
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,7 @@ public class ToxicUIData {
 	public static final String ALL_TASKS_TODOCATEGORY_KEY = "allTaskTodoCategoryKeyDoNotUseDirectly";
 	public static final List<TaskPriority> PRIORITY_ARRAY = generatePriorityArray();
 	public static final Font AWESOME_FONT = getAwesomeFont();
+	public static final String LICENSE = readLicense();
 	
 	private ToxicUIData() {
 		super();
@@ -39,5 +42,22 @@ public class ToxicUIData {
 			Logger.log("IOException when trying to load the AWESOME font.", e);
 		}
 	    return ttfBase;
+	}
+	
+	private static String readLicense(){
+		InputStream in = ToxicUIData.class.getResourceAsStream("/resources/license.txt");
+		BufferedReader input = new BufferedReader(new InputStreamReader(in));	
+		
+		StringBuilder builder = new StringBuilder();
+		String part = "";
+
+		try {
+			while ((part = input.readLine()) != null) {
+			    builder.append(part+"\n");
+			}
+		} catch (IOException e) {
+			Logger.log("IOException while trying to read the license-file", e);
+		}
+		return builder.toString();
 	}
 }
