@@ -141,11 +141,11 @@ public class ClientApplication {
 		String operatingSystemRaw = System.getProperty("os.name");
 		String output;
 		if("Windows".equals(operatingSystemRaw)){
-			output = "win";
+			output = "windows";
 		} else if("Mac OS X".equals(operatingSystemRaw)){
 			output = "osx";
 		} else if("Linux".equals(operatingSystemRaw)){
-			output = "lin";
+			output = "linux";
 		} else {
 			output = "unkown";
 			Logger.log("Operating System not recognized...");

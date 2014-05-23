@@ -58,18 +58,19 @@
 	<!-- jar-client -->
 	<target name="jar-client" description="Packages JAR distribution">
 		<echo>Packaging JAR distribution for CLIENT</echo>
+		<buildnumber file="build.num"/>
 		<jar jarfile="dist/ToxicTodoClient.jar" basedir="build">
 		    <zipgroupfileset includes="*.jar" dir="lib"/>
 			<manifest>
 			    <attribute name="Main-Class" value="${main-class-client}"/>
 				<attribute name="ToxicTodo" value="Dev: ${Author}" />
-				<attribute name="Version" value="${Ver}" />
+				<attribute name="Version" value="${Ver}-b${build.number}"/> 
 				<attribute name="Built-By" value="${user.name}" />
 			</manifest>
 		</jar>
 	</target>	
 	
-		<!-- jar-server -->
+	<!-- jar-server -->
 	<target name="jar-server" description="Packages JAR distribution">
 		<echo>Packaging JAR distribution for SERVER</echo>
 		<jar jarfile="dist/ToxicTodoServer.jar" basedir="build">
@@ -77,7 +78,7 @@
 			<manifest>
 			    <attribute name="Main-Class" value="${main-class-server}"/>
 				<attribute name="ToxicTodo" value="Dev: ${Author}" />
-				<attribute name="Version" value="${Ver}" />
+				<attribute name="Version" value="${Ver}-b${build.number}"/> 
 				<attribute name="Built-By" value="${user.name}" />
 			</manifest>
 		</jar>

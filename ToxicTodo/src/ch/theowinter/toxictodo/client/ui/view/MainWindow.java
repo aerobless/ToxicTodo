@@ -31,6 +31,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 
+import ch.theowinter.toxictodo.client.ClientApplication;
 import ch.theowinter.toxictodo.client.ClientSettings;
 import ch.theowinter.toxictodo.client.ClientTodoManager;
 import ch.theowinter.toxictodo.client.ui.model.CategoryListModel;
@@ -134,16 +135,36 @@ public class MainWindow{
 		frmToxictodo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmToxictodo.getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		MacUtils.makeWindowLeopardStyle(frmToxictodo.getRootPane());
+		if("osx".equals(ClientApplication.OS)){
+			MacUtils.makeWindowLeopardStyle(frmToxictodo.getRootPane());
+		}
+		
+		//Initialize Panels:
+		initSplitPane();
+		initCategoryPanel();
+	    initTaskPanel();
+	    
+	    //Initialize Toolbars:
+		initToolbar();
+		initBottomBar();
+		
+		//Needs to be called last or we get a nullpointer in the category-listener.
+		categoryList.setSelectedIndex(0);
+		
+		//Fix divider:
+		splitPane.setDividerLocation(250);
+	}
 
+	/**
+	 * Initialize the SplitPane in the center of the main window.
+	 */
+	private void initSplitPane() {
 		splitPane = new JSplitPane();
 		splitPane.setContinuousLayout(true);
 		splitPane.setResizeWeight(0.2);
 		splitPane.setBorder(new LineBorder(Color.blue,0));
 
 		frmToxictodo.getContentPane().add(splitPane, BorderLayout.CENTER);
-		
-		Dimension splitPaneMinimumSize = new Dimension(0, 0);
 		
 		//Custom Split Divider (thin & black)
 		splitPane.setUI(new BasicSplitPaneUI() {
@@ -161,26 +182,11 @@ public class MainWindow{
 	    }
 		);
 		splitPane.setDividerSize(1);
-
-		
-		//Initialize Panels:
-		initCategoryPanel(splitPaneMinimumSize);
-	    initTaskPanel();
-	    
-	    //Initialize Toolbars:
-		initToolbar();
-		initBottomBar();
-		
-		//Needs to be called last or we get a nullpointer in the category-listener.
-		categoryList.setSelectedIndex(0);
-		
-		//Fix divider:
-		splitPane.setDividerLocation(250);
 	}
 
 	/**
-	 * TODO COMMENT ME!
-	 *
+	 * Initialize the BottomBar. It contains some buttons
+	 * and a status message.
 	 */
 	private void initBottomBar() {
 		BottomBar bottomBar = new BottomBar(BottomBarSize.LARGE);
@@ -188,13 +194,7 @@ public class MainWindow{
 		frmToxictodo.getContentPane().add(bottomBar.getComponent(), BorderLayout.SOUTH);  
 
 		//Info Button:
-		FontIconButton btnInfo = new FontIconButton('\uf129', "Information about the Program");
-		btnInfo.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnInfo.setHorizontalTextPosition(SwingConstants.CENTER);	
-		btnInfo.putClientProperty("JButton.buttonType", TEXTURED);
-		btnInfo.setPreferredSize(bottomBarButtonSize);
-		btnInfo.setMinimumSize(bottomBarButtonSize);
-		btnInfo.setMaximumSize(bottomBarButtonSize);
+		FontIconButton btnInfo = fontIconButtonFactory('\uf129', "Information about the Program", MainWindow.TEXTURED, null, bottomBarButtonSize);
 		btnInfo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -208,7 +208,22 @@ public class MainWindow{
 			}
         });      
 		bottomBar.addComponentToRight(btnInfo);
-		bottomBar.addComponentToRight(settingsButtonFactory());
+		
+		FontIconButton btnSettings = fontIconButtonFactory('\uf013', "Change the program settings.", MainWindow.TEXTURED, null, bottomBarButtonSize);
+		btnSettings.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(settingsPanel == null){
+					settingsPanel = new SettingsPanel(settings, main);
+					setRightContent(settingsPanel);
+				}else if(settingsPanel.isVisible()){
+					switchToTasks();
+				}else{
+					setRightContent(settingsPanel);
+				}
+			}
+        });  
+		bottomBar.addComponentToRight(btnSettings);
 	}
 
 	/**
@@ -245,7 +260,8 @@ public class MainWindow{
 	 *
 	 * @param splitPaneMinimumSize
 	 */
-	private void initCategoryPanel(Dimension splitPaneMinimumSize) {
+	private void initCategoryPanel() {
+		Dimension splitPaneMinimumSize = new Dimension(0, 0);
 		JScrollPane categoryListscrollPane = new JScrollPane();
 		categoryListscrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		categoryListscrollPane.setBorder(new LineBorder(Color.black,0));
@@ -264,34 +280,6 @@ public class MainWindow{
 		
 		splitPane.setLeftComponent(categoryListscrollPane);
 		splitPane.getLeftComponent().setMinimumSize(splitPaneMinimumSize);
-	}
-	
-	/**
-	 * Create the settings button and initialize it's ActionListener
-	 * @return settings-button of type FontIconButton 
-	 */
-	private FontIconButton settingsButtonFactory(){
-		FontIconButton btnSettings = new FontIconButton('\uf013', "Change the program settings.");
-		btnSettings.setVerticalTextPosition(SwingConstants.BOTTOM);
-		btnSettings.setHorizontalTextPosition(SwingConstants.CENTER);	
-		btnSettings.putClientProperty("JButton.buttonType", TEXTURED);
-		btnSettings.setPreferredSize(bottomBarButtonSize);
-		btnSettings.setMinimumSize(bottomBarButtonSize);
-		btnSettings.setMaximumSize(bottomBarButtonSize);
-		btnSettings.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(settingsPanel == null){
-					settingsPanel = new SettingsPanel(settings, main);
-					setRightContent(settingsPanel);
-				}else if(settingsPanel.isVisible()){
-					switchToTasks();
-				}else{
-					setRightContent(settingsPanel);
-				}
-			}
-        });    
-		return btnSettings;
 	}
 	
 	/**
