@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import ch.theowinter.toxictodo.client.ClientApplication;
-import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeaderWhite;
+import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeader;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicUIData;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
@@ -46,7 +46,7 @@ public class InfoAndUpdatePanel extends JPanel {
 		setBorder(null);
 		setLayout(new BorderLayout(0, 0));
 		
-		PanelHeaderWhite header = new PanelHeaderWhite();
+		PanelHeader header = new PanelHeader();
 		header.setTitel("About ToxicTodo");
 		header.setSubTitel("Your personalized, universal, addictive todo application");
 		header.setIcon('\uf0ca');

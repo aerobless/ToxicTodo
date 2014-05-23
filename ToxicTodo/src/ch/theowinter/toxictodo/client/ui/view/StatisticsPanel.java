@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import ch.theowinter.toxictodo.client.ClientTodoManager;
-import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeaderWhite;
+import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeader;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicUIData;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
@@ -43,7 +43,7 @@ public class StatisticsPanel extends JPanel {
 		setBorder(null);
 		setLayout(new BorderLayout(0, 0));
 		
-		PanelHeaderWhite header = new PanelHeaderWhite();
+		PanelHeader header = new PanelHeader();
 		header.setTitel("Statistics");
 		header.setSubTitel("Track your progress when completing tasks.");
 		header.setIcon('\uf080');

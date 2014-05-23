@@ -21,7 +21,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import ch.theowinter.toxictodo.client.ClientSettings;
-import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeaderWhite;
+import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeader;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
 
@@ -48,7 +48,7 @@ public class SettingsPanel extends JPanel{
 		setLayout(new BorderLayout(0, 0));
 		
 		//Header:
-		PanelHeaderWhite header = new PanelHeaderWhite();
+		PanelHeader header = new PanelHeader();
 		add(header, BorderLayout.NORTH);
 		header.setTitel("Settings");
 		header.setSubTitel("Personalize ToxicTodo to your liking!");

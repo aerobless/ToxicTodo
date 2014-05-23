@@ -21,7 +21,7 @@ import ch.theowinter.toxictodo.client.ui.model.FontString;
 import ch.theowinter.toxictodo.client.ui.model.IconComboBoxModel;
 import ch.theowinter.toxictodo.client.ui.view.MainWindow;
 import ch.theowinter.toxictodo.client.ui.view.utilities.IconComboBoxRenderer;
-import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeaderWhite;
+import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeader;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
@@ -34,7 +34,7 @@ public class CategoryPanel extends JPanel {
 	private JTextField txtFieldCategoryTitel;
 	private TodoCategory oldCategory;
 	private JTextField txtFieldCategoryKeyword;
-	private PanelHeaderWhite header;
+	private PanelHeader header;
 	
 	//Buttons
 	private JButton btnSave;
@@ -51,7 +51,7 @@ public class CategoryPanel extends JPanel {
 		setBorder(null);
 		setLayout(new BorderLayout(0, 0));
 		
-		header = new PanelHeaderWhite();
+		header = new PanelHeader();
 		add(header, BorderLayout.NORTH);
 		header.setSubTitel("Press the 'save' button when you're done.");
 		header.setIcon('\uf07b');

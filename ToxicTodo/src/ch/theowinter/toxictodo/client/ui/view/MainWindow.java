@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -26,7 +28,11 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
@@ -42,7 +48,7 @@ import ch.theowinter.toxictodo.client.ui.model.TaskListModel;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ButtonTextGroup;
 import ch.theowinter.toxictodo.client.ui.view.utilities.CategoryListCellRenderer;
 import ch.theowinter.toxictodo.client.ui.view.utilities.FontIconButton;
-import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeaderWhite;
+import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeader;
 import ch.theowinter.toxictodo.client.ui.view.utilities.TaskListCellRenderer;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicUIData;
@@ -76,7 +82,7 @@ public class MainWindow{
 	//This window
 	JSplitPane splitPane;
 	MainWindow main = this;
-	PanelHeaderWhite taskListHeader;
+	PanelHeader taskListHeader;
 	JTextField searchField;
 	
 	//Buttons
@@ -144,8 +150,6 @@ public class MainWindow{
 		if("osx".equals(ClientApplication.OS)){
 			MacUtils.makeWindowLeopardStyle(frmToxictodo.getRootPane());
 		} else {
-			 System.setProperty("awt.useSystemAAFontSettings","off");
-			  System.setProperty("swing.aatext", "false");
 	        try {
 				UIManager.setLookAndFeel(
 						UIManager.getSystemLookAndFeelClassName());
@@ -247,7 +251,7 @@ public class MainWindow{
 	 * be swapped out with other panels, e.g. "new category", "new task" etc.
 	 */
 	private void initTaskPanel() {
-		taskListHeader = new PanelHeaderWhite();
+		taskListHeader = new PanelHeader();
 	    
 	    JScrollPane taskScrollPane = new JScrollPane();
 		taskScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -309,7 +313,7 @@ public class MainWindow{
 	 */
 	private FontIconButton fontIconButtonFactory(char icon, String tooltip,
 			String textureType, String buttonPosition, Dimension size) {
-		FontIconButton factoryButton;
+		final FontIconButton factoryButton;
 		if("osx".equals(ClientApplication.OS)){
 			factoryButton = new FontIconButton(icon, tooltip);
 			factoryButton.putClientProperty("JButton.buttonType", textureType);
@@ -318,6 +322,26 @@ public class MainWindow{
 			}
 		}else{
 			factoryButton = new FontIconButton(icon, tooltip, 28);
+			
+		/*	//Test
+			final Border raisedBevelBorder = BorderFactory.createRaisedBevelBorder();
+		    Insets insets = raisedBevelBorder.getBorderInsets(factoryButton);
+		    final EmptyBorder emptyBorder = new EmptyBorder(insets);
+		    factoryButton.setBorder(emptyBorder);
+		    factoryButton.setFocusPainted(false);
+		    factoryButton.setOpaque(false);
+		    factoryButton.setContentAreaFilled(false);
+		    factoryButton.getModel().addChangeListener(new ChangeListener() {
+		        @Override
+		        public void stateChanged(ChangeEvent e) {
+		            ButtonModel model = (ButtonModel) e.getSource();
+		            if (model.isRollover()) {
+		            	factoryButton.setBorder(raisedBevelBorder);
+		            } else {
+		            	factoryButton.setBorder(emptyBorder);
+		            }
+		        }
+		    });*/
 		}
 		factoryButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		factoryButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -379,7 +403,8 @@ public class MainWindow{
 			
 			JPanel buttonsLeft = new JPanel();
 			toolbarTop.add(buttonsLeft, BorderLayout.WEST);
-			toolbarTop.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ToxicColors.SOFT_TEXT_GREY));
+			toolbarTop.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ToxicColors.BORDER_GREY));
+			
 			toolbarTop.setBackground(ToxicColors.TEXT_WHITE);
 			frmToxictodo.getContentPane().add(toolbarTop, BorderLayout.NORTH);
 			buttonsLeft.setBackground(ToxicColors.TEXT_WHITE);
@@ -397,6 +422,7 @@ public class MainWindow{
 			
 			JPanel searchLeft = new JPanel();
 			searchLeft.setBackground(ToxicColors.TEXT_WHITE);
+
 			toolbarTop.add(searchLeft, BorderLayout.EAST);
 			searchLeft.add(searchField);
 		}

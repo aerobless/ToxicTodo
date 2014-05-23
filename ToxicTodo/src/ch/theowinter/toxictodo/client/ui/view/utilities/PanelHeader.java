@@ -10,7 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.MatteBorder;
 
-public class PanelHeaderWhite extends JPanel {
+import ch.theowinter.toxictodo.client.ClientApplication;
+
+public class PanelHeader extends JPanel {
 	private static final long serialVersionUID = 1231624288433035648L;
 	private JLabel lblTitel;
 	private JLabel lblSubtitel;
@@ -20,11 +22,17 @@ public class PanelHeaderWhite extends JPanel {
 	private JPanel subtitelPanel;
 	private JPanel topSpace;
 	private JPanel bottomSpace;
-	private Color background = ToxicColors.DIRTY_WHITE;
+	private Color background;
 	private JPanel westSpace;
 	private JPanel eastSpace;
 
-	public PanelHeaderWhite() {
+	public PanelHeader() {
+		if("osx".equals(ClientApplication.OS)){
+			background = ToxicColors.DIRTY_WHITE;
+			setBorder(new MatteBorder(0,0,1,0,ToxicColors.SOFT_TEXT_GREY));
+		}else{
+			background = ToxicColors.SOFT_GREY;
+		}
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel textPanel = new JPanel();
@@ -68,7 +76,7 @@ public class PanelHeaderWhite extends JPanel {
 		FlowLayout flBottomSpace = (FlowLayout) bottomSpace.getLayout();
 		flBottomSpace.setVgap(7);
 		textPanel.add(bottomSpace);
-		setBorder(new MatteBorder(0,0,1,0,ToxicColors.SOFT_TEXT_GREY));
+
 		bottomSpace.setBackground(background);
 		
 		iconPanel = new JPanel();

@@ -21,7 +21,7 @@ import javax.swing.ScrollPaneConstants;
 
 import ch.theowinter.toxictodo.client.ClientTodoManager;
 import ch.theowinter.toxictodo.client.ui.model.TaskPriorityComboboxModel;
-import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeaderWhite;
+import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeader;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
@@ -47,7 +47,7 @@ public class TaskPanel extends JPanel {
 		setBorder(null);
 		setLayout(new BorderLayout(0, 0));
 		
-		PanelHeaderWhite header = new PanelHeaderWhite();
+		PanelHeader header = new PanelHeader();
 		header.setTitel("Add a new task");
 		header.setSubTitel("Press 'enter' when you're done.");
 		header.setIcon('\uf15b');

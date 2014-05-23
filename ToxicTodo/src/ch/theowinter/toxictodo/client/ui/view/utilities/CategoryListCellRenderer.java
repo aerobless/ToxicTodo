@@ -22,7 +22,7 @@ public class CategoryListCellRenderer extends CategoryElementPanel implements Li
             
         // check if this cell is selected
         if (isSelected) {
-            background = ToxicColors.HARD_BLUE;
+        	background = ToxicColors.HARD_BLUE;
             this.setBackgroundColor(background);
             this.setFontColor(ToxicColors.TEXT_WHITE);
 

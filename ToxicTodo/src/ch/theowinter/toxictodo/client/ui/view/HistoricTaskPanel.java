@@ -8,7 +8,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.LineBorder;
 
-import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeaderWhite;
+import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeader;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
 
 public class HistoricTaskPanel extends JPanel{
@@ -20,7 +20,7 @@ public class HistoricTaskPanel extends JPanel{
 	}
 
 	void initialize(){	
-		PanelHeaderWhite taskListHeader = new PanelHeaderWhite();
+		PanelHeader taskListHeader = new PanelHeader();
 	    
 	    JScrollPane taskScrollPane = new JScrollPane();
 		taskScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
