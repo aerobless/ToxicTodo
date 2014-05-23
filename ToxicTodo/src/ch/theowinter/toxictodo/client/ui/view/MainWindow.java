@@ -5,8 +5,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -15,7 +15,6 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -28,11 +27,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
@@ -107,7 +102,7 @@ public class MainWindow{
 	
 	//Construction Finals
 	final Dimension uniBarButtonSize = toolbarButtonSize();
-	final Dimension bottomBarButtonSize = new Dimension(50, 27);
+	final Dimension bottomBarButtonSize = new Dimension(45, 15);
 	
 	/**
 	 * Create the application.
@@ -208,10 +203,6 @@ public class MainWindow{
 	 * and a status message.
 	 */
 	private void initBottomBar() {
-		BottomBar bottomBar = new BottomBar(BottomBarSize.LARGE);
-	    bottomBar.addComponentToLeft(MacWidgetFactory.createEmphasizedLabel("Status"));  
-		frmToxictodo.getContentPane().add(bottomBar.getComponent(), BorderLayout.SOUTH);  
-
 		//Info Button:
 		FontIconButton btnInfo = fontIconButtonFactory('\uf129', "Information about the Program", MainWindow.TEXTURED, null, bottomBarButtonSize);
 		btnInfo.addActionListener(new ActionListener() {
@@ -225,8 +216,7 @@ public class MainWindow{
 					switchToTasks();
 				}
 			}
-        });      
-		bottomBar.addComponentToRight(btnInfo);
+        }); 
 		
 		FontIconButton btnSettings = fontIconButtonFactory('\uf013', "Change the program settings.", MainWindow.TEXTURED, null, bottomBarButtonSize);
 		btnSettings.addActionListener(new ActionListener() {
@@ -241,8 +231,27 @@ public class MainWindow{
 					setRightContent(settingsPanel);
 				}
 			}
-        });  
-		bottomBar.addComponentToRight(btnSettings);
+        });
+		
+		if("osx".equals(ClientApplication.OS)){
+			BottomBar bottomBar = new BottomBar(BottomBarSize.LARGE);
+		    bottomBar.addComponentToLeft(MacWidgetFactory.createEmphasizedLabel("Status"));  
+			frmToxictodo.getContentPane().add(bottomBar.getComponent(), BorderLayout.SOUTH); 
+			
+			bottomBar.addComponentToRight(btnInfo);
+			bottomBar.addComponentToRight(btnSettings);
+		}else{
+			JPanel bottomBar = new JPanel();
+			bottomBar.setBackground(ToxicColors.TEXT_WHITE);
+			FlowLayout flowLeft = new FlowLayout();
+			flowLeft.setAlignment(FlowLayout.RIGHT);
+			bottomBar.setLayout(flowLeft);
+			bottomBar.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, ToxicColors.BORDER_GREY));
+			frmToxictodo.getContentPane().add(bottomBar, BorderLayout.SOUTH);
+			bottomBar.add(btnInfo);
+			bottomBar.add(btnSettings);
+		}
+ 
 	}
 
 	/**
@@ -321,7 +330,11 @@ public class MainWindow{
 				factoryButton.putClientProperty( "JButton.segmentPosition", buttonPosition);
 			}
 		}else{
-			factoryButton = new FontIconButton(icon, tooltip, 28);
+			if(size.equals(uniBarButtonSize)){
+				factoryButton = new FontIconButton(icon, tooltip, 28);
+			}else{
+				factoryButton = new FontIconButton(icon, tooltip, 14);
+			}
 			
 		/*	//Test
 			final Border raisedBevelBorder = BorderFactory.createRaisedBevelBorder();
