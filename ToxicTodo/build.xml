@@ -105,8 +105,7 @@
 	<!-- clean -->
 	<target name="clean" description="Clean up project">
 		<echo>Cleaning up</echo>
-		<echo>No cleaning for sonar analysis</echo>
-		<!--<delete dir="build" />-->
-		<!--<delete dir="lib" />-->
+		<delete dir="build" />
+		<delete dir="lib" />
 	</target>
 </project>
