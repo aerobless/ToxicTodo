@@ -1,10 +1,17 @@
 <project name="ToxicTodo" default="main" basedir=".">
 	<!-- env variables -->
 	<property name="target" location="target/" />
-	<property name="Ver" value="1.4" />
+	<property name="buildTime" value="1.4" />
+	<property name="buildDate" value="1.4" />
 	<property name="Author" value="Theo Winter (aerobless)" />
 	<property name="main-class-server"  value="ch.theowinter.toxictodo.server.ServerApplication"/>
 	<property name="main-class-client"  value="ch.theowinter.toxictodo.client.ClientApplication"/>
+	
+    <tstamp>
+        <format property="buildTime" pattern="HH:mm:ss" locale="en,UK"/>
+        <format property="buildDate" pattern="dd-MM-yyyy" locale="en,UK"/>
+    </tstamp>
+	
     <path id="classpath">
         <fileset dir="lib" includes="**/*.jar"/>
         <fileset dir="lib" />
@@ -55,14 +62,6 @@
 		<copy file="licence.txt" tofile="build/licence.txt" />
 	</target>	
 	
-	<!-- get the time -->
-	<target name="get-time">
-	    <tstamp>
-	        <format property="buildTime" pattern="HH:mm:ss" locale="en,UK"/>
-	        <format property="buildDate" pattern="dd-MM-yyyy" locale="en,UK"/>
-	    </tstamp>
-	</target>
-
 	<!-- jar-client -->
 	<target name="jar-client" description="Packages JAR distribution">
 		<echo>Packaging JAR distribution for CLIENT</echo>
