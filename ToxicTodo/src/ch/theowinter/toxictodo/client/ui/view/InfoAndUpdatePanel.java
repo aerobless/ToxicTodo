@@ -207,6 +207,7 @@ public class InfoAndUpdatePanel extends JPanel {
 		leftPanel.add(scrollPane, gbc_scrollPane);
 		
 		JTextArea textArea = new JTextArea();
+		textArea.setEditable(false);
 		scrollPane.setViewportView(textArea);
 		btnGitHubLink.addActionListener(new ActionListener() {
 			@Override
