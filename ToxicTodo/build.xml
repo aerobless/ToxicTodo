@@ -89,7 +89,7 @@
 			    <attribute name="Main-Class" value="${main-class-server}"/>
 				<attribute name="Developer" value="${Author}" />
 				<attribute name="Implementation-Version" value="${Ver}.${build.number}"/> 
-				<attribute name="SpecificationTitle" value="Built at ${buildTime} on ${buildDate}."/> 
+				<attribute name="Specification-Title" value="Built at ${buildTime} on ${buildDate}."/> 
 				<attribute name="Built-By" value="${user.name}" />
 			</manifest>
 		</jar>
