@@ -9,6 +9,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -31,6 +33,7 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 
 import java.awt.Font;
+import java.awt.Color;
 
 public class InfoAndUpdatePanel extends JPanel {
 	private static final long serialVersionUID = -2022909795010691054L;
@@ -42,7 +45,7 @@ public class InfoAndUpdatePanel extends JPanel {
 	public InfoAndUpdatePanel(MainWindow mainWindow) {
 		this.main = mainWindow;
 		setBackground(ToxicColors.SOFT_GREY);
-		setBounds(100, 100, 602, 391);
+		setBounds(100, 100, 835, 754);
 		setBorder(null);
 		setLayout(new BorderLayout(0, 0));
 		
@@ -125,43 +128,28 @@ public class InfoAndUpdatePanel extends JPanel {
 		gbcLblWebsite.gridy = 5;
 		leftPanel.add(lblWebsite, gbcLblWebsite);
 		
-		JButton btnWebsiteLink = new JButton(SharedInformation.WEBSITE);
-		GridBagConstraints gbcWebsite = new GridBagConstraints();
-		gbcWebsite.anchor = GridBagConstraints.WEST;
-		gbcWebsite.insets = new Insets(0, 0, 5, 5);
-		gbcWebsite.gridx = 2;
-		gbcWebsite.gridy = 5;
-		
-		//Ugly hack to get the URL button position right
-		JPanel webLinkPanel = new JPanel();
-		webLinkPanel.setPreferredSize(new Dimension(136, 20));
-		webLinkPanel.setBackground(this.getBackground());
-		webLinkPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		webLinkPanel.add(btnWebsiteLink);
-		btnWebsiteLink.setPreferredSize(new Dimension(150, 15));
-		btnWebsiteLink.setForeground(ToxicColors.LINK_BLUE);
-		btnWebsiteLink.setBorderPainted(false);
-		btnWebsiteLink.setFocusPainted(false);
-		btnWebsiteLink.setMargin(new Insets(0, 0, 0, 0));
-		btnWebsiteLink.setContentAreaFilled(false);
-		btnWebsiteLink.setOpaque(false);
-		btnWebsiteLink.setHorizontalAlignment(SwingConstants.LEFT);
-		btnWebsiteLink.setHorizontalTextPosition(SwingConstants.LEFT);
-		leftPanel.add(webLinkPanel, gbcWebsite);
-		btnWebsiteLink.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			       Desktop desktop = java.awt.Desktop.getDesktop();
-			       try {
-					desktop.browse(new URI("http://"+SharedInformation.WEBSITE));
-				} catch (IOException e1) {
-					Logger.log("IOException while trying to convert String to URI in InfoPanel",e1);
-				} catch (URISyntaxException anEx) {
-					Logger.log("URISyntaxException while trying to convert String to URI in InfoPanel",anEx);
-				}
-			}
-			});
-		
+		JLabel lblTheowinterch = new JLabel(SharedInformation.WEBSITE);
+		lblTheowinterch.setForeground(ToxicColors.LINK_BLUE);
+		lblTheowinterch.addMouseListener(new MouseAdapter() {
+			 public void mouseReleased(MouseEvent e)  
+			    {  
+		            Desktop desktop = java.awt.Desktop.getDesktop();
+				       try {
+						desktop.browse(new URI("http://"+SharedInformation.WEBSITE));
+					} catch (IOException e1) {
+						Logger.log("IOException while trying to convert String to URI in InfoPanel",e1);
+					} catch (URISyntaxException anEx) {
+						Logger.log("URISyntaxException while trying to convert String to URI in InfoPanel",anEx);
+					}
+			    }  
+		});
+		GridBagConstraints gbc_lblTheowinterch = new GridBagConstraints();
+		gbc_lblTheowinterch.anchor = GridBagConstraints.WEST;
+		gbc_lblTheowinterch.insets = new Insets(0, 0, 5, 5);
+		gbc_lblTheowinterch.gridx = 2;
+		gbc_lblTheowinterch.gridy = 5;
+		leftPanel.add(lblTheowinterch, gbc_lblTheowinterch);
+
 		//GITHUB
 		JLabel lblGithub = new JLabel("GitHub:");
 		lblGithub.setFont(new Font("Lucida Grande", Font.BOLD, 13));
@@ -172,23 +160,28 @@ public class InfoAndUpdatePanel extends JPanel {
 		gbcLblGithub.gridy = 6;
 		leftPanel.add(lblGithub, gbcLblGithub);
 		
-		JButton btnGitHubLink = new JButton(SharedInformation.GITHUB);
-		GridBagConstraints gbcLblGithublink = new GridBagConstraints();
-		gbcLblGithublink.anchor = GridBagConstraints.WEST;
-		gbcLblGithublink.insets = new Insets(0, 0, 5, 5);
-		gbcLblGithublink.gridx = 2;
-		gbcLblGithublink.gridy = 6;
+		JLabel lblGithubLink = new JLabel(SharedInformation.GITHUB);
+		lblGithubLink.setForeground(ToxicColors.LINK_BLUE);
+		lblGithubLink.addMouseListener(new MouseAdapter() {
+			 public void mouseReleased(MouseEvent e)  
+			    {  
+			       Desktop desktop = java.awt.Desktop.getDesktop();
+			       try {
+					desktop.browse(new URI("http://"+SharedInformation.GITHUB));
+				} catch (IOException e1) {
+					Logger.log("IOException while trying to convert String to URI in InfoPanel",e1);
+				} catch (URISyntaxException anEx) {
+					Logger.log("URISyntaxException while trying to convert String to URI in InfoPanel",anEx);
+				}
+			    }  
+		});
+		GridBagConstraints gbc_lblGithublinkcomawesome = new GridBagConstraints();
+		gbc_lblGithublinkcomawesome.anchor = GridBagConstraints.WEST;
+		gbc_lblGithublinkcomawesome.insets = new Insets(0, 0, 5, 5);
+		gbc_lblGithublinkcomawesome.gridx = 2;
+		gbc_lblGithublinkcomawesome.gridy = 6;
+		leftPanel.add(lblGithubLink, gbc_lblGithublinkcomawesome);
 		
-		//Ugly hack to get the URL button position right
-		JPanel gitHubLinkPanel = new JPanel();
-		gitHubLinkPanel.setPreferredSize(new Dimension(273, 20));
-		gitHubLinkPanel.setBackground(this.getBackground());
-		gitHubLinkPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		gitHubLinkPanel.add(btnGitHubLink);
-		btnGitHubLink.setPreferredSize(new Dimension(320, 15));
-		btnGitHubLink.setForeground(ToxicColors.LINK_BLUE);
-		btnGitHubLink.setBorderPainted(false);
-		leftPanel.add(gitHubLinkPanel, gbcLblGithublink);
 		
 		JLabel lblNewLabel = new JLabel("ToxicTodo uses a bunch of awesome open source projects:");
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD, 13));
@@ -213,19 +206,6 @@ public class InfoAndUpdatePanel extends JPanel {
 		licenseTextArea.setEditable(false);
 		licenseTextArea.setText(ToxicUIData.LICENSE);
 		scrollPane.setViewportView(licenseTextArea);
-		btnGitHubLink.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			       Desktop desktop = java.awt.Desktop.getDesktop();
-			       try {
-					desktop.browse(new URI("http://"+SharedInformation.GITHUB));
-				} catch (IOException e1) {
-					Logger.log("IOException while trying to convert String to URI in InfoPanel",e1);
-				} catch (URISyntaxException anEx) {
-					Logger.log("URISyntaxException while trying to convert String to URI in InfoPanel",anEx);
-				}
-			}
-			});
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setBackground(ToxicColors.SOFT_GREY);
 		FlowLayout flowLayoutBottomPanel = (FlowLayout) bottomPanel.getLayout();
