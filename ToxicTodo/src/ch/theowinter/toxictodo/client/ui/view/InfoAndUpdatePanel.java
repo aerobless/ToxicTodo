@@ -25,6 +25,9 @@ import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
 import ch.theowinter.toxictodo.sharedobjects.LogicEngine;
 import ch.theowinter.toxictodo.sharedobjects.SharedInformation;
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
+import java.awt.Font;
 
 public class InfoAndUpdatePanel extends JPanel {
 	private static final long serialVersionUID = -2022909795010691054L;
@@ -36,111 +39,94 @@ public class InfoAndUpdatePanel extends JPanel {
 	public InfoAndUpdatePanel(MainWindow mainWindow) {
 		this.main = mainWindow;
 		setBackground(ToxicColors.SOFT_GREY);
-		setBounds(100, 100, 515, 381);
+		setBounds(100, 100, 602, 391);
 		setBorder(null);
 		setLayout(new BorderLayout(0, 0));
 		
 		PanelHeaderWhite header = new PanelHeaderWhite();
 		header.setTitel("About ToxicTodo");
-		header.setSubTitel("Add better subtitle");
-		header.setIcon('\uf15b');
+		header.setSubTitel("Your personalized, universal, addictive todo application");
+		header.setIcon('\uf0ca');
 
 		add(header, BorderLayout.NORTH);
 		
-		JPanel rigthPanel = new JPanel();
-		add(rigthPanel, BorderLayout.CENTER);
-		
-		JLabel lblNewLabel = new JLabel("LOGO");
-		rigthPanel.add(lblNewLabel);
-		rigthPanel.setBackground(this.getBackground());
-		
 		JPanel leftPanel = new JPanel();
 		leftPanel.setBackground(ToxicColors.SOFT_GREY);
-		add(leftPanel, BorderLayout.WEST);
+		add(leftPanel, BorderLayout.CENTER);
 		GridBagLayout gblLeftPanel = new GridBagLayout();
-		gblLeftPanel.columnWidths = new int[]{128, 131, 0};
-		gblLeftPanel.rowHeights = new int[]{0, 0, 0, 21, 0, 0, 0, 0, 0, 0};
-		gblLeftPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-		gblLeftPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gblLeftPanel.columnWidths = new int[]{20, 58, 131, 15, 0};
+		gblLeftPanel.rowHeights = new int[]{20, 0, 0, 10, 0, 0, 0, 10, 19, 0, 0, 0};
+		gblLeftPanel.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gblLeftPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		leftPanel.setLayout(gblLeftPanel);
 		
-		JLabel spacer = new JLabel(" ");
-		GridBagConstraints gbcSpacer = new GridBagConstraints();
-		gbcSpacer.insets = new Insets(0, 0, 5, 5);
-		gbcSpacer.gridx = 0;
-		gbcSpacer.gridy = 0;
-		leftPanel.add(spacer, gbcSpacer);
-		
-		JLabel lblProgramVersion = new JLabel("Program Version:");
+		JLabel lblProgramVersion = new JLabel("Version:");
+		lblProgramVersion.setFont(new Font("Lucida Grande", Font.BOLD, 13));
 		GridBagConstraints gbcLblProgramVersion = new GridBagConstraints();
-		gbcLblProgramVersion.anchor = GridBagConstraints.EAST;
+		gbcLblProgramVersion.anchor = GridBagConstraints.WEST;
 		gbcLblProgramVersion.insets = new Insets(0, 0, 5, 5);
-		gbcLblProgramVersion.gridx = 0;
+		gbcLblProgramVersion.gridx = 1;
 		gbcLblProgramVersion.gridy = 1;
 		leftPanel.add(lblProgramVersion, gbcLblProgramVersion);
 		
-		JLabel lblVersion = new JLabel(getClass().getPackage().getImplementationVersion());
+		String versionNumber = getClass().getPackage().getImplementationVersion();
+		if(versionNumber == null){
+			versionNumber = "unoffical.local.build";
+		}
+		JLabel lblVersion = new JLabel(versionNumber);
 		GridBagConstraints gbcLblVersion = new GridBagConstraints();
 		gbcLblVersion.anchor = GridBagConstraints.WEST;
-		gbcLblVersion.insets = new Insets(0, 0, 5, 0);
-		gbcLblVersion.gridx = 1;
+		gbcLblVersion.insets = new Insets(0, 0, 5, 5);
+		gbcLblVersion.gridx = 2;
 		gbcLblVersion.gridy = 1;
 		leftPanel.add(lblVersion, gbcLblVersion);
 		
-		JLabel lblLastUpdated = new JLabel("Built on:");
-		GridBagConstraints gbcLblLastUpdated = new GridBagConstraints();
-		gbcLblLastUpdated.anchor = GridBagConstraints.EAST;
-		gbcLblLastUpdated.insets = new Insets(0, 0, 5, 5);
-		gbcLblLastUpdated.gridx = 0;
-		gbcLblLastUpdated.gridy = 2;
-		leftPanel.add(lblLastUpdated, gbcLblLastUpdated);
-		
-		JLabel lblUpdatedate = new JLabel(getClass().getPackage().getSpecificationTitle());
+		String buildDateInformation = getClass().getPackage().getSpecificationTitle();
+		if(buildDateInformation == null){
+			buildDateInformation = "This build was not downloaded from ToxicTodo's build-server.";
+		}
+		JLabel lblUpdatedate = new JLabel(buildDateInformation);
 		GridBagConstraints gbcLblUpdatedate = new GridBagConstraints();
+		gbcLblUpdatedate.gridwidth = 2;
 		gbcLblUpdatedate.anchor = GridBagConstraints.WEST;
-		gbcLblUpdatedate.insets = new Insets(0, 0, 5, 0);
+		gbcLblUpdatedate.insets = new Insets(0, 0, 5, 5);
 		gbcLblUpdatedate.gridx = 1;
 		gbcLblUpdatedate.gridy = 2;
 		leftPanel.add(lblUpdatedate, gbcLblUpdatedate);
 		
-		JLabel label = new JLabel(" ");
-		GridBagConstraints gbcLabel = new GridBagConstraints();
-		gbcLabel.insets = new Insets(0, 0, 5, 5);
-		gbcLabel.gridx = 0;
-		gbcLabel.gridy = 3;
-		leftPanel.add(label, gbcLabel);
-		
 		//AUTHOR:
 		JLabel lblAuthor = new JLabel("Author:");
+		lblAuthor.setFont(new Font("Lucida Grande", Font.BOLD, 13));
 		GridBagConstraints gbcLblAuthor = new GridBagConstraints();
-		gbcLblAuthor.anchor = GridBagConstraints.EAST;
+		gbcLblAuthor.anchor = GridBagConstraints.WEST;
 		gbcLblAuthor.insets = new Insets(0, 0, 5, 5);
-		gbcLblAuthor.gridx = 0;
+		gbcLblAuthor.gridx = 1;
 		gbcLblAuthor.gridy = 4;
 		leftPanel.add(lblAuthor, gbcLblAuthor);
 		
 		JLabel lblAuthorname = new JLabel(SharedInformation.AUTHOR);
 		GridBagConstraints gbcLblAuthorname = new GridBagConstraints();
 		gbcLblAuthorname.anchor = GridBagConstraints.WEST;
-		gbcLblAuthorname.insets = new Insets(0, 0, 5, 0);
-		gbcLblAuthorname.gridx = 1;
+		gbcLblAuthorname.insets = new Insets(0, 0, 5, 5);
+		gbcLblAuthorname.gridx = 2;
 		gbcLblAuthorname.gridy = 4;
 		leftPanel.add(lblAuthorname, gbcLblAuthorname);
 		
 		//WEBSITE:
 		JLabel lblWebsite = new JLabel("Website:");
+		lblWebsite.setFont(new Font("Lucida Grande", Font.BOLD, 13));
 		GridBagConstraints gbcLblWebsite = new GridBagConstraints();
-		gbcLblWebsite.anchor = GridBagConstraints.EAST;
+		gbcLblWebsite.anchor = GridBagConstraints.WEST;
 		gbcLblWebsite.insets = new Insets(0, 0, 5, 5);
-		gbcLblWebsite.gridx = 0;
+		gbcLblWebsite.gridx = 1;
 		gbcLblWebsite.gridy = 5;
 		leftPanel.add(lblWebsite, gbcLblWebsite);
 		
 		JButton btnWebsiteLink = new JButton(SharedInformation.WEBSITE);
 		GridBagConstraints gbcWebsite = new GridBagConstraints();
 		gbcWebsite.anchor = GridBagConstraints.WEST;
-		gbcWebsite.insets = new Insets(0, 0, 5, 0);
-		gbcWebsite.gridx = 1;
+		gbcWebsite.insets = new Insets(0, 0, 5, 5);
+		gbcWebsite.gridx = 2;
 		gbcWebsite.gridy = 5;
 		
 		//Ugly hack to get the URL button position right
@@ -175,18 +161,19 @@ public class InfoAndUpdatePanel extends JPanel {
 		
 		//GITHUB
 		JLabel lblGithub = new JLabel("GitHub:");
+		lblGithub.setFont(new Font("Lucida Grande", Font.BOLD, 13));
 		GridBagConstraints gbcLblGithub = new GridBagConstraints();
-		gbcLblGithub.anchor = GridBagConstraints.EAST;
+		gbcLblGithub.anchor = GridBagConstraints.WEST;
 		gbcLblGithub.insets = new Insets(0, 0, 5, 5);
-		gbcLblGithub.gridx = 0;
+		gbcLblGithub.gridx = 1;
 		gbcLblGithub.gridy = 6;
 		leftPanel.add(lblGithub, gbcLblGithub);
 		
 		JButton btnGitHubLink = new JButton(SharedInformation.GITHUB);
 		GridBagConstraints gbcLblGithublink = new GridBagConstraints();
 		gbcLblGithublink.anchor = GridBagConstraints.WEST;
-		gbcLblGithublink.insets = new Insets(0, 0, 5, 0);
-		gbcLblGithublink.gridx = 1;
+		gbcLblGithublink.insets = new Insets(0, 0, 5, 5);
+		gbcLblGithublink.gridx = 2;
 		gbcLblGithublink.gridy = 6;
 		
 		//Ugly hack to get the URL button position right
@@ -199,6 +186,28 @@ public class InfoAndUpdatePanel extends JPanel {
 		btnGitHubLink.setForeground(ToxicColors.LINK_BLUE);
 		btnGitHubLink.setBorderPainted(false);
 		leftPanel.add(gitHubLinkPanel, gbcLblGithublink);
+		
+		JLabel lblNewLabel = new JLabel("ToxicTodo uses a bunch of awesome open source projects:");
+		lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD, 13));
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.gridwidth = 2;
+		gbc_lblNewLabel.anchor = GridBagConstraints.WEST;
+		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel.gridx = 1;
+		gbc_lblNewLabel.gridy = 8;
+		leftPanel.add(lblNewLabel, gbc_lblNewLabel);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.gridwidth = 2;
+		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
+		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.gridx = 1;
+		gbc_scrollPane.gridy = 9;
+		leftPanel.add(scrollPane, gbc_scrollPane);
+		
+		JTextArea textArea = new JTextArea();
+		scrollPane.setViewportView(textArea);
 		btnGitHubLink.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
