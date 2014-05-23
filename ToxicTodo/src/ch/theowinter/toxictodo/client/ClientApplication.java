@@ -29,6 +29,9 @@ public class ClientApplication {
 	private final static String SETTINGS_FILE = logic.getJarDirectory("client_config.xml");
 	public final static ClientSettings INITAL_SETTINGS = loadSettings();
 	
+	//OSInfo
+	public final static String OS = getOS();
+	
 	private ClientApplication() {
 		super();
 	}
@@ -133,5 +136,22 @@ public class ClientApplication {
 	
 	public static void saveSettingsToDisk(){
 		logic.saveToXMLFile(INITAL_SETTINGS, SETTINGS_FILE);
+	}
+	
+	private static String getOS(){
+		String operatingSystemRaw = System.getProperty("os.name");
+		String output;
+		if("Windows".equals(operatingSystemRaw)){
+			output = "win";
+		} else if("Mac OS X".equals(operatingSystemRaw)){
+			output = "osx";
+		} else if("Linux".equals(operatingSystemRaw)){
+			output = "lin";
+		} else {
+			output = "unkown";
+			Logger.log("Operating System not recognized...");
+			Logger.log("Raw Data: "+operatingSystemRaw);
+		}
+		return output;
 	}
 }
