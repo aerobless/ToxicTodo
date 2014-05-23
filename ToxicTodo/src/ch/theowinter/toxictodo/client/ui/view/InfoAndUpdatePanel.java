@@ -95,7 +95,7 @@ public class InfoAndUpdatePanel extends JPanel {
 		gbcLblLastUpdated.gridy = 2;
 		leftPanel.add(lblLastUpdated, gbcLblLastUpdated);
 		
-		JLabel lblUpdatedate = new JLabel(timeBuilt());
+		JLabel lblUpdatedate = new JLabel(getClass().getPackage().getSpecificationTitle());
 		GridBagConstraints gbcLblUpdatedate = new GridBagConstraints();
 		gbcLblUpdatedate.anchor = GridBagConstraints.WEST;
 		gbcLblUpdatedate.insets = new Insets(0, 0, 5, 0);
@@ -257,9 +257,5 @@ public class InfoAndUpdatePanel extends JPanel {
 		} else{
 			Logger.log("User chose NOT TO try and update ToxicTodo.");
 		}
-	}
-	
-	public static String timeBuilt(){
-	    return "Built at @timeBuilt@ on @dateBuilt@";
 	}
 }
