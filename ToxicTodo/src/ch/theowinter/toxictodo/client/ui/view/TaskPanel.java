@@ -25,6 +25,8 @@ import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeader;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
+import java.awt.Component;
+import javax.swing.Box;
 
 public class TaskPanel extends JPanel {
 	private static final long serialVersionUID = -2022909795010691054L;
@@ -167,21 +169,24 @@ public class TaskPanel extends JPanel {
 		flowLayoutBottomPanel.setAlignment(FlowLayout.RIGHT);
 		add(bottomPanel, BorderLayout.SOUTH);
 		
-		JButton btnCancel = new JButton("Cancel");
-		bottomPanel.add(btnCancel);
-		btnCancel.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				cancelTask();
-			}
-        }); 
-		
 		JButton btnSaveLog = new JButton("Complete");
 		bottomPanel.add(btnSaveLog);
 		btnSaveLog.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				saveAndCompleteTask();
+			}
+        }); 
+		
+		Component horizontalStrut = Box.createHorizontalStrut(20);
+		bottomPanel.add(horizontalStrut);
+		
+		JButton btnCancel = new JButton("Cancel");
+		bottomPanel.add(btnCancel);
+		btnCancel.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				cancelTask();
 			}
         }); 
 		

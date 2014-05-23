@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -14,7 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -27,7 +30,11 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
@@ -118,6 +125,7 @@ public class MainWindow{
 	 */
 	public void launchGUI() {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					MainWindow window = new MainWindow(todoManager, settings);
@@ -176,18 +184,24 @@ public class MainWindow{
 		splitPane = new JSplitPane();
 		splitPane.setContinuousLayout(true);
 		splitPane.setResizeWeight(0.2);
-		splitPane.setBorder(new LineBorder(Color.blue,0));
+		splitPane.setBorder(new LineBorder(ToxicColors.BORDER_GREY,0));
 
 		frmToxictodo.getContentPane().add(splitPane, BorderLayout.CENTER);
 		
 		//Custom Split Divider (thin & black)
 		splitPane.setUI(new BasicSplitPaneUI() {
-	        public BasicSplitPaneDivider createDefaultDivider() {
+	        @Override
+			public BasicSplitPaneDivider createDefaultDivider() {
 	        return new BasicSplitPaneDivider(this) {
 				private static final long serialVersionUID = -3373489858114729264L;
 	            @Override
 	                public void paint(Graphics g) {
-	                g.setColor(ToxicColors.SOFT_TEXT_GREY);
+	            	if("osx".equals(ClientApplication.OS)){
+	                    g.setColor(ToxicColors.SOFT_TEXT_GREY);
+	            	} else {
+	            	  	setBorder(new LineBorder(ToxicColors.BORDER_GREY,0));
+	                    g.setColor(ToxicColors.BORDER_GREY);
+	            	}
 	                g.fillRect(0, 0, 1, getSize().height);
 	                    super.paint(g);
 	                }
@@ -336,7 +350,7 @@ public class MainWindow{
 				factoryButton = new FontIconButton(icon, tooltip, 14);
 			}
 			
-		/*	//Test
+			//Test
 			final Border raisedBevelBorder = BorderFactory.createRaisedBevelBorder();
 		    Insets insets = raisedBevelBorder.getBorderInsets(factoryButton);
 		    final EmptyBorder emptyBorder = new EmptyBorder(insets);
@@ -349,12 +363,12 @@ public class MainWindow{
 		        public void stateChanged(ChangeEvent e) {
 		            ButtonModel model = (ButtonModel) e.getSource();
 		            if (model.isRollover()) {
-		            	factoryButton.setBorder(raisedBevelBorder);
+		            	factoryButton.setForeground(ToxicColors.SELECTION_BLUE);
 		            } else {
-		            	factoryButton.setBorder(emptyBorder);
+		             	factoryButton.setForeground(ToxicColors.TEXT_GREY);
 		            }
 		        }
-		    });*/
+		    });
 		}
 		factoryButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		factoryButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -425,11 +439,20 @@ public class MainWindow{
 			buttonsLeft.add(new ButtonTextGroup(btnCompleteTask,"Complete"));
 			buttonsLeft.add(new ButtonTextGroup(btnRemoveTask,"Remove"));
 			
+			Component strut1 = Box.createHorizontalStrut(20);
+			buttonsLeft.add(strut1);
+			
 			buttonsLeft.add(new ButtonTextGroup(btnNewCategory,"New category"));
 			buttonsLeft.add(new ButtonTextGroup(btnEditCategory,"Edit category"));
 			
+			Component strut2 = Box.createHorizontalStrut(20);
+			buttonsLeft.add(strut2);
+			
 			buttonsLeft.add(new ButtonTextGroup(btnCompletedTaskList,"Completed Tasks"));
 			buttonsLeft.add(new ButtonTextGroup(btnStatistics,"Statistics"));
+			
+			Component strut3 = Box.createHorizontalStrut(20);
+			buttonsLeft.add(strut3);
 			
 			buttonsLeft.add(new ButtonTextGroup(btnRefresh,"Refresh"));
 			
@@ -647,7 +670,8 @@ public class MainWindow{
 	}
 	
 	class CategoryListSelectionHandler implements ListSelectionListener {
-	    public void valueChanged(ListSelectionEvent e) {
+	    @Override
+		public void valueChanged(ListSelectionEvent e) {
 	    	ListSelectionModel lsm = (ListSelectionModel)e.getSource();
 	    	TodoCategory currentCategory = categoryListModel.getElementAt(categoryList.getSelectedIndex());
 	    	taskListModel.changeCategory(currentCategory.getKeyword());

@@ -9,6 +9,8 @@ import javax.swing.ListCellRenderer;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
 
 public class CategoryListCellRenderer extends CategoryElementPanel implements ListCellRenderer<Object>{
+	public CategoryListCellRenderer() {
+	}
 
 	private static final long serialVersionUID = -2984750801578999639L;
 

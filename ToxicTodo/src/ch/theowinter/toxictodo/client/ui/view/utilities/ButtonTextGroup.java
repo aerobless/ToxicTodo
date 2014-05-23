@@ -8,7 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 public class ButtonTextGroup extends JPanel{
-	
+	private static final long serialVersionUID = 9182856902191336738L;
+
 	public ButtonTextGroup(FontIconButton button, String description) {
 		setLayout(new BorderLayout(0, 0));
 		
@@ -18,6 +19,5 @@ public class ButtonTextGroup extends JPanel{
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		add(lblNewLabel, BorderLayout.SOUTH);
 	}
-	private static final long serialVersionUID = -2573050760508438145L;
 	
 }
