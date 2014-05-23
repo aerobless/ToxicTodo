@@ -54,6 +54,14 @@
 		</move>
 		<copy file="licence.txt" tofile="build/licence.txt" />
 	</target>	
+	
+	<!-- get the time -->
+	<target name="get-time">
+	    <tstamp>
+	        <format property="buildTime" pattern="HH:mm:ss" locale="en,UK"/>
+	        <format property="buildDate" pattern="dd-MM-yyyy" locale="en,UK"/>
+	    </tstamp>
+	</target>
 
 	<!-- jar-client -->
 	<target name="jar-client" description="Packages JAR distribution">
@@ -64,7 +72,9 @@
 			<manifest>
 			    <attribute name="Main-Class" value="${main-class-client}"/>
 				<attribute name="Developer" value="${Author}" />
-				<attribute name="Implementation-Version" value="${Ver}.${build.number}"/> 
+				<attribute name="Implementation-Version" value="${Ver}.${build.number}"/>
+				<attribute name="timeBuilt" value="${buildTime}"/>
+				<attribute name="dateBuilt" value="${buildDate}"/>
 				<attribute name="Built-By" value="${user.name}" />
 			</manifest>
 		</jar>
@@ -79,6 +89,8 @@
 			    <attribute name="Main-Class" value="${main-class-server}"/>
 				<attribute name="Developer" value="${Author}" />
 				<attribute name="Implementation-Version" value="${Ver}.${build.number}"/> 
+				<attribute name="timeBuilt" value="${buildTime}"/> 
+				<attribute name="dateBuilt" value="${buildDate}"/> 
 				<attribute name="Built-By" value="${user.name}" />
 			</manifest>
 		</jar>
