@@ -79,7 +79,7 @@ public class InfoAndUpdatePanel extends JPanel {
 		gbcLblProgramVersion.gridy = 1;
 		leftPanel.add(lblProgramVersion, gbcLblProgramVersion);
 		
-		JLabel lblVersion = new JLabel(""+SharedInformation.VERSION);
+		JLabel lblVersion = new JLabel(getClass().getPackage().getImplementationVersion());
 		GridBagConstraints gbcLblVersion = new GridBagConstraints();
 		gbcLblVersion.anchor = GridBagConstraints.WEST;
 		gbcLblVersion.insets = new Insets(0, 0, 5, 0);

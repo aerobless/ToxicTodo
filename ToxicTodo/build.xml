@@ -1,7 +1,7 @@
 <project name="ToxicTodo" default="main" basedir=".">
 	<!-- env variables -->
 	<property name="target" location="target/" />
-	<property name="Ver" value="1.0" />
+	<property name="Ver" value="1.4" />
 	<property name="Author" value="Theo Winter (aerobless)" />
 	<property name="main-class-server"  value="ch.theowinter.toxictodo.server.ServerApplication"/>
 	<property name="main-class-client"  value="ch.theowinter.toxictodo.client.ClientApplication"/>
@@ -63,8 +63,8 @@
 		    <zipgroupfileset includes="*.jar" dir="lib"/>
 			<manifest>
 			    <attribute name="Main-Class" value="${main-class-client}"/>
-				<attribute name="ToxicTodo" value="Dev: ${Author}" />
-				<attribute name="Version" value="${Ver}-b${build.number}"/> 
+				<attribute name="Developer" value="${Author}" />
+				<attribute name="Implementation-Version" value="${Ver}.${build.number}"/> 
 				<attribute name="Built-By" value="${user.name}" />
 			</manifest>
 		</jar>
@@ -77,8 +77,8 @@
 		    <zipgroupfileset includes="*.jar" dir="lib"/>
 			<manifest>
 			    <attribute name="Main-Class" value="${main-class-server}"/>
-				<attribute name="ToxicTodo" value="Dev: ${Author}" />
-				<attribute name="Version" value="${Ver}-b${build.number}"/> 
+				<attribute name="Developer" value="${Author}" />
+				<attribute name="Implementation-Version" value="${Ver}.${build.number}"/> 
 				<attribute name="Built-By" value="${user.name}" />
 			</manifest>
 		</jar>
