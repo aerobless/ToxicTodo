@@ -98,7 +98,7 @@ public class MainWindow{
 	private InfoAndUpdatePanel infoPanel;
 	
 	//Construction Finals
-	final Dimension uniBarButtonSize = new Dimension(50, 27);
+	final Dimension uniBarButtonSize = toolbarButtonSize();
 	final Dimension bottomBarButtonSize = new Dimension(50, 27);
 	
 	/**
@@ -138,9 +138,12 @@ public class MainWindow{
 		frmToxictodo.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmToxictodo.getContentPane().setLayout(new BorderLayout(0, 0));
 		
+		
 		if("osx".equals(ClientApplication.OS)){
 			MacUtils.makeWindowLeopardStyle(frmToxictodo.getRootPane());
 		} else {
+			 System.setProperty("awt.useSystemAAFontSettings","off");
+			  System.setProperty("swing.aatext", "false");
 	        try {
 				UIManager.setLookAndFeel(
 						UIManager.getSystemLookAndFeelClassName());
@@ -304,15 +307,18 @@ public class MainWindow{
 	 */
 	private FontIconButton fontIconButtonFactory(char icon, String tooltip,
 			String textureType, String buttonPosition, Dimension size) {
-		FontIconButton factoryButton = new FontIconButton(icon, tooltip);
-		factoryButton.setVerticalTextPosition(SwingConstants.BOTTOM);
-		factoryButton.setHorizontalTextPosition(SwingConstants.CENTER);
+		FontIconButton factoryButton;
 		if("osx".equals(ClientApplication.OS)){
+			factoryButton = new FontIconButton(icon, tooltip);
 			factoryButton.putClientProperty("JButton.buttonType", textureType);
 			if(buttonPosition != null){
 				factoryButton.putClientProperty( "JButton.segmentPosition", buttonPosition);
 			}
+		}else{
+			factoryButton = new FontIconButton(icon, tooltip, 28);
 		}
+		factoryButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+		factoryButton.setHorizontalTextPosition(SwingConstants.CENTER);
 		factoryButton.setPreferredSize(size);
 		factoryButton.setMinimumSize(size);
 		factoryButton.setMaximumSize(size);
@@ -540,6 +546,16 @@ public class MainWindow{
 				}
 			}
         });
+	}
+	
+	private Dimension toolbarButtonSize(){
+		Dimension output;
+		if("osx".equals(ClientApplication.OS)){
+			output = new Dimension(50, 27);
+		}else{
+			output = new Dimension(65, 40);
+		}
+		return output;
 	}
 	
 	public void switchToTasks(){

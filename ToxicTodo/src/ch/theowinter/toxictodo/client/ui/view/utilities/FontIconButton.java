@@ -16,13 +16,21 @@ public class FontIconButton extends JButton{
 	 * @param tooltip
 	 */
 	public FontIconButton(char awesomeIcon, String tooltip) {
-    Font ttfReal = ToxicUIData.AWESOME_FONT.deriveFont(Font.BOLD, 14);
-    setFont(ttfReal);
-    setText(String.valueOf(awesomeIcon));
-    setForeground(ToxicColors.ICON_GREY);
-	setToolTipText(tooltip);
-	setFocusPainted(false);
-	setContentAreaFilled(false);
-	setBorderPainted(true);
+		initFontIconButton(awesomeIcon, tooltip, 14);
+	}
+	
+	public FontIconButton(char awesomeIcon, String tooltip, int fontSize) {
+		initFontIconButton(awesomeIcon, tooltip, fontSize);
+	}
+	
+	private void initFontIconButton(char awesomeIcon, String tooltip, int fontSize){
+		Font ttfReal = ToxicUIData.AWESOME_FONT.deriveFont(Font.BOLD, fontSize);
+		setFont(ttfReal);
+		setText(String.valueOf(awesomeIcon));
+		setForeground(ToxicColors.ICON_GREY);
+		setToolTipText(tooltip);
+		setFocusPainted(false);
+		setContentAreaFilled(false);
+		setBorderPainted(true);
 	}
 }
