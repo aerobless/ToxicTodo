@@ -23,6 +23,8 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -137,6 +139,13 @@ public class MainWindow{
 		
 		if("osx".equals(ClientApplication.OS)){
 			MacUtils.makeWindowLeopardStyle(frmToxictodo.getRootPane());
+		} else {
+	        try {
+				UIManager.setLookAndFeel(
+						UIManager.getSystemLookAndFeelClassName());
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException anEx) {
+				Logger.log("Unable to properly set the SystemLookAndFeel on a non-osx system.", anEx);
+			}
 		}
 		
 		//Initialize Panels:
@@ -297,9 +306,11 @@ public class MainWindow{
 		FontIconButton factoryButton = new FontIconButton(icon, tooltip);
 		factoryButton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		factoryButton.setHorizontalTextPosition(SwingConstants.CENTER);
-		factoryButton.putClientProperty("JButton.buttonType", textureType);
-		if(buttonPosition != null){
-			factoryButton.putClientProperty( "JButton.segmentPosition", buttonPosition);
+		if("osx".equals(ClientApplication.OS)){
+			factoryButton.putClientProperty("JButton.buttonType", textureType);
+			if(buttonPosition != null){
+				factoryButton.putClientProperty( "JButton.segmentPosition", buttonPosition);
+			}
 		}
 		factoryButton.setPreferredSize(size);
 		factoryButton.setMinimumSize(size);
@@ -317,13 +328,6 @@ public class MainWindow{
 	 * TODO: maybe needs to be replaced by a standard toolbar on windows, needs testing
 	 */
 	private void initToolbar(){
-		UnifiedToolBar unifiedToolbar = new UnifiedToolBar();
-		//Make the entire toolbar draggable, that's actually really awesome!
-		unifiedToolbar.installWindowDraggerOnWindow(frmToxictodo);
-		frmToxictodo.getContentPane().add(unifiedToolbar.getComponent(), BorderLayout.NORTH);
-		
-		//Toolbar buttons:
-		
 		//New Task:
 		btnNewTask = fontIconButtonFactory('\uf15b', "Create a new task.",SEGMENTED_TEXTURED,POS_FIRST, uniBarButtonSize);
 		btnNewTask.addActionListener(new ActionListener() {
@@ -408,13 +412,6 @@ public class MainWindow{
 			}
         });
 		
-		ButtonGroup taskGroup = new ButtonGroup();
-        taskGroup.add(btnNewTask);
-        taskGroup.add(btnCompleteTask);
-        taskGroup.add(btnRemoveTask);
-       
-        unifiedToolbar.addComponentToLeft(new LabeledComponentGroup("Tasks", taskGroup).getComponent());
-		
 		//Edit category:
 		btnEditCategory =   fontIconButtonFactory('\uf040',
 				"Edit an existing category.",
@@ -438,12 +435,8 @@ public class MainWindow{
 				}
 			}
         });	
-        ButtonGroup categoryGroup = new ButtonGroup();
-        categoryGroup.add(btnNewCategory);
-        categoryGroup.add(btnEditCategory);
-        unifiedToolbar.addComponentToLeft(new LabeledComponentGroup("Categories", categoryGroup).getComponent());
-        
-        //Add Log-Entry:
+		
+        //Historic/Completed Tasks:
 		btnCompletedTaskList = fontIconButtonFactory('\uf022',
 				"See a list of all completed tasks",
 				SEGMENTED_TEXTURED, POS_FIRST, uniBarButtonSize);
@@ -471,11 +464,6 @@ public class MainWindow{
 			}
         });	
 		
-		ButtonGroup statsGroup = new ButtonGroup();
-		statsGroup.add(btnCompletedTaskList);
-		statsGroup.add(btnStatistics);
-        unifiedToolbar.addComponentToLeft(new LabeledComponentGroup("Statistics", statsGroup).getComponent());
-        
 		FontIconButton btnRefresh = fontIconButtonFactory('\uf021',
 				"Synchronize this client to the server.",
 				TEXTURED, null, uniBarButtonSize);
@@ -490,16 +478,60 @@ public class MainWindow{
 					main.connectionWarning();
 				}
 			}
-        });      
-		unifiedToolbar.addComponentToLeft(new LabeledComponentGroup("Synchronize", btnRefresh).getComponent());
+        });   
 		
-		
-		//Search:
 		searchField = new JTextField(10);
         searchField.putClientProperty("JTextField.variant", "search");
-        unifiedToolbar.addComponentToRight(new LabeledComponentGroup(" ",
-        		searchField).getComponent());
-        searchField.getDocument().addDocumentListener(new SearchListener());	
+        searchField.getDocument().addDocumentListener(new SearchListener());
+		
+		if("osx".equals(ClientApplication.OS)){
+			UnifiedToolBar toolbarTop = new UnifiedToolBar();
+			toolbarTop.installWindowDraggerOnWindow(frmToxictodo);
+			frmToxictodo.getContentPane().add(toolbarTop.getComponent(), BorderLayout.NORTH);
+			
+			//Buttongroup "Tasks" 
+			ButtonGroup taskGroup = new ButtonGroup();
+	        taskGroup.add(btnNewTask);
+	        taskGroup.add(btnCompleteTask);
+	        taskGroup.add(btnRemoveTask);  
+	        toolbarTop.addComponentToLeft(new LabeledComponentGroup("Tasks", taskGroup).getComponent());
+		
+	        //Buttongroup "Category"
+	        ButtonGroup categoryGroup = new ButtonGroup();
+	        categoryGroup.add(btnNewCategory);
+	        categoryGroup.add(btnEditCategory);
+	        toolbarTop.addComponentToLeft(new LabeledComponentGroup("Categories", categoryGroup).getComponent());
+			
+	        //Buttongroup "Statistics"
+			ButtonGroup statsGroup = new ButtonGroup();
+			statsGroup.add(btnCompletedTaskList);
+			statsGroup.add(btnStatistics);
+	        toolbarTop.addComponentToLeft(new LabeledComponentGroup("Statistics", statsGroup).getComponent());
+	        
+	        //Button "Refresh"
+			toolbarTop.addComponentToLeft(new LabeledComponentGroup("Synchronize", btnRefresh).getComponent());
+			
+			//Search:
+	        toolbarTop.addComponentToRight(new LabeledComponentGroup(" ",
+	        		searchField).getComponent());
+		} else {
+			JPanel toolbarTop = new JPanel();
+			frmToxictodo.getContentPane().add(toolbarTop, BorderLayout.NORTH);
+			
+			toolbarTop.add(btnNewTask);
+			toolbarTop.add(btnCompleteTask);
+			toolbarTop.add(btnRemoveTask);
+			
+			toolbarTop.add(btnNewCategory);
+			toolbarTop.add(btnEditCategory);
+			
+			toolbarTop.add(btnCompletedTaskList);
+			toolbarTop.add(btnStatistics);
+			
+			toolbarTop.add(btnRefresh);
+			
+			toolbarTop.add(searchField);
+		}
 	}
 	
 	public void switchToTasks(){

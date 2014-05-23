@@ -140,9 +140,9 @@ public class ClientApplication {
 	private static String getOS(){
 		String operatingSystemRaw = System.getProperty("os.name");
 		String output;
-		if("Windows".equals(operatingSystemRaw)){
+		if(operatingSystemRaw.contains("Windows")){
 			output = "windows";
-		} else if("Mac OS X".equals(operatingSystemRaw)){
+		} else if(operatingSystemRaw.contains("Mac")){
 			output = "osx";
 		} else if("Linux".equals(operatingSystemRaw)){
 			output = "linux";
