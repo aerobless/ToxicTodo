@@ -161,57 +161,33 @@ public class MainWindow{
 	    }
 		);
 		splitPane.setDividerSize(1);
-		
-		//INIT CATEGORY PANEL 
-		JScrollPane categoryListscrollPane = new JScrollPane();
-		categoryListscrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		categoryListscrollPane.setBorder(new LineBorder(Color.black,0));
-		
-		JPanel categoryJPanel = new JPanel();
-		categoryListscrollPane.setViewportView(categoryJPanel);
-		categoryJPanel.setLayout(new BorderLayout(0, 0));
-		
-		categoryList = new JList<TodoCategory>(categoryListModel);
-		categoryJPanel.add(categoryList, BorderLayout.CENTER);
-		categoryList.setBackground(ToxicColors.SOFT_BLUE);
 
-		categoryList.setCellRenderer(new CategoryListCellRenderer());
-		ListSelectionModel listSelectionModel = categoryList.getSelectionModel();
-	    listSelectionModel.addListSelectionListener(new CategoryListSelectionHandler());
 		
-		splitPane.setLeftComponent(categoryListscrollPane);
-		splitPane.getLeftComponent().setMinimumSize(splitPaneMinimumSize);
-
-	    //TOTAL TASK PANEL
-	    taskListHeader = new PanelHeaderWhite();
+		//Initialize Panels:
+		initCategoryPanel(splitPaneMinimumSize);
+	    initTaskPanel();
 	    
-	    JScrollPane taskScrollPane = new JScrollPane();
-		taskScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-	    
-	    totalTaskPanel = new JPanel();
-	    totalTaskPanel.setLayout(new BorderLayout(0, 0));
-	    totalTaskPanel.add(taskListHeader, BorderLayout.NORTH);
-	    totalTaskPanel.add(taskScrollPane, BorderLayout.CENTER);
-	    
-		splitPane.setRightComponent(totalTaskPanel);
-
-		taskListModel = new TaskListModel(categoryListModel.getElementAt(0).getKeyword(), todoManager);
-		taskList = new JList<TodoTask>(taskListModel);
-		taskList.setCellRenderer(new TaskListCellRenderer());
-		taskList.setBackground(ToxicColors.SOFT_GREY);
-		
-		taskScrollPane.setViewportView(taskList);
-		taskScrollPane.setBackground(ToxicColors.SOFT_GREY);
-		taskScrollPane.setBorder(new LineBorder(Color.black,0));
-
+	    //Initialize Toolbars:
 		initToolbar();
-		 
-		//BOTTOM STATUS BAR
+		initBottomBar();
+		
+		//Needs to be called last or we get a nullpointer in the category-listener.
+		categoryList.setSelectedIndex(0);
+		
+		//Fix divider:
+		splitPane.setDividerLocation(250);
+	}
+
+	/**
+	 * TODO COMMENT ME!
+	 *
+	 */
+	private void initBottomBar() {
 		BottomBar bottomBar = new BottomBar(BottomBarSize.LARGE);
 	    bottomBar.addComponentToLeft(MacWidgetFactory.createEmphasizedLabel("Status"));  
 		frmToxictodo.getContentPane().add(bottomBar.getComponent(), BorderLayout.SOUTH);  
 
-		//Info:
+		//Info Button:
 		FontIconButton btnInfo = new FontIconButton('\uf129', "Information about the Program");
 		btnInfo.setVerticalTextPosition(SwingConstants.BOTTOM);
 		btnInfo.setHorizontalTextPosition(SwingConstants.CENTER);	
@@ -233,12 +209,61 @@ public class MainWindow{
         });      
 		bottomBar.addComponentToRight(btnInfo);
 		bottomBar.addComponentToRight(settingsButtonFactory());
+	}
+
+	/**
+	 * Initialize the taskPanel that is displayed on the right side
+	 * of the default main window, aka the right splitPane. The taskPanel can
+	 * be swapped out with other panels, e.g. "new category", "new task" etc.
+	 */
+	private void initTaskPanel() {
+		taskListHeader = new PanelHeaderWhite();
+	    
+	    JScrollPane taskScrollPane = new JScrollPane();
+		taskScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+	    
+	    totalTaskPanel = new JPanel();
+	    totalTaskPanel.setLayout(new BorderLayout(0, 0));
+	    totalTaskPanel.add(taskListHeader, BorderLayout.NORTH);
+	    totalTaskPanel.add(taskScrollPane, BorderLayout.CENTER);
+	    
+		splitPane.setRightComponent(totalTaskPanel);
+
+		taskListModel = new TaskListModel(categoryListModel.getElementAt(0).getKeyword(), todoManager);
+		taskList = new JList<TodoTask>(taskListModel);
+		taskList.setCellRenderer(new TaskListCellRenderer());
+		taskList.setBackground(ToxicColors.SOFT_GREY);
 		
-		//Needs to be called last or we get a nullpointer in the category-listener.
-		categoryList.setSelectedIndex(0);
+		taskScrollPane.setViewportView(taskList);
+		taskScrollPane.setBackground(ToxicColors.SOFT_GREY);
+		taskScrollPane.setBorder(new LineBorder(Color.black,0));
+	}
+
+	/**
+	 * Initialize the categoryPanel that is displayed on the left side
+	 * of the default main window, aka the left splitPane.
+	 *
+	 * @param splitPaneMinimumSize
+	 */
+	private void initCategoryPanel(Dimension splitPaneMinimumSize) {
+		JScrollPane categoryListscrollPane = new JScrollPane();
+		categoryListscrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		categoryListscrollPane.setBorder(new LineBorder(Color.black,0));
 		
-		//Fix divider:
-		splitPane.setDividerLocation(250);
+		JPanel categoryJPanel = new JPanel();
+		categoryListscrollPane.setViewportView(categoryJPanel);
+		categoryJPanel.setLayout(new BorderLayout(0, 0));
+		
+		categoryList = new JList<TodoCategory>(categoryListModel);
+		categoryJPanel.add(categoryList, BorderLayout.CENTER);
+		categoryList.setBackground(ToxicColors.SOFT_BLUE);
+
+		categoryList.setCellRenderer(new CategoryListCellRenderer());
+		ListSelectionModel listSelectionModel = categoryList.getSelectionModel();
+	    listSelectionModel.addListSelectionListener(new CategoryListSelectionHandler());
+		
+		splitPane.setLeftComponent(categoryListscrollPane);
+		splitPane.getLeftComponent().setMinimumSize(splitPaneMinimumSize);
 	}
 	
 	/**

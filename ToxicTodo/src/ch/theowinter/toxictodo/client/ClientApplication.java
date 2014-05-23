@@ -125,7 +125,6 @@ public class ClientApplication {
 		boolean firstTime = false;
 		File f = new File(SETTINGS_FILE);
 		if(!f.exists()){
-			//TODO: maybe add a better warning since this gets clear almost immediately in CLI version and not displayed at all in GUI.
 			Logger.log("INFORMATION:");
 			Logger.log("client_settings.xml has been created because you run ToxicTodo for the first time.");
 			Logger.log("Please edit the settings to chose your own server & port. - Localhost can be used for testing only.");
