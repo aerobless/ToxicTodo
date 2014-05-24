@@ -134,8 +134,8 @@ public class ClientTodoManager extends Observable{
 		//Handle repeateable tasks
 		if(finalizedTask.isDaily() || finalizedTask.isWeekly() || finalizedTask.isMonthly()){
 			if(writeToLog){
+				dataMessage = "LOG_TASK_AS_COMPLETED_ON_SERVER";
 				finalizedTask.setSummary(finalizedTask.getSummary()+" REPEATABLE:"+Math.random());
-				//TODO: WE NEED TO HANDLE THIS ON THE SERVER TOO..
 			}else{
 				Logger.log("Are you sure you want to remove this repeatable task permanently??");
 				//todo: make actual question window
