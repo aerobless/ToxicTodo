@@ -2,7 +2,6 @@ package ch.theowinter.toxictodo.sharedobjects.elements;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 public class TodoTask implements Serializable{
 	private static final long serialVersionUID = 8551171003242753417L;
@@ -24,7 +23,6 @@ public class TodoTask implements Serializable{
 	private String completionLocation;
 	private Date creationDate;
 	private Date completionDate;
-	private List<Date> repeatableHistory;
 
 	/**
 	 * Create a TodoTask with the simplified
@@ -152,10 +150,6 @@ public class TodoTask implements Serializable{
 
 	public Date getCreationDate() {
 		return creationDate;
-	}
-
-	public List<Date> getRepeatableHistory() {
-		return repeatableHistory;
 	}
 
 	public Date getCompletionDate() {
