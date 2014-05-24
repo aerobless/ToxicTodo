@@ -85,7 +85,7 @@ public class ClientTodoManager extends Observable{
 		return returnArray;
 	}
 	
-	public void addNewTask(int priority, String categoryKeyword, String taskDescription) throws IOException{
+	public void addNewTask(int priority, String categoryKeyword, String summary) throws IOException{
 		String location;
 		try {
 			location = locationEngine.getCity();
@@ -93,7 +93,7 @@ public class ClientTodoManager extends Observable{
 			Logger.log("Unable to get location.", e);
 			location = "No Location";
 		}
-		TodoTask task = new TodoTask(priority, false, taskDescription, location, new Date());
+		TodoTask task = new TodoTask(priority, summary, location, new Date());
 		
 		String outputCategoryKeyword = categoryKeyword;
 		if(categoryKeyword.equals(ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY)){
@@ -128,7 +128,7 @@ public class ClientTodoManager extends Observable{
 		}
 	}
 	
-	public void addAndCompleteTask(int priority, String categoryKeyword, String taskDescription) throws IOException{
+	public void addAndCompleteTask(int priority, String categoryKeyword, String summary) throws IOException{
 		String location;
 		try {
 			location = locationEngine.getCity();
@@ -136,7 +136,7 @@ public class ClientTodoManager extends Observable{
 			Logger.log("Unable to get location.", e);
 			location = "No Location";
 		}
-		TodoTask task = new TodoTask(priority, false, taskDescription, location, new Date());
+		TodoTask task = new TodoTask(priority, summary, location, new Date());
 		task.setCompletionDate(new Date());
 		task.setCompletionLocatioN(location);
 		

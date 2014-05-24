@@ -140,7 +140,7 @@ class ServerOpenConnectionThread implements Runnable {
 				ServerApplication.todoListHistoricTasks.addTask(dataFromClient.getAdditionalMessage(), dataFromClient.getTodoTask());
 				
 				java.util.Date date= new java.util.Date();
-				ServerApplication.writeLogToFile("CompletedTasks.txt", new Timestamp(date.getTime())+" : COMPLETED : "+dataFromClient.getTodoTask().getText());
+				ServerApplication.writeLogToFile("CompletedTasks.txt", new Timestamp(date.getTime())+" : COMPLETED : "+dataFromClient.getTodoTask().getSummary());
 				dataToClient = new ToxicDatagram("Answering successful request to remove & log task");
 				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
@@ -160,7 +160,7 @@ class ServerOpenConnectionThread implements Runnable {
 				ServerApplication.todoListHistoricTasks.addTask(dataFromClient.getAdditionalMessage(), dataFromClient.getTodoTask());
 				
 				java.util.Date date= new java.util.Date();
-				ServerApplication.writeLogToFile("CompletedTasks.txt", new Timestamp(date.getTime())+" : COMPLETED : "+dataFromClient.getTodoTask().getText());
+				ServerApplication.writeLogToFile("CompletedTasks.txt", new Timestamp(date.getTime())+" : COMPLETED : "+dataFromClient.getTodoTask().getSummary());
 				dataToClient = new ToxicDatagram("Answering successful request to remove & log task");
 				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {

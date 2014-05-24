@@ -10,7 +10,9 @@ public class TodoTask implements Serializable{
 	//Task Properties:
 	private int priority;
 	private char icon;
-	private boolean repeatable;
+	private boolean daily;
+	private boolean weekly;
+	private boolean monthly;
 	
 	//Task Data:
 	private String summary;
@@ -30,9 +32,9 @@ public class TodoTask implements Serializable{
 	 *
 	 * @param aTaskText
 	 */
-	public TodoTask(String aTaskText) {
+	public TodoTask(String summary) {
 		super();
-		text = aTaskText;
+		this.summary = summary;
 	}
 	
 	/**
@@ -41,17 +43,15 @@ public class TodoTask implements Serializable{
 	 * then use the simplified constructor.
 	 *
 	 * @param priority
-	 * @param repeatable
 	 * @param text
 	 * @param creationLocation
 	 * @param creationDate
 	 */
-	public TodoTask(int priority, boolean repeatable, String text,
+	public TodoTask(int priority, String summary,
 			String creationLocation, Date creationDate) {
 		super();
 		this.priority = priority;
-		this.repeatable = repeatable;
-		this.text = text;
+		this.summary = summary;
 		this.creationLocation = creationLocation;
 		this.creationDate = creationDate;
 	}
@@ -86,12 +86,28 @@ public class TodoTask implements Serializable{
 		this.icon = icon;
 	}
 
-	public boolean isRepeatable() {
-		return repeatable;
+	public boolean isDaily() {
+		return daily;
 	}
 
-	public void setRepeatable(boolean repeatable) {
-		this.repeatable = repeatable;
+	public void setDaily(boolean daily) {
+		this.daily = daily;
+	}
+
+	public boolean isWeekly() {
+		return weekly;
+	}
+
+	public void setWeekly(boolean weekly) {
+		this.weekly = weekly;
+	}
+
+	public boolean isMonthly() {
+		return monthly;
+	}
+
+	public void setMonthly(boolean monthly) {
+		this.monthly = monthly;
 	}
 
 	public String getSummary() {

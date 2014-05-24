@@ -105,8 +105,8 @@ public class TodoList implements Serializable {
 	 * @throws Exception
 	 */
 	public void removeTask(TodoTask todoTask, String category) throws Exception{
-		if(categoryMap.get(category).get(todoTask.getText())!=null){
-			categoryMap.get(category).removeTask(todoTask.getText());	
+		if(categoryMap.get(category).get(todoTask.getSummary())!=null){
+			categoryMap.get(category).removeTask(todoTask.getSummary());	
 		} else{
 			throw new Exception("Task doesn't exist.");
 		}
@@ -128,7 +128,7 @@ public class TodoList implements Serializable {
 		//We remove the allTask category if it exists to prevent duplicate findings of tasks.
 		localCategoryMap.remove(ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY);
 		for (TodoCategory category : localCategoryMap.values()) {
-			if((category.get(task.getText()))!=null){
+			if((category.get(task.getSummary()))!=null){
 				return category.getKeyword();
 			}
 		}

@@ -33,7 +33,7 @@ import javax.swing.Box;
 public class TaskPanel extends JPanel {
 	private static final long serialVersionUID = -2022909795010691054L;
 
-	private JTextArea txtAreaTaskDescription;
+	private JTextArea descriptionTextArea;
 	private JTextField txtFieldSummary;
 	private JComboBox<String> priorityCombobox;
 	private MainWindow main;
@@ -166,9 +166,9 @@ public class TaskPanel extends JPanel {
 		gbcScrollPane.gridy = 5;
 		centerPanel.add(scrollPane, gbcScrollPane);
 		
-		txtAreaTaskDescription = new JTextArea();
-		txtAreaTaskDescription.setLineWrap(true);
-		scrollPane.setViewportView(txtAreaTaskDescription);
+		descriptionTextArea = new JTextArea();
+		descriptionTextArea.setLineWrap(true);
+		scrollPane.setViewportView(descriptionTextArea);
 		scrollPane.setBorder(txtFieldSummary.getBorder());
 		
 		JPanel buttonRowJPanel = new JPanel();
@@ -216,13 +216,13 @@ public class TaskPanel extends JPanel {
 	
 	public void newTask(){
 		priorityCombobox.setSelectedIndex(0);
-		txtAreaTaskDescription.setText("");
+		descriptionTextArea.setText("");
 		txtFieldSummary.setText("");
 	}
 	
 	private void cancelTask(){
 		priorityCombobox.setSelectedIndex(0);
-		txtAreaTaskDescription.setText("");
+		descriptionTextArea.setText("");
 		txtFieldSummary.setText("");
 		main.switchToTasks();
 	}
@@ -230,7 +230,7 @@ public class TaskPanel extends JPanel {
 	private void saveAndCompleteTask(){
 		int taskPriority = priorityCombobox.getSelectedIndex();
 		TodoCategory category = main.getSelectedCategory();
-		String taskDescripition = txtAreaTaskDescription.getText();
+		String taskDescripition = descriptionTextArea.getText();
 		if(category != null && taskDescripition.length()>1 && taskPriority>-1){
 			try {
 				todoManager.addAndCompleteTask(taskPriority,category.getKeyword(), taskDescripition);
@@ -247,10 +247,11 @@ public class TaskPanel extends JPanel {
 	private void saveTask(){
 		int taskPriority = priorityCombobox.getSelectedIndex();
 		TodoCategory category = main.getSelectedCategory();
-		String taskDescripition = txtAreaTaskDescription.getText();
-		if(category != null && taskDescripition.length()>1 && taskPriority>-1){
+		//String taskDescripition = descriptionTextArea.getText();
+		String taskSummary = txtFieldSummary.getText();
+		if(category != null && taskSummary.length()>1 && taskPriority>-1){
 			try {
-				todoManager.addNewTask(taskPriority,category.getKeyword(), taskDescripition);
+				todoManager.addNewTask(taskPriority,category.getKeyword(), taskSummary);
 				main.switchToTasks();
 			} catch (IOException anEx) {
 				Logger.log("Connection lost while trying to save task.", anEx);

@@ -68,7 +68,7 @@ public class TaskListModel extends AbstractListModel<TodoTask> implements Observ
 	public void filter(String input){
 		List<TodoTask> workList = new ArrayList<TodoTask>();
 		for(TodoTask aTask : originalTaskList){
-			if(aTask.getText().toLowerCase().contains(input.toLowerCase())){
+			if(aTask.getSummary().toLowerCase().contains(input.toLowerCase())){
 				workList.add(aTask);
 			}
 		}
