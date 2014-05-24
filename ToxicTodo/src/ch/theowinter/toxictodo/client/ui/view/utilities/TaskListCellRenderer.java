@@ -16,7 +16,22 @@ public class TaskListCellRenderer extends IconTextElement implements ListCellRen
 			Object value, int index, boolean isSelected, boolean cellHasFocus) {
 		TodoTask currentTask = (TodoTask)value;
 
-		this.setText(ToxicUIData.PRIORITY_ARRAY.get(currentTask.getPriority()).getPriorityIcon(), currentTask.getSummary());
+		String taskDescription = currentTask.getSummary();
+		if(currentTask.isDaily()){
+			taskDescription = "<b>[DAILY]</b> "+taskDescription;
+		}
+		if(currentTask.isWeekly()){
+			taskDescription = "<b>[WEEKLY]</b> "+taskDescription;
+		}
+		if(currentTask.isMonthly()){
+			taskDescription = "<b>[MONTHLY]</b> "+taskDescription;
+		}
+		
+		//Yellow-Highlight of deadly important tasks
+		if(currentTask.getPriority()==3){
+			taskDescription = "<p style='background-color:yellow;'><font color='black'>"+taskDescription;
+		}
+		this.setText(ToxicUIData.PRIORITY_ARRAY.get(currentTask.getPriority()).getPriorityIcon(), taskDescription);
 
 		Color background = ToxicColors.SOFT_GREY;
             

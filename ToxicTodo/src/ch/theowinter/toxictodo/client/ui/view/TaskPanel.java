@@ -32,13 +32,17 @@ import javax.swing.Box;
 
 public class TaskPanel extends JPanel {
 	private static final long serialVersionUID = -2022909795010691054L;
-
-	private JTextArea descriptionTextArea;
-	private JTextField txtFieldSummary;
-	private JComboBox<String> priorityCombobox;
-	private MainWindow main;
 	private ClientTodoManager todoManager;
-	private JTextField txtFieldHyperlink;
+	private MainWindow main;
+	
+	//Data
+	private JComboBox<String> priorityCombobox;
+	private JTextField summaryTextField;
+	private JTextField hyperlinkTextField;
+	private JCheckBox dailyCheckbox;
+	private JCheckBox weeklyCheckbox;
+	private JCheckBox monthlyCheckbox;
+	private JTextArea descriptionTextArea;
 
 	/**
 	 * Create the frame.
@@ -101,14 +105,14 @@ public class TaskPanel extends JPanel {
 		gbcLblSummary.gridy = 2;
 		centerPanel.add(lblSummary, gbcLblSummary);
 		
-		txtFieldSummary = new JTextField();
+		summaryTextField = new JTextField();
 		GridBagConstraints gbcTxtFieldSummary = new GridBagConstraints();
 		gbcTxtFieldSummary.insets = new Insets(0, 0, 5, 5);
 		gbcTxtFieldSummary.fill = GridBagConstraints.HORIZONTAL;
 		gbcTxtFieldSummary.gridx = 1;
 		gbcTxtFieldSummary.gridy = 2;
-		centerPanel.add(txtFieldSummary, gbcTxtFieldSummary);
-		txtFieldSummary.setColumns(10);
+		centerPanel.add(summaryTextField, gbcTxtFieldSummary);
+		summaryTextField.setColumns(10);
 		
 		JLabel lblHyperlink = new JLabel("Hyperlink:");
 		GridBagConstraints gbcLblHyperlink = new GridBagConstraints();
@@ -118,14 +122,14 @@ public class TaskPanel extends JPanel {
 		gbcLblHyperlink.gridy = 3;
 		centerPanel.add(lblHyperlink, gbcLblHyperlink);
 		
-		txtFieldHyperlink = new JTextField();
+		hyperlinkTextField = new JTextField();
 		GridBagConstraints gbcTxtFieldHyperlink = new GridBagConstraints();
 		gbcTxtFieldHyperlink.insets = new Insets(0, 0, 5, 5);
 		gbcTxtFieldHyperlink.fill = GridBagConstraints.HORIZONTAL;
 		gbcTxtFieldHyperlink.gridx = 1;
 		gbcTxtFieldHyperlink.gridy = 3;
-		centerPanel.add(txtFieldHyperlink, gbcTxtFieldHyperlink);
-		txtFieldHyperlink.setColumns(10);
+		centerPanel.add(hyperlinkTextField, gbcTxtFieldHyperlink);
+		hyperlinkTextField.setColumns(10);
 		
 		JPanel repeatableRowJPanel = new JPanel();
 		repeatableRowJPanel.setOpaque(false);
@@ -140,14 +144,14 @@ public class TaskPanel extends JPanel {
 		gbc_repeatableRowJPanel.gridy = 4;
 		centerPanel.add(repeatableRowJPanel, gbc_repeatableRowJPanel);
 		
-		JCheckBox chckbxDaily = new JCheckBox("Daily");
-		repeatableRowJPanel.add(chckbxDaily);
+		dailyCheckbox = new JCheckBox("Daily");
+		repeatableRowJPanel.add(dailyCheckbox);
 		
-		JCheckBox checkBoxRepeatable = new JCheckBox("Weekly");
-		repeatableRowJPanel.add(checkBoxRepeatable);
+		weeklyCheckbox = new JCheckBox("Weekly");
+		repeatableRowJPanel.add(weeklyCheckbox);
 		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("Monthly");
-		repeatableRowJPanel.add(chckbxNewCheckBox);
+		monthlyCheckbox = new JCheckBox("Monthly");
+		repeatableRowJPanel.add(monthlyCheckbox);
 		
 		JLabel lblDescription = new JLabel("Description:");
 		GridBagConstraints gbcLblDescription = new GridBagConstraints();
@@ -169,7 +173,7 @@ public class TaskPanel extends JPanel {
 		descriptionTextArea = new JTextArea();
 		descriptionTextArea.setLineWrap(true);
 		scrollPane.setViewportView(descriptionTextArea);
-		scrollPane.setBorder(txtFieldSummary.getBorder());
+		scrollPane.setBorder(summaryTextField.getBorder());
 		
 		JPanel buttonRowJPanel = new JPanel();
 		buttonRowJPanel.setOpaque(false);
@@ -217,21 +221,23 @@ public class TaskPanel extends JPanel {
 	public void newTask(){
 		priorityCombobox.setSelectedIndex(0);
 		descriptionTextArea.setText("");
-		txtFieldSummary.setText("");
+		summaryTextField.setText("");
 	}
 	
 	private void cancelTask(){
 		priorityCombobox.setSelectedIndex(0);
 		descriptionTextArea.setText("");
-		txtFieldSummary.setText("");
+		summaryTextField.setText("");
 		main.switchToTasks();
 	}
 	
+	//TODO: add additional properties such as description, hyperlink, daily etc.
+	//TODO: make less duplicated
 	private void saveAndCompleteTask(){
 		int taskPriority = priorityCombobox.getSelectedIndex();
 		TodoCategory category = main.getSelectedCategory();
 		String taskDescripition = descriptionTextArea.getText();
-		if(category != null && taskDescripition.length()>1 && taskPriority>-1){
+		if(fieldsVerified()){
 			try {
 				todoManager.addAndCompleteTask(taskPriority,category.getKeyword(), taskDescripition);
 				main.switchToTasks();
@@ -245,13 +251,18 @@ public class TaskPanel extends JPanel {
 	}
 	
 	private void saveTask(){
-		int taskPriority = priorityCombobox.getSelectedIndex();
-		TodoCategory category = main.getSelectedCategory();
-		//String taskDescripition = descriptionTextArea.getText();
-		String taskSummary = txtFieldSummary.getText();
-		if(category != null && taskSummary.length()>1 && taskPriority>-1){
+		if(fieldsVerified()){
 			try {
-				todoManager.addNewTask(taskPriority,category.getKeyword(), taskSummary);
+				int taskPriority = priorityCombobox.getSelectedIndex();
+				TodoCategory category = main.getSelectedCategory();
+				String taskSummary = summaryTextField.getText();
+				String taskDescription = descriptionTextArea.getText();
+				String hyperlink = hyperlinkTextField.getText();
+				boolean daily = dailyCheckbox.isSelected();
+				boolean weekly = weeklyCheckbox.isSelected();
+				boolean monthly = monthlyCheckbox.isSelected();
+				
+				todoManager.addNewTask(taskPriority,category.getKeyword(), taskSummary, taskDescription, hyperlink, daily, weekly, monthly);
 				main.switchToTasks();
 			} catch (IOException anEx) {
 				Logger.log("Connection lost while trying to save task.", anEx);
@@ -260,5 +271,17 @@ public class TaskPanel extends JPanel {
 		}else{
 			main.genericWarning("Unable to save", "Have you filled in all fields?");
 		}
+	}
+
+	/**
+	 * Verifies that all fields are filled in correctly.
+	 * 
+	 * @param taskPriority
+	 * @param category
+	 * @param taskSummary
+	 * @return
+	 */
+	private boolean fieldsVerified() {
+		return main.getSelectedCategory() != null && summaryTextField.getText().length()>1 && priorityCombobox.getSelectedIndex()>-1;
 	}
 }

@@ -85,7 +85,9 @@ public class ClientTodoManager extends Observable{
 		return returnArray;
 	}
 	
-	public void addNewTask(int priority, String categoryKeyword, String summary) throws IOException{
+	public void addNewTask(int priority, String categoryKeyword, String summary, String taskDescription,
+			String hyperlink, boolean daily, boolean weekly, boolean monthly) throws IOException{
+		
 		String location;
 		try {
 			location = locationEngine.getCity();
@@ -93,7 +95,13 @@ public class ClientTodoManager extends Observable{
 			Logger.log("Unable to get location.", e);
 			location = "No Location";
 		}
+		//Setting additional properties
 		TodoTask task = new TodoTask(priority, summary, location, new Date());
+		task.setDescription(taskDescription);
+		task.setHyperlink(hyperlink);
+		task.setDaily(daily);
+		task.setWeekly(weekly);
+		task.setMonthly(monthly);
 		
 		String outputCategoryKeyword = categoryKeyword;
 		if(categoryKeyword.equals(ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY)){

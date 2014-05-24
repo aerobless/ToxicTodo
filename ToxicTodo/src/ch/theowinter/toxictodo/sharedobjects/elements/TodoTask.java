@@ -15,7 +15,7 @@ public class TodoTask implements Serializable{
 	
 	//Task Data:
 	private String summary;
-	private String text;
+	private String description;
 	private String hyperlink;
 	
 	//Task History:
@@ -27,7 +27,7 @@ public class TodoTask implements Serializable{
 
 	/**
 	 * Create a TodoTask with the simplified
-	 * constructor. Requires only a text.
+	 * constructor. Requires only a description.
 	 *
 	 * @param aTaskText
 	 */
@@ -38,11 +38,11 @@ public class TodoTask implements Serializable{
 	
 	/**
 	 * Create a a TodoTask with the full
-	 * constructor. (If you only have a todo-text
+	 * constructor. (If you only have a todo-description
 	 * then use the simplified constructor.
 	 *
 	 * @param priority
-	 * @param text
+	 * @param description
 	 * @param creationLocation
 	 * @param creationDate
 	 */
@@ -117,12 +117,12 @@ public class TodoTask implements Serializable{
 		this.summary = summary;
 	}
 
-	public String getText() {
-		return text;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setText(String text) {
-		this.text = text;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getHyperlink() {
