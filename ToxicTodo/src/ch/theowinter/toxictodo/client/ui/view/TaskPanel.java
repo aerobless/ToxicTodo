@@ -25,7 +25,9 @@ import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeader;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
+
 import java.awt.Component;
+
 import javax.swing.Box;
 
 public class TaskPanel extends JPanel {
@@ -51,7 +53,7 @@ public class TaskPanel extends JPanel {
 		
 		PanelHeader header = new PanelHeader();
 		header.setTitel("Add a new task");
-		header.setSubTitel("Press 'enter' when you're done.");
+		header.setSubTitel("Press 'save' when you're done.");
 		header.setIcon('\uf15b');
 
 		add(header, BorderLayout.NORTH);
@@ -60,10 +62,10 @@ public class TaskPanel extends JPanel {
 		centerPanel.setBackground(ToxicColors.SOFT_GREY);
 		add(centerPanel, BorderLayout.CENTER);
 		GridBagLayout gblCenterPanel = new GridBagLayout();
-		gblCenterPanel.columnWidths = new int[]{124, 0, 0, 0};
-		gblCenterPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+		gblCenterPanel.columnWidths = new int[]{108, 0, 20, 0};
+		gblCenterPanel.rowHeights = new int[]{15, 0, 0, 0, 0, 0, 5, 0, 0};
 		gblCenterPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gblCenterPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gblCenterPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		centerPanel.setLayout(gblCenterPanel);
 		
 		JLabel spacer = new JLabel(" ");
@@ -73,7 +75,7 @@ public class TaskPanel extends JPanel {
 		gbcSpacer.gridy = 0;
 		centerPanel.add(spacer, gbcSpacer);
 		
-		JLabel lblType = new JLabel("Priority:");
+		JLabel lblType = new JLabel("Task Priority:");
 		GridBagConstraints gbcLblType = new GridBagConstraints();
 		gbcLblType.anchor = GridBagConstraints.EAST;
 		gbcLblType.insets = new Insets(0, 0, 5, 5);
@@ -125,21 +127,27 @@ public class TaskPanel extends JPanel {
 		centerPanel.add(txtFieldHyperlink, gbcTxtFieldHyperlink);
 		txtFieldHyperlink.setColumns(10);
 		
-		JLabel lblRepeatable = new JLabel("Repeatable:");
-		GridBagConstraints gbcLblRepeatable = new GridBagConstraints();
-		gbcLblRepeatable.anchor = GridBagConstraints.EAST;
-		gbcLblRepeatable.insets = new Insets(0, 0, 5, 5);
-		gbcLblRepeatable.gridx = 0;
-		gbcLblRepeatable.gridy = 4;
-		centerPanel.add(lblRepeatable, gbcLblRepeatable);
+		JPanel repeatableRowJPanel = new JPanel();
+		repeatableRowJPanel.setOpaque(false);
+		FlowLayout fl_repeatableRowJPanel = (FlowLayout) repeatableRowJPanel.getLayout();
+		fl_repeatableRowJPanel.setVgap(0);
+		fl_repeatableRowJPanel.setHgap(0);
+		fl_repeatableRowJPanel.setAlignment(FlowLayout.LEFT);
+		GridBagConstraints gbc_repeatableRowJPanel = new GridBagConstraints();
+		gbc_repeatableRowJPanel.insets = new Insets(0, 0, 5, 5);
+		gbc_repeatableRowJPanel.fill = GridBagConstraints.BOTH;
+		gbc_repeatableRowJPanel.gridx = 1;
+		gbc_repeatableRowJPanel.gridy = 4;
+		centerPanel.add(repeatableRowJPanel, gbc_repeatableRowJPanel);
 		
-		JCheckBox checkBoxRepeatable = new JCheckBox("");
-		GridBagConstraints gbcCheckBoxRepeatable = new GridBagConstraints();
-		gbcCheckBoxRepeatable.anchor = GridBagConstraints.WEST;
-		gbcCheckBoxRepeatable.insets = new Insets(0, 0, 5, 5);
-		gbcCheckBoxRepeatable.gridx = 1;
-		gbcCheckBoxRepeatable.gridy = 4;
-		centerPanel.add(checkBoxRepeatable, gbcCheckBoxRepeatable);
+		JCheckBox chckbxDaily = new JCheckBox("Daily");
+		repeatableRowJPanel.add(chckbxDaily);
+		
+		JCheckBox checkBoxRepeatable = new JCheckBox("Weekly");
+		repeatableRowJPanel.add(checkBoxRepeatable);
+		
+		JCheckBox chckbxNewCheckBox = new JCheckBox("Monthly");
+		repeatableRowJPanel.add(chckbxNewCheckBox);
 		
 		JLabel lblDescription = new JLabel("Description:");
 		GridBagConstraints gbcLblDescription = new GridBagConstraints();
@@ -163,14 +171,20 @@ public class TaskPanel extends JPanel {
 		scrollPane.setViewportView(txtAreaTaskDescription);
 		scrollPane.setBorder(txtFieldSummary.getBorder());
 		
-		JPanel bottomPanel = new JPanel();
-		bottomPanel.setBackground(ToxicColors.SOFT_GREY);
-		FlowLayout flowLayoutBottomPanel = (FlowLayout) bottomPanel.getLayout();
-		flowLayoutBottomPanel.setAlignment(FlowLayout.RIGHT);
-		add(bottomPanel, BorderLayout.SOUTH);
+		JPanel buttonRowJPanel = new JPanel();
+		buttonRowJPanel.setOpaque(false);
+		FlowLayout flowLayout = (FlowLayout) buttonRowJPanel.getLayout();
+		flowLayout.setHgap(0);
+		flowLayout.setAlignment(FlowLayout.RIGHT);
+		GridBagConstraints gbc_buttonRowJPanel = new GridBagConstraints();
+		gbc_buttonRowJPanel.insets = new Insets(0, 0, 0, 5);
+		gbc_buttonRowJPanel.fill = GridBagConstraints.BOTH;
+		gbc_buttonRowJPanel.gridx = 1;
+		gbc_buttonRowJPanel.gridy = 7;
+		centerPanel.add(buttonRowJPanel, gbc_buttonRowJPanel);
 		
 		JButton btnSaveLog = new JButton("Complete");
-		bottomPanel.add(btnSaveLog);
+		buttonRowJPanel.add(btnSaveLog);
 		btnSaveLog.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -178,11 +192,11 @@ public class TaskPanel extends JPanel {
 			}
         }); 
 		
-		Component horizontalStrut = Box.createHorizontalStrut(20);
-		bottomPanel.add(horizontalStrut);
+		Component horizontalStrut = Box.createHorizontalStrut(30);
+		buttonRowJPanel.add(horizontalStrut);
 		
 		JButton btnCancel = new JButton("Cancel");
-		bottomPanel.add(btnCancel);
+		buttonRowJPanel.add(btnCancel);
 		btnCancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -191,13 +205,13 @@ public class TaskPanel extends JPanel {
         }); 
 		
 		JButton btnSave = new JButton("Save");
-		bottomPanel.add(btnSave);
+		buttonRowJPanel.add(btnSave);
 		btnSave.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				saveTask();
 			}
-        }); 
+        });
 	}
 	
 	public void newTask(){
