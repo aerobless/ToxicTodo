@@ -130,6 +130,18 @@ public class ClientTodoManager extends Observable{
 		if(categoryKeyword.equals(ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY)){
 			outputCategoryKeyword = todoList.getCategoryKeywordForTask(finalizedTask);
 		}
+		
+		//Handle repeateable tasks
+		if(finalizedTask.isDaily() || finalizedTask.isWeekly() || finalizedTask.isMonthly()){
+			if(writeToLog){
+				finalizedTask.setSummary(finalizedTask.getSummary()+" REPEATABLE:"+Math.random());
+				//TODO: WE NEED TO HANDLE THIS ON THE SERVER TOO..
+			}else{
+				Logger.log("Are you sure you want to remove this repeatable task permanently??");
+				//todo: make actual question window
+			}
+		}
+		
 		if(categoryKeyword != null){
 			ClientApplication.sendToServer(new ToxicDatagram(dataMessage, finalizedTask , outputCategoryKeyword));
 			updateList();
