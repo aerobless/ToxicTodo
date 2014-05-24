@@ -23,6 +23,7 @@ public class TodoTask implements Serializable{
 	private String completionLocation;
 	private Date creationDate;
 	private Date completionDate;
+	private int completionCount;
 
 	/**
 	 * Create a TodoTask with the simplified
@@ -158,5 +159,13 @@ public class TodoTask implements Serializable{
 
 	public void setCompletionDate(Date completedOn) {
 		this.completionDate = completedOn;
+	}
+
+	public int getCompletionCount() {
+		return completionCount;
+	}
+
+	public void incrementCompletionCount() {
+		completionCount +=1;
 	}
 }
