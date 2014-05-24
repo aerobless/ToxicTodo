@@ -60,7 +60,7 @@ public class CategoryPanel extends JPanel {
 		centerPanel.setBackground(ToxicColors.SOFT_GREY);
 		add(centerPanel, BorderLayout.CENTER);
 		GridBagLayout gblCenterPanel = new GridBagLayout();
-		gblCenterPanel.columnWidths = new int[]{124, 0, 0, 0};
+		gblCenterPanel.columnWidths = new int[]{124, 0, 20, 0};
 		gblCenterPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
 		gblCenterPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gblCenterPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
@@ -204,8 +204,7 @@ public class CategoryPanel extends JPanel {
 	}
 	
 	private void deleteCategory(){
-		int yesOrNo = 0;
-		int dialogResult = JOptionPane.showConfirmDialog (main.frmToxictodo, "Are you certain you want to delete: "+oldCategory.getKeyword(),"Confirm removal of "+oldCategory.getKeyword(),yesOrNo);
+		int dialogResult = JOptionPane.showConfirmDialog (main.frmToxictodo, "Are you certain you want to delete: "+oldCategory.getKeyword(),"Confirm removal of "+oldCategory.getKeyword(),JOptionPane.YES_NO_OPTION);
 		if(dialogResult == JOptionPane.YES_OPTION){
 			try {
 				main.resetCategorySelection();

@@ -497,7 +497,7 @@ public class MainWindow{
 				TodoCategory categoryKey = getSelectedCategory();
 				if(task != null && categoryKey != null){
 					try {
-						todoManager.removeTask(true, task, categoryKey.getKeyword());
+						todoManager.removeTask(true, task, categoryKey.getKeyword(), frmToxictodo);
 					} catch (IOException anEx) {
 						Logger.log("Connection lost while trying to complete a task", anEx);
 						main.connectionWarning();
@@ -520,7 +520,7 @@ public class MainWindow{
 				TodoCategory categoryKey = getSelectedCategory();
 				if(task != null && categoryKey != null){
 					try {
-						todoManager.removeTask(false, task, categoryKey.getKeyword());
+						todoManager.removeTask(false, task, categoryKey.getKeyword(), frmToxictodo);
 					} catch (IOException anEx) {
 						Logger.log("Connection lost while trying to remove a task", anEx);
 						main.connectionWarning();

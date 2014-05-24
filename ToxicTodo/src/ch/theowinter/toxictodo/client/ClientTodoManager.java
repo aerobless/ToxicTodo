@@ -1,5 +1,6 @@
 package ch.theowinter.toxictodo.client;
 
+import java.awt.Component;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.concurrent.Semaphore;
 
+import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
@@ -111,7 +113,7 @@ public class ClientTodoManager extends Observable{
 		updateList();
 	}
 	
-	public void removeTask(boolean writeToLog, TodoTask task, String categoryKeyword) throws IOException{
+	public void removeTask(boolean writeToLog, TodoTask task, String categoryKeyword, Component frame) throws IOException{
 		TodoTask finalizedTask = task;
 		finalizedTask.setCompletionDate(new Date());
 		String location;
@@ -137,8 +139,11 @@ public class ClientTodoManager extends Observable{
 				dataMessage = "LOG_TASK_AS_COMPLETED_ON_SERVER";
 				finalizedTask.setSummary(finalizedTask.getSummary()+" REPEATABLE:"+Math.random());
 			}else{
-				Logger.log("Are you sure you want to remove this repeatable task permanently??");
-				//todo: make actual question window
+				int dialogResult = JOptionPane.showConfirmDialog(frame, "Are you certain that you want to delete a"
+						+ " repeatable task?","Confirm removal of a repeatable task",JOptionPane.YES_NO_OPTION);
+				if(dialogResult==JOptionPane.NO_OPTION){
+					categoryKeyword = null;
+				}
 			}
 		}
 		
