@@ -702,7 +702,10 @@ public class MainWindow{
 	    	motivationArray.add("You miss 100% of the shots you don’t take. – Wayne Gretzky");
 	    	motivationArray.add("Your time is limited, so don’t waste it living someone else’s life. – Steve Jobs");
 	    	motivationArray.add("Start where you are. Use what you have.  Do what you can. – Arthur Ashe");
-	    	
+	    	motivationArray.add("I would rather die of passion than of boredom. – Vincent van Gogh");
+	    	motivationArray.add("Education costs money. But then so does ignorance. – Sir Claus Moser");
+	    	motivationArray.add("Dream big and dare to fail. – Norman Vaughan");
+	    	motivationArray.add("The only way to do great work is to love what you do. – Steve Jobs");
 	    	return motivationArray.get(getRandomInRange(0,(motivationArray.size()-1)));
 	    }
 	    
