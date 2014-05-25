@@ -99,6 +99,24 @@ public class TodoList implements Serializable {
 	}
 	
 	/**
+	 * Replace a task with another task.
+	 * Important: You have to supply the old summaryText so that we can identify the
+	 * task to be replaced..
+	 * 
+	 * @param categoryKey
+	 * @param oldSummary
+	 * @param editedTask
+	 */
+	public void editTask(String oldSummary, TodoTask editedTask){
+		//We search for the categoryKey because our DatagramObject isn't suitable
+		//for transporting more then one string.. it probably needs improving
+		//but for now we do it this way..
+		String categoryKey = getCategoryKeywordForTask(new TodoTask(oldSummary));
+		categoryMap.get(categoryKey).removeTask(oldSummary);
+		categoryMap.get(categoryKey).add(editedTask);
+	}
+	
+	/**
 	 * Remove a task from the category. Throws an error if the task doesn't exist.
 	 * @param todoTask
 	 * @param category

@@ -7,6 +7,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.concurrent.Semaphore;
 
 import javax.crypto.SealedObject;
@@ -120,7 +121,6 @@ class ServerOpenConnectionThread implements Runnable {
 			try {
 				ServerApplication.todoListActiveTasks.addTask(dataFromClient.getAdditionalMessage(), dataFromClient.getTodoTask());
 				dataToClient = new ToxicDatagram("Answering successful request to add new task");
-				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
 				Logger.log("Failed to add new task.", e);
 				dataToClient = new ToxicDatagram("Adding a new task failed. Maybe it already exists?");
@@ -131,18 +131,10 @@ class ServerOpenConnectionThread implements Runnable {
 			try {
 				ServerApplication.todoListActiveTasks.removeTask(dataFromClient.getTodoTask(), dataFromClient.getAdditionalMessage());
 				
-				//We create the category if it doesn't exist in the history taskList.
-				if(ServerApplication.todoListHistoricTasks.getCategoryMap().get(dataFromClient.getAdditionalMessage())==null){
-					String categoryName = ServerApplication.todoListActiveTasks.getCategoryMap().get(dataFromClient.getAdditionalMessage()).getName();
-					String categoryKeyword = dataFromClient.getAdditionalMessage();
-					ServerApplication.todoListHistoricTasks.addCategory(new TodoCategory(categoryName, categoryKeyword));
-				}			
-				ServerApplication.todoListHistoricTasks.addTask(dataFromClient.getAdditionalMessage(), dataFromClient.getTodoTask());
+				addToHistoricTaskList(dataFromClient);
 				
-				java.util.Date date= new java.util.Date();
-				ServerApplication.writeLogToFile("CompletedTasks.txt", new Timestamp(date.getTime())+" : COMPLETED : "+dataFromClient.getTodoTask().getSummary());
+				logCompletedToTxtFile(dataFromClient);
 				dataToClient = new ToxicDatagram("Answering successful request to remove & log task");
-				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
 				Logger.log("Failed to remove & log task.", e);
 				dataToClient = new ToxicDatagram("Completing a task failed.");
@@ -151,18 +143,19 @@ class ServerOpenConnectionThread implements Runnable {
 		} else if ("LOG_TASK_AS_COMPLETED_ON_SERVER".equals(serverMessage)){
 			writeLock.acquire();
 			try {	
-				//We create the category if it doesn't exist in the history taskList.
-				if(ServerApplication.todoListHistoricTasks.getCategoryMap().get(dataFromClient.getAdditionalMessage())==null){
-					String categoryName = ServerApplication.todoListActiveTasks.getCategoryMap().get(dataFromClient.getAdditionalMessage()).getName();
-					String categoryKeyword = dataFromClient.getAdditionalMessage();
-					ServerApplication.todoListHistoricTasks.addCategory(new TodoCategory(categoryName, categoryKeyword));
-				}			
-				ServerApplication.todoListHistoricTasks.addTask(dataFromClient.getAdditionalMessage(), dataFromClient.getTodoTask());
-				
-				java.util.Date date= new java.util.Date();
-				ServerApplication.writeLogToFile("CompletedTasks.txt", new Timestamp(date.getTime())+" : COMPLETED : "+dataFromClient.getTodoTask().getSummary());
+				addToHistoricTaskList(dataFromClient);	
+				logCompletedToTxtFile(dataFromClient);
 				dataToClient = new ToxicDatagram("Answering successful request to remove & log task");
-				ServerApplication.writeChangesToDisk();
+			} catch (Exception e) {
+				Logger.log("Failed to remove & log task.", e);
+				dataToClient = new ToxicDatagram("Completing a task failed.");
+			}
+			writeLock.release();
+		} else if ("UPDATE_TASK_ON_SERVER".equals(serverMessage)){
+			writeLock.acquire();
+			try {
+				ServerApplication.todoListActiveTasks.editTask(dataFromClient.getAdditionalMessage(), dataFromClient.getTodoTask());
+				dataToClient = new ToxicDatagram("Answering successful request to update a task");
 			} catch (Exception e) {
 				Logger.log("Failed to remove & log task.", e);
 				dataToClient = new ToxicDatagram("Completing a task failed.");
@@ -173,7 +166,6 @@ class ServerOpenConnectionThread implements Runnable {
 			try {
 				ServerApplication.todoListActiveTasks.removeTask(dataFromClient.getTodoTask(), dataFromClient.getAdditionalMessage());
 				dataToClient = new ToxicDatagram("Answering successful request to remove task");
-				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
 				Logger.log("Failed to remove task.", e);
 				dataToClient = new ToxicDatagram("Removing a task failed.");
@@ -184,7 +176,6 @@ class ServerOpenConnectionThread implements Runnable {
 			try {
 				ServerApplication.todoListActiveTasks.addCategory(dataFromClient.getTodoCategory());
 				dataToClient = new ToxicDatagram("Answering successful request to add category");
-				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
 				Logger.log("Failed to add new category.", e);
 				dataToClient = new ToxicDatagram("Adding a category failed.");
@@ -195,7 +186,6 @@ class ServerOpenConnectionThread implements Runnable {
 			try {
 				ServerApplication.todoListActiveTasks.removeCategory(dataFromClient.getTodoCategory().getKeyword());
 				dataToClient = new ToxicDatagram("Answering successful request to remove category");
-				ServerApplication.writeChangesToDisk();
 			} catch (Exception e) {
 				Logger.log("Failed to remove category.", e);
 				dataToClient = new ToxicDatagram("Removing a category failed.");
@@ -209,7 +199,7 @@ class ServerOpenConnectionThread implements Runnable {
 						dataFromClient.getTodoCategory().getName(),
 						dataFromClient.getTodoCategory().getIcon());
 				dataToClient = new ToxicDatagram("Answering successful request to edit category");
-				ServerApplication.writeChangesToDisk();
+				
 			} catch (Exception e) {
 				Logger.log("Failed to edit category.", e);
 				dataToClient = new ToxicDatagram("Editing a category failed.");
@@ -218,6 +208,46 @@ class ServerOpenConnectionThread implements Runnable {
 		} else{
 			Logger.log("Command from Client not recognized..");
 		}
+		ServerApplication.writeChangesToDisk();
 		return dataToClient;
+	}
+
+	/**
+	 * @param dataFromClient
+	 * @throws Exception
+	 */
+	private void addToHistoricTaskList(ToxicDatagram dataFromClient)
+			throws Exception {
+		if(doesCategoryExist(dataFromClient)){
+			createHistoricCategory(dataFromClient);
+		}			
+		ServerApplication.todoListHistoricTasks.addTask(dataFromClient.getAdditionalMessage(), dataFromClient.getTodoTask());
+	}
+
+	/**
+	 * @param dataFromClient
+	 * @param date
+	 */
+	private void logCompletedToTxtFile(ToxicDatagram dataFromClient) {
+		ServerApplication.writeLogToFile("CompletedTasks.txt", new Timestamp((new Date()).getTime())+" : COMPLETED : "+dataFromClient.getTodoTask().getSummary());
+	}
+
+	/**
+	 * @param dataFromClient
+	 * @throws Exception
+	 */
+	private void createHistoricCategory(ToxicDatagram dataFromClient)
+			throws Exception {
+		String categoryName = ServerApplication.todoListActiveTasks.getCategoryMap().get(dataFromClient.getAdditionalMessage()).getName();
+		String categoryKeyword = dataFromClient.getAdditionalMessage();
+		ServerApplication.todoListHistoricTasks.addCategory(new TodoCategory(categoryName, categoryKeyword));
+	}
+
+	/**
+	 * @param dataFromClient
+	 * @return
+	 */
+	private boolean doesCategoryExist(ToxicDatagram dataFromClient) {
+		return ServerApplication.todoListHistoricTasks.getCategoryMap().get(dataFromClient.getAdditionalMessage())==null;
 	}
 }
