@@ -143,8 +143,15 @@ public class ClientTodoManager extends Observable{
 		//Handle repeateable tasks
 		if(finalizedTask.isDaily() || finalizedTask.isWeekly() || finalizedTask.isMonthly()){
 			if(writeToLog){
+				//Update execution count and last execution date in original task copy..
+				//Could be done in one step if I improved my datagram class..
+				//But improving it is a massive undertaking so I do it the expensive way for now with two
+				//datagrams..
+				finalizedTask.incrementCompletionCount();
+				ClientApplication.sendToServer(new ToxicDatagram("UPDATE_TASK_ON_SERVER", finalizedTask , finalizedTask.getSummary()));
+				
 				dataMessage = "LOG_TASK_AS_COMPLETED_ON_SERVER";
-				finalizedTask.setSummary(finalizedTask.getSummary()+" REPEATABLE:"+Math.random());
+				finalizedTask.setSummary(finalizedTask.getSummary()+" REPEATABLE-COUNT_"+finalizedTask.getCompletionCount());
 			}else{
 				int dialogResult = JOptionPane.showConfirmDialog(frame, "Are you certain that you want to delete a"
 						+ " repeatable task?","Confirm removal of a repeatable task",JOptionPane.YES_NO_OPTION);
