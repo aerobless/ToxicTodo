@@ -125,8 +125,10 @@ public class TodoList implements Serializable {
 	 */
 	public String getCategoryKeywordForTask(TodoTask task){
 		Map<String, TodoCategory> localCategoryMap = getCategoryMap();
-		//We remove the allTask category if it exists to prevent duplicate findings of tasks.
+		//TODO: we need a better way to handle this..
+		//We remove our artificial categories.. if it exists to prevent duplicate findings of tasks.
 		localCategoryMap.remove(ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY);
+		localCategoryMap.remove(ToxicUIData.TODAY_DAILY_TASK_KEY);
 		for (TodoCategory category : localCategoryMap.values()) {
 			if((category.get(task.getSummary()))!=null){
 				return category.getKeyword();

@@ -136,7 +136,7 @@ public class ClientTodoManager extends Observable{
 			dataMessage = "REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER";
 		}
 		String outputCategoryKeyword = categoryKeyword;
-		if(categoryKeyword.equals(ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY)){
+		if(categoryKeyword.equals(ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY) || categoryKeyword.equals(ToxicUIData.TODAY_DAILY_TASK_KEY)){
 			outputCategoryKeyword = todoList.getCategoryKeywordForTask(finalizedTask);
 		}
 		
