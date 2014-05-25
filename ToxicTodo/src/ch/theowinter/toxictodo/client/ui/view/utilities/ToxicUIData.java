@@ -14,6 +14,7 @@ import ch.theowinter.toxictodo.sharedobjects.Logger;
 
 public class ToxicUIData {
 	public static final String ALL_TASKS_TODOCATEGORY_KEY = "allTaskTodoCategoryKeyDoNotUseDirectly";
+	public static final String TODAY_DAILY_TASK_KEY = "whatYouCanDoTodayDoTodayKeyDoNotUSeDirectly";
 	public static final List<TaskPriority> PRIORITY_ARRAY = generatePriorityArray();
 	public static final Font AWESOME_FONT = getAwesomeFont();
 	public static final String LICENSE = readLicense();
