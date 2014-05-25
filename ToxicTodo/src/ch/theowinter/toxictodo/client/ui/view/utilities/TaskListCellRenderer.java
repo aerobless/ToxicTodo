@@ -54,8 +54,12 @@ public class TaskListCellRenderer extends IconTextElement implements ListCellRen
 	private void initTooltip(TodoTask currentTask){
 		String isRepeatableText = "no";
 		if(currentTask.isDaily() || currentTask.isMonthly() || currentTask.isMonthly()){
+			String latCompletion = "";
+			if(currentTask.getCompletionDate()!=null){
+				latCompletion = "<b>Last completion:</b> "+(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(currentTask.getCompletionDate()));
+			}
 			isRepeatableText = "yes<br> <b>Completion Count:</b> "+currentTask.getCompletionCount()+"<br>"
-					+ "<b>Last completion:</b> "+(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(currentTask.getCompletionDate()));
+					+ latCompletion;
 		}
 		
         setToolTipText("<html><b>Task: </b>"+currentTask.getSummary()+"<br>"
