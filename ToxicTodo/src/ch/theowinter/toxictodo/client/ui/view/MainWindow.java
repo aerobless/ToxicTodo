@@ -475,13 +475,13 @@ public class MainWindow{
 			public void actionPerformed(ActionEvent e) {
 				if(newTaskPanel == null){
 					newTaskPanel = new TaskPanel(main, todoManager);
-					newTaskPanel.newTask();
+					newTaskPanel.cleanTask();
 					setRightContent(newTaskPanel);
 				}else if(newTaskPanel.isVisible()){
 					switchToTasks();
 				} else{
 					setRightContent(newTaskPanel);
-					newTaskPanel.newTask();
+					newTaskPanel.cleanTask();
 				}
 			}
         });  

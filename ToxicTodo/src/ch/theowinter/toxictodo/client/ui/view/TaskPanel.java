@@ -218,16 +218,18 @@ public class TaskPanel extends JPanel {
         });
 	}
 	
-	public void newTask(){
+	public void cleanTask(){
 		priorityCombobox.setSelectedIndex(0);
 		descriptionTextArea.setText("");
 		summaryTextField.setText("");
+		hyperlinkTextField.setText("");
+		dailyCheckbox.setSelected(false);
+		weeklyCheckbox.setSelected(false);
+		monthlyCheckbox.setSelected(false);
 	}
 	
 	private void cancelTask(){
-		priorityCombobox.setSelectedIndex(0);
-		descriptionTextArea.setText("");
-		summaryTextField.setText("");
+		cleanTask();
 		main.switchToTasks();
 	}
 	
