@@ -1,6 +1,7 @@
 package ch.theowinter.toxictodo.client.ui.view;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -8,6 +9,8 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -67,9 +70,9 @@ public class TaskPanel extends JPanel {
 		add(centerPanel, BorderLayout.CENTER);
 		GridBagLayout gblCenterPanel = new GridBagLayout();
 		gblCenterPanel.columnWidths = new int[]{108, 0, 20, 0};
-		gblCenterPanel.rowHeights = new int[]{15, 0, 0, 0, 0, 0, 5, 0, 0};
+		gblCenterPanel.rowHeights = new int[]{15, 0, 0, 0, 0, 0, 0, 0};
 		gblCenterPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
-		gblCenterPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gblCenterPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		centerPanel.setLayout(gblCenterPanel);
 		
 		JLabel spacer = new JLabel(" ");
@@ -122,14 +125,41 @@ public class TaskPanel extends JPanel {
 		gbcLblHyperlink.gridy = 3;
 		centerPanel.add(lblHyperlink, gbcLblHyperlink);
 		
+		JPanel hyperlinkPanel = new JPanel();
+		GridBagConstraints gbc_hyperlinkPanel = new GridBagConstraints();
+		gbc_hyperlinkPanel.fill = GridBagConstraints.BOTH;
+		gbc_hyperlinkPanel.insets = new Insets(0, 0, 5, 5);
+		gbc_hyperlinkPanel.gridx = 1;
+		gbc_hyperlinkPanel.gridy = 3;
+		centerPanel.add(hyperlinkPanel, gbc_hyperlinkPanel);
+		hyperlinkPanel.setOpaque(false);
+		hyperlinkPanel.setLayout(new BorderLayout(0, 0));
+		
 		hyperlinkTextField = new JTextField();
-		GridBagConstraints gbcTxtFieldHyperlink = new GridBagConstraints();
-		gbcTxtFieldHyperlink.insets = new Insets(0, 0, 5, 5);
-		gbcTxtFieldHyperlink.fill = GridBagConstraints.HORIZONTAL;
-		gbcTxtFieldHyperlink.gridx = 1;
-		gbcTxtFieldHyperlink.gridy = 3;
-		centerPanel.add(hyperlinkTextField, gbcTxtFieldHyperlink);
+		hyperlinkPanel.add(hyperlinkTextField, BorderLayout.CENTER);
 		hyperlinkTextField.setColumns(10);
+		
+		JButton btnLaunchHyperlink = new JButton("Launch");
+		btnLaunchHyperlink.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(hyperlinkTextField.getText().startsWith("http://")||hyperlinkTextField.getText().startsWith("https://")){
+				    Desktop desktop = java.awt.Desktop.getDesktop();
+				       try {
+						desktop.browse(new URI(hyperlinkTextField.getText()));
+					} catch (IOException e1) {
+						Logger.log("IOException while trying to convert String to URI in TaskPanel",e1);
+					} catch (URISyntaxException anEx) {
+						Logger.log("URISyntaxException while trying to convert String to URI in TaskPanel",anEx);
+					}
+				} else {
+					Logger.log("User tried to launch a URL that doesn't start with http:// nor https://.");
+					Logger.log("At this time ftp:// etc. are not supported.");
+				}
+			}
+		});
+		hyperlinkPanel.add(btnLaunchHyperlink, BorderLayout.EAST);
 		
 		JPanel repeatableRowJPanel = new JPanel();
 		repeatableRowJPanel.setOpaque(false);
@@ -184,7 +214,7 @@ public class TaskPanel extends JPanel {
 		gbc_buttonRowJPanel.insets = new Insets(0, 0, 0, 5);
 		gbc_buttonRowJPanel.fill = GridBagConstraints.BOTH;
 		gbc_buttonRowJPanel.gridx = 1;
-		gbc_buttonRowJPanel.gridy = 7;
+		gbc_buttonRowJPanel.gridy = 6;
 		centerPanel.add(buttonRowJPanel, gbc_buttonRowJPanel);
 		
 		JButton btnSaveLog = new JButton("Complete");
