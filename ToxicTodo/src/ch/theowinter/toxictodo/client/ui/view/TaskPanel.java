@@ -1,6 +1,7 @@
 package ch.theowinter.toxictodo.client.ui.view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -9,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -25,10 +27,7 @@ import ch.theowinter.toxictodo.client.ui.view.utilities.PanelHeader;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicColors;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
-
-import java.awt.Component;
-
-import javax.swing.Box;
+import ch.theowinter.toxictodo.sharedobjects.elements.TodoTask;
 
 public class TaskPanel extends JPanel {
 	private static final long serialVersionUID = -2022909795010691054L;
@@ -216,6 +215,16 @@ public class TaskPanel extends JPanel {
 				saveTask();
 			}
         });
+	}
+	
+	public void loadTask(TodoTask loadedTask){
+		priorityCombobox.setSelectedIndex(loadedTask.getPriority());
+		descriptionTextArea.setText(loadedTask.getDescription());
+		summaryTextField.setText(loadedTask.getSummary());
+		hyperlinkTextField.setText(loadedTask.getHyperlink());
+		dailyCheckbox.setSelected(loadedTask.isDaily());
+		weeklyCheckbox.setSelected(loadedTask.isWeekly());
+		monthlyCheckbox.setSelected(loadedTask.isMonthly());
 	}
 	
 	public void cleanTask(){

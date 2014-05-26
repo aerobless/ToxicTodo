@@ -302,7 +302,16 @@ public class MainWindow{
         	public void mouseClicked(MouseEvent event)
         	{
         	  if (event.getClickCount() == 2) {
-        		  System.out.println(taskList.getSelectedValue().getSummary());
+        		  if(newTaskPanel == null){
+        			  newTaskPanel = new TaskPanel(main, todoManager);
+        			  newTaskPanel.loadTask(taskList.getSelectedValue());
+        			  setRightContent(newTaskPanel);
+        		  }else if(newTaskPanel.isVisible()){
+        			  switchToTasks();
+        		  } else {
+        			  setRightContent(newTaskPanel);
+        			  newTaskPanel.loadTask(taskList.getSelectedValue());
+        		  }
         	  }
         	}
 		});
