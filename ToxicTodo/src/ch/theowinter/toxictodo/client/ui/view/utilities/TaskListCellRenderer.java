@@ -48,6 +48,7 @@ public class TaskListCellRenderer extends IconTextElement implements ListCellRen
         }
         initTooltip(currentTask);
         setBackground(background);
+        
 		return this;
 	}
 	
@@ -68,4 +69,5 @@ public class TaskListCellRenderer extends IconTextElement implements ListCellRen
         		+ "<b>Repeatable: </b>"+isRepeatableText+"<br>"
         		+ "<b>Created in: </b>"+currentTask.getCreationLocation()+"</html>");
 	}
+	
 }
