@@ -10,6 +10,8 @@ import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -239,10 +241,9 @@ public class MainWindow{
 				if(settingsPanel == null){
 					settingsPanel = new SettingsPanel(settings, main);
 					setRightContent(settingsPanel);
-				}else if(settingsPanel.isVisible()){
-					switchToTasks();
 				}else{
-					setRightContent(settingsPanel);
+					settingsPanel = null;
+					switchToTasks();
 				}
 			}
         });
@@ -294,6 +295,25 @@ public class MainWindow{
 		taskScrollPane.setViewportView(taskList);
 		taskScrollPane.setBackground(ToxicColors.SOFT_GREY);
 		taskScrollPane.setBorder(new LineBorder(Color.black,0));
+		
+	    taskList.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent event)
+        	{
+        	  if (event.getClickCount() == 2) {
+        		  if(newTaskPanel == null){
+        			  newTaskPanel = new TaskPanel(main, todoManager);
+        			  newTaskPanel.loadTask(taskList.getSelectedValue());
+        			  setRightContent(newTaskPanel);
+        		  }else if(newTaskPanel.isVisible()){
+        			  switchToTasks();
+        		  } else {
+        			  setRightContent(newTaskPanel);
+        			  newTaskPanel.loadTask(taskList.getSelectedValue());
+        		  }
+        	  }
+        	}
+		});
 	}
 
 	/**
