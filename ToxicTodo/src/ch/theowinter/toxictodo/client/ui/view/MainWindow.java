@@ -241,10 +241,9 @@ public class MainWindow{
 				if(settingsPanel == null){
 					settingsPanel = new SettingsPanel(settings, main);
 					setRightContent(settingsPanel);
-				}else if(settingsPanel.isVisible()){
-					switchToTasks();
 				}else{
-					setRightContent(settingsPanel);
+					settingsPanel = null;
+					switchToTasks();
 				}
 			}
         });
