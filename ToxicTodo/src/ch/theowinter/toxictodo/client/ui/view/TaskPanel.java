@@ -42,7 +42,16 @@ public class TaskPanel extends JPanel {
 	private JCheckBox weeklyCheckbox;
 	private JCheckBox monthlyCheckbox;
 	private JTextArea descriptionTextArea;
+	
+	//History
+	private String oldSummary;
 
+	//Buttons
+	JButton btnSave;
+	JButton btnCancel;
+	JButton btnSaveLog;
+
+	
 	/**
 	 * Create the frame.
 	 */
@@ -186,19 +195,13 @@ public class TaskPanel extends JPanel {
 		gbc_buttonRowJPanel.gridy = 7;
 		centerPanel.add(buttonRowJPanel, gbc_buttonRowJPanel);
 		
-		JButton btnSaveLog = new JButton("Complete");
+		btnSaveLog = new JButton("Complete");
 		buttonRowJPanel.add(btnSaveLog);
-		btnSaveLog.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				saveAndCompleteTask();
-			}
-        }); 
 		
 		Component horizontalStrut = Box.createHorizontalStrut(30);
 		buttonRowJPanel.add(horizontalStrut);
 		
-		JButton btnCancel = new JButton("Cancel");
+		btnCancel = new JButton("Cancel");
 		buttonRowJPanel.add(btnCancel);
 		btnCancel.addActionListener(new ActionListener() {
 			@Override
@@ -207,17 +210,13 @@ public class TaskPanel extends JPanel {
 			}
         }); 
 		
-		JButton btnSave = new JButton("Save");
+		btnSave = new JButton("Save");
 		buttonRowJPanel.add(btnSave);
-		btnSave.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				saveTask();
-			}
-        });
 	}
 	
 	public void loadTask(TodoTask loadedTask){
+		oldSummary = loadedTask.getSummary();
+		
 		priorityCombobox.setSelectedIndex(loadedTask.getPriority());
 		descriptionTextArea.setText(loadedTask.getDescription());
 		summaryTextField.setText(loadedTask.getSummary());
@@ -225,6 +224,15 @@ public class TaskPanel extends JPanel {
 		dailyCheckbox.setSelected(loadedTask.isDaily());
 		weeklyCheckbox.setSelected(loadedTask.isWeekly());
 		monthlyCheckbox.setSelected(loadedTask.isMonthly());
+		
+		btnSaveLog.setVisible(false);
+		
+		btnSave.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				updateTask();
+			}
+        });
 	}
 	
 	public void cleanTask(){
@@ -235,6 +243,22 @@ public class TaskPanel extends JPanel {
 		dailyCheckbox.setSelected(false);
 		weeklyCheckbox.setSelected(false);
 		monthlyCheckbox.setSelected(false);
+		
+		btnSaveLog.setVisible(true);
+		
+		btnSave.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				saveTask();
+			}
+        });
+		
+		btnSaveLog.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				saveAndCompleteTask();
+			}
+        }); 
 	}
 	
 	private void cancelTask(){
@@ -274,6 +298,27 @@ public class TaskPanel extends JPanel {
 				boolean monthly = monthlyCheckbox.isSelected();
 				
 				todoManager.addNewTask(taskPriority,category.getKeyword(), taskSummary, taskDescription, hyperlink, daily, weekly, monthly);
+				main.switchToTasks();
+			} catch (IOException anEx) {
+				Logger.log("Connection lost while trying to save task.", anEx);
+				main.connectionWarning();
+			}
+		}else{
+			main.genericWarning("Unable to save", "Have you filled in all fields?");
+		}
+	}
+	
+	private void updateTask(){
+		if(fieldsVerified()){
+			try {
+				TodoTask editedTask = new TodoTask(summaryTextField.getText());
+				editedTask.setPriority(priorityCombobox.getSelectedIndex());
+				editedTask.setDescription(descriptionTextArea.getText());
+				editedTask.setHyperlink(hyperlinkTextField.getText());
+				editedTask.setDaily(dailyCheckbox.isSelected());
+				editedTask.setWeekly(weeklyCheckbox.isSelected());
+				editedTask.setMonthly(monthlyCheckbox.isSelected());
+				todoManager.editTask(editedTask, oldSummary);
 				main.switchToTasks();
 			} catch (IOException anEx) {
 				Logger.log("Connection lost while trying to save task.", anEx);
