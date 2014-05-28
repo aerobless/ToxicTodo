@@ -134,12 +134,12 @@ public class TaskPanel extends JPanel {
 		centerPanel.add(lblHyperlink, gbcLblHyperlink);
 		
 		JPanel hyperlinkPanel = new JPanel();
-		GridBagConstraints gbc_hyperlinkPanel = new GridBagConstraints();
-		gbc_hyperlinkPanel.fill = GridBagConstraints.BOTH;
-		gbc_hyperlinkPanel.insets = new Insets(0, 0, 5, 5);
-		gbc_hyperlinkPanel.gridx = 1;
-		gbc_hyperlinkPanel.gridy = 3;
-		centerPanel.add(hyperlinkPanel, gbc_hyperlinkPanel);
+		GridBagConstraints gbcHyperlinkPanel = new GridBagConstraints();
+		gbcHyperlinkPanel.fill = GridBagConstraints.BOTH;
+		gbcHyperlinkPanel.insets = new Insets(0, 0, 5, 5);
+		gbcHyperlinkPanel.gridx = 1;
+		gbcHyperlinkPanel.gridy = 3;
+		centerPanel.add(hyperlinkPanel, gbcHyperlinkPanel);
 		hyperlinkPanel.setOpaque(false);
 		hyperlinkPanel.setLayout(new BorderLayout(0, 0));
 		
@@ -171,16 +171,16 @@ public class TaskPanel extends JPanel {
 		
 		JPanel repeatableRowJPanel = new JPanel();
 		repeatableRowJPanel.setOpaque(false);
-		FlowLayout fl_repeatableRowJPanel = (FlowLayout) repeatableRowJPanel.getLayout();
-		fl_repeatableRowJPanel.setVgap(0);
-		fl_repeatableRowJPanel.setHgap(0);
-		fl_repeatableRowJPanel.setAlignment(FlowLayout.LEFT);
-		GridBagConstraints gbc_repeatableRowJPanel = new GridBagConstraints();
-		gbc_repeatableRowJPanel.insets = new Insets(0, 0, 5, 5);
-		gbc_repeatableRowJPanel.fill = GridBagConstraints.BOTH;
-		gbc_repeatableRowJPanel.gridx = 1;
-		gbc_repeatableRowJPanel.gridy = 4;
-		centerPanel.add(repeatableRowJPanel, gbc_repeatableRowJPanel);
+		FlowLayout flRepeatableRowJPanel = (FlowLayout) repeatableRowJPanel.getLayout();
+		flRepeatableRowJPanel.setVgap(0);
+		flRepeatableRowJPanel.setHgap(0);
+		flRepeatableRowJPanel.setAlignment(FlowLayout.LEFT);
+		GridBagConstraints gbcRepeatableRowJPanel = new GridBagConstraints();
+		gbcRepeatableRowJPanel.insets = new Insets(0, 0, 5, 5);
+		gbcRepeatableRowJPanel.fill = GridBagConstraints.BOTH;
+		gbcRepeatableRowJPanel.gridx = 1;
+		gbcRepeatableRowJPanel.gridy = 4;
+		centerPanel.add(repeatableRowJPanel, gbcRepeatableRowJPanel);
 		
 		dailyCheckbox = new JCheckBox("Daily");
 		repeatableRowJPanel.add(dailyCheckbox);
@@ -218,12 +218,12 @@ public class TaskPanel extends JPanel {
 		FlowLayout flowLayout = (FlowLayout) buttonRowJPanel.getLayout();
 		flowLayout.setHgap(0);
 		flowLayout.setAlignment(FlowLayout.RIGHT);
-		GridBagConstraints gbc_buttonRowJPanel = new GridBagConstraints();
-		gbc_buttonRowJPanel.insets = new Insets(0, 0, 0, 5);
-		gbc_buttonRowJPanel.fill = GridBagConstraints.BOTH;
-		gbc_buttonRowJPanel.gridx = 1;
-		gbc_buttonRowJPanel.gridy = 6;
-		centerPanel.add(buttonRowJPanel, gbc_buttonRowJPanel);
+		GridBagConstraints gbcButtonRowJPanel = new GridBagConstraints();
+		gbcButtonRowJPanel.insets = new Insets(0, 0, 0, 5);
+		gbcButtonRowJPanel.fill = GridBagConstraints.BOTH;
+		gbcButtonRowJPanel.gridx = 1;
+		gbcButtonRowJPanel.gridy = 6;
+		centerPanel.add(buttonRowJPanel, gbcButtonRowJPanel);
 		
 		btnSaveLog = new JButton("Complete");
 		buttonRowJPanel.add(btnSaveLog);
