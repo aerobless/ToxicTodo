@@ -314,7 +314,12 @@ public class MainWindow{
 		
 		categoryList = new JList<TodoCategory>(categoryListModel);
 		categoryJPanel.add(categoryList, BorderLayout.CENTER);
-		categoryList.setBackground(ToxicColors.SOFT_BLUE);
+		
+		if("osx".equals(ClientApplication.OS)){
+			categoryList.setBackground(ToxicColors.SOFT_BLUE);
+		}else{
+			categoryList.setBackground(ToxicColors.BACKGROUND_BLUE);
+		}
 
 		categoryList.setCellRenderer(new CategoryListCellRenderer());
 		ListSelectionModel listSelectionModel = categoryList.getSelectionModel();
