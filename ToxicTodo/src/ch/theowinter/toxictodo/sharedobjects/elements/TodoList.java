@@ -99,6 +99,24 @@ public class TodoList implements Serializable {
 	}
 	
 	/**
+	 * Replace a task with another task.
+	 * Important: You have to supply the old summaryText so that we can identify the
+	 * task to be replaced..
+	 * 
+	 * @param categoryKey
+	 * @param oldSummary
+	 * @param editedTask
+	 */
+	public void editTask(String oldSummary, TodoTask editedTask){
+		//We search for the categoryKey because our DatagramObject isn't suitable
+		//for transporting more then one string.. it probably needs improving
+		//but for now we do it this way..
+		String categoryKey = getCategoryKeywordForTask(new TodoTask(oldSummary));
+		categoryMap.get(categoryKey).removeTask(oldSummary);
+		categoryMap.get(categoryKey).add(editedTask);
+	}
+	
+	/**
 	 * Remove a task from the category. Throws an error if the task doesn't exist.
 	 * @param todoTask
 	 * @param category
@@ -125,8 +143,10 @@ public class TodoList implements Serializable {
 	 */
 	public String getCategoryKeywordForTask(TodoTask task){
 		Map<String, TodoCategory> localCategoryMap = getCategoryMap();
-		//We remove the allTask category if it exists to prevent duplicate findings of tasks.
+		//TODO: we need a better way to handle this..
+		//We remove our artificial categories.. if it exists to prevent duplicate findings of tasks.
 		localCategoryMap.remove(ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY);
+		localCategoryMap.remove(ToxicUIData.TODAY_DAILY_TASK_KEY);
 		for (TodoCategory category : localCategoryMap.values()) {
 			if((category.get(task.getSummary()))!=null){
 				return category.getKeyword();

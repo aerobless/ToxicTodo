@@ -2,6 +2,7 @@ package ch.theowinter.toxictodo.client.ui.view.utilities;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
@@ -45,7 +46,28 @@ public class TaskListCellRenderer extends IconTextElement implements ListCellRen
             background = ToxicColors.SOFT_GREY;
             this.setFontColor(Color.BLACK);
         }
+        initTooltip(currentTask);
         setBackground(background);
+        
 		return this;
 	}
+	
+	private void initTooltip(TodoTask currentTask){
+		String isRepeatableText = "no";
+		if(currentTask.isDaily() || currentTask.isMonthly() || currentTask.isMonthly()){
+			String latCompletion = "";
+			if(currentTask.getCompletionDate()!=null){
+				latCompletion = "<b>Last completion:</b> "+(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(currentTask.getCompletionDate()));
+			}
+			isRepeatableText = "yes<br> <b>Completion Count:</b> "+currentTask.getCompletionCount()+"<br>"
+					+ latCompletion;
+		}
+		
+        setToolTipText("<html><b>Task: </b>"+currentTask.getSummary()+"<br>"
+        		+ "<b>Priority: </b>"+ToxicUIData.PRIORITY_ARRAY.get(currentTask.getPriority()).getPriorityText()+"<br>"
+        		+ "<b>Hyperlink: </b>"+currentTask.getHyperlink()+"<br>"
+        		+ "<b>Repeatable: </b>"+isRepeatableText+"<br>"
+        		+ "<b>Created in: </b>"+currentTask.getCreationLocation()+"</html>");
+	}
+	
 }

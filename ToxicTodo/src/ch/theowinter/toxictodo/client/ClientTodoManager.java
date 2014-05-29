@@ -72,7 +72,14 @@ public class ClientTodoManager extends Observable{
 	}
 
 	public void updateList() throws IOException{
-		setTodoList(generateAllTasksCategory(ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT"))));
+		TodoList originalTodoList = ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT"));
+		TodoList advancedTodoList = generateAllTasksCategory(originalTodoList);
+		try {
+			advancedTodoList.addCategory(generateTodyCategory(originalTodoList));
+		} catch (Exception e) {
+			Logger.log("Unable to add daily-Task category to advancedTodoList", e);
+		}
+		setTodoList(advancedTodoList);
 	}
 	
 	public TodoList updateHistoricList() throws IOException {
@@ -129,15 +136,22 @@ public class ClientTodoManager extends Observable{
 			dataMessage = "REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER";
 		}
 		String outputCategoryKeyword = categoryKeyword;
-		if(categoryKeyword.equals(ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY)){
+		if(categoryKeyword.equals(ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY) || categoryKeyword.equals(ToxicUIData.TODAY_DAILY_TASK_KEY)){
 			outputCategoryKeyword = todoList.getCategoryKeywordForTask(finalizedTask);
 		}
 		
 		//Handle repeateable tasks
 		if(finalizedTask.isDaily() || finalizedTask.isWeekly() || finalizedTask.isMonthly()){
 			if(writeToLog){
+				//Update execution count and last execution date in original task copy..
+				//Could be done in one step if I improved my datagram class..
+				//But improving it is a massive undertaking so I do it the expensive way for now with two
+				//datagrams..
+				finalizedTask.incrementCompletionCount();
+				ClientApplication.sendToServer(new ToxicDatagram("UPDATE_TASK_ON_SERVER", finalizedTask , finalizedTask.getSummary()));
+				
 				dataMessage = "LOG_TASK_AS_COMPLETED_ON_SERVER";
-				finalizedTask.setSummary(finalizedTask.getSummary()+" REPEATABLE:"+Math.random());
+				finalizedTask.setSummary(finalizedTask.getSummary()+" REPEATABLE-COUNT_"+finalizedTask.getCompletionCount());
 			}else{
 				int dialogResult = JOptionPane.showConfirmDialog(frame, "Are you certain that you want to delete a"
 						+ " repeatable task?","Confirm removal of a repeatable task",JOptionPane.YES_NO_OPTION);
@@ -167,6 +181,11 @@ public class ClientTodoManager extends Observable{
 		
 		ClientApplication.sendToServer(new ToxicDatagram("LOG_TASK_AS_COMPLETED_ON_SERVER", task, categoryKeyword));
 		//TODO: update historicTodoList(?)
+	}
+	
+	public void editTask(TodoTask newTask, String oldSummary) throws IOException{
+			ClientApplication.sendToServer(new ToxicDatagram("UPDATE_TASK_ON_SERVER", newTask , oldSummary));
+			updateList();
 	}
 	
 	public void addNewCategory(String description, String keyword, char icon, boolean systemCategory) throws IOException{
@@ -199,5 +218,43 @@ public class ClientTodoManager extends Observable{
 			Logger.log("error generating all-tasks category..", e);
 		}
 		return inputList;
+	}
+	
+	/**
+	 * Generate an additional category consisting of all tasks that are daily-repeatable
+	 * and haven't been completed today.
+	 * It returns the "TODAY_DAILY_TASK_KEY" category, that can be added to the todoList.
+	 * 
+	 * @param originalTodoList
+	 * @return
+	 */
+	public TodoCategory generateTodyCategory(TodoList originalTodoList){
+		Date today = new Date();
+		TodoCategory todayTasks = new TodoCategory("Today's Tasks", ToxicUIData.TODAY_DAILY_TASK_KEY, '\uf073',true);
+		try {
+			for(String categoryKey : originalTodoList.getCategoryMap().keySet()){
+				List<TodoTask> currentCategoryTasks = originalTodoList.getCategoryMap().get(categoryKey).getTaskInCategoryAsArrayList();
+				for(TodoTask currentTask : currentCategoryTasks){
+					if(currentTask.isDaily() && ((currentTask.getCompletionDate()==null) || !isSameDay(currentTask.getCompletionDate(), today))){
+						todayTasks.add(currentTask);
+					}
+				}
+			}
+		} catch (Exception e) {
+			Logger.log("error generating all-tasks category..", e);
+		}
+		return todayTasks;
+	}
+	
+	/*
+	 * http://stackoverflow.com/questions/2517709/comparing-two-dates-to-see-if-they-are-in-the-same-day
+	 * Doesn't respect daylight saving or anything advanced but it's exact enough for our purpose.
+	 */
+	public static boolean isSameDay(Date date1, Date date2) {
+	    // Strip out the time part of each date.
+	    long julianDayNumber1 = date1.getTime() / 86400000; //Millies per day
+	    long julianDayNumber2 = date2.getTime() / 86400000;
+	    // If they now are equal then it is the same day.
+	    return julianDayNumber1 == julianDayNumber2;
 	}
 }
