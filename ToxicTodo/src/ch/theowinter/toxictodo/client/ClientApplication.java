@@ -121,6 +121,7 @@ public class ClientApplication {
 		return loadingSettings;
 	}
 	
+	
 	public static boolean firstTimeRun(){
 		boolean firstTime = false;
 		File f = new File(SETTINGS_FILE);
