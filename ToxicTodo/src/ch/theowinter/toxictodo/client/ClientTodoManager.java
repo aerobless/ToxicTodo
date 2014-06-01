@@ -80,7 +80,21 @@ public class ClientTodoManager extends Observable{
 	public void updateList() throws IOException{
 		TodoList originalTodoList = ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT"));
 		TodoList advancedTodoList = generateAllTasksCategory(originalTodoList);
+		
+		try {
+			advancedTodoList.addCategory(generateTodyCategory(originalTodoList));
+		} catch (Exception e) {
+			Logger.log("Unable to add daily-Task category to advancedTodoList", e);
+		}
 
+		removeEmptyCategories(advancedTodoList);
+		
+		setTodoList(advancedTodoList);
+	}
+	/**
+	 * @param advancedTodoList
+	 */
+	private void removeEmptyCategories(TodoList advancedTodoList) {
 		//Remove the "orphan" category if it doesn't contain any tasks.
 		if(!advancedTodoList.getCategoryMap().get("orphan").containsTasks()){
 			advancedTodoList.getCategoryMap().remove("orphan");
@@ -88,13 +102,13 @@ public class ClientTodoManager extends Observable{
 				main.resetCategorySelection();	
 			}
 		}
-		
-		try {
-			advancedTodoList.addCategory(generateTodyCategory(originalTodoList));
-		} catch (Exception e) {
-			Logger.log("Unable to add daily-Task category to advancedTodoList", e);
+		//Remove the "today's tasks" category if it doesn't contain any tasks.
+		if(!advancedTodoList.getCategoryMap().get(ToxicUIData.TODAY_DAILY_TASK_KEY).containsTasks()){
+			advancedTodoList.getCategoryMap().remove(ToxicUIData.TODAY_DAILY_TASK_KEY);
+			if(main != null){
+				main.resetCategorySelection();	
+			}
 		}
-		setTodoList(advancedTodoList);
 	}
 	
 	public TodoList updateHistoricList() throws IOException {
