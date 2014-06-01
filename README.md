@@ -9,6 +9,9 @@ The server application is intended to be run on a dedicated server (e.g. some ch
 
 ###Features:
  * Create a task containing a description and meta data such as task priority and your location (based on IP).
+ * Create daily/weekly/monthly tasks, that can be completed multiple times.
+ * Add a hyperlink to as task, so you can launch a website associated with it right from the app.
+ * Dynamic category that features daily tasks that haven't been completed yet.
  * Remove a task without logging.
  * Complete a task, logging the complition data, location and other meta data.
  * View Statistics (currently only amount of completed tasks, work in progress).
