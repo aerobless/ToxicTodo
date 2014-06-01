@@ -95,20 +95,17 @@ public class ClientTodoManager extends Observable{
 	 * @param advancedTodoList
 	 */
 	private void removeEmptyCategories(TodoList advancedTodoList) {
+		// IS UNSTABLE - REMOVED FOR NOW UNTIL I FIND A BETTER WAY TO DO THIS...
+		
 		//Remove the "orphan" category if it doesn't contain any tasks.
-		if(!advancedTodoList.getCategoryMap().get("orphan").containsTasks()){
-			advancedTodoList.getCategoryMap().remove("orphan");
-			if(main != null){
-				main.resetCategorySelection();	
+	/*	if(advancedTodoList.getCategoryMap().get("orphan") != null){
+			if(!advancedTodoList.getCategoryMap().get("orphan").containsTasks()){
+				advancedTodoList.getCategoryMap().remove("orphan");
+				if(main != null){
+					main.resetCategorySelection();	
+				}
 			}
-		}
-		//Remove the "today's tasks" category if it doesn't contain any tasks.
-		if(!advancedTodoList.getCategoryMap().get(ToxicUIData.TODAY_DAILY_TASK_KEY).containsTasks()){
-			advancedTodoList.getCategoryMap().remove(ToxicUIData.TODAY_DAILY_TASK_KEY);
-			if(main != null){
-				main.resetCategorySelection();	
-			}
-		}
+		} */
 	}
 	
 	public TodoList updateHistoricList() throws IOException {
