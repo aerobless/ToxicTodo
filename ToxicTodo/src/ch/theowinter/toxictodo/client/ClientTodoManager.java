@@ -13,6 +13,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import ch.theowinter.toxictodo.client.ui.view.MainWindow;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicUIData;
 import ch.theowinter.toxictodo.sharedobjects.LocationEngine;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
@@ -25,6 +26,7 @@ public class ClientTodoManager extends Observable{
 	//Class variables
 	private TodoList todoList;
 	private LocationEngine locationEngine;
+	private MainWindow main;
 	
 	//Locks
 	private Semaphore writeLock = new Semaphore(1);
@@ -55,6 +57,10 @@ public class ClientTodoManager extends Observable{
 		return todoList;
 	}
 
+	public void setMain(MainWindow main){
+		this.main = main;
+	}
+	
 	public void setTodoList(TodoList input){
 		try {
 			writeLock.acquire();
@@ -74,6 +80,15 @@ public class ClientTodoManager extends Observable{
 	public void updateList() throws IOException{
 		TodoList originalTodoList = ClientApplication.sendToServer(new ToxicDatagram("SEND_TODOLIST_TO_CLIENT"));
 		TodoList advancedTodoList = generateAllTasksCategory(originalTodoList);
+
+		//Remove the "orphan" category if it doesn't contain any tasks.
+		if(!advancedTodoList.getCategoryMap().get("orphan").containsTasks()){
+			advancedTodoList.getCategoryMap().remove("orphan");
+			if(main != null){
+				main.resetCategorySelection();	
+			}
+		}
+		
 		try {
 			advancedTodoList.addCategory(generateTodyCategory(originalTodoList));
 		} catch (Exception e) {

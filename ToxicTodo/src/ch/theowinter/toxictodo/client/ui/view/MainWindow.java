@@ -118,6 +118,7 @@ public class MainWindow{
 	 */
 	public MainWindow(ClientTodoManager aTodoManager, ClientSettings someSettings) {
 		todoManager = aTodoManager;
+		todoManager.setMain(main);
 		settings = someSettings;
 		initialize();
 	}
@@ -691,7 +692,9 @@ public class MainWindow{
 	}
 	
 	public void resetCategorySelection(){
-		categoryList.setSelectedIndex(0);
+		if(categoryList != null){
+			categoryList.setSelectedIndex(0);
+		}
 	}
 	
 	class CategoryListSelectionHandler implements ListSelectionListener {

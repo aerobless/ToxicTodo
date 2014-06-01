@@ -9,6 +9,7 @@ import javax.swing.AbstractListModel;
 import javax.swing.event.ListDataListener;
 
 import ch.theowinter.toxictodo.client.ClientTodoManager;
+import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoTask;
 
 public class TaskListModel extends AbstractListModel<TodoTask> implements Observer{
@@ -62,7 +63,12 @@ public class TaskListModel extends AbstractListModel<TodoTask> implements Observ
 	
 	private List<TodoTask> getTaskArray(String catKey){
 		currentCategory = catKey;
-		return todoManager.getTodoList().getCategoryMap().get(catKey).getTaskInCategoryAsArrayList();
+		TodoCategory category = todoManager.getTodoList().getCategoryMap().get(catKey);
+		if(category != null){
+			return category.getTaskInCategoryAsArrayList();
+		}else{
+			return null;
+		}
 	}
 	
 	public void filter(String input){
