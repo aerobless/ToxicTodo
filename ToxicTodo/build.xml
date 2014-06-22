@@ -57,11 +57,11 @@
 		<javac target="1.7" source="1.7" srcdir="src/ch/" destdir="build" debug="true" debuglevel="lines,vars,source" classpathref="classpath" includeantruntime="false">
 			<compilerarg value="-Xbootclasspath/p:${toString:classpath}" />
 		</javac>
-		<move todir="build/resources/">
+		<copy todir="build/resources/">
 		    <fileset dir="src/resources/">
 		      <include name="*"/>
 		    </fileset>
-		</move>
+		</copy>
 	</target>	
 
 	<!-- jar-client -->
