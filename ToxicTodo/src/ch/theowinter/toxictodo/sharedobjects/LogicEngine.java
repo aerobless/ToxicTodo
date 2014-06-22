@@ -131,9 +131,9 @@ public class LogicEngine {
 		}
 		try {
 			if("windows".equals(ClientApplication.OS)){
-				Runtime.getRuntime().exec("java -jar "+downloadPath.substring(1)+" 10 "+updateURL+isGUI);
+				Runtime.getRuntime().exec(new String[]{"java", "-jar", downloadPath.substring(1),"10", updateURL, isGUI});
 			}else{
-				Runtime.getRuntime().exec("java -jar "+downloadPath+" 10 "+updateURL+isGUI);
+				Runtime.getRuntime().exec(new String[]{"java", "-jar", downloadPath, "10", updateURL, isGUI});
 			}
 		} catch (IOException e) {
 			Logger.log("IOException trying to updateSoftware in LogicEngine", e);
