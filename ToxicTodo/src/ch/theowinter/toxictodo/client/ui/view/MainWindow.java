@@ -302,8 +302,6 @@ public class MainWindow{
         			  specificTaskPanel.loadTask(taskList.getSelectedValue());
         			  setRightContent(specificTaskPanel);
         			  main.setButtonsLocked(true);
-        		  }else if(specificTaskPanel.isVisible()){
-        			  switchToTasks();
         		  } else {
         			  setRightContent(specificTaskPanel);
         			  specificTaskPanel.loadTask(taskList.getSelectedValue());
@@ -501,8 +499,6 @@ public class MainWindow{
 					specificTaskPanel.cleanTask();
 					setRightContent(specificTaskPanel);
 					main.setButtonsLocked(true);
-				}else if(specificTaskPanel.isVisible()){
-					switchToTasks();
 				} else{
 					setRightContent(specificTaskPanel);
 					specificTaskPanel.cleanTask();
@@ -569,8 +565,6 @@ public class MainWindow{
 					categoryPanel.newCategory();
 					setRightContent(categoryPanel);
 					main.setButtonsLocked(true);
-				}else if(categoryPanel.isVisible()){
-					switchToTasks();
 				} else{
 					categoryPanel.newCategory();
 					setRightContent(categoryPanel);
@@ -594,8 +588,6 @@ public class MainWindow{
 						categoryPanel.setCategory(editCategory);
 						setRightContent(categoryPanel);
 						main.setButtonsLocked(true);
-					}else if(categoryPanel.isVisible()){
-						switchToTasks();
 					} else{
 						categoryPanel.setCategory(getSelectedCategory());
 						setRightContent(categoryPanel);
@@ -623,14 +615,9 @@ public class MainWindow{
 		btnStatistics.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(statisticsPanel != null){
-					statisticsPanel = null;
-					switchToTasks();
-				} else{
-					statisticsPanel = new StatisticsPanel(main, todoManager);
-					setRightContent(statisticsPanel);
-					main.setButtonsLocked(true);
-				}
+				statisticsPanel = new StatisticsPanel(main, todoManager);
+				setRightContent(statisticsPanel);
+				main.setButtonsLocked(true);
 			}
         });	
 		
