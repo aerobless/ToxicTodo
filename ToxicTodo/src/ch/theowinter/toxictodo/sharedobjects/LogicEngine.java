@@ -117,7 +117,6 @@ public class LogicEngine {
 		} catch (UnsupportedEncodingException e) {
 			Logger.log("UnsipportedEncodingException in LogicEngine. (UTF-8)", e);
 		}
-		System.out.println(decodedPath);
 		return decodedPath;
 	}
 	
