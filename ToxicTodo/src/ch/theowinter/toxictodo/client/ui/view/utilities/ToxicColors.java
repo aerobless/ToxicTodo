@@ -17,6 +17,7 @@ public class ToxicColors {
 	
 	//Windows
 	public static final Color TOOLBAR_GREY = new Color(245, 246, 247);
+	public static final Color DISABLED_GREY = new Color(169, 183, 206);
 	public static final Color BORDER_GREY = new Color(218, 219, 220);
 	public static final Color BACKGROUND_BLUE = new Color(200, 210, 225);
 	public static final Color SELECTION_BLUE = new Color(25, 121, 202);

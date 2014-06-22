@@ -385,6 +385,8 @@ public class MainWindow{
 		            ButtonModel model = (ButtonModel) e.getSource();
 		            if (model.isRollover()) {
 		            	factoryButton.setForeground(ToxicColors.SELECTION_BLUE);
+		            } else if (!model.isEnabled()) {
+		            	factoryButton.setForeground(ToxicColors.DISABLED_GREY);
 		            } else {
 		             	factoryButton.setForeground(ToxicColors.TEXT_GREY);
 		            }
@@ -406,7 +408,6 @@ public class MainWindow{
 	 * mac button theory:
 	 * http://nadeausoftware.com/articles/2008/11/mac_java_tip_how_create_aqua_single_and_segmented_buttons
 	 * 
-	 * TODO: maybe needs to be replaced by a standard toolbar on windows, needs testing
 	 */
 	private void initToolbar(){
 		initToolbarButtons();   
