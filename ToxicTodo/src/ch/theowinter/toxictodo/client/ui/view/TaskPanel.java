@@ -37,6 +37,9 @@ public class TaskPanel extends JPanel {
 	private ClientTodoManager todoManager;
 	private MainWindow main;
 	
+	//Decoration
+	private PanelHeader header;
+	
 	//Data
 	private JComboBox<String> priorityCombobox;
 	private JTextField summaryTextField;
@@ -66,7 +69,7 @@ public class TaskPanel extends JPanel {
 		setBorder(null);
 		setLayout(new BorderLayout(0, 0));
 		
-		PanelHeader header = new PanelHeader();
+		header = new PanelHeader();
 		header.setTitel("Add a new task");
 		header.setSubTitel("Press 'save' when you're done.");
 		header.setIcon('\uf15b');
@@ -256,7 +259,8 @@ public class TaskPanel extends JPanel {
 		monthlyCheckbox.setSelected(loadedTask.isMonthly());
 		
 		btnSaveLog.setVisible(false);
-		
+
+		header.setTitel("Edit a task");
 		btnSave.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
