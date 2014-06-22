@@ -6,6 +6,7 @@ import java.awt.Component;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
+import ch.theowinter.toxictodo.client.ClientApplication;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoCategory;
 
 public class CategoryListCellRenderer extends CategoryElementPanel implements ListCellRenderer<Object>{
@@ -30,7 +31,11 @@ public class CategoryListCellRenderer extends CategoryElementPanel implements Li
 
         // unselected, and not the DnD drop location
         } else {
-            background = ToxicColors.SOFT_BLUE;
+        	if("osx".equals(ClientApplication.OS)){
+                background = ToxicColors.SOFT_BLUE;
+        	} else{
+            	background = ToxicColors.BACKGROUND_BLUE;
+        	}
             this.setBackgroundColor(background);
             this.setFontColor(ToxicColors.TEXT_BLACK);
         }
