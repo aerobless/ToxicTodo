@@ -4,9 +4,11 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLDecoder;
 
 import ch.theowinter.toxictodo.client.ClientApplication;
 import ch.theowinter.toxictodo.client.ClientSettings;
@@ -109,7 +111,14 @@ public class LogicEngine {
 		} catch (MalformedURLException e) {
 			Logger.log("Malformed URL in LogicEngine. JarLoc: "+jarLocation+" Filename: "+filename, e);
 		}
-		return dataXML.getPath();
+		String decodedPath = null;
+		try {
+			decodedPath = URLDecoder.decode(dataXML.getPath(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			Logger.log("UnsipportedEncodingException in LogicEngine. (UTF-8)", e);
+		}
+		System.out.println(decodedPath);
+		return decodedPath;
 	}
 	
 	public boolean updateSoftware(String updateURL, boolean updateWithGUI){
