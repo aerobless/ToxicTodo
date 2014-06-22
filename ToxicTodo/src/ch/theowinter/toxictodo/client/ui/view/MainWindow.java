@@ -228,14 +228,9 @@ public class MainWindow{
 		btnInfo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(infoPanel==null){
-					infoPanel = new InfoAndUpdatePanel(main);
-					setRightContent(infoPanel);
-					main.setButtonsLocked(true);
-				}else{
-					infoPanel = null;
-					switchToTasks();
-				}
+				infoPanel = new InfoAndUpdatePanel(main);
+				setRightContent(infoPanel);
+				main.setButtonsLocked(true);
 			}
         }); 
 		
@@ -243,14 +238,9 @@ public class MainWindow{
 		btnSettings.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(settingsPanel == null){
-					settingsPanel = new SettingsPanel(settings, main);
-					setRightContent(settingsPanel);
-					main.setButtonsLocked(true);
-				}else{
-					settingsPanel = null;
-					switchToTasks();
-				}
+				settingsPanel = new SettingsPanel(settings, main);
+				setRightContent(settingsPanel);
+				main.setButtonsLocked(true);
 			}
         });
 		
