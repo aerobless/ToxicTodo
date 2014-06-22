@@ -98,10 +98,13 @@ public class MainWindow{
 	FontIconButton btnCompletedTaskList;
 	FontIconButton btnStatistics;
 	FontIconButton btnRefresh;
+	FontIconButton btnInfo;
+	FontIconButton btnSettings;
+	
 	
 	//Panels
-	private JPanel totalTaskPanel;
-	private TaskPanel newTaskPanel;
+	private JPanel taskListPanel;
+	private TaskPanel specificTaskPanel;
 	private CategoryPanel categoryPanel;
 	private SettingsPanel settingsPanel;
 	
@@ -221,13 +224,14 @@ public class MainWindow{
 	 */
 	private void initBottomBar() {
 		//Info Button:
-		FontIconButton btnInfo = fontIconButtonFactory('\uf129', "Information about the Program", MainWindow.TEXTURED, null, bottomBarButtonSize);
+		btnInfo = fontIconButtonFactory('\uf129', "Information about the Program", MainWindow.TEXTURED, null, bottomBarButtonSize);
 		btnInfo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(infoPanel==null){
 					infoPanel = new InfoAndUpdatePanel(main);
 					setRightContent(infoPanel);
+					main.setButtonsLocked(true);
 				}else{
 					infoPanel = null;
 					switchToTasks();
@@ -235,13 +239,14 @@ public class MainWindow{
 			}
         }); 
 		
-		FontIconButton btnSettings = fontIconButtonFactory('\uf013', "Change the program settings.", MainWindow.TEXTURED, null, bottomBarButtonSize);
+		btnSettings = fontIconButtonFactory('\uf013', "Change the program settings.", MainWindow.TEXTURED, null, bottomBarButtonSize);
 		btnSettings.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(settingsPanel == null){
 					settingsPanel = new SettingsPanel(settings, main);
 					setRightContent(settingsPanel);
+					main.setButtonsLocked(true);
 				}else{
 					settingsPanel = null;
 					switchToTasks();
@@ -281,12 +286,12 @@ public class MainWindow{
 	    JScrollPane taskScrollPane = new JScrollPane();
 		taskScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 	    
-	    totalTaskPanel = new JPanel();
-	    totalTaskPanel.setLayout(new BorderLayout(0, 0));
-	    totalTaskPanel.add(taskListHeader, BorderLayout.NORTH);
-	    totalTaskPanel.add(taskScrollPane, BorderLayout.CENTER);
+	    taskListPanel = new JPanel();
+	    taskListPanel.setLayout(new BorderLayout(0, 0));
+	    taskListPanel.add(taskListHeader, BorderLayout.NORTH);
+	    taskListPanel.add(taskScrollPane, BorderLayout.CENTER);
 	    
-		splitPane.setRightComponent(totalTaskPanel);
+		splitPane.setRightComponent(taskListPanel);
 
 		taskListModel = new TaskListModel(categoryListModel.getElementAt(0).getKeyword(), todoManager);
 		taskList = new JList<TodoTask>(taskListModel);
@@ -302,15 +307,17 @@ public class MainWindow{
         	public void mouseClicked(MouseEvent event)
         	{
         	  if (event.getClickCount() == 2) {
-        		  if(newTaskPanel == null){
-        			  newTaskPanel = new TaskPanel(main, todoManager);
-        			  newTaskPanel.loadTask(taskList.getSelectedValue());
-        			  setRightContent(newTaskPanel);
-        		  }else if(newTaskPanel.isVisible()){
+        		  if(specificTaskPanel == null){
+        			  specificTaskPanel = new TaskPanel(main, todoManager);
+        			  specificTaskPanel.loadTask(taskList.getSelectedValue());
+        			  setRightContent(specificTaskPanel);
+        			  main.setButtonsLocked(true);
+        		  }else if(specificTaskPanel.isVisible()){
         			  switchToTasks();
         		  } else {
-        			  setRightContent(newTaskPanel);
-        			  newTaskPanel.loadTask(taskList.getSelectedValue());
+        			  setRightContent(specificTaskPanel);
+        			  specificTaskPanel.loadTask(taskList.getSelectedValue());
+        			  main.setButtonsLocked(true);
         		  }
         	  }
         	}
@@ -499,15 +506,17 @@ public class MainWindow{
 		btnNewTask.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(newTaskPanel == null){
-					newTaskPanel = new TaskPanel(main, todoManager);
-					newTaskPanel.cleanTask();
-					setRightContent(newTaskPanel);
-				}else if(newTaskPanel.isVisible()){
+				if(specificTaskPanel == null){
+					specificTaskPanel = new TaskPanel(main, todoManager);
+					specificTaskPanel.cleanTask();
+					setRightContent(specificTaskPanel);
+					main.setButtonsLocked(true);
+				}else if(specificTaskPanel.isVisible()){
 					switchToTasks();
 				} else{
-					setRightContent(newTaskPanel);
-					newTaskPanel.cleanTask();
+					setRightContent(specificTaskPanel);
+					specificTaskPanel.cleanTask();
+					main.setButtonsLocked(true);
 				}
 			}
         });  
@@ -569,11 +578,13 @@ public class MainWindow{
 					categoryPanel = new CategoryPanel(main, todoManager);
 					categoryPanel.newCategory();
 					setRightContent(categoryPanel);
+					main.setButtonsLocked(true);
 				}else if(categoryPanel.isVisible()){
 					switchToTasks();
 				} else{
 					categoryPanel.newCategory();
 					setRightContent(categoryPanel);
+					main.setButtonsLocked(true);
 				}
 			}
         });
@@ -592,11 +603,13 @@ public class MainWindow{
 						categoryPanel = new CategoryPanel(main, todoManager);
 						categoryPanel.setCategory(editCategory);
 						setRightContent(categoryPanel);
+						main.setButtonsLocked(true);
 					}else if(categoryPanel.isVisible()){
 						switchToTasks();
 					} else{
 						categoryPanel.setCategory(getSelectedCategory());
 						setRightContent(categoryPanel);
+						main.setButtonsLocked(true);
 					}
 				}
 			}
@@ -626,6 +639,7 @@ public class MainWindow{
 				} else{
 					statisticsPanel = new StatisticsPanel(main, todoManager);
 					setRightContent(statisticsPanel);
+					main.setButtonsLocked(true);
 				}
 			}
         });	
@@ -660,7 +674,8 @@ public class MainWindow{
 	public void switchToTasks(){
 		searchField.setText("");
 		splitPane.getRightComponent().setVisible(false);
-		setRightContent(totalTaskPanel);
+		setRightContent(taskListPanel);
+		setButtonsLocked(false);
 	}
 	
 	public void setRightContent(Component content){
@@ -672,6 +687,19 @@ public class MainWindow{
 	
 	public TodoCategory getSelectedCategory(){
 		return categoryList.getSelectedValue();
+	}
+	
+	public void setButtonsLocked(boolean isLocked){
+		btnNewTask.setEnabled(!isLocked);
+		btnCompleteTask.setEnabled(!isLocked);
+		btnRemoveTask.setEnabled(!isLocked);
+		btnEditCategory.setEnabled(!isLocked);
+		btnNewCategory.setEnabled(!isLocked);
+		btnCompletedTaskList.setEnabled(!isLocked);
+		btnStatistics.setEnabled(!isLocked);
+		btnRefresh.setEnabled(!isLocked);
+		btnSettings.setEnabled(!isLocked);
+		btnInfo.setEnabled(!isLocked);
 	}
 	
 	public TodoTask getSelectedTask(){
