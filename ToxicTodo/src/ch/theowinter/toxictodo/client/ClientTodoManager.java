@@ -26,7 +26,6 @@ public class ClientTodoManager extends Observable{
 	//Class variables
 	private TodoList todoList;
 	private LocationEngine locationEngine;
-	private MainWindow main;
 	
 	//Locks
 	private Semaphore writeLock = new Semaphore(1);
@@ -58,7 +57,6 @@ public class ClientTodoManager extends Observable{
 	}
 
 	public void setMain(MainWindow main){
-		this.main = main;
 	}
 	
 	public void setTodoList(TodoList input){
@@ -82,7 +80,7 @@ public class ClientTodoManager extends Observable{
 		TodoList advancedTodoList = generateAllTasksCategory(originalTodoList);
 		
 		try {
-			advancedTodoList.addCategory(generateTodyCategory(originalTodoList));
+			advancedTodoList.addCategory(generateTodayCategory(originalTodoList));
 		} catch (Exception e) {
 			Logger.log("Unable to add daily-Task category to advancedTodoList", e);
 		}
@@ -243,6 +241,7 @@ public class ClientTodoManager extends Observable{
 		} catch (Exception e) {
 			Logger.log("error generating all-tasks category..", e);
 		}
+		
 		return inputList;
 	}
 	
@@ -254,7 +253,7 @@ public class ClientTodoManager extends Observable{
 	 * @param originalTodoList
 	 * @return
 	 */
-	public TodoCategory generateTodyCategory(TodoList originalTodoList){
+	public TodoCategory generateTodayCategory(TodoList originalTodoList){
 		Date today = new Date();
 		TodoCategory todayTasks = new TodoCategory("Today's Tasks", ToxicUIData.TODAY_DAILY_TASK_KEY, '\uf073',true);
 		try {
