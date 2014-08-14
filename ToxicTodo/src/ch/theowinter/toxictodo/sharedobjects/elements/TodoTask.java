@@ -145,7 +145,7 @@ public class TodoTask implements Serializable{
 		return completionLocation;
 	}
 
-	public void setCompletionLocatioN(String completionLocatioN) {
+	public void setCompletionLocation(String completionLocatioN) {
 		this.completionLocation = completionLocatioN;
 	}
 

@@ -16,7 +16,6 @@ public class HistoricTaskPanel extends JPanel{
 
 	public HistoricTaskPanel() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	void initialize(){	
@@ -31,13 +30,7 @@ public class HistoricTaskPanel extends JPanel{
 	    totalTaskPanel.add(taskScrollPane, BorderLayout.CENTER);
 	    
 	    add(totalTaskPanel);
-	/*
-	    TaskListModel taskListModel = new TaskListModel(categoryListModel.getElementAt(0).getKeyword(), todoManager);
-		taskList = new JList<TodoTask>(taskListModel);
-		taskList.setCellRenderer(new TaskListCellRenderer());
-		taskList.setBackground(ToxicColors.SOFT_GREY);*/
-		
-		/*taskScrollPane.setViewportView(taskList);*/
+
 		taskScrollPane.setBackground(ToxicColors.SOFT_GREY);
 		taskScrollPane.setBorder(new LineBorder(Color.black,0));
 	}

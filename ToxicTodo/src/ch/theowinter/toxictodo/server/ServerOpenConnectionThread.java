@@ -106,109 +106,177 @@ class ServerOpenConnectionThread implements Runnable {
 		Logger.log("Trying to handle: "+serverMessage);
 		ToxicDatagram dataToClient = new ToxicDatagram("ERROR - 500 - Bad Request to server action handler.");
 		if("SEND_TODOLIST_TO_CLIENT".equals(serverMessage)){
-			//We wait until noone's writing anymore 
-			while(writeLock.availablePermits()==0){
-				wait();
-			}
-			dataToClient = new ToxicDatagram("Answering successful request for TodoList", ServerApplication.getServerActiveTodoList());
+			dataToClient = sendTodoListToClient();
 		} else if ("SEND_HISTORIC_TODOLIST_TO_CLIENT".equals(serverMessage)){
-			while(writeLock.availablePermits()==0){
-				wait();
-			}
-			dataToClient = new ToxicDatagram("Answering successful request for Historic TodoList", ServerApplication.getServerHistoricTodoList());
+			dataToClient = sendHistoricTodoListToClient();
 		} else if ("ADD_TASK_TO_LIST_ON_SERVER".equals(serverMessage)){
-			writeLock.acquire();
-			try {
-				ServerApplication.todoListActiveTasks.addTask(dataFromClient.getAdditionalMessage(), dataFromClient.getTodoTask());
-				dataToClient = new ToxicDatagram("Answering successful request to add new task");
-			} catch (Exception e) {
-				Logger.log("Failed to add new task.", e);
-				dataToClient = new ToxicDatagram("Adding a new task failed. Maybe it already exists?");
-			}
-			writeLock.release();
+			dataToClient = addTaskToListOnServer(dataFromClient);
 		} else if ("REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER".equals(serverMessage)){
-			writeLock.acquire();
-			try {
-				ServerApplication.todoListActiveTasks.removeTask(dataFromClient.getTodoTask(), dataFromClient.getAdditionalMessage());
-				
-				addToHistoricTaskList(dataFromClient);
-				
-				logCompletedToTxtFile(dataFromClient);
-				dataToClient = new ToxicDatagram("Answering successful request to remove & log task");
-			} catch (Exception e) {
-				Logger.log("Failed to remove & log task.", e);
-				dataToClient = new ToxicDatagram("Completing a task failed.");
-			}
-			writeLock.release();
+			dataToClient = removeAndLogTaskAsCompletedOnServer(dataFromClient);
 		} else if ("LOG_TASK_AS_COMPLETED_ON_SERVER".equals(serverMessage)){
-			writeLock.acquire();
-			try {	
-				addToHistoricTaskList(dataFromClient);	
-				logCompletedToTxtFile(dataFromClient);
-				dataToClient = new ToxicDatagram("Answering successful request to remove & log task");
-			} catch (Exception e) {
-				Logger.log("Failed to remove & log task.", e);
-				dataToClient = new ToxicDatagram("Completing a task failed.");
-			}
-			writeLock.release();
+			dataToClient = logTaskAsCompletedOnServer(dataFromClient);
 		} else if ("UPDATE_TASK_ON_SERVER".equals(serverMessage)){
-			writeLock.acquire();
-			try {
-				ServerApplication.todoListActiveTasks.editTask(dataFromClient.getAdditionalMessage(), dataFromClient.getTodoTask());
-				dataToClient = new ToxicDatagram("Answering successful request to update a task");
-			} catch (Exception e) {
-				Logger.log("Failed to remove & log task.", e);
-				dataToClient = new ToxicDatagram("Completing a task failed.");
-			}
-			writeLock.release();
+			dataToClient = updateTaskOnServer(dataFromClient);
 		} else if ("REMOVE_TASK_ON_SERVER".equals(serverMessage)){
-			writeLock.acquire();
-			try {
-				ServerApplication.todoListActiveTasks.removeTask(dataFromClient.getTodoTask(), dataFromClient.getAdditionalMessage());
-				dataToClient = new ToxicDatagram("Answering successful request to remove task");
-			} catch (Exception e) {
-				Logger.log("Failed to remove task.", e);
-				dataToClient = new ToxicDatagram("Removing a task failed.");
-			}
-			writeLock.release();
+			dataToClient = removeTaskOnServer(dataFromClient);
 		} else if ("ADD_CATEGORY_TO_LIST_ON_SERVER".equals(serverMessage)){
-			writeLock.acquire();
-			try {
-				ServerApplication.todoListActiveTasks.addCategory(dataFromClient.getTodoCategory());
-				dataToClient = new ToxicDatagram("Answering successful request to add category");
-			} catch (Exception e) {
-				Logger.log("Failed to add new category.", e);
-				dataToClient = new ToxicDatagram("Adding a category failed.");
-			}
-			writeLock.release();
+			dataToClient = addCategoryToListOnServer(dataFromClient);
 		} else if ("REMOVE_CATEGORY_ON_SERVER".equals(serverMessage)){
-			writeLock.acquire();
-			try {
-				ServerApplication.todoListActiveTasks.removeCategory(dataFromClient.getTodoCategory().getKeyword());
-				dataToClient = new ToxicDatagram("Answering successful request to remove category");
-			} catch (Exception e) {
-				Logger.log("Failed to remove category.", e);
-				dataToClient = new ToxicDatagram("Removing a category failed.");
-			}
-			writeLock.release();
+			dataToClient = removeCategoryOnServer(dataFromClient);
 		} else if ("EDIT_CATEGORY_ON_SERVER".equals(serverMessage)){
-			writeLock.acquire();
-			try {
-				ServerApplication.todoListActiveTasks.editCategory(dataFromClient.getAdditionalMessage(),
-						dataFromClient.getTodoCategory().getKeyword(),
-						dataFromClient.getTodoCategory().getName(),
-						dataFromClient.getTodoCategory().getIcon());
-				dataToClient = new ToxicDatagram("Answering successful request to edit category");
-				
-			} catch (Exception e) {
-				Logger.log("Failed to edit category.", e);
-				dataToClient = new ToxicDatagram("Editing a category failed.");
-			}
-			writeLock.release();
+			dataToClient = editCategoryOnServer(dataFromClient);
 		} else{
 			Logger.log("Command from Client not recognized..");
 		}
 		ServerApplication.writeChangesToDisk();
+		return dataToClient;
+	}
+
+	private ToxicDatagram editCategoryOnServer(ToxicDatagram dataFromClient)
+			throws InterruptedException {
+		ToxicDatagram dataToClient;
+		writeLock.acquire();
+		try {
+			ServerApplication.todoListActiveTasks.editCategory(dataFromClient.getAdditionalMessage(),
+					dataFromClient.getTodoCategory().getKeyword(),
+					dataFromClient.getTodoCategory().getName(),
+					dataFromClient.getTodoCategory().getIcon());
+			dataToClient = new ToxicDatagram("Answering successful request to edit category");
+			
+		} catch (Exception e) {
+			Logger.log("Failed to edit category.", e);
+			dataToClient = new ToxicDatagram("Editing a category failed.");
+		}
+		writeLock.release();
+		return dataToClient;
+	}
+
+	private ToxicDatagram removeCategoryOnServer(ToxicDatagram dataFromClient)
+			throws InterruptedException {
+		ToxicDatagram dataToClient;
+		writeLock.acquire();
+		try {
+			ServerApplication.todoListActiveTasks.removeCategory(dataFromClient.getTodoCategory().getKeyword());
+			dataToClient = new ToxicDatagram("Answering successful request to remove category");
+		} catch (Exception e) {
+			Logger.log("Failed to remove category.", e);
+			dataToClient = new ToxicDatagram("Removing a category failed.");
+		}
+		writeLock.release();
+		return dataToClient;
+	}
+
+	private ToxicDatagram addCategoryToListOnServer(ToxicDatagram dataFromClient)
+			throws InterruptedException {
+		ToxicDatagram dataToClient;
+		writeLock.acquire();
+		try {
+			ServerApplication.todoListActiveTasks.addCategory(dataFromClient.getTodoCategory());
+			dataToClient = new ToxicDatagram("Answering successful request to add category");
+		} catch (Exception e) {
+			Logger.log("Failed to add new category.", e);
+			dataToClient = new ToxicDatagram("Adding a category failed.");
+		}
+		writeLock.release();
+		return dataToClient;
+	}
+
+	private ToxicDatagram removeTaskOnServer(ToxicDatagram dataFromClient)
+			throws InterruptedException {
+		ToxicDatagram dataToClient;
+		writeLock.acquire();
+		try {
+			ServerApplication.todoListActiveTasks.removeTask(dataFromClient.getTodoTask(), dataFromClient.getAdditionalMessage());
+			dataToClient = new ToxicDatagram("Answering successful request to remove task");
+		} catch (Exception e) {
+			Logger.log("Failed to remove task.", e);
+			dataToClient = new ToxicDatagram("Removing a task failed.");
+		}
+		writeLock.release();
+		return dataToClient;
+	}
+
+	private ToxicDatagram updateTaskOnServer(ToxicDatagram dataFromClient)
+			throws InterruptedException {
+		ToxicDatagram dataToClient;
+		writeLock.acquire();
+		try {
+			ServerApplication.todoListActiveTasks.editTask(dataFromClient.getAdditionalMessage(), dataFromClient.getTodoTask());
+			dataToClient = new ToxicDatagram("Answering successful request to update a task");
+		} catch (Exception e) {
+			Logger.log("Failed to remove & log task.", e);
+			dataToClient = new ToxicDatagram("Completing a task failed.");
+		}
+		writeLock.release();
+		return dataToClient;
+	}
+
+	private ToxicDatagram logTaskAsCompletedOnServer(
+			ToxicDatagram dataFromClient) throws InterruptedException {
+		ToxicDatagram dataToClient;
+		writeLock.acquire();
+		try {	
+			addToHistoricTaskList(dataFromClient);	
+			logCompletedToTxtFile(dataFromClient);
+			dataToClient = new ToxicDatagram("Answering successful request to remove & log task");
+		} catch (Exception e) {
+			Logger.log("Failed to remove & log task.", e);
+			dataToClient = new ToxicDatagram("Completing a task failed.");
+		}
+		writeLock.release();
+		return dataToClient;
+	}
+
+	private ToxicDatagram removeAndLogTaskAsCompletedOnServer(
+			ToxicDatagram dataFromClient) throws InterruptedException {
+		ToxicDatagram dataToClient;
+		writeLock.acquire();
+		try {
+			ServerApplication.todoListActiveTasks.removeTask(dataFromClient.getTodoTask(), dataFromClient.getAdditionalMessage());
+			
+			addToHistoricTaskList(dataFromClient);
+			
+			logCompletedToTxtFile(dataFromClient);
+			dataToClient = new ToxicDatagram("Answering successful request to remove & log task");
+		} catch (Exception e) {
+			Logger.log("Failed to remove & log task.", e);
+			dataToClient = new ToxicDatagram("Completing a task failed.");
+		}
+		writeLock.release();
+		return dataToClient;
+	}
+
+	private ToxicDatagram addTaskToListOnServer(ToxicDatagram dataFromClient)
+			throws InterruptedException {
+		ToxicDatagram dataToClient;
+		writeLock.acquire();
+		try {
+			ServerApplication.todoListActiveTasks.addTask(dataFromClient.getAdditionalMessage(), dataFromClient.getTodoTask());
+			dataToClient = new ToxicDatagram("Answering successful request to add new task");
+		} catch (Exception e) {
+			Logger.log("Failed to add new task.", e);
+			dataToClient = new ToxicDatagram("Adding a new task failed. Maybe it already exists?");
+		}
+		writeLock.release();
+		return dataToClient;
+	}
+
+	private ToxicDatagram sendHistoricTodoListToClient()
+			throws InterruptedException {
+		ToxicDatagram dataToClient;
+		while(writeLock.availablePermits()==0){
+			wait();
+		}
+		dataToClient = new ToxicDatagram("Answering successful request for Historic TodoList", ServerApplication.getServerHistoricTodoList());
+		return dataToClient;
+	}
+
+	private ToxicDatagram sendTodoListToClient() throws InterruptedException {
+		ToxicDatagram dataToClient;
+		while(writeLock.availablePermits()==0){
+			wait();
+		}
+		dataToClient = new ToxicDatagram("Answering successful request for TodoList", ServerApplication.getServerActiveTodoList());
 		return dataToClient;
 	}
 

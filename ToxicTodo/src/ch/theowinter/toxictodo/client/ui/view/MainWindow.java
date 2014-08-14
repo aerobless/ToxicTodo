@@ -121,7 +121,6 @@ public class MainWindow{
 	 */
 	public MainWindow(ClientTodoManager aTodoManager, ClientSettings someSettings) {
 		todoManager = aTodoManager;
-		todoManager.setMain(main);
 		settings = someSettings;
 		initialize();
 	}
@@ -294,8 +293,7 @@ public class MainWindow{
 		
 	    taskList.addMouseListener(new MouseAdapter() {
         	@Override
-        	public void mouseClicked(MouseEvent event)
-        	{
+        	public void mouseClicked(MouseEvent event){
         	  if (event.getClickCount() == 2) {
         		  if(specificTaskPanel == null){
         			  specificTaskPanel = new TaskPanel(main, todoManager);
@@ -417,73 +415,81 @@ public class MainWindow{
         searchField.getDocument().addDocumentListener(new SearchListener());
 		
 		if("osx".equals(ClientApplication.OS)){
-			UnifiedToolBar toolbarTop = new UnifiedToolBar();
-			toolbarTop.installWindowDraggerOnWindow(frmToxictodo);
-			frmToxictodo.getContentPane().add(toolbarTop.getComponent(), BorderLayout.NORTH);
-			
-			//Buttongroup "Tasks" 
-			ButtonGroup taskGroup = new ButtonGroup();
-	        taskGroup.add(btnNewTask);
-	        taskGroup.add(btnCompleteTask);
-	        taskGroup.add(btnRemoveTask);  
-	        toolbarTop.addComponentToLeft(new LabeledComponentGroup("Tasks", taskGroup).getComponent());
-		
-	        //Buttongroup "Category"
-	        ButtonGroup categoryGroup = new ButtonGroup();
-	        categoryGroup.add(btnNewCategory);
-	        categoryGroup.add(btnEditCategory);
-	        toolbarTop.addComponentToLeft(new LabeledComponentGroup("Categories", categoryGroup).getComponent());
-			
-	        //Buttongroup "Statistics"
-			ButtonGroup statsGroup = new ButtonGroup();
-			statsGroup.add(btnCompletedTaskList);
-			statsGroup.add(btnStatistics);
-	        toolbarTop.addComponentToLeft(new LabeledComponentGroup("Statistics", statsGroup).getComponent());
-	        
-	        //Button "Refresh"
-			toolbarTop.addComponentToLeft(new LabeledComponentGroup("Synchronize", btnRefresh).getComponent());
-			
-			//Search:
-	        toolbarTop.addComponentToRight(new LabeledComponentGroup(" ",
-	        		searchField).getComponent());
+			initUnifiedToolbarForOSX();
 		} else {
-			JPanel toolbarTop = new JPanel();
-			toolbarTop.setLayout(new BorderLayout());
-			
-			JPanel buttonsLeft = new JPanel();
-			toolbarTop.add(buttonsLeft, BorderLayout.WEST);
-			toolbarTop.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ToxicColors.BORDER_GREY));
-			
-			toolbarTop.setBackground(ToxicColors.TEXT_WHITE);
-			frmToxictodo.getContentPane().add(toolbarTop, BorderLayout.NORTH);
-			buttonsLeft.setBackground(ToxicColors.TEXT_WHITE);
-			buttonsLeft.add(new ButtonTextGroup(btnNewTask,"New Task"));
-			buttonsLeft.add(new ButtonTextGroup(btnCompleteTask,"Complete"));
-			buttonsLeft.add(new ButtonTextGroup(btnRemoveTask,"Remove"));
-			
-			Component strut1 = Box.createHorizontalStrut(20);
-			buttonsLeft.add(strut1);
-			
-			buttonsLeft.add(new ButtonTextGroup(btnNewCategory,"New category"));
-			buttonsLeft.add(new ButtonTextGroup(btnEditCategory,"Edit category"));
-			
-			Component strut2 = Box.createHorizontalStrut(20);
-			buttonsLeft.add(strut2);
-			
-			buttonsLeft.add(new ButtonTextGroup(btnCompletedTaskList,"Completed Tasks"));
-			buttonsLeft.add(new ButtonTextGroup(btnStatistics,"Statistics"));
-			
-			Component strut3 = Box.createHorizontalStrut(20);
-			buttonsLeft.add(strut3);
-			
-			buttonsLeft.add(new ButtonTextGroup(btnRefresh,"Refresh"));
-			
-			JPanel searchLeft = new JPanel();
-			searchLeft.setBackground(ToxicColors.TEXT_WHITE);
-
-			toolbarTop.add(searchLeft, BorderLayout.EAST);
-			searchLeft.add(searchField);
+			initNormalToolbarForLinuxAndWindows();
 		}
+	}
+
+	private void initNormalToolbarForLinuxAndWindows() {
+		JPanel toolbarTop = new JPanel();
+		toolbarTop.setLayout(new BorderLayout());
+		
+		JPanel buttonsLeft = new JPanel();
+		toolbarTop.add(buttonsLeft, BorderLayout.WEST);
+		toolbarTop.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ToxicColors.BORDER_GREY));
+		
+		toolbarTop.setBackground(ToxicColors.TEXT_WHITE);
+		frmToxictodo.getContentPane().add(toolbarTop, BorderLayout.NORTH);
+		buttonsLeft.setBackground(ToxicColors.TEXT_WHITE);
+		buttonsLeft.add(new ButtonTextGroup(btnNewTask,"New Task"));
+		buttonsLeft.add(new ButtonTextGroup(btnCompleteTask,"Complete"));
+		buttonsLeft.add(new ButtonTextGroup(btnRemoveTask,"Remove"));
+		
+		Component strut1 = Box.createHorizontalStrut(20);
+		buttonsLeft.add(strut1);
+		
+		buttonsLeft.add(new ButtonTextGroup(btnNewCategory,"New category"));
+		buttonsLeft.add(new ButtonTextGroup(btnEditCategory,"Edit category"));
+		
+		Component strut2 = Box.createHorizontalStrut(20);
+		buttonsLeft.add(strut2);
+		
+		buttonsLeft.add(new ButtonTextGroup(btnCompletedTaskList,"Completed Tasks"));
+		buttonsLeft.add(new ButtonTextGroup(btnStatistics,"Statistics"));
+		
+		Component strut3 = Box.createHorizontalStrut(20);
+		buttonsLeft.add(strut3);
+		
+		buttonsLeft.add(new ButtonTextGroup(btnRefresh,"Refresh"));
+		
+		JPanel searchLeft = new JPanel();
+		searchLeft.setBackground(ToxicColors.TEXT_WHITE);
+
+		toolbarTop.add(searchLeft, BorderLayout.EAST);
+		searchLeft.add(searchField);
+	}
+
+	private void initUnifiedToolbarForOSX() {
+		UnifiedToolBar toolbarTop = new UnifiedToolBar();
+		toolbarTop.installWindowDraggerOnWindow(frmToxictodo);
+		frmToxictodo.getContentPane().add(toolbarTop.getComponent(), BorderLayout.NORTH);
+		
+		//Buttongroup "Tasks" 
+		ButtonGroup taskGroup = new ButtonGroup();
+		taskGroup.add(btnNewTask);
+		taskGroup.add(btnCompleteTask);
+		taskGroup.add(btnRemoveTask);  
+		toolbarTop.addComponentToLeft(new LabeledComponentGroup("Tasks", taskGroup).getComponent());
+
+		//Buttongroup "Category"
+		ButtonGroup categoryGroup = new ButtonGroup();
+		categoryGroup.add(btnNewCategory);
+		categoryGroup.add(btnEditCategory);
+		toolbarTop.addComponentToLeft(new LabeledComponentGroup("Categories", categoryGroup).getComponent());
+		
+		//Buttongroup "Statistics"
+		ButtonGroup statsGroup = new ButtonGroup();
+		statsGroup.add(btnCompletedTaskList);
+		statsGroup.add(btnStatistics);
+		toolbarTop.addComponentToLeft(new LabeledComponentGroup("Statistics", statsGroup).getComponent());
+		
+		//Button "Refresh"
+		toolbarTop.addComponentToLeft(new LabeledComponentGroup("Synchronize", btnRefresh).getComponent());
+		
+		//Search:
+		toolbarTop.addComponentToRight(new LabeledComponentGroup(" ",
+				searchField).getComponent());
 	}
 
 	/**

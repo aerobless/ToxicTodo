@@ -92,8 +92,7 @@ public class TaskListModel extends AbstractListModel<TodoTask> implements Observ
 	 */
 	public List<TodoTask> sort(List<TodoTask> list){
 		Collections.sort(list,
-				new Comparator<TodoTask>() 
-				{
+				new Comparator<TodoTask>(){
 					@Override
 					public int compare(TodoTask task1, TodoTask task2) {
 						return task1.getSummary().compareTo(task2.getSummary());

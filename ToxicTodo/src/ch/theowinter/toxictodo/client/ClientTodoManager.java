@@ -13,7 +13,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-import ch.theowinter.toxictodo.client.ui.view.MainWindow;
 import ch.theowinter.toxictodo.client.ui.view.utilities.ToxicUIData;
 import ch.theowinter.toxictodo.sharedobjects.LocationEngine;
 import ch.theowinter.toxictodo.sharedobjects.Logger;
@@ -55,9 +54,6 @@ public class ClientTodoManager extends Observable{
 	public TodoList getTodoList() {
 		return todoList;
 	}
-
-	public void setMain(MainWindow main){
-	}
 	
 	public void setTodoList(TodoList input){
 		try {
@@ -84,28 +80,10 @@ public class ClientTodoManager extends Observable{
 		} catch (Exception e) {
 			Logger.log("Unable to add daily-Task category to advancedTodoList", e);
 		}
-
-		removeEmptyCategories(advancedTodoList);
 		
 		setTodoList(advancedTodoList);
 	}
-	/**
-	 * @param advancedTodoList
-	 */
-	private void removeEmptyCategories(TodoList advancedTodoList) {
-		// IS UNSTABLE - REMOVED FOR NOW UNTIL I FIND A BETTER WAY TO DO THIS...
-		
-		//Remove the "orphan" category if it doesn't contain any tasks.
-	/*	if(advancedTodoList.getCategoryMap().get("orphan") != null){
-			if(!advancedTodoList.getCategoryMap().get("orphan").containsTasks()){
-				advancedTodoList.getCategoryMap().remove("orphan");
-				if(main != null){
-					main.resetCategorySelection();	
-				}
-			}
-		} */
-	}
-	
+
 	public TodoList updateHistoricList() throws IOException {
 		return generateAllTasksCategory(ClientApplication.sendToServer(new ToxicDatagram("SEND_HISTORIC_TODOLIST_TO_CLIENT")));
 	}
@@ -122,12 +100,7 @@ public class ClientTodoManager extends Observable{
 			String hyperlink, boolean daily, boolean weekly, boolean monthly) throws IOException{
 		
 		String location;
-		try {
-			location = locationEngine.getCity();
-		} catch (ParserConfigurationException | SAXException e) {
-			Logger.log("Unable to get location.", e);
-			location = "No Location";
-		}
+		location = getLocation();
 		//Setting additional properties
 		TodoTask task = new TodoTask(priority, summary, location, new Date());
 		task.setDescription(taskDescription);
@@ -147,20 +120,16 @@ public class ClientTodoManager extends Observable{
 	public void removeTask(boolean writeToLog, TodoTask task, String categoryKeyword, Component frame) throws IOException{
 		TodoTask finalizedTask = task;
 		finalizedTask.setCompletionDate(new Date());
-		String location;
-		try {
-			location = locationEngine.getCity();
-		} catch (ParserConfigurationException | SAXException e) {
-			Logger.log("Unable to get location.", e);
-			location = "No Location";
-		}
-		finalizedTask.setCompletionLocatioN(location);
+		finalizedTask.setCompletionLocation(getLocation());
+		
 		String dataMessage = "REMOVE_TASK_ON_SERVER";
+		
 		if(writeToLog){
 			dataMessage = "REMOVE_AND_LOG_TASK_AS_COMPLETED_ON_SERVER";
 		}
+		
 		String outputCategoryKeyword = categoryKeyword;
-		if(categoryKeyword.equals(ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY) || categoryKeyword.equals(ToxicUIData.TODAY_DAILY_TASK_KEY)){
+		if(isSpecialCategory(categoryKeyword)){
 			outputCategoryKeyword = todoList.getCategoryKeywordForTask(finalizedTask);
 		}
 		
@@ -184,14 +153,17 @@ public class ClientTodoManager extends Observable{
 				}
 			}
 		}
-		
+		requestRemovalOnServer(categoryKeyword, finalizedTask, dataMessage, outputCategoryKeyword);
+	}
+	private void requestRemovalOnServer(String categoryKeyword,
+			TodoTask finalizedTask, String dataMessage,
+			String outputCategoryKeyword) throws IOException {
 		if(categoryKeyword != null){
 			ClientApplication.sendToServer(new ToxicDatagram(dataMessage, finalizedTask , outputCategoryKeyword));
 			updateList();
 		}
 	}
-	
-	public void addAndCompleteTask(int priority, String categoryKeyword, String summary) throws IOException{
+	private String getLocation() throws IOException {
 		String location;
 		try {
 			location = locationEngine.getCity();
@@ -199,9 +171,18 @@ public class ClientTodoManager extends Observable{
 			Logger.log("Unable to get location.", e);
 			location = "No Location";
 		}
+		return location;
+	}
+	private boolean isSpecialCategory(String categoryKeyword) {
+		return categoryKeyword.equals(ToxicUIData.ALL_TASKS_TODOCATEGORY_KEY) || categoryKeyword.equals(ToxicUIData.TODAY_DAILY_TASK_KEY);
+	}
+	
+	public void addAndCompleteTask(int priority, String categoryKeyword, String summary) throws IOException{
+		String location;
+		location = getLocation();
 		TodoTask task = new TodoTask(priority, summary, location, new Date());
 		task.setCompletionDate(new Date());
-		task.setCompletionLocatioN(location);
+		task.setCompletionLocation(location);
 		
 		ClientApplication.sendToServer(new ToxicDatagram("LOG_TASK_AS_COMPLETED_ON_SERVER", task, categoryKeyword));
 		//TODO: update historicTodoList(?)
