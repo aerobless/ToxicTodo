@@ -18,6 +18,13 @@ import ch.theowinter.toxictodo.sharedobjects.LogicEngine;
 import ch.theowinter.toxictodo.sharedobjects.elements.TodoList;
 import ch.theowinter.toxictodo.sharedobjects.elements.ToxicDatagram;
 
+/* Commit reset info:
+ * Hard Reset to state before attempting to make ToxicTodo independent of a local server
+ * for the local mode. It's proven to messy and there's not that much to be gained from it.
+ * So I'm dropping that idea and continue on improving the fully server based version further.
+ * For my own use.
+ */
+
 public class ClientApplication {
 	public static final String CLIENT_UPDATE_URL = "http://w1nter.net:8080/job/ToxicTodo/lastSuccessfulBuild/artifact/ToxicTodo/dist/ToxicTodoClient.jar";
 	
