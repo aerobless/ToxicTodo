@@ -1,6 +1,8 @@
 package ch.theowinter.toxictodo.client.ui.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -31,7 +33,7 @@ public class TaskListModel extends AbstractListModel<TodoTask> implements Observ
 
 	public void changeCategory(String categoryKeyword){
 		originalTaskList = getTaskArray(categoryKeyword);
-		filteredTaskList = originalTaskList;
+		filteredTaskList = sort(originalTaskList);
 		fireContentsChanged(this, 0, filteredTaskList.size()-1);
 	}
 
@@ -39,7 +41,7 @@ public class TaskListModel extends AbstractListModel<TodoTask> implements Observ
 	public void update(Observable o, Object arg) {
 		if(currentCategory != null){
 			originalTaskList = getTaskArray(currentCategory);
-			filteredTaskList = originalTaskList;
+			filteredTaskList = sort(originalTaskList);
 			fireContentsChanged(this, 0, filteredTaskList.size()-1);
 		}
 	}
@@ -78,7 +80,26 @@ public class TaskListModel extends AbstractListModel<TodoTask> implements Observ
 				workList.add(aTask);
 			}
 		}
-		filteredTaskList = workList;
+		filteredTaskList = sort(workList);
 		fireContentsChanged(this, 0, filteredTaskList.size()-1);
+	}
+	
+	/**
+	 * Sort the TaskList alphabetically by summary.
+	 *
+	 * @param list
+	 * @return
+	 */
+	public List<TodoTask> sort(List<TodoTask> list){
+		Collections.sort(list,
+				new Comparator<TodoTask>() 
+				{
+					@Override
+					public int compare(TodoTask task1, TodoTask task2) {
+						return task1.getSummary().compareTo(task2.getSummary());
+					}
+				}
+			);
+		return list;
 	}
 }
