@@ -41,7 +41,10 @@ class ServerOpenConnectionThread implements Runnable {
 		try {
 			is = inputSocket.getInputStream();
 			ObjectInputStream ois = new ObjectInputStream(is);
-		        	
+			
+			//TODO: remove artifical delay again
+			//addArtificalDelay(2);
+			
 			Logger.log("got a message from a client");
 			SealedObject encryptedDataFromClient = (SealedObject)ois.readObject(); 
 			
@@ -317,5 +320,21 @@ class ServerOpenConnectionThread implements Runnable {
 	 */
 	private boolean doesCategoryExist(ToxicDatagram dataFromClient) {
 		return ServerApplication.todoListHistoricTasks.getCategoryMap().get(dataFromClient.getAdditionalMessage())==null;
+	}
+	
+	/**
+	 * This method is for testing/debugging purposes only. It should not be used
+	 * in a release. It allows us to have the server respond "delayed", so that
+	 * I can simulate a slow response time in a local environment.
+	 * @param seconds
+	 */
+	@SuppressWarnings("unused")
+	private void addArtificalDelay(int seconds){
+		Logger.log("DBUG: Artifical Delay is enabled!!");
+		try {
+			Thread.sleep(seconds*1000);
+		} catch (InterruptedException e) {
+			Logger.log("InterruptedException while trying to sleep for an artifical delay. (DEBUG)", e);
+		}
 	}
 }
