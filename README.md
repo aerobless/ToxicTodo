@@ -44,7 +44,6 @@ Update to the latest version from the CI server | update | update
 
 ##Download
 **ToxicTodo CI-Server:** [http://w1nter.net:8080/job/ToxicTodo/](http://w1nter.net:8080/job/ToxicTodo/)  
-**ToxicTodo Sonar-Server:** [http://sonar.w1nter.net/dashboard/index/103](http://sonar.w1nter.net/dashboard/index/1)
 
 
 ##License
