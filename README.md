@@ -44,7 +44,7 @@ Update to the latest version from the CI server | update | update
 
 ##Download
 **ToxicTodo Server .JAR download:** [download.theowinter.ch/ToxicTodoServer.jar](http://download.theowinter.ch/ToxicTodoServer.jar)  
-**ToxicTodo Client .JAR download:** [download.theowinter.ch/ToxicTodoClient.jar](download.theowinter.ch/ToxicTodoClient.jar)  
+**ToxicTodo Client .JAR download:** [download.theowinter.ch/ToxicTodoClient.jar](http://download.theowinter.ch/ToxicTodoClient.jar)  
 
 
 ##License
