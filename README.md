@@ -43,7 +43,8 @@ Update to the latest version from the CI server | update | update
 
 
 ##Download
-**ToxicTodo CI-Server:** [http://w1nter.net:8080/job/ToxicTodo/](http://w1nter.net:8080/job/ToxicTodo/)  
+**ToxicTodo Server .JAR download:** [download.theowinter.ch/ToxicTodoServer.jar](http://download.theowinter.ch/ToxicTodoServer.jar)  
+**ToxicTodo Client .JAR download:** [download.theowinter.ch/ToxicTodoClient.jar](download.theowinter.ch/ToxicTodoClient.jar)  
 
 
 ##License
