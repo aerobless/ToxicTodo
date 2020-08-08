@@ -4,10 +4,10 @@ ToxicTodo
 ToxicTodo is a server based todo list. It has a nice, mac-optimized GUI as well as a fully-featured command line mode. ToxicTodo uses a custom category-tasks model that allows you to make special categories for certain kinds of task.  
 The server application is intended to be run on a dedicated server (e.g. some cheap VPS), so that you have a synchronised todo list across all your computers. However if you just want to quickly test ToxicTodo or if you’re only using one computer it also comes with a integrated server. So you can just double-click the ToxicTodo.jar and you’re ready to go :).
 
-##Graphical mode
+## Graphical mode
 ![Toxic Todo GUI](https://raw.githubusercontent.com/aerobless/ToxicTodo/master/ToxicTodo_GUI.png)
 
-###Features:
+### Features:
  * Create a task containing a description and meta data such as task priority and your location (based on IP).
  * Create daily/weekly/monthly tasks, that can be completed multiple times.
  * Add a hyperlink to as task, so you can launch a website associated with it right from the app.
@@ -21,7 +21,7 @@ The server application is intended to be run on a dedicated server (e.g. some ch
  * Change the settings (internal or external server, password, port etc.)
  * Update ToxicTodo to the latest build on Jenkins (BEWARE: builds on Jenkins may not be stable, use at your own risk)
 
-##Commandline mode
+## Commandline mode
 ![Toxic Todo Client](https://raw.githubusercontent.com/aerobless/ToxicTodo/master/ToxicTodo_CLI.png)
 
 What | Command | Example use
@@ -35,19 +35,16 @@ Remove a category | remove category [categoryKeyword] | remove category school
 Show about info | about **OR** identify | about **OR** identify
 Update to the latest version from the CI server | update | update
 
-##Server
-![Toxic Todo Diagram](http://w1nter.com/downloads/toxicTodoDiag.png)
-
 **Server-Commands:**
 *stop / exit* - to shutdown the server application.
 
 
-##Download
+## Download
 **ToxicTodo Server .JAR download:** [download.theowinter.ch/ToxicTodoServer.jar](http://download.theowinter.ch/ToxicTodoServer.jar)  
 **ToxicTodo Client .JAR download:** [download.theowinter.ch/ToxicTodoClient.jar](http://download.theowinter.ch/ToxicTodoClient.jar)  
 
 
-##License
+## License
 > Copyright (c) 2014 Theo Winter
 
 > Permission is hereby granted, free of charge, to any person obtaining a copy
