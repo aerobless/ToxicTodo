@@ -38,12 +38,6 @@ Update to the latest version from the CI server | update | update
 **Server-Commands:**
 *stop / exit* - to shutdown the server application.
 
-
-## Download
-**ToxicTodo Server .JAR download:** [download.theowinter.ch/ToxicTodoServer.jar](http://download.theowinter.ch/ToxicTodoServer.jar)  
-**ToxicTodo Client .JAR download:** [download.theowinter.ch/ToxicTodoClient.jar](http://download.theowinter.ch/ToxicTodoClient.jar)  
-
-
 ## License
 > Copyright (c) 2014 Theo Winter
 
